@@ -124,8 +124,9 @@
 
 #' Karolinska Cortex/Hippocamus dataset subsample
 #' @source
+#' download.file("goo.gl/r5Y24y",destfile="expression_mRNA_17-Aug-2014.txt")
+#' path = "expression_mRNA_17-Aug-2014.txt"
 #' cortex_mrna  = load.linnarsson.sct.data("expression_mRNA_17-Aug-2014.txt")
-#' cortex_mrna$exp = cortex_mrna$exp[1:200,]
 #' save(cortex_mrna,file="data/cortex_mrna.rda")
 'cortex_mrna'
 
