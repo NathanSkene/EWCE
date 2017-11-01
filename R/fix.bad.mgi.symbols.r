@@ -15,7 +15,7 @@
 #' }
 #' @export
 #' @import biomaRt
-fix.bad.mgi.symbols <- function(exp,mrk_file_path="/Users/ns9/Google Drive/DiseaseEnrichment/MRK_List2"){
+fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL){
     # Check arguments
     if(is.null(exp)){stop("ERROR: 'exp' is null. It should be a numerical matrix with the rownames being MGI symbols.")}
     if(!is.null(levels(exp[1,3]))){stop("ERROR: Input 'exp' should not contain factors. Perhaps stringsAsFactors was not set while loading")}
@@ -41,9 +41,20 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path="/Users/ns9/Google Drive/Disea
     }
 
     # Load data from MGI to check for synonyms
-    mgi_data = read.csv(mrk_file_path,sep="\t",stringsAsFactors = FALSE)
-    # -- the above file is downlaoded from: http://www.informatics.jax.org/downloads/reports/index.html
-    mgi_data = mgi_data[!mgi_data$Marker.Synonyms..pipe.separated.=="",]
+    if(is.null(mrk_file_path)){
+        data("mgi_synonym_data")
+        mgi_data = mgi_synonym_data
+    }else{
+        if(!file.exists(mrk_file_path)){
+            stop("ERROR: the file path used in mrk_file_path does not direct to a real file. Either leave this argument blank or direct to an MRK_List2.rpt file downloaded from the MGI website. It should be possible to obtain from: http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt")
+        }
+        mgi_data = read.csv(mrk_file_path,sep="\t",stringsAsFactors = FALSE)
+        if(!"Marker.Synonyms..pipe.separated." %in% colnames(mgi_synonym_data)){
+            stop("ERROR: the MRK_List2.rpt file does not seem to have a column named 'Marker.Synonyms..pipe.separated.'")
+        }
+        # -- the above file is downlaoded from: http://www.informatics.jax.org/downloads/reports/index.html
+        mgi_data = mgi_data[!mgi_data$Marker.Synonyms..pipe.separated.=="",]
+    }
 
     # If there are too many genes in not_MGI then the grep crashes... so try seperately
     stepSize=500

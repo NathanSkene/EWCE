@@ -136,3 +136,11 @@
 #' magma2=merge(magma,hgnc_symbols,by="GENE")
 #' write.csv(magma2[1:100,]$hgnc_symbol,file="Alzh_IGAP_top100magma.txt",quote=FALSE,row.names = FALSE)
 'alzh_gwas_top100'
+
+#' MGI synonym data
+#' @source
+#' download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile="MRK_List2.rpt")
+#' mgi_synonym_data = read.csv(mrk_file_path,sep="\t",stringsAsFactors = FALSE)
+#' mgi_synonym_data = mgi_data[!mgi_data$Marker.Synonyms..pipe.separated.=="",]
+#' save(mgi_synonym_data,file="data/mgi_synonym_data.rda", compress='xz')
+'mgi_synonym_data'
