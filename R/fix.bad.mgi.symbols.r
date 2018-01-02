@@ -114,7 +114,7 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL){
     new_exp  = rbind(exp_Good,exp_Bad)
 
     print(sprintf("%s rows should have been corrected by checking synonms",dim(matchingSYN)[1]))
-    still_not_MGI = sort(rownames(new_exp)[!rownames(new_exp) %in% mgi_symbols$mgi_symbol])
+    still_not_MGI = sort(rownames(new_exp)[!rownames(new_exp) %in% all_mgi])
     print(sprintf("%s rows STILL do not have proper MGI symbols",length(still_not_MGI)))
     return(new_exp)
 }
