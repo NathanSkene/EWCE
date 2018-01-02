@@ -7,7 +7,7 @@
 \format{An object of class \code{data.frame} with 55834 rows and 12 columns.}
 \source{
 download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile="MRK_List2.rpt")
-mgi_synonym_data = read.csv(mrk_file_path,sep="\t",stringsAsFactors = FALSE)
+mgi_synonym_data = read.csv(mrk_file_path,sep="\\t",stringsAsFactors = FALSE)
 mgi_synonym_data = mgi_data[!mgi_data$Marker.Synonyms..pipe.separated.=="",]
 save(mgi_synonym_data,file="data/mgi_synonym_data.rda", compress='xz')
 }
