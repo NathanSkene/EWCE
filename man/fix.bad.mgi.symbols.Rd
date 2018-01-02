@@ -7,8 +7,7 @@
 check in the MGI synonm database for whether they match to a proper MGI symbol. Where a symbol is found to be an aliases for a gene that is already
 in the dataset, the combined reads are summed together.}
 \usage{
-fix.bad.mgi.symbols(exp,
-  mrk_file_path = "/Users/ns9/Google Drive/DiseaseEnrichment/MRK_List2")
+fix.bad.mgi.symbols(exp, mrk_file_path = NULL)
 }
 \arguments{
 \item{exp}{An expression matrix where the rows are MGI symbols}

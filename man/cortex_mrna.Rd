@@ -6,8 +6,9 @@
 \title{Karolinska Cortex/Hippocamus dataset subsample}
 \format{An object of class \code{list} of length 2.}
 \source{
+download.file("goo.gl/r5Y24y",destfile="expression_mRNA_17-Aug-2014.txt")
+path = "expression_mRNA_17-Aug-2014.txt"
 cortex_mrna  = load.linnarsson.sct.data("expression_mRNA_17-Aug-2014.txt")
-cortex_mrna$exp = cortex_mrna$exp[1:200,]
 save(cortex_mrna,file="data/cortex_mrna.rda")
 }
 \usage{

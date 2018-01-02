@@ -24,6 +24,23 @@
 #'
 "mouse_to_human_homologs"
 
+
+#' All MGI gene symbols with ENSEMBL gene IDs
+#'
+#' A dataset containing all MGI symbols in first column, then ensembl_gene_id in second column
+#'
+#' @source
+#' The code to prepare the .Rda file file from the marker file is:
+#' \code{
+#' library("biomaRt")
+#' listMarts(host="www.ensembl.org")
+#' mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="mmusculus_gene_ensembl")
+#' all_mgi_wtEnsembl = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
+#' save(all_mgi_wtEnsembl,file="all_mgi_wtEnsembl.Rda")
+#' }
+#'
+"all_mgi_wtEnsembl"
+
 #' All MGI gene symbols
 #'
 #' A dataset containing all MGI symbols
