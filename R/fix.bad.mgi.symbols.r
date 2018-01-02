@@ -30,7 +30,8 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL){
     #mouse = useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
     #attrib_mus = listAttributes(mouse)
     #mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
-    not_MGI = rownames(exp)[!rownames(exp) %in% all_mgi_wtEnsembl$mgi_symbol]
+    data(all_mgi)
+    not_MGI = rownames(exp)[!rownames(exp) %in% all_mgi]
     print(sprintf("%s rows do not have proper MGI symbols",length(not_MGI)))
     if(length(not_MGI)>20){print(not_MGI[1:20])}
 
