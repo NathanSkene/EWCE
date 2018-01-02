@@ -494,5 +494,142 @@ print(res_rbfox_id)
 
 The analysis also tests for enrichment of Rbfox binding genes in the schizophrenia susceptibility genes, as well as both hPSD and Rbfox genes in Intellectual Disability genes. All of the enrichments are confirmed as still being present after controlling for the associated cell type, apart from the enrichment of PSD genes in Schizophrenia which falls from borderline to non-significant.
 
+## Controlling for multiple cell types
+
+```{r }
+load.genelists <- function(){
+    load(file="/Users/ns9/Box Sync/LDSC_Paper_EWCE/Data/pats_orthologs.rda")
+    geneGroups = list()
+    
+    # Glial Gene Sets
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "Glial Gene Sets"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/PosthumaGliaSchiz/"
+    geneGroups[[length(geneGroups)]]$file_names    = gsub("\\.txt","",setdiff(list.files(geneGroups[[length(geneGroups)]]$paths),"readme.txt"))
+    geneGroups[[length(geneGroups)]]$written_names = geneGroups[[length(geneGroups)]]$file_names    
+    
+    # SYNAPTIC
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "Post-Synaptic"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/"
+    geneGroups[[length(geneGroups)]]$file_names    = c("nmdar","psd95","hPSD")
+    geneGroups[[length(geneGroups)]]$written_names = c("NMDA Receptor Complex","PSD95 Complex","Post-synaptic Density")
+    
+    # EXAC
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "EXAC"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/"
+    geneGroups[[length(geneGroups)]]$file_names    = c("EXAC_LossOfFunctionIntolerant")
+    geneGroups[[length(geneGroups)]]$written_names = c("Loss of Function Intolerant")
+    
+    # RNA Binding
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "RNA Binding"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/"
+    #geneGroups[[length(geneGroups)]]$file_names    = c("Rbfox_binding","FMRP_binding","CELF4_binding_sites","mir137_targets","nSR100_genesRegulatedBy")
+    geneGroups[[length(geneGroups)]]$file_names    = c("Rbfox_binding","FMRP_binding","CELF4_binding_sites","mir137_targets")
+    #geneGroups[[length(geneGroups)]]$written_names = c("Rbfox binding","FMRP binding","CELF4 binding","Mir137 targets","nSR100 regulated")
+    geneGroups[[length(geneGroups)]]$written_names = c("Rbfox binding","FMRP binding","CELF4 binding","Mir137 targets")
+    
+    # Presynaptic & Axonal
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "Presynaptic &  Axonal"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/"
+    geneGroups[[length(geneGroups)]]$file_names    = c("Presynaptic_notMitochondrial_notVesicular_Boyken2013_HGNC_1to1homologs","Synaptic_Vesicle_Proteome_Takamori2006_HGNC_1to1homologs","Axon_RGC_ageADULT","Axon_RGC_ageE17")
+    geneGroups[[length(geneGroups)]]$written_names = c("Presynaptic","Synaptic Vesicle","Axonal (Adult)","Axonal (E17)")
+    
+    # Cell parts
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "Cell parts"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Google Drive/DiseaseLists/"
+    geneGroups[[length(geneGroups)]]$file_names    = c("Mitochondrial Localised Genes from MitoCarta Human","LysosomalProteins")
+    geneGroups[[length(geneGroups)]]$written_names = c("Mitochondrial","Lysosomal")
+    
+    # Human Protein Atlas
+    geneGroups[[length(geneGroups)+1]] <- list()
+    geneGroups[[length(geneGroups)]]$list_group  = "Human Protein Atlas"
+    geneGroups[[length(geneGroups)]]$paths       = "/Users/ns9/Datasets that are too large to store elsewhere/Human Protein Atlas/GeneLists/"
+    geneGroups[[length(geneGroups)]]$file_names    = gsub("\\.txt","",list.files(geneGroups[[length(geneGroups)]]$paths))
+    geneGroups[[length(geneGroups)]]$written_names = gsub("HumanProteinAtlas_","",geneGroups[[length(geneGroups)]]$file_names)
+    
+    lists = list()
+    for(i in 1:length(geneGroups)){
+        for(j in 1:length(geneGroups[[i]]$file_names)){
+            newList = list()
+            newList$file = sprintf("%s%s.txt",geneGroups[[i]]$paths,geneGroups[[i]]$file_names[j])
+            newList$name = geneGroups[[i]]$written_names[j]
+            newList$group = geneGroups[[i]]$list_group
+            newList$genes = trimws(unlist(read.csv(newList$file,stringsAsFactors=FALSE,header=FALSE)[,1])[-(1:2)])
+            newList$origin = unlist(read.csv(newList$file,stringsAsFactors=FALSE,header=FALSE)[,1])[2]
+            numMGI = sum(newList$genes %in% orthologs$MGI.symbol)
+            numHGNC = sum(newList$genes %in% orthologs$HGNC.symbol)
+            newList$species = "mouse"
+            # If the gene list is HGNC
+            if(numHGNC>numMGI){
+                newList$species = "human"
+                newList$MGI_1to1_Orth = orthologs[orthologs$HGNC.symbol %in% newList$genes,]$MGI.symbol
+                newList$HGNC_1to1_Orth = newList$genes[newList$genes %in% orthologs$HGNC.symbol]
+            }
+            # If the gene list is MGI
+            if(newList$species=="mouse"){
+                newList$MGI_1to1_Orth = newList$genes[newList$genes %in% orthologs$MGI.symbol]
+                newList$HGNC_1to1_Orth = orthologs[orthologs$MGI.symbol %in% newList$genes,]$HGNC.symbol
+            }
+            lists[[length(lists)+1]] = newList
+        }
+    }
+    return(lists)
+}
+```
+
+```{r }
+load("/Users/ns9/Box Sync/Patrick & Julien/celltype_data_allKImouse_wtHypo_MergedStriatal_1to1only_level1_thresh0_trim0.rda")
+ctd=list()
+ctd[[1]] = celltype_data[[1]]
+ctd[[1]]$specificity = ctd[[1]]$cell_dists
+ctd[[1]]$mean_exp = ctd[[1]]$all_scts
+
+data("mouse_to_human_homologs")
+m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
+
+schiz_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/schiz_magma_top10percent.txt",stringsAsFactors = FALSE)[-1,1]
+mouse.hits.schiz = schiz_genes
+mouse.bg  = unique(m2h$MGI.symbol)
+
+lists = load.genelists()
+#listNames = unlist(lapply(lists,function(l) l$name))
+
+# cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits.schiz[mouse.hits.schiz %in% mouse.bg],
+#                    bg=mouse.bg,reps=1000,annotLevel=1,geneSizeControl=FALSE,genelistSpecies="mouse",sctSpecies="mouse")
+# print(ewce.plot(cont_results$results,mtc_method="BH"))
+
+controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons","Medium Spiny Neuron")
+for(jj in 1:length(lists)){
+    lGenes = lists[[jj]]$MGI_1to1_Orth
+    res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = lGenes[lGenes %in% mouse.bg], bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)#controlledCT=controlledCTs)
+    lists[[jj]]$p_uncontrolled = res_hpsd_schiz$p_uncontrolled
+    lists[[jj]]$p_controlled = res_hpsd_schiz$p_controlled
+    print(lists[[jj]]$name)
+    print(sprintf("Uncontrolled: %s",lists[[jj]]$p_uncontrolled))
+    print(sprintf("Controlled: %s",lists[[jj]]$p_controlled))
+}
+listNames = unlist(lapply(lists,function(l) l$name))
+listPcont = unlist(lapply(lists,function(l) l$p_controlled))
+listPuncont = unlist(lapply(lists,function(l) l$p_uncontrolled))
+listRes = data.frame(name=listNames,p_uncontrolled=listPuncont,p_controlled=listPcont)
+listRes = listRes[order(listRes$p_controlled),]
+
+res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal CA1")
+print(res_hpsd_schiz)
+print(res_rbfox_schiz)
+
+res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal SS")
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal SS")
+print(res_hpsd_id)
+print(res_rbfox_id)
+```
+
+
+
 # References
 

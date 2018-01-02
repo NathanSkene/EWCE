@@ -18,6 +18,9 @@ generate_controlled_bootstrap_geneset(hitGenes, sct_data, annotLevel, reps,
 
 \item{controlledCT}{Name of a celltype (from colnames of sct_data[[x]]$specificity.}
 }
+\value{
+Matrix of genes (nrows=length(hitGenes),ncols=reps), where each column is a gene list
+}
 \description{
 \code{generate_controlled_bootstrap_geneset} Used to generated celltype controlled bootstraped
 }

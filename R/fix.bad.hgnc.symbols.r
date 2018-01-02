@@ -12,9 +12,10 @@ fix.bad.hgnc.symbols <- function(exp,dropNonHGNC=FALSE){
 
     # First, find which gene symbols are not proper HGNC symbols
     #library("biomaRt")
-    human = useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
-    hgnc_symbols = getBM(attributes=c("hgnc_symbol"), mart=human)
-    not_HGNC = rownames(exp)[!rownames(exp) %in% hgnc_symbols$hgnc_symbol]
+    #human = useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
+    #hgnc_symbols = getBM(attributes=c("hgnc_symbol"), mart=human)
+    #not_HGNC = rownames(exp)[!rownames(exp) %in% hgnc_symbols$hgnc_symbol]
+    not_HGNC = rownames(exp)[!rownames(exp) %in% all_hgnc]
     print(sprintf("%s of %s are not proper HGNC symbols",length(unique(not_HGNC)),dim(exp)[1]))
 
     # If dropNonHGNC==TRUE then dropNonHGNC symbols
