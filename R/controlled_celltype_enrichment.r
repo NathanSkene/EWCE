@@ -42,7 +42,7 @@ controlled_geneset_enrichment <- function(disease_genes,functional_genes,bg_gene
         sct_data_bgReduced[[lvl]]$specificity = sct_data_bgReduced[[lvl]]$specificity[combinedGenes,]
     }
 
-    controlled_bootstrap_set = generate_controlled_bootstrap_geneset(hitGenes,sct_data_bgReduced,annotLevel,reps,controlledCT)
+    controlled_bootstrap_set = generate_controlled_bootstrap_geneset(hitGenes=hitGenes,sct_data=sct_data_bgReduced,annotLevel=annotLevel,reps=reps,controlledCT=controlledCT)
     uncontrolled_bootstrap_set = replicate(reps,sample(combinedGenes,length(hitGenes)))
 
     # Calculate uncontrolled enrichment
