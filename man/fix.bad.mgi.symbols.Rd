@@ -7,12 +7,14 @@
 check in the MGI synonm database for whether they match to a proper MGI symbol. Where a symbol is found to be an aliases for a gene that is already
 in the dataset, the combined reads are summed together.}
 \usage{
-fix.bad.mgi.symbols(exp, mrk_file_path = NULL)
+fix.bad.mgi.symbols(exp, mrk_file_path = NULL, printAllBadSymbols = FALSE)
 }
 \arguments{
 \item{exp}{An expression matrix where the rows are MGI symbols}
 
 \item{mrk_file_path}{Path to the MRK_List2 file which can be downloaded from www.informatics.jax.org/downloads/reports/index.html}
+
+\item{printAllBadSymbols}{Output to console all the bad gene symbols}
 }
 \value{
 Returns the expression matrix with the rownames corrected and rows representing the same gene merged
