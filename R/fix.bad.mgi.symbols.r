@@ -6,6 +6,7 @@
 #' Also checks whether any gene names contain "Sep", "Mar" or "Feb". These should be checked for any suggestion that excel has corrupted the gene names.
 #' @param exp An expression matrix where the rows are MGI symbols
 #' @param mrk_file_path Path to the MRK_List2 file which can be downloaded from www.informatics.jax.org/downloads/reports/index.html
+#' @param printAllBadSymbols Output to console all the bad gene symbols
 #' @return Returns the expression matrix with the rownames corrected and rows representing the same gene merged
 #' @examples
 #' \dontrun{
@@ -15,7 +16,7 @@
 #' }
 #' @export
 #' @import biomaRt
-fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL){
+fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE){
     # Check arguments
     if(is.null(exp)){stop("ERROR: 'exp' is null. It should be a numerical matrix with the rownames being MGI symbols.")}
     if(!is.null(levels(exp[1,3]))){stop("ERROR: Input 'exp' should not contain factors. Perhaps stringsAsFactors was not set while loading")}
@@ -120,5 +121,8 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL){
     print(sprintf("%s rows should have been corrected by checking synonms",dim(matchingSYN)[1]))
     still_not_MGI = sort(rownames(new_exp)[!rownames(new_exp) %in% all_mgi])
     print(sprintf("%s rows STILL do not have proper MGI symbols",length(still_not_MGI)))
+    if(printAllBadSymbols==TRUE){
+        print(still_not_MGI)
+    }
     return(new_exp)
 }
