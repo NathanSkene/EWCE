@@ -1,3 +1,20 @@
+#' Human Ensembl Transcript Lengths & GC content
+#'
+#' A dataset containing the transcript lengths and GC content for each human ensembl gene
+#'
+#' @source
+#' The code to prepare the .Rda file file from the marker file is:
+#' \code{
+#' library(biomaRt)
+#' listMarts(host="www.ensembl.org")
+#' human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
+#' ensembl_transript_lengths_GCcontent = getBM(attributes=c("transcript_length","percentage_gene_gc_content","ensembl_gene_id"), mart= human)
+#' save(ensembl_transript_lengths_GCcontent,file="ensembl_transcript_lengths_GCcontent.Rda")
+#' }
+#'
+"ensembl_transcript_lengths_GCcontent"
+
+
 #' Table of Human-->Mouse orthologs for all human genes
 #'
 #' A dataset containing the MGI and HGNC symbols, Human and Mouse Entrez and Ensembl gene IDs for all human
@@ -57,6 +74,22 @@
 #' }
 #'
 "all_mgi"
+
+#' All HGNC gene symbols with ENSEMBL gene IDs
+#'
+#' A dataset containing all HGNC symbols in first column, then ensembl_gene_id in second column
+#'
+#' @source
+#' The code to prepare the .Rda file file from the marker file is:
+#' \code{
+#' library("biomaRt")
+#' listMarts(host="www.ensembl.org")
+#' human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
+#' all_hgnc_wtEnsembl = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), mart=human)
+#' save(all_hgnc_wtEnsembl,file="all_hgnc_wtEnsembl.Rda")
+#' }
+#'
+"all_hgnc_wtEnsembl"
 
 #' All HGNC gene symbols
 #'
