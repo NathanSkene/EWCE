@@ -2,10 +2,3 @@
 .Rhistory
 .RData
 .Ruserdata
-.DS_Store
-.Rbuildignore
-R/.DS_Store
-vignettes/BootstrapPlots
-vignettes/BootstrapPlots/*
-vignettes/CellType*
-vignettes/MRK_List2.rpt
