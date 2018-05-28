@@ -4,21 +4,14 @@
 \alias{generate.celltype.data}
 \title{generate.celltype.data}
 \usage{
-generate.celltype.data(exp, level1class, level2class, groupName, thresh = 0,
-  trim = 0)
+generate.celltype.data(exp, annotLevels, groupName)
 }
 \arguments{
 \item{exp}{Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
 
-\item{level1class}{Array of strings containing the level 1 cell type names associated with each column in exp}
-
-\item{level2class}{Array of strings containing the level 2 cell type names associated with each column in exp}
+\item{annotLevels}{List with arrays of strings containing the cell type names associated with each column in exp}
 
 \item{groupName}{A human readable name for refering to the dataset being loaded}
-
-\item{thresh}{Expression threshold value below which a gene is dropped (default=0). We do not recommend changing from the default.}
-
-\item{trim}{Value determining how the trimmed mean is calculated (range: 0 to 0.5, default=0). We do not recommend changing from the default.}
 }
 \value{
 Filenames for the saved celltype_data files
@@ -32,5 +25,6 @@ data("cortex_mrna")
 expData = cortex_mrna$exp
 l1=cortex_mrna$annot$level1class
 l2=cortex_mrna$annot$level2class
-fNames_ALLCELLS = generate.celltype.data(exp=expData,l1,l2,"allKImouse",thresh=0,trim=0)
+annotLevels = list(l1=l1,l2=l2)
+fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels,"allKImouse")
 }

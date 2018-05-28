@@ -48,7 +48,7 @@ ewce_expression_data <- function(sct_data,annotLevel=1,tt,sortBy="t",thresh=250,
         tt$MGI.symbol = tt$HGNC.symbol
     }
     tt$MGI.symbol = as.character(tt$MGI.symbol)
-    
+
     tt2=tt
 
 #     if(ttSpecies=="human"){
@@ -78,8 +78,8 @@ ewce_expression_data <- function(sct_data,annotLevel=1,tt,sortBy="t",thresh=250,
     # Do EWCE analysis
     #full_res_up = bootstrap.enrichment.test(sct_data=sct_data,annot=annot,mouse.hits=mouse.upreg.hits,mouse.bg=mouse.bg,reps = reps,annotLevel=1,geneSizeControl=FALSE)
     #full_res_down = bootstrap.enrichment.test(sct_data=sct_data,annot=annot,mouse.hits=mouse.downreg.hits,mouse.bg=mouse.bg,reps = reps,annotLevel=1,geneSizeControl=FALSE)
-    full_res_up = EWCE::bootstrap.enrichment.test(sct_data=sct_data,hits=mouse.upreg.hits,bg=mouse.bg,reps = reps,annotLevel=1,geneSizeControl=FALSE,genelistSpecies=ttSpecies,sctSpecies=sctSpecies)
-    full_res_down = EWCE::bootstrap.enrichment.test(sct_data=sct_data,hits=mouse.downreg.hits,bg=mouse.bg,reps = reps,annotLevel=1,geneSizeControl=FALSE,genelistSpecies=ttSpecies,sctSpecies=sctSpecies)
+    full_res_up = EWCE::bootstrap.enrichment.test(sct_data=sct_data,hits=mouse.upreg.hits,bg=mouse.bg,reps = reps,annotLevel=annotLevel,geneSizeControl=FALSE,genelistSpecies=ttSpecies,sctSpecies=sctSpecies)
+    full_res_down = EWCE::bootstrap.enrichment.test(sct_data=sct_data,hits=mouse.downreg.hits,bg=mouse.bg,reps = reps,annotLevel=annotLevel,geneSizeControl=FALSE,genelistSpecies=ttSpecies,sctSpecies=sctSpecies)
 
     joint_results = rbind(cbind(full_res_up$results,Direction="Up"),cbind(full_res_down$results,Direction="Down"))
     hit.cells.up = full_res_up$hit.cells
