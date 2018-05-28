@@ -51,8 +51,8 @@ check.ewce.genelist.inputs <- function(sct_data,hits,bg,genelistSpecies,sctSpeci
 
     ## Check that the gene lists are really from the correct species
     if(genelistSpecies=="mouse"){
-        if(sum(hits %in% all_mgi)<4){stop("ERROR: less than four of the hits genes are MGI symbols. They must be provided as correctly formatted MGI symbols (or alter genelistSpecies)")}
-        if(sum(bg %in% all_mgi)<4){  stop("ERROR: less than four of the bg genes are MGI symbols. They must be provided as correctly formatted MGI symbols (or alter genelistSpecies)")}
+        if(sum(hits %in% all_mgi)<4){print(sprintf("Passed: %s",paste(hits,collapse=", ")));stop("ERROR: less than four of the hits genes are MGI symbols. They must be provided as correctly formatted MGI symbols (or alter genelistSpecies)")}
+        if(sum(bg %in% all_mgi)<4){ print(sprintf("Passed: %s",paste(hits,collapse=", "))); stop("ERROR: less than four of the bg genes are MGI symbols. They must be provided as correctly formatted MGI symbols (or alter genelistSpecies)")}
         if(sum(bg %in% all_mgi)<sum(bg %in% all_hgnc)){stop("ERROR: more bg genes are HGNC genes than MGI genes. Did you provide the correct species?")}
     }
     if(genelistSpecies=="human"){

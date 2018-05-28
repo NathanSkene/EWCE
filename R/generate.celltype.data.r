@@ -58,7 +58,8 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
         return(ctd_oneLevel)
     }
     calculate.specificity.for.level <- function(ctd_oneLevel){
-        ctd_oneLevel$specificity = ctd_oneLevel$mean_exp/(apply(ctd_oneLevel$mean_exp,1,sum)+0.000000000001)
+        normalised_meanExp = t(t(ctd_oneLevel$mean_exp)*(1/colSums(ctd_oneLevel$mean_exp)))
+        ctd_oneLevel$specificity = normalised_meanExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
         return(ctd_oneLevel)
     }
     ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp2)
