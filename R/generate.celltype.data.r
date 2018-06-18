@@ -35,8 +35,12 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
     ctd = list()
     for(i in 1:length(annotLevels)){ctd[[length(ctd)+1]] = list(annot=annotLevels[[i]])}
 
-    aggregate.over.celltypes <- function(rowOfMeans,celltypes){
-        exp_out = as.matrix(data.frame(aggregate(rowOfMeans,by=list(celltypes),FUN=mean)))
+    aggregate.over.celltypes <- function(rowOfMeans,celltypes,func="mean"){
+        if(func=="mean"){
+            exp_out = as.matrix(data.frame(aggregate(rowOfMeans,by=list(celltypes),FUN=mean)))
+        }else if(func=="median"){
+            exp_out = as.matrix(data.frame(aggregate(rowOfMeans,by=list(celltypes),FUN=median)))
+        }
         rownames(exp_out) = exp_out[,"Group.1"]
         exp_out = exp_out[,2]
         exp_out2 = as.numeric(exp_out)
@@ -57,12 +61,29 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
         }
         return(ctd_oneLevel)
     }
+    calculate.medianexp.for.level <- function(ctd_oneLevel,expMatrix){
+        if(dim(expMatrix)[2]==length(unique(ctd_oneLevel$annot))){
+            print(dim(expMatrix)[2])
+            print(length(ctd_oneLevel$annot))
+            if(sum(!colnames(expMatrix)==ctd_oneLevel$annot)!=0){
+                stop("There are an equal number of celltypes in expMatrix and ctd_oneLevel but the names do not match")
+            }
+            ctd_oneLevel$median_exp = expMatrix
+        }else{
+            median_exp = apply(expMatrix,1,aggregate.over.celltypes,ctd_oneLevel$annot,func="median")
+            ctd_oneLevel$median_exp = t(median_exp)
+        }
+        return(ctd_oneLevel)
+    }
     calculate.specificity.for.level <- function(ctd_oneLevel){
         normalised_meanExp = t(t(ctd_oneLevel$mean_exp)*(1/colSums(ctd_oneLevel$mean_exp)))
+        normalised_medianExp = t(t(ctd_oneLevel$median_exp)*(1/colSums(ctd_oneLevel$mean_exp)))
         ctd_oneLevel$specificity = normalised_meanExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
+        ctd_oneLevel$median_specificity = normalised_medianExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
         return(ctd_oneLevel)
     }
     ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp2)
+    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp2)
     ctd3 = mclapply(ctd2,calculate.specificity.for.level)
     ctd=ctd3
     stopCluster(cl)
