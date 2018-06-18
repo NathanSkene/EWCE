@@ -67,7 +67,7 @@ bootstrap.enrichment.test <- function(sct_data=NA,hits=NA,bg=NA,genelistSpecies=
     # IF USING GENESIZE AND GC-CONTENT MATCHING, THEN GENERATE THE SAMPLE LISTS
 	if(geneSizeControl==TRUE){
 		#control_related = prepare.genesize.control.network(humanGenelist=human.hits,human.bg=human.bg,mouseGenes=unique(c(mouse.hits,mouse.bg)),numBOOT=reps)
-	    control_related = prepare.genesize.control.network(hits=hits,bg=bg,numBOOT=reps)
+	    control_related = prepare.genesize.control.network(hits=hits,bg=bg,numBOOT=reps,sctSpecies=sctSpecies)
 		control_network = control_related[["list_network"]]
 		hitGenes = control_related[["hitGenes"]]
 		nonHits  = unique(control_related[["list_network"]]) #mouse.bg
