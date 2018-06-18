@@ -4,7 +4,7 @@
 \alias{prepare.genesize.control.network}
 \title{Prepare genesize control network}
 \usage{
-prepare.genesize.control.network(hits, bg, numBOOT = 10000)
+prepare.genesize.control.network(hits, bg, numBOOT = 10000, sctSpecies)
 }
 \arguments{
 \item{hits}{Array of MGI gene symbols containing the target gene list. Must be HGNC symbols.}
@@ -12,6 +12,8 @@ prepare.genesize.control.network(hits, bg, numBOOT = 10000)
 \item{bg}{Array of MGI gene symbols containing the background gene list (including hit genes). Must be HGNC symbols.}
 
 \item{numBOOT}{Number of gene lists to sample}
+
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset}
 }
 \value{
 A list containing three data frames:
