@@ -189,7 +189,7 @@ exp_merged_DROPPED = drop.uninformative.genes(exp=merged_KI$exp, level2annot = m
 
 # Calculate specificity data
 annotLevels = list(level1class=merged_KI$annot$level1class,level2class=merged_KI$annot$level2class)
-fNames_MergedKI = generate.celltype.data(exp=exp_merged_DROPPED,annotLevels,"MergedKI",thresh=0,trim=0)
+fNames_MergedKI = generate.celltype.data(exp=exp_merged_DROPPED,annotLevels,"MergedKI")
 fNames_MergedKI = filter.genes.without.1to1.homolog(fNames_MergedKI)
 load(fNames_MergedKI[2])
 ```
