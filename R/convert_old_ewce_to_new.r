@@ -1,3 +1,11 @@
+#' convert_old_ewce_to_new
+#'
+#' \code{convert_old_ewce_to_new} Used to get an new style EWCE ctd file (mean_exp/specificity) from old ones (all_scts)
+#'
+#' @param level1 File path to old level1 of EWCE ctd
+#' @param level2 File path to old level2 of EWCE ctd
+#' @return ctd The new style data structure
+#' @export
 convert_old_ewce_to_new <- function(level1,level2){
     load(level1)
     ctd=list()
@@ -9,16 +17,4 @@ convert_old_ewce_to_new <- function(level1,level2){
     ctd[[2]]$specificity = celltype_data[[1]]$cell_dists
     ctd[[2]]$mean_exp    = celltype_data[[1]]$all_scts
     return(ctd)
-}
-
-
-convert_new_ewce_to_old <- function(ctd,lvl){
-    celltype_data=list()
-    celltype_data[[1]]=list()
-    celltype_data[[1]]$cell_dists  = ctd[[lvl]]$specificity
-    celltype_data[[1]]$all_scts    = ctd[[lvl]]$mean_exp
-    #celltype_data[[2]]=list()
-    #celltype_data[[2]]$cell_dists = ctd[[2]]$specificity
-    #celltype_data[[2]]$all_scts   = ctd[[2]]$mean_exp
-    return(celltype_data)
 }

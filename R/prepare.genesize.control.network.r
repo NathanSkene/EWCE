@@ -5,6 +5,7 @@
 #' @param hits Array of MGI gene symbols containing the target gene list. Must be HGNC symbols.
 #' @param bg Array of MGI gene symbols containing the background gene list (including hit genes). Must be HGNC symbols.
 #' @param numBOOT Number of gene lists to sample
+#' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset
 #' @return A list containing three data frames:
 #' \itemize{
 #'   \item \code{hitGenes}: Array of HGNC symbols containing the hit genes. May be slightly reduced if gene length / GC content could not be found for all genes.
@@ -17,7 +18,7 @@
 #' @import stats
 #' @import utils
 #' @import biomaRt
-prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000){
+prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000,sctSpecies){
     ### PREPARE TO QUERY BIOMART
     combined_human_genes = unique(c(hits,bg))
     #library("biomaRt")
@@ -47,15 +48,19 @@ prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000){
     colnames(data_byGene) = c("HGNC.symbol","transcript_lengths","percentage_gene_gc_content")
     data_byGene = data_byGene[data_byGene$HGNC.symbol!="",]
 
-    ### DROP ANY HUMAN GENES WITHOUT HOMOLOGOUS MOUSE GENES
-    mouse_to_human_homologs=NULL # <-- THIS LINE ONLY INCLUDED TO FOOL devtools::check()
-    data("mouse_to_human_homologs", envir = environment())
-    m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-    data_byGene2 = data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol,]
+    if(sctSpecies=="mouse"){
+        ### DROP ANY HUMAN GENES WITHOUT HOMOLOGOUS MOUSE GENES
+        mouse_to_human_homologs=NULL # <-- THIS LINE ONLY INCLUDED TO FOOL devtools::check()
+        data("mouse_to_human_homologs", envir = environment())
+        m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
+        data_byGene2 = data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol,]
 
-    ### MERGE THE LENGTH/GC DATA WITH MOUSE ORTHOLOG DATA
-    data_byGene3 = merge(data_byGene2,m2h,by="HGNC.symbol")
-    data_byGene2 = data_byGene3
+        ### MERGE THE LENGTH/GC DATA WITH MOUSE ORTHOLOG DATA
+        data_byGene3 = merge(data_byGene2,m2h,by="HGNC.symbol")
+        data_byGene2 = data_byGene3
+    }else if(sctSpecies=="human"){
+        data_byGene2 = data_byGene3 = data_byGene
+    }
 
     # GET QUANTILES FOR TRANSCRIPT LENGTH + GC CONTENT
     tl_quants = quantile(data_byGene2$transcript_length, probs = seq(0.1, 1, 0.1))
@@ -74,13 +79,21 @@ prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000){
 
     ### FOR EACH 'DISEASE LIST' GENERATE A SET OF 10000 QUADRANT MATCHED GENE LISTS
     # - Get new set of mouse hitGenes, containing only those within data_byGene2
-    hitGenes_NEW = data_byGene2[data_byGene2$HGNC.symbol %in% hits,"MGI.symbol"]
+    if(sctSpecies=="mouse"){
+        hitGenes_NEW = data_byGene2[data_byGene2$HGNC.symbol %in% hits,"MGI.symbol"]
+    }else if(sctSpecies=="human"){
+        hitGenes_NEW = data_byGene2[data_byGene2$HGNC.symbol %in% hits,"HGNC.symbol"]
+    }
     list_genes1d = hits[hits %in% data_byGene$HGNC.symbol]
 
     # GET ALL MOUSE GENES IN EACH QUADRANT
     quad_genes = list()
     for(uq in unique(data_byGene2$uniq_quad)){
-        quad_genes[[uq]] = unique(data_byGene2[data_byGene2$uniq_quad==uq,"MGI.symbol"])
+        if(sctSpecies=="mouse"){
+            quad_genes[[uq]] = unique(data_byGene2[data_byGene2$uniq_quad==uq,"MGI.symbol"])
+        }else if(sctSpecies=="human"){
+            quad_genes[[uq]] = unique(data_byGene2[data_byGene2$uniq_quad==uq,"HGNC.symbol"])
+        }
     }
 
     # GET MATRIX WITH 10000 RANDOMLY SAMPLED GENES FROM THE SAME QUADRANT AS THE LIST GENE
@@ -88,7 +101,11 @@ prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000){
     count=0
     for(gene in hitGenes_NEW){
         count=count+1
-        this_gene_quad = data_byGene2[data_byGene2$MGI.symbol==gene,"uniq_quad"][1]
+        if(sctSpecies=="mouse"){
+            this_gene_quad = data_byGene2[data_byGene2$MGI.symbol==gene,"uniq_quad"][1]
+        }else if(sctSpecies=="human"){
+            this_gene_quad = data_byGene2[data_byGene2$HGNC.symbol==gene,"uniq_quad"][1]
+        }
         candidates = as.vector(unlist(quad_genes[this_gene_quad]))
         list_network[,count] = sample(candidates,numBOOT,replace=TRUE)
     }
