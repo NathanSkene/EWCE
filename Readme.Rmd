@@ -11,6 +11,7 @@ vignette: >
   %\usepackage[utf8]{inputenc}    
 ---
 
+<!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
 BiocStyle::markdown()
@@ -20,15 +21,16 @@ knitr::opts_chunk$set(tidy         = FALSE,
 ```
 
 # Citation
-If you use `r Biocpkg("EWCE")`[@skene_2016] in published research, please cite N. Skene et al (2016).
 
-```
-N.G. SKENE, S.G.N. GRANT
-"Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment."
-Frontiers in Neuroscience, 27th Jan 2016
-```
+If you use the EWCE package as well then please cite
 
-URL: [http://journal.frontiersin.org/article/10.3389/fnins.2016.00016/abstract](http://journal.frontiersin.org/article/10.3389/fnins.2016.00016/abstract)
+[Skene, et al. Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment.
+Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
+
+If you use the cortex/hippocampus single cell data associated with this package then please cite the following papers:
+
+[Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq.
+Science, 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
 
 # Introduction
 
@@ -55,21 +57,12 @@ Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
 
 # Installing EWCE
 
-The *EWCE* package is available from the Bioconductor repository at http://www.bioconductor.org
-To be able to install the package one needs first to install R and the core Bioconductor packages. 
-If you have already installed Bioconductor packages on your system then you can skip the two lines 
-below.
+The *EWCE* package is available from github. The old version available from the Bioconductor archives is depreciated and should not be used. To be able to install the package one needs first to install R then run the following lines of code:
 
 ```
-source("http://bioconductor.org/biocLite.R")
-biocLite()
-```
-
-Once the core Bioconductor packages are installed, we can install the *EWCE* package by
-
-```
-source("http://bioconductor.org/biocLite.R")
-biocLite("EWCE")
+install.packages("devtools")
+library(devtools)
+install_github("nathanskene/ewce")
 ```
 
 You can then load the package:
@@ -319,7 +312,7 @@ human.bg = unique(c(human.hits,m2h$HGNC.symbol))
 
 The bootstrapping function then takes different arguments:
 
-```{r, cache=FALSE}
+```{r, cache=FALSE, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=1,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -337,7 +330,7 @@ This shows that the controlled method generates enrichments that are generally c
 
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
-```{r, cache=FALSE, fig.width = 8, fig.height = 4}
+```{r, cache=FALSE, fig.width = 8, fig.height = 4, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -376,7 +369,7 @@ To demonstrate this we have an example dataset `tt_alzh`. This data frame was ge
 
 The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
 
-```{r}
+```{r, results="hide"}
 data(tt_alzh)
 tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
 ```
@@ -395,7 +388,7 @@ Where multiple transcriptomic studies have been performed with the same purpose,
 
 To demonstrate this we use a two further Alzheimer's transcriptome dataset coming from Brodmann areas 36 and 44: these area stored in `tt_alzh_BA36` and `tt_alzh_BA44`. The first step is to run EWCE on each of these individually and store the output into one list.
 
-```{r cache=FALSE}
+```{r cache=FALSE, results="hide"}
 # Load the data
 data(tt_alzh_BA36)
 data(tt_alzh_BA44)
@@ -427,11 +420,8 @@ The merged results from all three Alzheimer's brain regions are found to be rema
 
 In a followup paper we found that an enrichment detected for Schizophrenia in Somatosensory Pyramidal neurons could be explained by accounting for expression in Hippocampal CA1 pyramidal neurons. These results are described here:
 
-```
-Nathan G. Skene, Julien Bryois, Trygve E. Bakken, Gerome Breen, James J. Crowley, Helena Gaspar, Paola Giusti-Rodriguez, Rebecca D. Hodge, Jeremy A. Miller, Ana Munoz-Manchado, Michael C. O'Donovan, Michael J. Owen, Antonio F. Pardinas, Jesper Ryge, James T. R. Walters, Sten Linnarsson, Ed S. Lein, - Major Depressive Disorder Working Group of the PGC, Patrick F. Sullivan, Jens Hjerling-Leffler
-"Genetic Identification Of Brain Cell Types Underlying Schizophrenia."
-bioRxiv, 2017
-```
+[Skene, et al. Genetic identification of brain cell types underlying schizophrenia.
+Nature Genetics, 2018.](https://www.nature.com/articles/s41588-018-0129-5)
 
 Those results were generated using an alternative enrichment method designed for use with GWAS Summary Statistics rather than gene sets. The same sort of approach can be extended to EWCE as well, and we have implemented it within this package. When testing for enrichment the other gene sets that are sampled are selected to have equivilent specificity in the controlled celltype.
 
@@ -464,7 +454,7 @@ When controlling for astrocytes the enrichment is astrocytes is totally abolishe
 
 Traditionally the standard analysis run on all gene sets was the GO enrichment analysis. Once you have established that a given gene list is enriched for a given celltype, it becomes questionable whether a GO enrichment is driven purely by the underlying cell type enrichment. For instance, it is well established that genes associated with schizophrenia are enriched for the human post-synaptic density genes, however, it has also been shown that schizophrenia is enriched for specificity in CA1 pyramidal neurons (which highly express hPSD genes). These two enrichments can be disassociated using the following analysis:
 
-```{r }
+```{r, results="hide"}
 data("mouse_to_human_homologs")
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 
@@ -494,7 +484,7 @@ The analysis also tests for enrichment of Rbfox binding genes in the schizophren
 
 ## Controlling for multiple cell types
 
-```{r }
+```{r, results="hide"}
 controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
 
 res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)
