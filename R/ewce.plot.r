@@ -30,14 +30,33 @@
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @import stats
+#' @import ggdendro
+#' @import gridExtra
 #' @importFrom grid unit
 # @import plyr
-ewce.plot <- function(total_res,mtc_method="bonferroni"){
+ewce.plot <- function(total_res,mtc_method="bonferroni",ctd=NA){
     if(!mtc_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")){
         stop("ERROR: Invalid mtc_method argument. Please see '?p.adjust' for valid methods.")
     }
     multiList = TRUE
     if(is.null(total_res$list)){multiList = FALSE}
+
+    # Check if ctd is provided (if so, dendrogram is to be added)
+    make_dendro = FALSE
+    suppressWarnings(if(!is.na(ctd[[1]])){
+        make_dendro = TRUE
+        # If using dendrogram... Find the relevant level of the CTD annotation
+        cells.in.ctd <- function(ctdIN,cells){if(sum(!cells %in% colnames(ctdIN$specificity)==0)){return(1)}else{return(0)}}
+        if(length(ctd[[1]]$plotting)>0){
+            annotLevel = which(unlist(lapply(ctd,FUN=cells.in.ctd,cells=as.character(total_res$CellType)))==1)
+            if(length(annotLevel)==0){
+                stop("All of the cells within total_res should come from a single annotation layer of the CTD")
+            }
+        }
+
+        # Set order of cells
+        if(length(ctd[[annotLevel]]$plotting)>0){total_res$CellType=factor(total_res$CellType,levels=ctd[[annotLevel]]$plotting$cell_ordering)}
+    })
 
     # Multiple testing correction across all rows
     total_res$q = p.adjust(total_res$p,method=mtc_method)
@@ -70,20 +89,28 @@ ewce.plot <- function(total_res,mtc_method="bonferroni"){
         the_plot = ggplot(total_res) + geom_bar(aes_string(x='CellType',y='abs_sd'),fill="red",stat="identity") + graph_theme +theme(legend.position="none")
     }
 
+     # Setup the main plot
      the_plot = the_plot  +
          theme(plot.margin=unit(c(1,0,0,0),"mm"),axis.text.x = element_text(angle = 55, hjust = 1))+
          theme(panel.border = element_rect(colour = "black", fill=NA, size=1))+
          xlab("") +
          theme(strip.text.y = element_text(angle = 0)) +
          coord_cartesian(ylim = c(0,1.1*upperLim))+
-         ylab("Std.Devs. from the mean") + theme(plot.margin = unit(c(0,0,0,1.5), "cm"))
+         #ylab("Std.Devs. from the mean") + theme(plot.margin = unit(c(0,0,0,1.5), "cm"))
+         ylab("Std.Devs. from the mean") + theme(plot.margin = unit(c(0,0,0,0), "cm"))
 
      the_plot = the_plot + scale_y_continuous(breaks=c(0,ceiling(upperLim*0.66))) + geom_text(aes_string(label="ast_q",x="CellType",y="y_ast"),size=10)
+     if(multiList){ the_plot = the_plot + facet_grid("list ~ .",scales="free", space = "free_x") }
 
-     if(multiList){
-         the_plot = the_plot + facet_grid("list ~ .",scales="free", space = "free_x")
-         #the_plot = the_plot + facet_grid(facets="list ~ .",scale="free", space = "free_x")
-     }
+    # Prepare output
+    output = list()
+    output$plain = the_plot
 
-    return(the_plot)
+    if(make_dendro){
+        the_dendrogram = ctd[[annotLevel]]$plotting$ggdendro_horizontal+theme(plot.margin=unit(c(0,0,0,0),unit="cm"))
+        combined_plot  = plot_grid(the_dendrogram, the_plot, align = "hv",ncol=1,rel_heights=c(1,1))
+        output$withDendro = combined_plot
+    }
+
+    return(output)
 }
