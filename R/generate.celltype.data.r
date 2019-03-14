@@ -16,6 +16,9 @@
 #' fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels,"allKImouse")
 #' @export
 #' @import parallel
+#' @import ggdendro
+#' @import gridExtra
+
 generate.celltype.data <- function(exp,annotLevels,groupName){
     require("parallel")
     # Calculate the number of cores
@@ -87,6 +90,11 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
     ctd3 = mclapply(ctd2,calculate.specificity.for.level)
     ctd=ctd3
     stopCluster(cl)
+
+    # ADD DENDROGRAM DATA TO CTD
+    ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)
+    library(ggdendro)
+    ctd = lapply(ctd,prep.dendro)
 
     fNames=sprintf("CellTypeData_%s.rda",groupName)
     save(ctd,file=fNames)
