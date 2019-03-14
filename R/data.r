@@ -142,6 +142,7 @@
 #' All genes from the merged SCT dataset
 #' @source
 #' The datasets were downloaded from the website associated with the paper & GEO and loaded using read_celltype_data PMID:25700174
+#' usethis::use_data(ctd,overwrite = TRUE)
 "ctd"
 
 #' Schizophrenia susceptibility genes from CLOZUK

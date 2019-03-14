@@ -290,7 +290,13 @@ print(full_results$results[order(full_results$results$p),3:5][1:6,])
 The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean:
 
 ```{r, fig.width = 7, fig.height = 4}
-print(ewce.plot(full_results$results,mtc_method="BH"))
+print(ewce.plot(full_results$results,mtc_method="BH")$plain)
+```
+
+For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. There is no automated way to align the dendrogram (that I've figured out yet) with the graph ticks, so this needs to be done manually in Inkscape.
+
+```{r }
+print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 ```
 
 If you want to view the characteristics of enrichment for each gene within the list then the `generate.bootstrap.plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
@@ -321,7 +327,7 @@ cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
 We plot these results using `ewce.plot`:
 
 ```{r, fig.width = 7, fig.height = 4}
-print(ewce.plot(cont_results$results,mtc_method="BH"))
+print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
 This shows that the controlled method generates enrichments that are generally comparable to the standard method.
@@ -334,7 +340,7 @@ Both the analyses shown above were run on level 1 annotations. It is possible to
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
-print(ewce.plot(cont_results$results,mtc_method="BH"))
+print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
 With the subcell analysis each microglial subtype was enriched and correspondingly we see here that the microglial celltype is enriched.
@@ -355,7 +361,7 @@ merged_results = rbind(full_res2,scnd_res2)
 ```
 
 ```{r fig.width = 7, fig.height = 4}
-print(ewce.plot(total_res=merged_results,mtc_method="BH"))
+print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
 As expected, the second randomly generated gene list shows no significant enrichments.
@@ -377,7 +383,7 @@ tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,ttSpecies
 The results of this analysis can again be plotted using the `ewce.plot` function.
 
 ```{r fig.width = 7, fig.height = 4}
-ewce.plot(tt_results$joint_results)
+ewce.plot(tt_results$joint_results)$plain
 ```
 
 As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.
@@ -410,7 +416,7 @@ print(merged_res)
 The results can then be plotted as normal using the `ewce.plot` function.
 
 ```{r fig.width = 7, fig.height = 4}
-print(ewce.plot(merged_res))
+print(ewce.plot(merged_res)$plain)
 ```
 
 The merged results from all three Alzheimer's brain regions are found to be remarkably similar, as was reported in our paper.  
@@ -445,7 +451,7 @@ full_res1 = data.frame(unconditional_results$results,list="Unconditional Enrichm
 full_res2 = data.frame(conditional_results_micro$results,list="Conditional Enrichment (Microglia controlled)")
 full_res3 = data.frame(conditional_results_astro$results,list="Conditional Enrichment (Astrocyte controlled)")
 merged_results = rbind(rbind(full_res1,full_res2),full_res3)
-print(ewce.plot(total_res=merged_results,mtc_method="BH"))
+print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
 When controlling for astrocytes the enrichment is astrocytes is totally abolished as expected, and vica versa. The enrichment in microglia remains strongly significant however after controlling for microglia, suggesting that this enrichment is independent of that in astrocytes. 
