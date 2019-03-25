@@ -8,7 +8,7 @@
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{
-markers = read.csv("MRK_List2.rpt",sep="\t")
+markers = read.csv(url("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt"),sep="\t")
 genes = markers[markers$Feature.Type=="protein coding gene",]
 listMarts(host="www.ensembl.org")
 human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
@@ -29,6 +29,6 @@ mouse_to_human_homologs
 \description{
 A dataset containing the MGI and HGNC symbols, Human and Mouse Entrez and Ensembl gene IDs for all human
 orthologs for mouse genes. Whenin the mouse genes are defined based on a list of all MGI markers from the
-MGI website (downloaded as MRK_List2.rpt file from http://goo.gl/mjf2GQ)
+MGI website (downloaded as MRK_List2.rpt file from http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt)
 }
 \keyword{datasets}
