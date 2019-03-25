@@ -5,7 +5,8 @@
 \title{Bootstrap celltype enrichment test for transcriptome data}
 \usage{
 ewce_expression_data(sct_data, annotLevel = 1, tt, sortBy = "t",
-  thresh = 250, reps = 100, ttSpecies = "mouse", sctSpecies = "mouse")
+  thresh = 250, reps = 100, ttSpecies = "mouse",
+  sctSpecies = "mouse")
 }
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
