@@ -1,3 +1,14 @@
+#' prep.dendro
+#'
+#' \code{prep.dendro} adds a dendrogram to a cts
+#'
+#' @param ctdIN A single annotLevel of a ctd, i.e. ctd[[1]] (the function is intended to be used via apply)
+#' @return A ctd with dendrogram plotting info added
+#' @examples
+#' ctd = lapply(ctd,EWCE::bin.specificity.into.quantiles,numberOfBins=40)
+#' library(ggdendro)
+#' ctd = lapply(ctd,EWCE::prep.dendro)
+#' @export
 prep.dendro <- function(ctdIN){
     binned_file_dist <- dist(t(ctdIN$specificity_quantiles)) # euclidean distances between the rows
     binned_file_dist_hclust <- hclust(binned_file_dist)
