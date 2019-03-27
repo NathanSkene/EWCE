@@ -11,7 +11,7 @@
 #' print(ctd[[1]]$specificity_quantiles[1:3,])
 #' @export
 bin.specificity.into.quantiles <- function(ctdIN,numberOfBins){
-    ctdIN$specificity_quantiles = apply(ctdIN$specificity,2,FUN=bin.columns.into.quantiles,numberOfBins)
+    ctdIN$specificity_quantiles = apply(ctdIN$specificity,2,FUN=bin.columns.into.quantiles,numberOfBins=numberOfBins)
     rownames(ctdIN$specificity_quantiles) = rownames(ctdIN$specificity)
     return(ctdIN)
 }
