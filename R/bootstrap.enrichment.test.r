@@ -81,7 +81,13 @@ bootstrap.enrichment.test <- function(sct_data=NA,hits=NA,bg=NA,genelistSpecies=
 	    combinedGenes = c(hits,bg) #c(mouse.hits,mouse.bg)
 	}
 
-    for(lv in 1:length(sct_data)){
+
+    if(!is.null(names(sct_data))){
+        numLevels = sum(names(sct_data)=="") # This is neccesary in case further meta-data such as $name is used
+    }else{
+        numLevels = length(sct_data)
+    }
+    for(lv in 1:numLevels){
         gN = rownames(sct_data[[lv]]$mean_exp)
         sct_data[[lv]]$mean_exp = sct_data[[lv]]$mean_exp[gN %in% combinedGenes,]
         sct_data[[lv]]$specificity = sct_data[[lv]]$specificity[gN %in% combinedGenes,]

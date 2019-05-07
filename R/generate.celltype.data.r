@@ -33,7 +33,9 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
     if(groupName==""){stop("ERROR: groupName must be set. groupName is used to label the files created by this function.")}
 
     # Convert characters to numbers
-    exp2<-suppressWarnings(apply(exp,2,function(x) {storage.mode(x) <- 'double'; x}))
+    if(!class(exp)=="dgCMatrix"){
+        exp<-suppressWarnings(apply(exp,2,function(x) {storage.mode(x) <- 'double'; x}))
+    }
 
     ctd = list()
     for(i in 1:length(annotLevels)){ctd[[length(ctd)+1]] = list(annot=annotLevels[[i]])}
@@ -85,8 +87,8 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
         ctd_oneLevel$median_specificity = normalised_medianExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
         return(ctd_oneLevel)
     }
-    ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp2)
-    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp2)
+    ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp)
+    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp)
     ctd3 = mclapply(ctd2,calculate.specificity.for.level)
     ctd=ctd3
     stopCluster(cl)
