@@ -21,6 +21,9 @@
 
 generate.celltype.data <- function(exp,annotLevels,groupName){
     require("parallel")
+
+    if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
+
     # Calculate the number of cores
     no_cores <- detectCores()
     cl <- makeCluster(no_cores)
