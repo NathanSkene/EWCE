@@ -5,6 +5,7 @@
 #' @param exp Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.
 #' @param annotLevels List with arrays of strings containing the cell type names associated with each column in exp
 #' @param groupName A human readable name for refering to the dataset being loaded
+#' @param no_cores Number of cores that should be used to speedup the computation
 #' @return Filenames for the saved celltype_data files
 #' @examples
 #' # Load the single cell data
@@ -19,13 +20,13 @@
 #' @import ggdendro
 #' @import gridExtra
 
-generate.celltype.data <- function(exp,annotLevels,groupName){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=detectCores()-1){
     require("parallel")
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
 
     # Calculate the number of cores
-    no_cores <- detectCores()
+
     cl <- makeCluster(no_cores)
 
     # First, check the number of annotations equals the number of columns in the expression data
@@ -90,9 +91,9 @@ generate.celltype.data <- function(exp,annotLevels,groupName){
         ctd_oneLevel$median_specificity = normalised_medianExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
         return(ctd_oneLevel)
     }
-    ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp)
-    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp)
-    ctd3 = mclapply(ctd2,calculate.specificity.for.level)
+    ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp,mc.cores=no_cores)
+    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp,mc.cores=no_cores)
+    ctd3 = mclapply(ctd2,calculate.specificity.for.level,mc.cores=no_cores)
     ctd=ctd3
     stopCluster(cl)
 
