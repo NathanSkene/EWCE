@@ -23,7 +23,9 @@ Imports:
     stringi,
     cowplot,
     readxl,
-    HGNChelper
+    HGNChelper,
+    ggdendro,
+    gridExtra
 Suggests: knitr, BiocStyle
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
