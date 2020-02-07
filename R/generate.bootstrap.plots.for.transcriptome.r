@@ -50,33 +50,8 @@
 # @import plyr
 #' @import grDevices
 generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,annotLevel=1,reps,full_results=NA,listFileName="",showGNameThresh=25,ttSpecies="mouse",sctSpecies="mouse",sortBy="t"){
-    # Check the arguments
-    correct_length = length(full_results)==5
-    required_names = c("joint_results","hit.cells.up","hit.cells.down","bootstrap_data.up","bootstrap_data.down")
-    all_required_names = sum(names(full_results) %in% required_names)==5
-    if(!correct_length | !all_required_names){stop("ERROR: full_results is not valid output from the ewce_expression_data function. This function only takes data generated from transcriptome analyses.")}
 
-    # Check the arguments
-    if(!sortBy %in% colnames(tt)){stop("ERROR: tt does not contain a column with value passed in sortBy argument")}
-    if(dim(tt)[1]<(thresh*2)){stop("ERROR: length of table is less than twice the size of threshold")}
-
-    # Check that the top table has correct columns
-    if(ttSpecies=="human" & !"HGNC.symbol" %in% colnames(tt)){stop("ERROR: if ttSpecies==human then there must be an HGNC.symbol column")}
-    if(ttSpecies=="mouse" & !"MGI.symbol" %in% colnames(tt)){stop("ERROR: if ttSpecies==mouse then there must be an MGI.symbol column")}
-
-    if(ttSpecies=="human" & sctSpecies=="human"){
-        tt$MGI.symbol = tt$HGNC.symbol
-    }
-    m2h <- EWCE::mouse_to_human_homologs[,c("MGI.symbol","HGNC.symbol")]
-    if(ttSpecies=="human" & sctSpecies=="mouse"){
-        tt = merge(tt,m2h,by="HGNC.symbol")
-
-    }
-
-    if(ttSpecies=="mouse" & sctSpecies=="human"){
-        tt = merge(tt,m2h,by="HGNC.symbol")
-        tt$MGI.symbol = tt$HGNC.symbol
-    }
+    tt = check_args_for_bootstrap_plot_generation(sct_data,tt,thresh,annotLevel,reps,full_results,listFileName,showGNameThresh,ttSpecies,sctSpecies,sortBy)
 
     for(dirS in c("Up","Down")){
         a = full_results$joint_results
@@ -94,28 +69,10 @@ generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,an
 
         # Get expression data of bootstrapped genes
         signif_res = as.character(results$CellType)[results$p<0.05]
-        nReps = 1000
-        exp_mats = list()
-        for(cc in signif_res){
-            exp_mats[[cc]] = matrix(0,nrow=nReps,ncol=length(mouse.hits))
-            rownames(exp_mats[[cc]]) = sprintf("Rep%s",1:nReps)
-        }
-        for(s in 1:nReps){
-            bootstrap_set = sample(combinedGenes,length(mouse.hits))
-            ValidGenes = rownames(sct_data[[annotLevel]]$specificity)[rownames(sct_data[[annotLevel]]$specificity) %in% bootstrap_set]
-
-            expD = sct_data[[annotLevel]]$specificity[ValidGenes,]
-
-            for(cc in signif_res){
-                exp_mats[[cc]][s,] = sort(expD[,cc])
-            }
-        }
-
+        exp_mats = get_exp_data_for_bootstrapped_genes(results,signif_res,sct_data,mouse.hits,combinedGenes,annotLevel,nReps = reps)
 
         # Get expression levels of the hit genes
         hit.exp = sct_data[[annotLevel]]$specificity[mouse.hits,]	#cell.list.exp(mouse.hits)
-
-        #print(hit.exp)
 
         graph_theme = theme_bw(base_size = 12, base_family = "Helvetica") +
             theme(panel.grid.major = element_line(size = .5, color = "grey"),
@@ -138,90 +95,150 @@ generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,an
             dat$boot = dat$boot*100
             maxHit = max(dat$hit)
             maxX = max(dat$boot)+0.1*max(dat$boot)
+
             # Plot several variants of the graph
-            #basic_graph = ggplot(dat,aes(x=boot,y=hit))+geom_point(size=1)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
-            #    geom_abline(intercept = 0, slope = 1, colour = "red")
-            basic_graph = ggplot(dat,aes_string(x="boot",y="hit"))+geom_point(size=1)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
-                geom_abline(intercept = 0, slope = 1, colour = "red")
-
-
-            # Plot without text
-            pdf(sprintf("BootstrapPlots/qqplot_noText_%s____%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
-            print(basic_graph+ggtitle(cc))
-            dev.off()
-
-            # If a gene has over 25% of it's expression proportion in a celltype, then list the genename
-            dat$symLab = ifelse(dat$hit>showGNameThresh,sprintf("  %s", dat$Gnames),'')
-
-            #basic_graph = ggplot(dat,aes(x=boot,y=hit))+geom_point(size=2)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
-            basic_graph = ggplot(dat,aes_string(x="boot",y="hit"))+geom_point(size=2)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
-                geom_abline(intercept = 0, slope = 1, colour = "red")
-
-            # Plot with gene names
-            pdf(sprintf("BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
-            print(basic_graph +
-                      geom_text(aes_string(label="symLab"),hjust=0,vjust=0,size=3) + xlim(c(0,maxX))+ggtitle(cc)
-            )
-            dev.off()
-            # Plot BIG with gene names
-            pdf(sprintf("BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf",tag,listFileName,cc),width=15,height=15)
-            print(basic_graph +
-                      geom_text(aes_string(label="symLab"),hjust=0,vjust=0,size=3) + xlim(c(0,maxX))+ggtitle(cc)
-            )
-            dev.off()
+            basic_graph = plot_bootstrap_plots(dat,tag,listFileName,cc,showGNameThresh,graph_theme,maxX)
 
             # Plot with bootstrap distribution
-            melt_boot = melt(exp_mats[[cc]])
-            colnames(melt_boot) = c("Rep","Pos","Exp")
-            actVals = data.frame(pos=as.factor(1:length(hit_exp)),vals=hit_exp)
-            #if(sub==TRUE){melt_boot$Exp=melt_boot$Exp/10; actVals$vals=actVals$vals/10}
-            pdf(sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
-            melt_boot$Pos = as.factor(melt_boot$Pos)
-            #print(ggplot(melt_boot)+geom_boxplot(aes(x=as.factor(Pos),y=Exp),outlier.size=0)+
-            #         geom_point(aes(x=pos,y=vals),col="red",data=actVals)+
-            print(ggplot(melt_boot)+geom_boxplot(aes_string(x="Pos",y="Exp"),outlier.size=0)+
-                      geom_point(aes_string(x="pos",y="vals"),col="red",data=actVals)+
-                      ylab("Expression in cell type (%)\n")+
-                      xlab("Least specific --> Most specific") + scale_x_discrete(breaks=NULL)+graph_theme)
-            dev.off()
+            plot_with_bootstrap_distributions(exp_mats,cc,hit_exp,tag,listFileName,graph_theme)
 
             # Plot with LOG bootstrap distribution
-            # - First get the ordered gene names
-            rownames(dat)=dat$Gnames
-            datOrdered = data.frame(GSym=rownames(dat),Pos=1:dim(dat)[1])
+            plot_log_bootstrap_distributions(dat,exp_mats,cc,hit_exp,tag,listFileName,melt_boot,graph_theme)
 
-            # - Arrange the data frame for plotting
-            melt_boot = melt(exp_mats[[cc]])
-            colnames(melt_boot) = c("Rep","Pos","Exp")
-            melt_boot$Exp = melt_boot$Exp*100
-            melt_boot = merge(melt_boot,datOrdered,by="Pos")
-            melt_boot$GSym = factor(as.character(melt_boot$GSym),levels=as.character(datOrdered$GSym))
-
-            # - Prepare the values of the list genes to be plotted as red dots
-            actVals = data.frame(Pos=as.factor(1:length(hit_exp)),vals=hit_exp*100)
-            actVals = merge(actVals,datOrdered,by="Pos")
-            actVals$GSym = factor(as.character(actVals$GSym),levels=as.character(datOrdered$GSym))
-
-            # - Determine whether changes are significant
-            p = rep(1,max(melt_boot$Pos))
-            for(i in 1:max(melt_boot$Pos)){
-                p[i] = sum(actVals[actVals$Pos==i,"vals"]<melt_boot[melt_boot$Pos==i,"Exp"])/length(melt_boot[melt_boot$Pos==i,"Exp"])
-            }
-            ast = rep("*",max(melt_boot$Pos))
-            ast[p>0.05] = ""
-            actVals = cbind(actVals[order(actVals$Pos),],ast)
-            # - Plot the graph!
-            #if(sub==TRUE){melt_boot$Exp=melt_boot$Exp/10; actVals$vals=actVals$vals/10}
-            wd = 1+length(unique(melt_boot[,4]))*0.175
-            pdf(sprintf("BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf",tag,listFileName,cc),width=wd,height=4)
-            print(ggplot(melt_boot)+geom_boxplot(aes_string(x="GSym",y="Exp"),outlier.size=0)+graph_theme+
-                      theme(axis.text.x = element_text(angle = 90, hjust = 1))+
-                      geom_point(aes_string(x="GSym",y="vals"),col="red",data=actVals)+
-                      geom_text(aes_string(x="GSym",y="vals",label="ast"),colour="black",col="black",data=actVals)+
-                      ylab("Expression in cell type (%)\n")+
-                      xlab("Least specific --> Most specific")+scale_y_log10()
-            )
-            dev.off()
         }
     }
+}
+
+check_args_for_bootstrap_plot_generation <- function(sct_data,tt,thresh,annotLevel,reps,full_results,listFileName,showGNameThresh,ttSpecies,sctSpecies,sortBy){
+    # Check the arguments
+    correct_length = length(full_results)==5
+    required_names = c("joint_results","hit.cells.up","hit.cells.down","bootstrap_data.up","bootstrap_data.down")
+    all_required_names = sum(names(full_results) %in% required_names)==5
+    if(!correct_length | !all_required_names){stop("ERROR: full_results is not valid output from the ewce_expression_data function. This function only takes data generated from transcriptome analyses.")}
+
+    # Check the arguments
+    if(!sortBy %in% colnames(tt)){stop("ERROR: tt does not contain a column with value passed in sortBy argument")}
+    if(dim(tt)[1]<(thresh*2)){stop("ERROR: length of table is less than twice the size of threshold")}
+
+    # Check that the top table has correct columns
+    if(ttSpecies=="human" & !"HGNC.symbol" %in% colnames(tt)){stop("ERROR: if ttSpecies==human then there must be an HGNC.symbol column")}
+    if(ttSpecies=="mouse" & !"MGI.symbol" %in% colnames(tt)){stop("ERROR: if ttSpecies==mouse then there must be an MGI.symbol column")}
+
+    if(ttSpecies=="human" & sctSpecies=="human"){
+        tt$MGI.symbol = tt$HGNC.symbol
+    }
+    m2h <- EWCE::mouse_to_human_homologs[,c("MGI.symbol","HGNC.symbol")]
+    if(ttSpecies=="human" & sctSpecies=="mouse"){
+        tt = merge(tt,m2h,by="HGNC.symbol")
+
+    }
+    if(ttSpecies=="mouse" & sctSpecies=="human"){
+        tt = merge(tt,m2h,by="HGNC.symbol")
+        tt$MGI.symbol = tt$HGNC.symbol
+    }
+    return(tt)
+}
+
+
+get_exp_data_for_bootstrapped_genes <- function(results,signif_res,sct_data,mouse.hits,combinedGenes,annotLevel,nReps = reps){
+    exp_mats = list()
+    for(cc in signif_res){
+        exp_mats[[cc]] = matrix(0,nrow=nReps,ncol=length(mouse.hits))
+        rownames(exp_mats[[cc]]) = sprintf("Rep%s",1:nReps)
+    }
+    for(s in 1:nReps){
+        bootstrap_set = sample(combinedGenes,length(mouse.hits))
+        ValidGenes = rownames(sct_data[[annotLevel]]$specificity)[rownames(sct_data[[annotLevel]]$specificity) %in% bootstrap_set]
+
+        expD = sct_data[[annotLevel]]$specificity[ValidGenes,]
+
+        for(cc in signif_res){
+            exp_mats[[cc]][s,] = sort(expD[,cc])
+        }
+    }
+    return(exp_mats)
+}
+
+plot_with_bootstrap_distributions <- function(exp_mats,cc,hit_exp,tag,listFileName,graph_theme){
+    melt_boot = melt(exp_mats[[cc]])
+    colnames(melt_boot) = c("Rep","Pos","Exp")
+    actVals = data.frame(pos=as.factor(1:length(hit_exp)),vals=hit_exp)
+    pdf(sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
+    melt_boot$Pos = as.factor(melt_boot$Pos)
+    print(ggplot(melt_boot)+geom_boxplot(aes_string(x="Pos",y="Exp"),outlier.size=0)+
+              geom_point(aes_string(x="pos",y="vals"),col="red",data=actVals)+
+              ylab("Expression in cell type (%)\n")+
+              xlab("Least specific --> Most specific") + scale_x_discrete(breaks=NULL)+graph_theme)
+    dev.off()
+}
+
+plot_bootstrap_plots <- function(dat,tag,listFileName,cc,showGNameThresh,graph_theme,maxX){
+    basic_graph = ggplot(dat,aes_string(x="boot",y="hit"))+geom_point(size=1)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
+        geom_abline(intercept = 0, slope = 1, colour = "red")
+
+    # Plot without text
+    pdf(sprintf("BootstrapPlots/qqplot_noText_%s____%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
+    print(basic_graph+ggtitle(cc))
+    dev.off()
+
+    # If a gene has over 25% of it's expression proportion in a celltype, then list the genename
+    dat$symLab = ifelse(dat$hit>showGNameThresh,sprintf("  %s", dat$Gnames),'')
+
+    basic_graph = ggplot(dat,aes_string(x="boot",y="hit"))+geom_point(size=2)+xlab("Mean Bootstrap Expression")+ylab("Expression in cell type (%)\n") + graph_theme +
+        geom_abline(intercept = 0, slope = 1, colour = "red")
+
+    # Plot with gene names
+    pdf(sprintf("BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
+    print(basic_graph +
+              geom_text(aes_string(label="symLab"),hjust=0,vjust=0,size=3) + xlim(c(0,maxX))+ggtitle(cc)
+    )
+    dev.off()
+
+    # Plot BIG with gene names
+    pdf(sprintf("BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf",tag,listFileName,cc),width=15,height=15)
+    print(basic_graph +
+              geom_text(aes_string(label="symLab"),hjust=0,vjust=0,size=3) + xlim(c(0,maxX))+ggtitle(cc)
+    )
+    dev.off()
+
+    return(basic_graph)
+}
+
+plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFileName,melt_boot,graph_theme){
+    # - First get the ordered gene names
+    rownames(dat)=dat$Gnames
+    datOrdered = data.frame(GSym=rownames(dat),Pos=1:dim(dat)[1])
+
+    # - Arrange the data frame for plotting
+    melt_boot = melt(exp_mats[[cc]])
+    colnames(melt_boot) = c("Rep","Pos","Exp")
+    melt_boot$Exp = melt_boot$Exp*100
+    melt_boot = merge(melt_boot,datOrdered,by="Pos")
+    melt_boot$GSym = factor(as.character(melt_boot$GSym),levels=as.character(datOrdered$GSym))
+
+    # - Prepare the values of the list genes to be plotted as red dots
+    actVals = data.frame(Pos=as.factor(1:length(hit_exp)),vals=hit_exp*100)
+    actVals = merge(actVals,datOrdered,by="Pos")
+    actVals$GSym = factor(as.character(actVals$GSym),levels=as.character(datOrdered$GSym))
+
+    # - Determine whether changes are significant
+    p = rep(1,max(melt_boot$Pos))
+    for(i in 1:max(melt_boot$Pos)){
+        p[i] = sum(actVals[actVals$Pos==i,"vals"]<melt_boot[melt_boot$Pos==i,"Exp"])/length(melt_boot[melt_boot$Pos==i,"Exp"])
+    }
+    ast = rep("*",max(melt_boot$Pos))
+    ast[p>0.05] = ""
+    actVals = cbind(actVals[order(actVals$Pos),],ast)
+    # - Plot the graph!
+    #if(sub==TRUE){melt_boot$Exp=melt_boot$Exp/10; actVals$vals=actVals$vals/10}
+    wd = 1+length(unique(melt_boot[,4]))*0.175
+    pdf(sprintf("BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf",tag,listFileName,cc),width=wd,height=4)
+    print(ggplot(melt_boot)+geom_boxplot(aes_string(x="GSym",y="Exp"),outlier.size=0)+graph_theme+
+              theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+              geom_point(aes_string(x="GSym",y="vals"),col="red",data=actVals)+
+              geom_text(aes_string(x="GSym",y="vals",label="ast"),colour="black",col="black",data=actVals)+
+              ylab("Expression in cell type (%)\n")+
+              xlab("Least specific --> Most specific")+scale_y_log10()
+    )
+    dev.off()
 }
