@@ -14,10 +14,16 @@ vignette: >
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
+if (!require("pacman")) install.packages("pacman")
+if (!require("BiocManager")) install.packages("BiocManager")
+if (!require("BiocStyle")) BiocManager::install("BiocStyle")
+pacman::p_load("BiocManager","BiocStyle","ggplots2","cowplot",try.bioconductor=TRUE)
+
 BiocStyle::markdown()
 knitr::opts_chunk$set(tidy         = FALSE,
                       warning      = FALSE,
                       message      = FALSE)
+# rmarkdown::render("Readme.Rmd", envir=.GlobalEnv)
 ```
 
 # Citation
@@ -387,6 +393,15 @@ ewce.plot(tt_results$joint_results)$plain
 ```
 
 As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.
+
+## Generating bootstrap plots for transcriptomes
+
+A common request is to explain which differentially expressed genes are associated with a cell type...
+
+```
+full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
+  full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse")
+```
 
 ## Merging multiple transcriptome studies
 
