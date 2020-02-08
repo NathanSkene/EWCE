@@ -15,6 +15,7 @@
 #' @param ttSpecies Either 'mouse' or 'human' depending on which species the differential expression table was generated from
 #' @param sctSpecies Either 'mouse' or 'human' depending on which species the single cell data was generated from
 #' @param sortBy Column name of metric in tt which should be used to sort up- from down- regulated genes. Default="t"
+#' @param onlySignif Should plots only be generated for cells which have significant changes?
 #' @return Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
 #' value of listFileName. The files are saved into the 'BootstrapPlot' folder. The files start with one of the following:
 #' \itemize{
@@ -47,9 +48,10 @@
 #' @export
 #' @import ggplot2
 #' @importFrom reshape2 melt
+#' @importFrom scales comma
 # @import plyr
 #' @import grDevices
-generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,annotLevel=1,reps,full_results=NA,listFileName="",showGNameThresh=25,ttSpecies="mouse",sctSpecies="mouse",sortBy="t"){
+generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,annotLevel=1,reps,full_results=NA,listFileName="",showGNameThresh=25,ttSpecies="mouse",sctSpecies="mouse",sortBy="t",onlySignif=TRUE){
 
     tt = check_args_for_bootstrap_plot_generation(sct_data,tt,thresh,annotLevel,reps,full_results,listFileName,showGNameThresh,ttSpecies,sctSpecies,sortBy)
 
@@ -60,15 +62,19 @@ generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,an
         # Drop genes lacking expression data
         if(dirS=="Up"){tt=tt[order(tt[,sortBy],decreasing=TRUE),]}
         if(dirS=="Down"){tt=tt[order(tt[,sortBy],decreasing=FALSE),]}
-        mouse.hits = unique(tt$MGI.symbol[1:thresh])
-        mouse.hits = mouse.hits[mouse.hits %in% rownames(sct_data[[1]]$specificity)]
-        mouse.bg = unique(tt$MGI.symbol)
+        mouse.hits = as.character(unique(tt$MGI.symbol[1:thresh]))
+        mouse.hits = mouse.hits[mouse.hits %in% rownames(sct_data[[annotLevel]]$specificity)]
+        mouse.bg = as.character(unique(tt$MGI.symbol))
         mouse.bg = mouse.bg[!mouse.bg %in% mouse.hits]
-        mouse.bg = mouse.bg[mouse.bg %in% rownames(sct_data[[1]]$specificity)]
+        mouse.bg = mouse.bg[mouse.bg %in% rownames(sct_data[[annotLevel]]$specificity)]
         combinedGenes = unique(c(mouse.hits, mouse.bg))
 
         # Get expression data of bootstrapped genes
-        signif_res = as.character(results$CellType)[results$p<0.05]
+        if(onlySignif){
+            signif_res = as.character(results$CellType)[results$p<0.05]
+        }else{
+            signif_res = as.character(results$CellType)
+        }
         exp_mats = get_exp_data_for_bootstrapped_genes(results,signif_res,sct_data,mouse.hits,combinedGenes,annotLevel,nReps = reps)
 
         # Get expression levels of the hit genes
@@ -160,7 +166,7 @@ get_exp_data_for_bootstrapped_genes <- function(results,signif_res,sct_data,mous
 }
 
 plot_with_bootstrap_distributions <- function(exp_mats,cc,hit_exp,tag,listFileName,graph_theme){
-    melt_boot = melt(exp_mats[[cc]])
+    melt_boot = reshape2::melt(exp_mats[[cc]])
     colnames(melt_boot) = c("Rep","Pos","Exp")
     actVals = data.frame(pos=as.factor(1:length(hit_exp)),vals=hit_exp)
     pdf(sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf",tag,listFileName,cc),width=3.5,height=3.5)
@@ -210,7 +216,7 @@ plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFil
     datOrdered = data.frame(GSym=rownames(dat),Pos=1:dim(dat)[1])
 
     # - Arrange the data frame for plotting
-    melt_boot = melt(exp_mats[[cc]])
+    melt_boot = reshape2::melt(exp_mats[[cc]])
     colnames(melt_boot) = c("Rep","Pos","Exp")
     melt_boot$Exp = melt_boot$Exp*100
     melt_boot = merge(melt_boot,datOrdered,by="Pos")
@@ -238,7 +244,7 @@ plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFil
               geom_point(aes_string(x="GSym",y="vals"),col="red",data=actVals)+
               geom_text(aes_string(x="GSym",y="vals",label="ast"),colour="black",col="black",data=actVals)+
               ylab("Expression in cell type (%)\n")+
-              xlab("Least specific --> Most specific")+scale_y_log10()
+              xlab("Least specific --> Most specific")+scale_y_log10(labels = scales::comma)
     )
     dev.off()
 }
