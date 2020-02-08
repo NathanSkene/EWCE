@@ -398,9 +398,9 @@ As was reported in our paper, neuronal genes are found to be downregulated while
 
 A common request is to explain which differentially expressed genes are associated with a cell type...
 
-```
+```{r }
 full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-  full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse")
+  full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse",onlySignif=FALSE)
 ```
 
 ## Merging multiple transcriptome studies
