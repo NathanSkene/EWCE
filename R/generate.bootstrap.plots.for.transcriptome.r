@@ -210,6 +210,8 @@ plot_bootstrap_plots <- function(dat,tag,listFileName,cc,showGNameThresh,graph_t
     return(basic_graph)
 }
 
+myScalesComma <- function(x){return(scales::comma(x=x,accuracy=0.01))}
+
 plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFileName,melt_boot,graph_theme){
     # - First get the ordered gene names
     rownames(dat)=dat$Gnames
@@ -244,7 +246,7 @@ plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFil
               geom_point(aes_string(x="GSym",y="vals"),col="red",data=actVals)+
               geom_text(aes_string(x="GSym",y="vals",label="ast"),colour="black",col="black",data=actVals)+
               ylab("Expression in cell type (%)\n")+
-              xlab("Least specific --> Most specific")+scale_y_log10(labels = scales::comma)
+              xlab("Least specific --> Most specific")+scale_y_log10(labels = myScalesComma,limits=c(0.01,100))#+ylim(0,100)
     )
     dev.off()
 }
