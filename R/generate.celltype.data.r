@@ -17,10 +17,11 @@
 #' fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels,"allKImouse")
 #' @export
 #' @import parallel
+#' @import future
 #' @import ggdendro
 #' @import gridExtra
 
-generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=detectCores()-1){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=future::availableCores()-1){
     require("parallel")
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
@@ -28,6 +29,7 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=detectCore
     # Calculate the number of cores
 
     cl <- makeCluster(no_cores)
+    print(sprintf("Using %s cores",no_cores))
 
     # First, check the number of annotations equals the number of columns in the expression data
     lapply(annotLevels,test <- function(x,exp){if(length(x)!=dim(exp)[2]){stop("Error: length of all annotation levels must equal the number of columns in exp matrix")}},exp)
