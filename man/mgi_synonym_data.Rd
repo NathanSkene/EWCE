@@ -4,7 +4,9 @@
 \name{mgi_synonym_data}
 \alias{mgi_synonym_data}
 \title{MGI synonym data}
-\format{An object of class \code{data.frame} with 55834 rows and 12 columns.}
+\format{
+An object of class \code{data.frame} with 55834 rows and 12 columns.
+}
 \source{
 download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile="MRK_List2.rpt")
 mgi_synonym_data = read.csv(mrk_file_path,sep="\\t",stringsAsFactors = FALSE)

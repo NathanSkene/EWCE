@@ -4,7 +4,9 @@
 \name{mouse_to_human_homologs}
 \alias{mouse_to_human_homologs}
 \title{Table of Human-->Mouse orthologs for all human genes}
-\format{An object of class \code{data.frame} with 15604 rows and 6 columns.}
+\format{
+An object of class \code{data.frame} with 15604 rows and 6 columns.
+}
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{

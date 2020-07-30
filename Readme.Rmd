@@ -17,7 +17,7 @@ vignette: >
 if (!require("pacman")) install.packages("pacman")
 if (!require("BiocManager")) install.packages("BiocManager")
 if (!require("BiocStyle")) BiocManager::install("BiocStyle")
-pacman::p_load("BiocManager","BiocStyle","ggplots2","cowplot",try.bioconductor=TRUE)
+pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
 
 BiocStyle::markdown()
 knitr::opts_chunk$set(tidy         = FALSE,
@@ -79,6 +79,7 @@ library(ggplot2)
 library(cowplot)
 library(limma)
 library(readxl)
+theme_set(theme_cowplot())
 ```
 
 # Loading single cell transcriptome data
@@ -103,7 +104,7 @@ To check the data we can quickly plot the distribution of expression of a given 
 data("cortex_mrna")
 gene="Necab1"
 cellExpDist = data.frame(e=cortex_mrna$exp[gene,],l1=cortex_mrna$annot[colnames(cortex_mrna$exp),]$level1class)
-ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
 It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. The first time you run it you will need to download the MRK_List2 file from MGI which lists known synonyms for MGI gene symbols. We recommend running this on all input datasets.
@@ -114,6 +115,21 @@ if(!file.exists("MRK_List2.rpt")){
 }
 cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.rpt")
 ```
+
+## Transform the data
+
+A different number of reads is found across each cell. We suggest using scTransform to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
+
+```{r }
+# devtools::install_github(repo = 'ChristophH/sctransform')
+library(sctransform)
+scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
+cortex_mrna$exp_scT = correct_counts(scT, cortex_mrna$exp) # umi_corrected
+
+cortex_mrna$exp_scT_normed = Matrix::t(Matrix::t(cortex_mrna$exp_scT)*(1/Matrix::colSums(cortex_mrna$exp_scT)))
+```
+
+Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this scTransform step.
 
 ## Calculate specificity matrices
 
@@ -128,7 +144,7 @@ Rather than returning the data directly, the functions save the calculated data 
 
 ```{r  cache=FALSE}
 # Generate celltype data for just the cortex/hippocampus data
-exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp,level2annot = cortex_mrna$annot$level2class)
+exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,level2annot = cortex_mrna$annot$level2class)
 annotLevels = list(level1class=cortex_mrna$annot$level1class,level2class=cortex_mrna$annot$level2class)
 fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,annotLevels=annotLevels,groupName="kiCortexOnly")
 print(fNames_CortexOnly)

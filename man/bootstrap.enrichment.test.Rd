@@ -4,9 +4,17 @@
 \alias{bootstrap.enrichment.test}
 \title{Bootstrap celltype enrichment test}
 \usage{
-bootstrap.enrichment.test(sct_data = NA, hits = NA, bg = NA,
-  genelistSpecies = "mouse", sctSpecies = "mouse", reps = 100,
-  annotLevel = 1, geneSizeControl = FALSE, controlledCT = NULL)
+bootstrap.enrichment.test(
+  sct_data = NA,
+  hits = NA,
+  bg = NA,
+  genelistSpecies = "mouse",
+  sctSpecies = "mouse",
+  reps = 100,
+  annotLevel = 1,
+  geneSizeControl = FALSE,
+  controlledCT = NULL
+)
 }
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
