@@ -8,7 +8,7 @@
 #' @return A ggplot containing the plot
 #' @examples
 #' # Load the single cell data
-#' data("ctd")
+#' data(ctd)
 #'
 #' # Set the parameters for the analysis
 #' reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
