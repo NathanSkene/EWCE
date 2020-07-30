@@ -2,11 +2,3 @@ language: R
 r: bioc-release
 cache: packages
 
-
-install:
- - R -e 'remotes::install_github("nathanskene/ewce")'
-
-
-script:
- - R CMD build .
- - R CMD check *tar.gz
