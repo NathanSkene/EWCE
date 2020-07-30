@@ -25,7 +25,10 @@ Imports:
     readxl,
     HGNChelper,
     ggdendro,
-    gridExtra
+    gridExtra,
+    Matrix,
+    future,
+    scales
 Suggests: knitr, BiocStyle
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,

@@ -21,9 +21,10 @@
 #' @import ggdendro
 #' @import gridExtra
 #' @import Matrix
+#' @import RNOmni
+#' @import ggdendro
 
 generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
-    require("parallel")
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
 
@@ -84,7 +85,6 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
 
     # ADD DENDROGRAM DATA TO CTD
     ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)
-    library(ggdendro)
     ctd = lapply(ctd,prep.dendro)
 
     fNames=sprintf("CellTypeData_%s.rda",groupName)

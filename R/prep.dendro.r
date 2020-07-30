@@ -6,9 +6,9 @@
 #' @return A ctd with dendrogram plotting info added
 #' @examples
 #' ctd = lapply(ctd,EWCE::bin.specificity.into.quantiles,numberOfBins=40)
-#' library(ggdendro)
 #' ctd = lapply(ctd,EWCE::prep.dendro)
 #' @export
+#' @import ggdendro
 prep.dendro <- function(ctdIN){
     binned_file_dist <- dist(t(ctdIN$specificity_quantiles)) # euclidean distances between the rows
     binned_file_dist_hclust <- hclust(binned_file_dist)

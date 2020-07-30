@@ -21,7 +21,7 @@
 prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000,sctSpecies){
     ### PREPARE TO QUERY BIOMART
     combined_human_genes = unique(c(hits,bg))
-    #library("biomaRt")
+
     #listMarts(host="www.ensembl.org")
     #human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
 
