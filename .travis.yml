@@ -1,8 +1,11 @@
 language: R
+r: bioc-release
 cache: packages
 
+
 install:
- - R -e 'devtools::install_deps(dep = T)'
+ - R -e 'remotes::install_github("nathanskene/ewce")'
+
 
 script:
  - R CMD build .
