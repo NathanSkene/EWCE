@@ -4,7 +4,9 @@
 \name{hpsd_genes}
 \alias{hpsd_genes}
 \title{Human post-synaptic density}
-\format{An object of class \code{character} of length 1461.}
+\format{
+An object of class \code{character} of length 1461.
+}
 \source{
 From Supplementary Table 2 of https://www.nature.com/neuro/journal/v14/n1/full/nn.2719.html
 hpsd_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/hPSD.txt",stringsAsFactors = FALSE)[-1,1]

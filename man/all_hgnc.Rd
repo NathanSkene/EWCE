@@ -4,7 +4,9 @@
 \name{all_hgnc}
 \alias{all_hgnc}
 \title{All HGNC gene symbols}
-\format{An object of class \code{character} of length 36591.}
+\format{
+An object of class \code{character} of length 36591.
+}
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{

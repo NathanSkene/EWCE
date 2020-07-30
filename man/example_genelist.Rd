@@ -4,7 +4,9 @@
 \name{example_genelist}
 \alias{example_genelist}
 \title{Example Gene list}
-\format{An object of class \code{character} of length 22.}
+\format{
+An object of class \code{character} of length 22.
+}
 \source{
 These were obtained from two sources:
 http://www.alzgene.org/TopResults.asp and PMID24162737

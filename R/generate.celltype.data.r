@@ -21,7 +21,7 @@
 #' @import gridExtra
 #' @import Matrix
 
-generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=detectCores()-1){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
 
     require("parallel")
 
@@ -76,6 +76,10 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=detectCore
     ctd3 = mclapply(ctd2,calculate.specificity.for.level,mc.cores=no_cores)
     ctd=ctd3
     stopCluster(cl)
+
+    # Use the rank norm transformation on specificity
+    rNorm <- function(ctdIN){   bbb = t(apply(ctdIN$specificity,1,RNOmni::rankNorm));  return(bbb)    }
+
 
     # ADD DENDROGRAM DATA TO CTD
     ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)
