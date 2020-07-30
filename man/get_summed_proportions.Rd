@@ -4,8 +4,15 @@
 \alias{get_summed_proportions}
 \title{Get summed proportions}
 \usage{
-get_summed_proportions(hitGenes, sct_data, annotLevel, reps,
-  geneSizeControl, controlledCT = NULL, control_network = NULL)
+get_summed_proportions(
+  hitGenes,
+  sct_data,
+  annotLevel,
+  reps,
+  geneSizeControl,
+  controlledCT = NULL,
+  control_network = NULL
+)
 }
 \arguments{
 \item{hitGenes}{Array of gene names. The target gene set.}

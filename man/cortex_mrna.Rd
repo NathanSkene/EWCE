@@ -4,7 +4,9 @@
 \name{cortex_mrna}
 \alias{cortex_mrna}
 \title{Karolinska Cortex/Hippocamus dataset subsample}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \source{
 download.file("goo.gl/r5Y24y",destfile="expression_mRNA_17-Aug-2014.txt")
 path = "expression_mRNA_17-Aug-2014.txt"
