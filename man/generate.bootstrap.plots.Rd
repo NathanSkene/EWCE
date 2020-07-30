@@ -4,9 +4,17 @@
 \alias{generate.bootstrap.plots}
 \title{Generate bootstrap plots}
 \usage{
-generate.bootstrap.plots(sct_data, hits, bg, genelistSpecies = "mouse",
-  sctSpecies = "mouse", reps, annotLevel = 1, full_results = NA,
-  listFileName = "")
+generate.bootstrap.plots(
+  sct_data,
+  hits,
+  bg,
+  genelistSpecies = "mouse",
+  sctSpecies = "mouse",
+  reps,
+  annotLevel = 1,
+  full_results = NA,
+  listFileName = ""
+)
 }
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}

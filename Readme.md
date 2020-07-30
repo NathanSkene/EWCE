@@ -1,9 +1,19 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
 Nathan Skene
-2020-02-07
+2020-07-30
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
+
+    ## Warning: package 'TRUE' is not available (for R version 4.0.2)
+
+    ## Warning in p_install(package, character.only = TRUE, ...):
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'TRUE'
+
+    ## Warning in pacman::p_load("BiocManager", "BiocStyle", "ggplot2", "cowplot", : Failed to install/load:
+    ## TRUE
 
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
@@ -102,6 +112,7 @@ library(ggplot2)
 library(cowplot)
 library(limma)
 library(readxl)
+theme_set(theme_cowplot())
 ```
 
 # Loading single cell transcriptome data
@@ -135,7 +146,7 @@ a given gene across all the cell types.
 data("cortex_mrna")
 gene="Necab1"
 cellExpDist = data.frame(e=cortex_mrna$exp[gene,],l1=cortex_mrna$annot[colnames(cortex_mrna$exp),]$level1class)
-ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
 ![](Readme_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
@@ -153,6 +164,34 @@ for MGI gene symbols. We recommend running this on all input datasets.
     }
     cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.rpt")
 
+## Transform the data
+
+A different number of reads is found across each cell. We suggest using
+scTransform to normalise for differences due to cell size, then linearly
+scale. Note that this might be slow.
+
+``` r
+# devtools::install_github(repo = 'ChristophH/sctransform')
+library(sctransform)
+scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
+```
+
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   1%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |========                                                              |  11%  |                                                                              |=========                                                             |  13%  |                                                                              |==========                                                            |  14%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  17%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |===============                                                       |  21%  |                                                                              |================                                                      |  23%  |                                                                              |=================                                                     |  24%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |======================                                                |  31%  |                                                                              |=======================                                               |  33%  |                                                                              |========================                                              |  34%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  40%  |                                                                              |=============================                                         |  41%  |                                                                              |==============================                                        |  43%  |                                                                              |===============================                                       |  44%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================                                  |  51%  |                                                                              |=====================================                                 |  53%  |                                                                              |======================================                                |  54%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  57%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |===========================================                           |  61%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |==================================================                    |  71%  |                                                                              |===================================================                   |  73%  |                                                                              |====================================================                  |  74%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  77%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  80%  |                                                                              |=========================================================             |  81%  |                                                                              |==========================================================            |  83%  |                                                                              |===========================================================           |  84%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  91%  |                                                                              |=================================================================     |  93%  |                                                                              |==================================================================    |  94%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================| 100%
+
+``` r
+cortex_mrna$exp_scT = correct_counts(scT, cortex_mrna$exp) # umi_corrected
+```
+
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   1%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |========                                                              |  11%  |                                                                              |=========                                                             |  13%  |                                                                              |==========                                                            |  14%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  17%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |===============                                                       |  21%  |                                                                              |================                                                      |  23%  |                                                                              |=================                                                     |  24%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |======================                                                |  31%  |                                                                              |=======================                                               |  33%  |                                                                              |========================                                              |  34%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  40%  |                                                                              |=============================                                         |  41%  |                                                                              |==============================                                        |  43%  |                                                                              |===============================                                       |  44%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================                                  |  51%  |                                                                              |=====================================                                 |  53%  |                                                                              |======================================                                |  54%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  57%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |===========================================                           |  61%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |==================================================                    |  71%  |                                                                              |===================================================                   |  73%  |                                                                              |====================================================                  |  74%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  77%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  80%  |                                                                              |=========================================================             |  81%  |                                                                              |==========================================================            |  83%  |                                                                              |===========================================================           |  84%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  91%  |                                                                              |=================================================================     |  93%  |                                                                              |==================================================================    |  94%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================| 100%
+
+``` r
+cortex_mrna$exp_scT_normed = Matrix::t(Matrix::t(cortex_mrna$exp_scT)*(1/Matrix::colSums(cortex_mrna$exp_scT)))
+```
+
+Note that this is optional (and was not used in the original EWCE
+publication) so by all means ignore this scTransform step.
+
 ## Calculate specificity matrices
 
 The next steps are as follows: 1) Drop genes which do not show
@@ -168,7 +207,7 @@ calculated data to a file and the filename is returned.
 
 ``` r
 # Generate celltype data for just the cortex/hippocampus data
-exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp,level2annot = cortex_mrna$annot$level2class)
+exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,level2annot = cortex_mrna$annot$level2class)
 annotLevels = list(level1class=cortex_mrna$annot$level1class,level2class=cortex_mrna$annot$level2class)
 fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,annotLevels=annotLevels,groupName="kiCortexOnly")
 print(fNames_CortexOnly)
@@ -181,7 +220,8 @@ fNames_CortexOnly = filter.genes.without.1to1.homolog(fNames_CortexOnly)
 print(fNames_CortexOnly)
 ```
 
-    ## [1] "CellTypeData_kiCortexOnly.rda"          "CellTypeData_kiCortexOnly_1to1only.rda"
+    ## [1] "CellTypeData_kiCortexOnly.rda"         
+    ## [2] "CellTypeData_kiCortexOnly_1to1only.rda"
 
 ``` r
 load(fNames_CortexOnly[1])
@@ -274,7 +314,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=AvgExp),stat="identity")+facet_grid(Gene~.)+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 This graph shows the average expression of three genes: *Apoe, Gfap* and
 *Gapdh*. While there are substantial differences in which cell types
@@ -293,7 +333,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Expression),stat="identity")+facet_grid(Gene~.
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 We can now see in this graph that *Gfap* is the most specific to a cell
 type (Type 1 Astrocytes) of either of those three genes, with over 60%
@@ -312,7 +352,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+facet_grid(Gene~
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 # Application to genetic data
 
@@ -328,8 +368,10 @@ data("example_genelist")
 print(example_genelist)
 ```
 
-    ##  [1] "APOE"     "BIN1"     "CLU"      "ABCA7"    "CR1"      "PICALM"   "MS4A6A"   "CD33"     "MS4A4E"   "CD2AP"    "EOGA1"    "INPP5D"   "MEF2C"    "HLA-DRB5" "ZCWPW1"   "NME8"    
-    ## [17] "PTK2B"    "CELF1"    "SORL1"    "FERMT2"   "SLC24A4"  "CASS4"
+    ##  [1] "APOE"     "BIN1"     "CLU"      "ABCA7"    "CR1"      "PICALM"  
+    ##  [7] "MS4A6A"   "CD33"     "MS4A4E"   "CD2AP"    "EOGA1"    "INPP5D"  
+    ## [13] "MEF2C"    "HLA-DRB5" "ZCWPW1"   "NME8"     "PTK2B"    "CELF1"   
+    ## [19] "SORL1"    "FERMT2"   "SLC24A4"  "CASS4"
 
 All gene IDs are assumed by the package to be provided in gene symbol
 format (rather than Ensembl/Entrez). Symbols can be provided as either
@@ -367,7 +409,9 @@ The target list is now converted to MGI
 print(mouse.hits)
 ```
 
-    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1"  "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm"  "Fermt2"  "Sorl1"
+    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+    ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
+    ## [15] "Fermt2"  "Sorl1"
 
 And we have 15604 genes in background set.
 
@@ -396,7 +440,9 @@ full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.b
                                 reps=reps,annotLevel=level)
 ```
 
-    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1"  "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm"  "Fermt2"  "Sorl1"  
+    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+    ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
+    ## [15] "Fermt2"  "Sorl1"  
     ## [1] "astrocytes_ependymal"
     ## [1] 0.078
     ## [1] ""
@@ -445,7 +491,7 @@ the bootstrapped mean:
 print(ewce.plot(full_results$results,mtc_method="BH")$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 For publications it can be useful to plot a dendrogram alongside the
 plot. This can be done by including the cell type data as an additional
@@ -458,7 +504,7 @@ Inkscape.
 print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 If you want to view the characteristics of enrichment for each gene
 within the list then the `generate.bootstrap.plots` function should be
@@ -505,7 +551,7 @@ We plot these results using `ewce.plot`:
 print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 This shows that the controlled method generates enrichments that are
 generally comparable to the standard method.
@@ -524,7 +570,7 @@ cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
 print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 With the subcell analysis each microglial subtype was enriched and
 correspondingly we see here that the microglial celltype is enriched.
@@ -546,7 +592,8 @@ second_results = bootstrap.enrichment.test(sct_data=ctd,hits=gene.list.2,
                     bg=mouse.bg,reps=reps,annotLevel=1)
 ```
 
-    ##  [1] "Rcl1"   "Myom1"  "Gpr12"  "Micu2"  "Pds5b"  "Jagn1"  "Rbm17"  "Trib2"  "Theg"   "Itpr1"  "Prmt5"  "Usp6nl" "Fgf9"   "Map1a"  "Samd11" "Noc2l" 
+    ##  [1] "Rcl1"   "Myom1"  "Gpr12"  "Micu2"  "Pds5b"  "Jagn1"  "Rbm17"  "Trib2" 
+    ##  [9] "Theg"   "Itpr1"  "Prmt5"  "Usp6nl" "Fgf9"   "Map1a"  "Samd11" "Noc2l" 
     ## [1] "astrocytes_ependymal"
     ## [1] 0.93
     ## [1] ""
@@ -581,7 +628,7 @@ merged_results = rbind(full_res2,scnd_res2)
 print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 As expected, the second randomly generated gene list shows no
 significant enrichments.
@@ -620,7 +667,7 @@ function.
 ewce.plot(tt_results$joint_results)$plain
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 As was reported in our paper, neuronal genes are found to be
 downregulated while glial genes are upregulated.
@@ -629,10 +676,12 @@ downregulated while glial genes are upregulated.
 
 A common request is to explain which differentially expressed genes are
 associated with a cell
-    type…
+type…
 
-    full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-      full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse")
+``` r
+full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
+  full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse",onlySignif=FALSE)
+```
 
 ## Merging multiple transcriptome studies
 
@@ -673,7 +722,7 @@ function.
 print(ewce.plot(merged_res)$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 The merged results from all three Alzheimer’s brain regions are found to
 be remarkably similar, as was reported in our paper.
@@ -713,29 +762,31 @@ unconditional_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
                     bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",sctSpecies="mouse")
 ```
 
-    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1"  "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm"  "Fermt2"  "Sorl1"  
+    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+    ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
+    ## [15] "Fermt2"  "Sorl1"  
     ## [1] "astrocytes_ependymal"
-    ## [1] 0.064
+    ## [1] 0.068
     ## [1] ""
     ## [1] "endothelial-mural"
-    ## [1] 0.733
+    ## [1] 0.739
     ## [1] ""
     ## [1] "interneurons"
-    ## [1] 0.999
+    ## [1] 1
     ## [1] ""
     ## [1] "microglia"
-    ## [1] 0.031
-    ## [1] "Fold enrichment: 1.61888487918066"
-    ## [1] "Standard deviations from mean: 2.19905395210729"
+    ## [1] 0.021
+    ## [1] "Fold enrichment: 1.64761311827687"
+    ## [1] "Standard deviations from mean: 2.33568722818016"
     ## [1] ""
     ## [1] "oligodendrocytes"
-    ## [1] 0.724
+    ## [1] 0.75
     ## [1] ""
     ## [1] "pyramidal CA1"
-    ## [1] 0.674
+    ## [1] 0.68
     ## [1] ""
     ## [1] "pyramidal SS"
-    ## [1] 0.702
+    ## [1] 0.725
     ## [1] ""
 
 ``` r
@@ -743,29 +794,31 @@ conditional_results_micro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hi
                     bg=mouse.bg,reps=reps,annotLevel=1,controlledCT="microglia",genelistSpecies="mouse",sctSpecies="mouse")
 ```
 
-    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1"  "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm"  "Fermt2"  "Sorl1"  
+    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+    ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
+    ## [15] "Fermt2"  "Sorl1"  
     ## [1] "astrocytes_ependymal"
-    ## [1] 0.034
-    ## [1] "Fold enrichment: 1.47801230959319"
-    ## [1] "Standard deviations from mean: 2.06409830378691"
+    ## [1] 0.044
+    ## [1] "Fold enrichment: 1.47916487585736"
+    ## [1] "Standard deviations from mean: 2.07124860428218"
     ## [1] ""
     ## [1] "endothelial-mural"
-    ## [1] 0.634
+    ## [1] 0.643
     ## [1] ""
     ## [1] "interneurons"
     ## [1] 0.999
     ## [1] ""
     ## [1] "microglia"
-    ## [1] 0.691
+    ## [1] 0.71
     ## [1] ""
     ## [1] "oligodendrocytes"
-    ## [1] 0.58
+    ## [1] 0.588
     ## [1] ""
     ## [1] "pyramidal CA1"
-    ## [1] 0.266
+    ## [1] 0.267
     ## [1] ""
     ## [1] "pyramidal SS"
-    ## [1] 0.401
+    ## [1] 0.402
     ## [1] ""
 
 ``` r
@@ -773,29 +826,31 @@ conditional_results_astro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hi
                     bg=mouse.bg,reps=reps,annotLevel=1,controlledCT="astrocytes_ependymal",genelistSpecies="mouse",sctSpecies="mouse")
 ```
 
-    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1"  "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm"  "Fermt2"  "Sorl1"  
+    ##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+    ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
+    ## [15] "Fermt2"  "Sorl1"  
     ## [1] "astrocytes_ependymal"
-    ## [1] 0.382
+    ## [1] 0.389
     ## [1] ""
     ## [1] "endothelial-mural"
-    ## [1] 0.589
+    ## [1] 0.59
     ## [1] ""
     ## [1] "interneurons"
     ## [1] 0.999
     ## [1] ""
     ## [1] "microglia"
-    ## [1] 0.028
-    ## [1] "Fold enrichment: 1.62067626633963"
-    ## [1] "Standard deviations from mean: 2.1120999490048"
+    ## [1] 0.024
+    ## [1] "Fold enrichment: 1.63029616818068"
+    ## [1] "Standard deviations from mean: 2.17493418363843"
     ## [1] ""
     ## [1] "oligodendrocytes"
-    ## [1] 0.396
+    ## [1] 0.371
     ## [1] ""
     ## [1] "pyramidal CA1"
-    ## [1] 0.66
+    ## [1] 0.675
     ## [1] ""
     ## [1] "pyramidal SS"
-    ## [1] 0.476
+    ## [1] 0.49
     ## [1] ""
 
 ``` r
@@ -806,7 +861,7 @@ merged_results = rbind(rbind(full_res1,full_res2),full_res3)
 print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
-![](Readme_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+![](Readme_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 When controlling for astrocytes the enrichment is astrocytes is totally
 abolished as expected, and vica versa. The enrichment in microglia

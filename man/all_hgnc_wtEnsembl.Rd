@@ -4,7 +4,9 @@
 \name{all_hgnc_wtEnsembl}
 \alias{all_hgnc_wtEnsembl}
 \title{All HGNC gene symbols with ENSEMBL gene IDs}
-\format{An object of class \code{data.frame} with 64029 rows and 2 columns.}
+\format{
+An object of class \code{data.frame} with 64029 rows and 2 columns.
+}
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{

@@ -4,10 +4,20 @@
 \alias{generate.bootstrap.plots.for.transcriptome}
 \title{Generate bootstrap plots}
 \usage{
-generate.bootstrap.plots.for.transcriptome(sct_data, tt, thresh = 250,
-  annotLevel = 1, reps, full_results = NA, listFileName = "",
-  showGNameThresh = 25, ttSpecies = "mouse", sctSpecies = "mouse",
-  sortBy = "t")
+generate.bootstrap.plots.for.transcriptome(
+  sct_data,
+  tt,
+  thresh = 250,
+  annotLevel = 1,
+  reps,
+  full_results = NA,
+  listFileName = "",
+  showGNameThresh = 25,
+  ttSpecies = "mouse",
+  sctSpecies = "mouse",
+  sortBy = "t",
+  onlySignif = TRUE
+)
 }
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
@@ -31,6 +41,8 @@ generate.bootstrap.plots.for.transcriptome(sct_data, tt, thresh = 250,
 \item{sctSpecies}{Either 'mouse' or 'human' depending on which species the single cell data was generated from}
 
 \item{sortBy}{Column name of metric in tt which should be used to sort up- from down- regulated genes. Default="t"}
+
+\item{onlySignif}{Should plots only be generated for cells which have significant changes?}
 }
 \value{
 Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
