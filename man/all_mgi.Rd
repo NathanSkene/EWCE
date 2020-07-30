@@ -4,7 +4,9 @@
 \name{all_mgi}
 \alias{all_mgi}
 \title{All MGI gene symbols}
-\format{An object of class \code{character} of length 48440.}
+\format{
+An object of class \code{character} of length 48440.
+}
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{

@@ -4,8 +4,13 @@
 \alias{generate_controlled_bootstrap_geneset}
 \title{generate_controlled_bootstrap_geneset}
 \usage{
-generate_controlled_bootstrap_geneset(hitGenes, sct_data, annotLevel, reps,
-  controlledCT = NULL)
+generate_controlled_bootstrap_geneset(
+  hitGenes,
+  sct_data,
+  annotLevel,
+  reps,
+  controlledCT = NULL
+)
 }
 \arguments{
 \item{hitGenes}{Array of gene names. The target gene set.}

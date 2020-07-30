@@ -4,8 +4,14 @@
 \alias{check.ewce.genelist.inputs}
 \title{check.ewce.genelist.inputs}
 \usage{
-check.ewce.genelist.inputs(sct_data, hits, bg, genelistSpecies, sctSpecies,
-  geneSizeControl = FALSE)
+check.ewce.genelist.inputs(
+  sct_data,
+  hits,
+  bg,
+  genelistSpecies,
+  sctSpecies,
+  geneSizeControl = FALSE
+)
 }
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
