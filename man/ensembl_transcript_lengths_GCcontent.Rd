@@ -4,7 +4,9 @@
 \name{ensembl_transcript_lengths_GCcontent}
 \alias{ensembl_transcript_lengths_GCcontent}
 \title{Human Ensembl Transcript Lengths & GC content}
-\format{An object of class \code{data.frame} with 217589 rows and 3 columns.}
+\format{
+An object of class \code{data.frame} with 217589 rows and 3 columns.
+}
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{

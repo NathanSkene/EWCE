@@ -20,8 +20,9 @@
 #' @import future
 #' @import ggdendro
 #' @import gridExtra
+#' @import Matrix
 
-generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=future::availableCores()-1){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
     require("parallel")
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
@@ -43,21 +44,12 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=future::av
         exp<-suppressWarnings(apply(exp,2,function(x) {storage.mode(x) <- 'double'; x}))
     }
 
+    # Make exp into a sparse matrix
+    exp = Matrix::Matrix(exp)
+
     ctd = list()
     for(i in 1:length(annotLevels)){ctd[[length(ctd)+1]] = list(annot=annotLevels[[i]])}
 
-    aggregate.over.celltypes <- function(rowOfMeans,celltypes,func="mean"){
-        if(func=="mean"){
-            exp_out = as.matrix(data.frame(aggregate(rowOfMeans,by=list(celltypes),FUN=mean)))
-        }else if(func=="median"){
-            exp_out = as.matrix(data.frame(aggregate(rowOfMeans,by=list(celltypes),FUN=median)))
-        }
-        rownames(exp_out) = exp_out[,"Group.1"]
-        exp_out = exp_out[,2]
-        exp_out2 = as.numeric(exp_out)
-        names(exp_out2) = names(exp_out)
-        return(exp_out2)
-    }
     calculate.meanexp.for.level <- function(ctd_oneLevel,expMatrix){
         if(dim(expMatrix)[2]==length(unique(ctd_oneLevel$annot))){
             print(dim(expMatrix)[2])
@@ -65,39 +57,30 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=future::av
             if(sum(!colnames(expMatrix)==ctd_oneLevel$annot)!=0){
                 stop("There are an equal number of celltypes in expMatrix and ctd_oneLevel but the names do not match")
             }
-            ctd_oneLevel$mean_exp = expMatrix
+            ctd_oneLevel$mean_exp = as.matrix(expMatrix)
         }else{
-            mean_exp = apply(expMatrix,1,aggregate.over.celltypes,ctd_oneLevel$annot)
-            ctd_oneLevel$mean_exp = t(mean_exp)
-        }
-        return(ctd_oneLevel)
-    }
-    calculate.medianexp.for.level <- function(ctd_oneLevel,expMatrix){
-        if(dim(expMatrix)[2]==length(unique(ctd_oneLevel$annot))){
-            print(dim(expMatrix)[2])
-            print(length(ctd_oneLevel$annot))
-            if(sum(!colnames(expMatrix)==ctd_oneLevel$annot)!=0){
-                stop("There are an equal number of celltypes in expMatrix and ctd_oneLevel but the names do not match")
-            }
-            ctd_oneLevel$median_exp = expMatrix
-        }else{
-            median_exp = apply(expMatrix,1,aggregate.over.celltypes,ctd_oneLevel$annot,func="median")
-            ctd_oneLevel$median_exp = t(median_exp)
+            #mean_exp = apply(expMatrix,1,aggregate.over.celltypes,ctd_oneLevel$annot)
+            mm <- model.matrix(~ 0 + ctd_oneLevel$annot)
+            colnames(mm) <- names(table(ctd_oneLevel$annot))
+            mat.summary.mm1 <- expMatrix %*% mm
+            ctd_oneLevel$mean_exp = as.matrix(mat.summary.mm1)
         }
         return(ctd_oneLevel)
     }
     calculate.specificity.for.level <- function(ctd_oneLevel){
         normalised_meanExp = t(t(ctd_oneLevel$mean_exp)*(1/colSums(ctd_oneLevel$mean_exp)))
-        normalised_medianExp = t(t(ctd_oneLevel$median_exp)*(1/colSums(ctd_oneLevel$mean_exp)))
         ctd_oneLevel$specificity = normalised_meanExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
-        ctd_oneLevel$median_specificity = normalised_medianExp/(apply(normalised_meanExp,1,sum)+0.000000000001)
         return(ctd_oneLevel)
     }
     ctd2 = mclapply(ctd,calculate.meanexp.for.level,exp,mc.cores=no_cores)
-    ctd2 = mclapply(ctd2,calculate.medianexp.for.level,exp,mc.cores=no_cores)
+
     ctd3 = mclapply(ctd2,calculate.specificity.for.level,mc.cores=no_cores)
     ctd=ctd3
     stopCluster(cl)
+
+    # Use the rank norm transformation on specificity
+    rNorm <- function(ctdIN){   bbb = t(apply(ctdIN$specificity,1,RNOmni::rankNorm));  return(bbb)    }
+
 
     # ADD DENDROGRAM DATA TO CTD
     ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)

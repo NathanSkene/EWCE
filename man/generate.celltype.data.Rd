@@ -4,7 +4,7 @@
 \alias{generate.celltype.data}
 \title{generate.celltype.data}
 \usage{
-generate.celltype.data(exp, annotLevels, groupName)
+generate.celltype.data(exp, annotLevels, groupName, no_cores = 1)
 }
 \arguments{
 \item{exp}{Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
@@ -12,6 +12,8 @@ generate.celltype.data(exp, annotLevels, groupName)
 \item{annotLevels}{List with arrays of strings containing the cell type names associated with each column in exp}
 
 \item{groupName}{A human readable name for refering to the dataset being loaded}
+
+\item{no_cores}{Number of cores that should be used to speedup the computation}
 }
 \value{
 Filenames for the saved celltype_data files

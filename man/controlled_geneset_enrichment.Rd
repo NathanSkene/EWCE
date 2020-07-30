@@ -4,8 +4,15 @@
 \alias{controlled_geneset_enrichment}
 \title{Celltype controlled geneset enrichment}
 \usage{
-controlled_geneset_enrichment(disease_genes, functional_genes, bg_genes,
-  sct_data, annotLevel, reps, controlledCT)
+controlled_geneset_enrichment(
+  disease_genes,
+  functional_genes,
+  bg_genes,
+  sct_data,
+  annotLevel,
+  reps,
+  controlledCT
+)
 }
 \arguments{
 \item{disease_genes}{Array of gene symbols containing the disease gene list. Does not have to be disease genes. Must be from same species as the single cell transcriptome dataset.}

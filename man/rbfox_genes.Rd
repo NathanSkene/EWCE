@@ -4,7 +4,9 @@
 \name{rbfox_genes}
 \alias{rbfox_genes}
 \title{Rbfox binding genes}
-\format{An object of class \code{character} of length 4143.}
+\format{
+An object of class \code{character} of length 4143.
+}
 \source{
 from supplementary table 1 of HITS-CLIP and Integrative Modeling Define the Rbfox Splicing-Regulatory Network Linked to Brain Development and Autism. All with rbfox2 count greater than 4 or summed rbfox 1 and 3 greater than 12
 rbfox_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/Rbfox_binding.txt",stringsAsFactors = FALSE)[-1,1]

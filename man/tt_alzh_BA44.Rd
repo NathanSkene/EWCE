@@ -4,7 +4,9 @@
 \name{tt_alzh_BA44}
 \alias{tt_alzh_BA44}
 \title{Example table of differential expression (Alzheimer's BA44)}
-\format{An object of class \code{data.frame} with 21745 rows and 7 columns.}
+\format{
+An object of class \code{data.frame} with 21745 rows and 7 columns.
+}
 \source{
 The table was determined based on data associated with the paper with PMID:17845826
 }

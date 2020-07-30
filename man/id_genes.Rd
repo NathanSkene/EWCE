@@ -4,7 +4,9 @@
 \name{id_genes}
 \alias{id_genes}
 \title{Intellectual disability genes}
-\format{An object of class \code{character} of length 1159.}
+\format{
+An object of class \code{character} of length 1159.
+}
 \source{
 from http://compbio.charite.de/hpoweb/showterm?id=HP:0001249
 id_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/Intellectual Disability July2017.txt",stringsAsFactors = FALSE)[-1,1]
