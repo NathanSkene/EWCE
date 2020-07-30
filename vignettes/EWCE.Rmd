@@ -15,10 +15,10 @@ vignette: >
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
-if (!require("pacman")) install.packages("pacman")
-if (!require("BiocManager")) install.packages("BiocManager")
-if (!require("BiocStyle")) BiocManager::install("BiocStyle")
-pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
+#if (!require("pacman")) install.packages("pacman")
+#if (!require("BiocManager")) install.packages("BiocManager")
+#if (!require("BiocStyle")) BiocManager::install("BiocStyle")
+#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
 
 BiocStyle::markdown()
 knitr::opts_chunk$set(tidy         = FALSE,
@@ -143,7 +143,7 @@ The last step is only neccesary if you plan to compare to human data, i.e. genes
 
 Rather than returning the data directly, the functions save the calculated data to a file and the filename is returned.
 
-```{r  cache=FALSE}
+```{r  }
 # Generate celltype data for just the cortex/hippocampus data
 exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,level2annot = cortex_mrna$annot$level2class)
 annotLevels = list(level1class=cortex_mrna$annot$level1class,level2class=cortex_mrna$annot$level2class)
@@ -324,7 +324,7 @@ print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 
 If you want to view the characteristics of enrichment for each gene within the list then the `generate.bootstrap.plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
 
-```{r cache=FALSE}
+```{r }
 generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,reps=100,annotLevel=1,full_results=full_results,listFileName="VignetteGraphs")
 ```
     
@@ -341,7 +341,7 @@ human.bg = unique(c(human.hits,m2h$HGNC.symbol))
 
 The bootstrapping function then takes different arguments:
 
-```{r, cache=FALSE, results="hide"}
+```{r, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=1,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -359,7 +359,7 @@ This shows that the controlled method generates enrichments that are generally c
 
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
-```{r, cache=FALSE, fig.width = 8, fig.height = 4, results="hide"}
+```{r, fig.width = 8, fig.height = 4, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -426,7 +426,7 @@ Where multiple transcriptomic studies have been performed with the same purpose,
 
 To demonstrate this we use a two further Alzheimer's transcriptome dataset coming from Brodmann areas 36 and 44: these area stored in `tt_alzh_BA36` and `tt_alzh_BA44`. The first step is to run EWCE on each of these individually and store the output into one list.
 
-```{r cache=FALSE, results="hide"}
+```{r results="hide"}
 # Load the data
 data(tt_alzh_BA36)
 data(tt_alzh_BA44)

@@ -31,7 +31,6 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     }
 
     # Check for symbols which are not real MGI symbols
-    #library("biomaRt")
     #mouse = useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
     #attrib_mus = listAttributes(mouse)
     #mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
@@ -80,7 +79,6 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     }
     countBottom=countTop=0
     # Count how many "|" symbols are in "mgi_data$Marker.Synonyms..pipe.separated" to determine how many rows the dataframe needs
-    #library(stringr)
     allSYN=matrix("",nrow=length(keep_rows)+sum(str_count(mgi_data$Marker.Synonyms..pipe.separated.,"\\|")),ncol=2)
     colnames(allSYN) = c("mgi_symbol","syn")
     for(i in keep_rows){

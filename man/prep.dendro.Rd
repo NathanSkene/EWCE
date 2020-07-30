@@ -17,6 +17,5 @@ A ctd with dendrogram plotting info added
 }
 \examples{
 ctd = lapply(ctd,EWCE::bin.specificity.into.quantiles,numberOfBins=40)
-library(ggdendro)
 ctd = lapply(ctd,EWCE::prep.dendro)
 }
