@@ -6,11 +6,13 @@
 #' @param annotLevels List with arrays of strings containing the cell type names associated with each column in exp
 #' @param groupName A human readable name for refering to the dataset being loaded
 #' @param no_cores Number of cores that should be used to speedup the computation
+#' @param savePath Directory where the CTD file should be saved
 #' @return Filenames for the saved celltype_data files
 #' @examples
 #' # Load the single cell data
 #' data("cortex_mrna")
 #' expData = cortex_mrna$exp
+#' expData = expData[1:500,] # Use only a subset to keep the example quick
 #' l1=cortex_mrna$annot$level1class
 #' l2=cortex_mrna$annot$level2class
 #' annotLevels = list(l1=l1,l2=l2)
@@ -20,17 +22,17 @@
 #' @import future
 #' @import ggdendro
 #' @import gridExtra
-#' @import Matrix
+#' @importFrom Matrix Matrix
 #' @import RNOmni
 #' @import ggdendro
 
-generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath="~/"){
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
 
     # Calculate the number of cores
 
-    cl <- makeCluster(no_cores)
+    cl <- parallel::makeCluster(no_cores)
     print(sprintf("Using %s cores",no_cores))
 
     # First, check the number of annotations equals the number of columns in the expression data
@@ -41,7 +43,7 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
     if(groupName==""){stop("ERROR: groupName must be set. groupName is used to label the files created by this function.")}
 
     # Convert characters to numbers
-    if(!class(exp)=="dgCMatrix"){
+    if(!class(exp)[1]=="dgCMatrix"){
         exp<-suppressWarnings(apply(exp,2,function(x) {storage.mode(x) <- 'double'; x}))
     }
 
@@ -87,7 +89,7 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1){
     ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)
     ctd = lapply(ctd,prep.dendro)
 
-    fNames=sprintf("CellTypeData_%s.rda",groupName)
+    fNames=sprintf("%s/CellTypeData_%s.rda",savePath,groupName)
     save(ctd,file=fNames)
     return(fNames)
 }

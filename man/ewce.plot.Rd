@@ -10,6 +10,8 @@ ewce.plot(total_res, mtc_method = "bonferroni", ctd = NA)
 \item{total_res}{results dataframe generated using \code{\link{bootstrap.enrichment.test}} or \code{\link{ewce_expression_data}} functions. Multiple results tables can be merged into one results table, as long as the 'list' column is set to distinguish them.}
 
 \item{mtc_method}{method to be used for multiple testing correction. Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", "hochberg", "hommel", "bonferroni", "BH", "BY",}
+
+\item{ctd}{Should be provided so that the dendrogram can be taken from it and added to plots}
 }
 \value{
 A ggplot containing the plot
