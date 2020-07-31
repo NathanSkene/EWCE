@@ -28,8 +28,11 @@ Imports:
     gridExtra,
     Matrix,
     future,
-    scales
-Suggests: knitr, BiocStyle
+    scales,
+    RNOmni,
+    sctransform
+Remotes: ChristophH/sctransform@*release
+Suggests: knitr, BiocStyle, rmarkdown
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,
