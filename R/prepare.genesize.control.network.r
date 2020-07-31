@@ -27,8 +27,7 @@ prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000,sctSpecies)
 
     ### FIRST GET ALL ENSEMBL GENE IDS FOR THE HUMAN GENES
     #hum_ens = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), filters="hgnc_symbol", values= combined_human_genes, mart= human)
-    data(all_hgnc_wtEnsembl)
-    hum_ens = all_hgnc_wtEnsembl[all_hgnc_wtEnsembl$hgnc_symbol %in% combined_human_genes,]
+    hum_ens = EWCE::all_hgnc_wtEnsembl[EWCE::all_hgnc_wtEnsembl$hgnc_symbol %in% combined_human_genes,]
 
     # CHECK THE GENELISTS WERE HUMAN HGNC SYMBOLS
     if(sum(hits %in% hum_ens$hgnc_symbol)==0){stop("ERROR: No hits recognised as human HGNC symbols. Perhaps the gene list was wrongly provided as MGI symbols? prepare.genesize.control.network only accepts HGNC symbols.")}
@@ -36,8 +35,7 @@ prepare.genesize.control.network <- function(hits,bg,numBOOT = 10000,sctSpecies)
 
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM BIOMART
     #all_lengths = getBM(attributes=c("transcript_length","percentage_gene_gc_content","ensembl_gene_id"), filters="ensembl_gene_id", values= hum_ens$ensembl_gene_id, mart= human)
-    data(ensembl_transcript_lengths_GCcontent)
-    all_lengths = ensembl_transcript_lengths_GCcontent[ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% hum_ens$ensembl_gene_id,]
+    all_lengths = EWCE::ensembl_transcript_lengths_GCcontent[EWCE::ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% hum_ens$ensembl_gene_id,]
     all_lengths = all_lengths[!is.na(all_lengths$transcript_length),]
     all_lens = merge(all_lengths,hum_ens,by="ensembl_gene_id")
 

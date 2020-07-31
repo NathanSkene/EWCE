@@ -2,9 +2,8 @@
 title: "Expression Weighted Celltype Enrichment with *EWCE*"
 author: "Nathan Skene"
 date: "`r Sys.Date()`"
-bibliography: EWCE.bib
-csl: nature.csl
-output: rmarkdown::github_document
+bibliography: ../inst/extdata/EWCE.bib
+csl: ../inst/extdata/nature.csl
 vignette: >
   %\VignetteIndexEntry{Expression Weighted Celltype Enrichment with EWCE}
   %\VignetteEngine{knitr::rmarkdown}
@@ -102,7 +101,7 @@ cortex_mrna  = load.linnarsson.sct.data(path)
 To check the data we can quickly plot the distribution of expression of a given gene across all the cell types.
 
 ```{r }
-data("cortex_mrna")
+data(cortex_mrna)
 gene="Necab1"
 cellExpDist = data.frame(e=cortex_mrna$exp[gene,],l1=cortex_mrna$annot[colnames(cortex_mrna$exp),]$level1class)
 ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
@@ -117,11 +116,23 @@ if(!file.exists("MRK_List2.rpt")){
 cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.rpt")
 ```
 
+## Drop genes
+
+The vignette takes a while to go through if you use all genes. So let's restrict to 1000 random genes.
+
+```{r }
+nKeep = 1000
+must_keep = c("Apoe","Gfap","Gapdh")
+set.seed(123458)
+keep_genes = c(must_keep,sample(rownames(cortex_mrna$exp),997))
+cortex_mrna$exp = cortex_mrna$exp[keep_genes,]
+```
+
 ## Transform the data
 
 A different number of reads is found across each cell. We suggest using scTransform to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
 
-```{r }
+```{r, cache=TRUE }
 # devtools::install_github(repo = 'ChristophH/sctransform')
 library(sctransform)
 scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
@@ -259,7 +270,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+facet_grid(Gene~
 For the first demonstration of EWCE we will test for whether genes that are genetically associated with Alzheimer's disease are enriched in any particular celltype. This gene list is stored within the package are we access it by first loading the package and then the dataset:
 
 ```{r}
-data("example_genelist")
+data(example_genelist)
 print(example_genelist)
 ```
 
@@ -287,10 +298,10 @@ And we have `r length(unique(mouse.bg))` genes in background set.
 
 ## Setting analysis parameters
 
-We now need to set the parameters for the analysis. For a publishable analysis we would want to generate over 10000 random lists and determine their expression levels, but for computational speed let us only use `reps=1000`. We want to analyse level 1 annotations so set level to 1.
+We now need to set the parameters for the analysis. For a publishable analysis we would want to generate over 10000 random lists and determine their expression levels, but for computational speed let us only use `reps=100`. We want to analyse level 1 annotations so set level to 1.
 
 ```{r }
-reps=1000 # <- Use 1000 bootstrap lists so it runs quickly, for publishable analysis use >10000
+reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
 level=1 # <- Use level 1 annotations (i.e. Interneurons)
 ```
 
@@ -298,7 +309,7 @@ level=1 # <- Use level 1 annotations (i.e. Interneurons)
 
 We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows:
 
-```{r }
+```{r, cache=TRUE }
 # Bootstrap significance testing, without controlling for transcript length and GC content
 full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
                                 reps=reps,annotLevel=level)
@@ -324,8 +335,8 @@ print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 
 If you want to view the characteristics of enrichment for each gene within the list then the `generate.bootstrap.plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
 
-```{r }
-generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,reps=100,annotLevel=1,full_results=full_results,listFileName="VignetteGraphs")
+```{r, cache=TRUE }
+generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,reps=reps,annotLevel=1,full_results=full_results,listFileName="VignetteGraphs")
 ```
     
 ## Running EWCE analysis on genetic data with controls for transcript length and GC-content
@@ -341,7 +352,7 @@ human.bg = unique(c(human.hits,m2h$HGNC.symbol))
 
 The bootstrapping function then takes different arguments:
 
-```{r, results="hide"}
+```{r, cache=TRUE, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=1,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -359,7 +370,7 @@ This shows that the controlled method generates enrichments that are generally c
 
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
-```{r, fig.width = 8, fig.height = 4, results="hide"}
+```{r, cache=TRUE, fig.width = 8, fig.height = 4, results="hide"}
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -374,7 +385,7 @@ It is often useful to plot results from multiple gene list analyses together. Th
 
 To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.
 
-```{r }
+```{r, cache=TRUE }
 gene.list.2 = mouse.bg[1:30]
 second_results = bootstrap.enrichment.test(sct_data=ctd,hits=gene.list.2,
                     bg=mouse.bg,reps=reps,annotLevel=1)
@@ -398,7 +409,7 @@ To demonstrate this we have an example dataset `tt_alzh`. This data frame was ge
 
 The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
 
-```{r, results="hide"}
+```{r, cache=TRUE, results="hide"}
 data(tt_alzh)
 tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
 ```
@@ -415,7 +426,7 @@ As was reported in our paper, neuronal genes are found to be downregulated while
 
 A common request is to explain which differentially expressed genes are associated with a cell type...
 
-```{r }
+```{r, cache=TRUE }
 full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
   full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse",onlySignif=FALSE)
 ```
@@ -471,7 +482,7 @@ m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 mouse.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
 
-reps=1000
+reps=reps
 unconditional_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
                     bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",sctSpecies="mouse")
 conditional_results_micro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
@@ -507,13 +518,13 @@ mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
 
 data("rbfox_genes")
 
-res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal CA1")
-res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal CA1")
+res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal CA1")
+res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal CA1")
 print(res_hpsd_schiz)
 print(res_rbfox_schiz)
 
-res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal SS")
-res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT="pyramidal SS")
+res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal SS")
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal SS")
 print(res_hpsd_id)
 print(res_rbfox_id)
 ```
@@ -525,13 +536,13 @@ The analysis also tests for enrichment of Rbfox binding genes in the schizophren
 ```{r, results="hide"}
 controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
 
-res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)
-res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)
+res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
+res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
 print(res_hpsd_schiz)
 print(res_rbfox_schiz)
 
-res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)
-res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=1000, controlledCT=controlledCTs)
+res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
 print(res_hpsd_id)
 print(res_rbfox_id)
 

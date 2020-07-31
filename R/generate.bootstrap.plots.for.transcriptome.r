@@ -109,7 +109,7 @@ generate.bootstrap.plots.for.transcriptome <- function(sct_data,tt,thresh=250,an
             plot_with_bootstrap_distributions(exp_mats,cc,hit_exp,tag,listFileName,graph_theme)
 
             # Plot with LOG bootstrap distribution
-            plot_log_bootstrap_distributions(dat,exp_mats,cc,hit_exp,tag,listFileName,melt_boot,graph_theme)
+            plot_log_bootstrap_distributions(dat,exp_mats,cc,hit_exp,tag,listFileName,graph_theme)
 
         }
     }
@@ -146,7 +146,7 @@ check_args_for_bootstrap_plot_generation <- function(sct_data,tt,thresh,annotLev
 }
 
 
-get_exp_data_for_bootstrapped_genes <- function(results,signif_res,sct_data,mouse.hits,combinedGenes,annotLevel,nReps = reps){
+get_exp_data_for_bootstrapped_genes <- function(results,signif_res,sct_data,mouse.hits,combinedGenes,annotLevel,nReps = NA){
     exp_mats = list()
     for(cc in signif_res){
         exp_mats[[cc]] = matrix(0,nrow=nReps,ncol=length(mouse.hits))
@@ -212,7 +212,7 @@ plot_bootstrap_plots <- function(dat,tag,listFileName,cc,showGNameThresh,graph_t
 
 myScalesComma <- function(x){return(scales::comma(x=x,accuracy=0.01))}
 
-plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFileName,melt_boot,graph_theme){
+plot_log_bootstrap_distributions <- function(dat,exp_mats,cc,hit_exp,tag,listFileName,graph_theme){
     # - First get the ordered gene names
     rownames(dat)=dat$Gnames
     datOrdered = data.frame(GSym=rownames(dat),Pos=1:dim(dat)[1])

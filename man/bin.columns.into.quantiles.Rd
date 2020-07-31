@@ -19,5 +19,7 @@ A matrix with same shape as matrixIn but with columns storing quantiles instead 
 }
 \examples{
 data(ctd)
-ctd[[1]]$specificity_quantiles = apply(ctd[[1]]$specificity,2,FUN=bin.columns.into.quantiles,numberOfBins=40)
+ctd[[1]]$specificity_quantiles = apply(ctd[[1]]$specificity,2,
+                                       FUN=bin.columns.into.quantiles,
+                                       numberOfBins=40)
 }
