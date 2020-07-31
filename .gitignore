@@ -7,3 +7,9 @@ BootstrapPlots
 *.csv
 *.txt
 *.log
+doc
+Meta
+vignettes/.build.timestamp
+vignettes/EWCE_cache/*
+vignettes/EWCE_files/*
+
