@@ -8,11 +8,13 @@
 #' @return Array of filenames included the ones with only 1:1 homologs
 #' @examples
 #' # Load the single cell data
-#' data("cortex_mrna")
+#' data(cortex_mrna)
 #' expData = cortex_mrna$exp
+#' expData = expData[1:500,] # Use only a subset to keep the example quick
 #' l1=cortex_mrna$annot$level1class
 #' l2=cortex_mrna$annot$level2class
-#' fNames_ALLCELLS = generate.celltype.data(exp=expData,l1,l2,"allKImouse",thresh=0,trim=0)
+#' annotLevels = list(level1class=l1,level2class=l2)
+#' fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels=annotLevels,groupName="allKImouse")
 #' fNames_ALLCELLS = filter.genes.without.1to1.homolog(fNames_ALLCELLS)
 #' @export
 #' @import utils

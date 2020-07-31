@@ -13,6 +13,7 @@
 #' @param annotLevel an integer indicating which level of the annotation to analyse. Default = 1.
 #' @param full_results The full output of \code{\link{bootstrap.enrichment.test}} for the same genelist
 #' @param listFileName String used as the root for files saved using this function
+#' @param savePath Directory where the BootstrapPlots folder should be saved
 #' @return Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
 #' value of listFileName. The files are saved into the 'BootstrapPlot' folder. The files start with one of the following:
 #' \itemize{
@@ -50,7 +51,7 @@
 #' @import ggplot2
 #' @importFrom reshape2 melt
 # @import plyr
-generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse",sctSpecies="mouse", reps, annotLevel=1, full_results=NA, listFileName=""){
+generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse",sctSpecies="mouse", reps, annotLevel=1, full_results=NA, listFileName="",savePath="~/"){
     # Check the arguments
     if(length(full_results)!=3){stop("ERROR: full_results is not valid output from the bootstrap.enrichment.test function")}
     if(sum(!as.character(unique(full_results$results$CellType)) %in% colnames(sct_data[[1]]$specificity))==length(as.character(unique(full_results$results$CellType)))){
@@ -98,8 +99,8 @@ generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse"
               axis.line = element_line(size=.7, color = "black"),legend.position = c(0.75, 0.7), text = element_text(size=14),
               axis.title.x = element_text(vjust = -0.35), axis.title.y = element_text(vjust = 0.6)) + theme(legend.title=element_blank())
 
-    if (!file.exists("BootstrapPlots")){
-        dir.create(file.path(getwd(), "BootstrapPlots"))
+    if (!file.exists(sprintf("%s/BootstrapPlots",savePath))){
+        dir.create(file.path(savePath, "BootstrapPlots"))
     }
 
     # Plot the QQ plots
@@ -121,7 +122,7 @@ generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse"
 
 
         # Plot without text
-        pdf(sprintf("BootstrapPlots/qqplot_noText____%s____%s.pdf",listFileName,cc),width=3.5,height=3.5)
+        pdf(sprintf("%s/BootstrapPlots/qqplot_noText____%s____%s.pdf",savePath,listFileName,cc),width=3.5,height=3.5)
         print(basic_graph)
         dev.off()
 
@@ -132,7 +133,7 @@ generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse"
             geom_abline(intercept = 0, slope = 1, colour = "red")
 
         # Plot with gene names
-        pdf(sprintf("BootstrapPlots/qqplot_wtGSym____%s____%s.pdf",listFileName,cc),width=3.5,height=3.5)
+        pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSym____%s____%s.pdf",savePath,listFileName,cc),width=3.5,height=3.5)
         print(basic_graph +
                   geom_text(aes_string(label="symLab"),hjust=0,vjust=0,size=3) + xlim(c(0,maxX))
         )
@@ -143,7 +144,7 @@ generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse"
         colnames(melt_boot) = c("Rep","Pos","Exp")
         actVals = data.frame(pos=as.factor(1:length(hit_exp)),vals=hit_exp)
         #if(sub==TRUE){melt_boot$Exp=melt_boot$Exp/10; actVals$vals=actVals$vals/10}
-        pdf(sprintf("BootstrapPlots/bootDists____%s____%s.pdf",listFileName,cc),width=3.5,height=3.5)
+        pdf(sprintf("%s/BootstrapPlots/bootDists____%s____%s.pdf",savePath,listFileName,cc),width=3.5,height=3.5)
         melt_boot$Pos = as.factor(melt_boot$Pos)
         #print(ggplot(melt_boot)+geom_boxplot(aes(x=as.factor(Pos),y=Exp),outlier.size=0)+
         #         geom_point(aes(x=pos,y=vals),col="red",data=actVals)+
@@ -181,7 +182,7 @@ generate.bootstrap.plots <- function(sct_data, hits, bg, genelistSpecies="mouse"
         # - Plot the graph!
        # if(sub==TRUE){melt_boot$Exp=melt_boot$Exp/10; actVals$vals=actVals$vals/10}
         wd = 1+length(unique(melt_boot[,4]))*0.175
-        pdf(sprintf("BootstrapPlots/bootDists_LOG____%s____%s.pdf",listFileName,cc),width=wd,height=4)
+        pdf(sprintf("%s/BootstrapPlots/bootDists_LOG____%s____%s.pdf",savePath,listFileName,cc),width=wd,height=4)
         #melt_boot$Exp=melt_boot$Exp+0.00000001
         melt_boot = melt_boot[melt_boot$Exp!=0,]
         print(ggplot(melt_boot)+geom_boxplot(aes_string(x="GSym",y="Exp"),outlier.size=0)+graph_theme+
