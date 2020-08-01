@@ -1,4 +1,4 @@
 language: R
-r: 3.6.1
+r: oldrel
 cache: packages
 
