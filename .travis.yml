@@ -1,4 +1,4 @@
 language: R
-r: bioc-release
+r: 3.6
 cache: packages
 
