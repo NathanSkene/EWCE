@@ -2,3 +2,6 @@ language: R
 r: oldrel
 cache: packages
 
+before_install:
+- wget https://cran.r-project.org/src/contrib/Archive/XML/XML_3.99-0.3.tar.gz
+- R CMD INSTALL XML_3.99-0.3.tar.gz
