@@ -6,7 +6,7 @@ bibliography: ../inst/extdata/EWCE.bib
 csl: ../inst/extdata/nature.csl
 vignette: >
   %\VignetteIndexEntry{Expression Weighted Celltype Enrichment with EWCE}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\usepackage[utf8]{inputenc}    
 ---
 
