@@ -15,6 +15,7 @@ LazyData: TRUE
 Depends: R(>= 3.2)
 VignetteBuilder: knitr
 Imports:
+    XML,
     ggplot2,
     reshape2,
     biomaRt,
