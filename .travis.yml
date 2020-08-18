@@ -8,12 +8,27 @@ r:
 - release
 - oldrel
 
+services:
+- docker
+
 cache: packages
 
+# This section is included to ensure that an earlier version of the XML package is installed, as the latest version of
+# XML depends on R4.0
 before_install:
 - wget https://cran.r-project.org/src/contrib/Archive/XML/XML_3.99-0.3.tar.gz
 - R CMD INSTALL XML_3.99-0.3.tar.gz
 - rm XML_3.99-0.3.tar.gz
+
+# This is intended to run Docker only when the build on linux/release is completed succesfully
+matrix:
+    include:
+    - os: linux
+      r: release
+    after_success:
+        - docker image build -t nathanskene/EWCE . ;
+        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+        - docker push nathanskene/ewce;
 
 notifications:
   webhooks:
