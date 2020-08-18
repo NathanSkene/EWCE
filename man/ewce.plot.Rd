@@ -4,7 +4,7 @@
 \alias{ewce.plot}
 \title{Plot EWCE results}
 \usage{
-ewce.plot(total_res, mtc_method = "bonferroni", ctd = NA)
+ewce.plot(total_res, mtc_method = "bonferroni", ctd = NULL)
 }
 \arguments{
 \item{total_res}{results dataframe generated using \code{\link{bootstrap.enrichment.test}} or \code{\link{ewce_expression_data}} functions. Multiple results tables can be merged into one results table, as long as the 'list' column is set to distinguish them.}
