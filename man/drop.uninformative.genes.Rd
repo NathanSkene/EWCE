@@ -21,5 +21,6 @@ is less than a strict p-threshold, then the gene is dropped.
 }
 \examples{
 data("cortex_mrna")
+cortex_mrna$exp = cortex_mrna$exp[1:300,] # Use only a subset of genes to keep the example quick
 exp2 = drop.uninformative.genes(exp=cortex_mrna$exp,level2annot=cortex_mrna$annot$level2class)
 }

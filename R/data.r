@@ -5,7 +5,6 @@
 #' @source
 #' The code to prepare the .Rda file file from the marker file is:
 #' \code{
-#' library(biomaRt)
 #' listMarts(host="www.ensembl.org")
 #' human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
 #' ensembl_transript_lengths_GCcontent = getBM(attributes=c("transcript_length","percentage_gene_gc_content","ensembl_gene_id"), mart= human)
@@ -49,7 +48,6 @@
 #' @source
 #' The code to prepare the .Rda file file from the marker file is:
 #' \code{
-#' library("biomaRt")
 #' listMarts(host="www.ensembl.org")
 #' mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="mmusculus_gene_ensembl")
 #' all_mgi_wtEnsembl = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
@@ -65,7 +63,6 @@
 #' @source
 #' The code to prepare the .Rda file file from the marker file is:
 #' \code{
-#' library("biomaRt")
 #' listMarts(host="www.ensembl.org")
 #' mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="mmusculus_gene_ensembl")
 #' mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
@@ -82,7 +79,6 @@
 #' @source
 #' The code to prepare the .Rda file file from the marker file is:
 #' \code{
-#' library("biomaRt")
 #' listMarts(host="www.ensembl.org")
 #' human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
 #' all_hgnc_wtEnsembl = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), mart=human)
@@ -98,7 +94,6 @@
 #' @source
 #' The code to prepare the .Rda file file from the marker file is:
 #' \code{
-#' library("biomaRt")
 #' listMarts(host="www.ensembl.org")
 #' human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
 #' hgnc_symbols = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), mart=human)

@@ -4,7 +4,13 @@
 \alias{generate.celltype.data}
 \title{generate.celltype.data}
 \usage{
-generate.celltype.data(exp, annotLevels, groupName, no_cores = 1)
+generate.celltype.data(
+  exp,
+  annotLevels,
+  groupName,
+  no_cores = 1,
+  savePath = "~/"
+)
 }
 \arguments{
 \item{exp}{Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
@@ -14,6 +20,8 @@ generate.celltype.data(exp, annotLevels, groupName, no_cores = 1)
 \item{groupName}{A human readable name for refering to the dataset being loaded}
 
 \item{no_cores}{Number of cores that should be used to speedup the computation}
+
+\item{savePath}{Directory where the CTD file should be saved}
 }
 \value{
 Filenames for the saved celltype_data files
@@ -25,6 +33,7 @@ Filenames for the saved celltype_data files
 # Load the single cell data
 data("cortex_mrna")
 expData = cortex_mrna$exp
+expData = expData[1:500,] # Use only a subset to keep the example quick
 l1=cortex_mrna$annot$level1class
 l2=cortex_mrna$annot$level2class
 annotLevels = list(l1=l1,l2=l2)

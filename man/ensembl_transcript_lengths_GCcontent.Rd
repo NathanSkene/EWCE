@@ -10,7 +10,6 @@ An object of class \code{data.frame} with 217589 rows and 3 columns.
 \source{
 The code to prepare the .Rda file file from the marker file is:
 \code{
-library(biomaRt)
 listMarts(host="www.ensembl.org")
 human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
 ensembl_transript_lengths_GCcontent = getBM(attributes=c("transcript_length","percentage_gene_gc_content","ensembl_gene_id"), mart= human)

@@ -5,10 +5,11 @@
 #' @param total_res results dataframe generated using \code{\link{bootstrap.enrichment.test}} or \code{\link{ewce_expression_data}} functions. Multiple results tables can be merged into one results table, as long as the 'list' column is set to distinguish them.
 #' @param mtc_method method to be used for multiple testing correction. Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", "hochberg", "hommel", "bonferroni", "BH", "BY",
 #   "fdr" or "none". Default method is bonferroni.
+#' @param ctd Should be provided so that the dendrogram can be taken from it and added to plots
 #' @return A ggplot containing the plot
 #' @examples
 #' # Load the single cell data
-#' data("ctd")
+#' data(ctd)
 #'
 #' # Set the parameters for the analysis
 #' reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
@@ -107,8 +108,8 @@ ewce.plot <- function(total_res,mtc_method="bonferroni",ctd=NA){
     output$plain = the_plot
 
     if(make_dendro){
-        the_dendrogram = ctd[[annotLevel]]$plotting$ggdendro_horizontal+theme(plot.margin=unit(c(0,0,0,0),unit="cm"))
-        combined_plot  = plot_grid(the_dendrogram, the_plot, align = "hv",ncol=1,rel_heights=c(1,1))
+        the_dendrogram = ctd[[annotLevel]]$plotting$ggdendro_horizontal+theme(plot.margin=unit(c(0,0,0,0),units="cm"))
+        combined_plot  = cowplot::plot_grid(the_dendrogram, the_plot, align = "hv",ncol=1,rel_heights=c(1,1))
         output$withDendro = combined_plot
     }
 

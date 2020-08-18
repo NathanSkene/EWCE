@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.travis.yml
+BootstrapPlots/*
+Readme_files/*
+^doc$
+^Meta$
+vignettes/EWCE_cache/*
+Dockerfile
+Readme.md

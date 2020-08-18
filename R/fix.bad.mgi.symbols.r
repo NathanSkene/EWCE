@@ -31,12 +31,11 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     }
 
     # Check for symbols which are not real MGI symbols
-    #library("biomaRt")
     #mouse = useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
     #attrib_mus = listAttributes(mouse)
     #mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
-    data(all_mgi)
-    not_MGI = rownames(exp)[!rownames(exp) %in% all_mgi]
+    #data(all_mgi)
+    not_MGI = rownames(exp)[!rownames(exp) %in% EWCE::all_mgi]
     print(sprintf("%s rows do not have proper MGI symbols",length(not_MGI)))
     if(length(not_MGI)>20){print(not_MGI[1:20])}
 
@@ -48,14 +47,14 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
 
     # Load data from MGI to check for synonyms
     if(is.null(mrk_file_path)){
-        data("mgi_synonym_data")
-        mgi_data = mgi_synonym_data
+        #data("mgi_synonym_data")
+        mgi_data = EWCE::mgi_synonym_data
     }else{
         if(!file.exists(mrk_file_path)){
             stop("ERROR: the file path used in mrk_file_path does not direct to a real file. Either leave this argument blank or direct to an MRK_List2.rpt file downloaded from the MGI website. It should be possible to obtain from: http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt")
         }
         mgi_data = read.csv(mrk_file_path,sep="\t",stringsAsFactors = FALSE)
-        if(!"Marker.Synonyms..pipe.separated." %in% colnames(mgi_synonym_data)){
+        if(!"Marker.Synonyms..pipe.separated." %in% colnames(EWCE::mgi_synonym_data)){
             stop("ERROR: the MRK_List2.rpt file does not seem to have a column named 'Marker.Synonyms..pipe.separated.'")
         }
         # -- the above file is downlaoded from: http://www.informatics.jax.org/downloads/reports/index.html
@@ -80,7 +79,6 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     }
     countBottom=countTop=0
     # Count how many "|" symbols are in "mgi_data$Marker.Synonyms..pipe.separated" to determine how many rows the dataframe needs
-    #library(stringr)
     allSYN=matrix("",nrow=length(keep_rows)+sum(str_count(mgi_data$Marker.Synonyms..pipe.separated.,"\\|")),ncol=2)
     colnames(allSYN) = c("mgi_symbol","syn")
     for(i in keep_rows){
@@ -119,7 +117,7 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     new_exp  = rbind(exp_Good,exp_Bad)
 
     print(sprintf("%s rows should have been corrected by checking synonms",dim(matchingSYN)[1]))
-    still_not_MGI = sort(rownames(new_exp)[!rownames(new_exp) %in% all_mgi])
+    still_not_MGI = sort(rownames(new_exp)[!rownames(new_exp) %in% EWCE::all_mgi])
     print(sprintf("%s rows STILL do not have proper MGI symbols",length(still_not_MGI)))
     if(printAllBadSymbols==TRUE){
         print(still_not_MGI)

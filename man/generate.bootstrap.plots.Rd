@@ -13,7 +13,8 @@ generate.bootstrap.plots(
   reps,
   annotLevel = 1,
   full_results = NA,
-  listFileName = ""
+  listFileName = "",
+  savePath = "~/"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ generate.bootstrap.plots(
 \item{full_results}{The full output of \code{\link{bootstrap.enrichment.test}} for the same genelist}
 
 \item{listFileName}{String used as the root for files saved using this function}
+
+\item{savePath}{Directory where the BootstrapPlots folder should be saved}
 }
 \value{
 Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
