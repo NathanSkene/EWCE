@@ -15,6 +15,7 @@ LazyData: TRUE
 Depends: R(>= 3.2)
 VignetteBuilder: knitr
 Imports:
+    XML,
     ggplot2,
     reshape2,
     biomaRt,
@@ -25,8 +26,14 @@ Imports:
     readxl,
     HGNChelper,
     ggdendro,
-    gridExtra
-Suggests: knitr, BiocStyle
+    gridExtra,
+    Matrix,
+    future,
+    scales,
+    RNOmni,
+    sctransform
+Remotes: ChristophH/sctransform@*release
+Suggests: knitr, BiocStyle, rmarkdown
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,
