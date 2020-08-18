@@ -7,12 +7,14 @@
 #' @return A matrix with same shape as matrixIn but with columns storing quantiles instead of specificity
 #' @examples
 #' data(ctd)
-#' ctd$specificity_quantiles = apply(ctd$specificity,2,FUN=bin.columns.into.quantiles,numberOfBins)
+#' ctd[[1]]$specificity_quantiles = apply(ctd[[1]]$specificity,2,
+#'                                        FUN=bin.columns.into.quantiles,
+#'                                        numberOfBins=40)
 #' @export
 bin.columns.into.quantiles <- function(matrixIn,numberOfBins=40){
     quantileValues = rep(0,length(matrixIn))
     quantileValues[matrixIn>0] = as.numeric(cut(matrixIn[matrixIn>0],
-                                                 breaks=unique(quantile(matrixIn[matrixIn>0], probs=seq(0,1, by=1/numberOfBins), na.rm=TRUE)),
-                                                 include.lowest=TRUE))
+        breaks=unique(quantile(matrixIn[matrixIn>0], probs=seq(0,1, by=1/numberOfBins), na.rm=TRUE)),
+        include.lowest=TRUE))
     return(quantileValues)
 }
