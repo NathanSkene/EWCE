@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created this based on https://docs.travis-ci.com/user/docker/
-Rscript -e 'pkgdown::deploy_site_github()';
-docker build -t nathanskene/ewce . ;
+Rscript -e 'pkgdown::deploy_site_github(ssh_id = Sys.getenv("TRAVIS_DEPLOY_KEY", ""))';
+docker build -q -t nathanskene/ewce . ;
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
 docker push nathanskene/ewce;
