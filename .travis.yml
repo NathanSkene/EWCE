@@ -11,32 +11,31 @@ r:
 services:
 - docker
 
+before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+
 cache: packages
 
 # This section is included to ensure that an earlier version of the XML package is installed, as the latest version of
 # XML depends on R4.0
 before_install:
+- echo TRAVIS_OS_NAME
+- echo $TRAVIS_R_VERSION
 - wget https://cran.r-project.org/src/contrib/Archive/XML/XML_3.99-0.3.tar.gz
 - R CMD INSTALL XML_3.99-0.3.tar.gz
 - rm XML_3.99-0.3.tar.gz
 
-# This is intended to run Docker only when the build on linux/release is completed succesfully
-matrix:
-    include:
-    - os: linux
-      r: release
-    after_success:
-        - docker image build -t nathanskene/EWCE . ;
-        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-        - docker push nathanskene/ewce;
+# This is intended to run Docker only when the build on linux/release is completed succesfully on the master branch
+deploy:
+  provider: script
+  script: bash docker_push
+  skip_cleanup: true
+  on:
+    branch: master
 
+# Email me if it fails to build!
 notifications:
-  webhooks:
-    on_success: always
-    on_failure: always
-    on_start: never
-    on_cancel: never
-    on_error: never
   email:
     recipients:
       - n.skene@imperial.ac.uk
+    on_success: never # default: change
+    on_failure: always # default: always
