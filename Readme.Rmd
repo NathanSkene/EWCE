@@ -1,0 +1,98 @@
+---
+title: "Expression Weighted Celltype Enrichment with *EWCE*"
+author: "Nathan Skene"
+date: "`r Sys.Date()`"
+bibliography: inst/extdata/EWCE.bib
+csl: inst/extdata/nature.csl
+output: rmarkdown::github_document
+vignette: >
+  %\VignetteIndexEntry{Expression Weighted Celltype Enrichment with EWCE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}    
+---
+
+<!-- [![Build Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE) -->
+<!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
+
+```{r style, echo=FALSE, results='asis', message=FALSE}
+#if (!require("pacman")) install.packages("pacman")
+#if (!require("BiocManager")) install.packages("BiocManager")
+#if (!require("BiocStyle")) BiocManager::install("BiocStyle")
+#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
+
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy         = FALSE,
+                      warning      = FALSE,
+                      message      = FALSE)
+# rmarkdown::render("Readme.Rmd", envir=.GlobalEnv)
+```
+
+# Introduction
+
+The *EWCE* package is designed to facilitate expression weighted celltype enrichment analysis as described in our Frontiers in Neuroscience paper [@skene_2016].
+
+The package was originally designed to work with the single cell cortical transcriptome data from the Linnarsson lab[@zeisel2015cell] which is available at http://linnarssonlab.org/cortex/. Using this package it is possible to read in any single cell transcriptome data, provided that you have a cell by gene expression matrix (with each cell as a seperate column) and a seperate annotation dataframe, with a row for each cell.
+
+The *EWCE* process involves testing for whether the genes in a target list have higher levels of expression in a given cell type than can reasonably be expected by chance. The probability distribution for this is estimated by randomly generating gene lists of equal length from a set of background genes.
+
+The *EWCE* method can be applied to any gene list. In the paper we reported it's application to genetic and transcriptomic datasets, and in this vignette we detail how this can be done. 
+
+Note that throughout this vignette we use the terms 'cell type' and 'sub-cell type' to refer to two levels of annotation of what a cell type is. This is described in further detail in our paper[@skene_2016], but relates to the two levels of annotation provided in the Linnarsson dataset[@zeisel2015cell]. In this dataset a cell is described as having a cell type (i.e. 'Interneuron') and subcell type (i.e. 'Int11' a.k.a Interneuron type 11).
+
+# Overview
+
+The process for using *EWCE* essentially involves three steps.
+
+First, one needs to load the relevant single cell transcriptome dataset. Single cell transcriptome data is read in from a text file using the `read_celltype_data`.
+
+The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated
+publication.
+
+Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
+
+# Installing EWCE
+
+The *EWCE* package is available from github. The old version available from the Bioconductor archives is depreciated and should not be used. To be able to install the package one needs first to install R then run the following lines of code:
+
+```
+if (!require("devtools")) {
+  install.packages("devtools")
+}
+devtools::install_github("nathanskene/ewce")
+```
+
+You can then load the package:
+
+```{r }
+library(EWCE)
+```
+
+# Using with docker
+
+Images with the latest version of EWCE are regularly pushed to Dockerhub. If you already have docker installed you can load up a working copy using the following commands. Note, that you will need to replace the initial directory path with a location on your computer that you wish to be able to access from within the docker image.
+
+```
+docker pull nathanskene/ewce
+docker run --name=ewce -e PASSWORD=ewcedocker -p 8790:8790 -d -v /User/$USER:/var/ewce nathanskene/ewce:latest
+docker exec -ti ewce R
+```
+
+# Getting started
+
+See the vignette for instructions on usage
+
+# Citation
+
+If you use the EWCE package as well then please cite
+
+[Skene, et al. Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment.
+Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
+
+If you use the cortex/hippocampus single cell data associated with this package then please cite the following papers:
+
+[Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq.
+Science, 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
+
+
+# References
+
