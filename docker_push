@@ -1,9 +1,6 @@
 #!/bin/bash
 # Created this based on https://docs.travis-ci.com/user/docker/
-if [ “$TRAVIS_OS_NAME” == “linux” ];
-then
-    Rscript -e 'pkgdown::deploy_site_github();
-    docker image build -t nathanskene/EWCE . ;
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-    docker push nathanskene/ewce;
-fi
+Rscript -e 'pkgdown::deploy_site_github()';
+docker build -t nathanskene/ewce . ;
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+docker push nathanskene/ewce;
