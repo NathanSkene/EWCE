@@ -10,7 +10,6 @@ vignette: >
   %\usepackage[utf8]{inputenc}    
 ---
 
-<!-- [![Build Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE) -->
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
