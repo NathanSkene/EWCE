@@ -20,6 +20,7 @@ cache: packages
 before_install:
 - echo TRAVIS_OS_NAME
 - echo $TRAVIS_R_VERSION
+- echo $TRAVIS_R_VERSION_STRING
 - wget https://cran.r-project.org/src/contrib/Archive/XML/XML_3.99-0.3.tar.gz
 - R CMD INSTALL XML_3.99-0.3.tar.gz
 - rm XML_3.99-0.3.tar.gz
@@ -30,7 +31,8 @@ deploy:
   script: bash docker_push
   skip_cleanup: true
   on:
-    branch: master
+#    branch: master
+     condition: "$TRAVIS_OS_NAME = linux && $TRAVIS_R_VERSION_STRING = 'release'"
 
 # Email me if it fails to build!
 notifications:
