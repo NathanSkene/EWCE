@@ -14,4 +14,7 @@ RUN apt-get update &&\
     libssh2-1-dev
 
 # install the dependencies of the R package located at `/ewce`
-RUN R -e "devtools::install_dev_deps('/ewce', dep = TRUE)"
+RUN R -e "devtools::install_dev_deps('/ewce', dep = TRUE, quiet=TRUE)"
+
+# install the package
+RUN R -e "devtools::install_github('nathanskene/ewce',quiet=TRUE)"

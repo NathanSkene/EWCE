@@ -13,3 +13,5 @@ vignettes/.build.timestamp
 vignettes/EWCE_cache/*
 vignettes/EWCE_files/*
 
+docs
+docs/
