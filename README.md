@@ -1,26 +1,15 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
 Nathan Skene
-2020-08-19
-
-<!-- [![Build Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE) -->
+2020-08-20
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelector("h1").className = "title";
-});
-</script>
+<!-- badges: start -->
 
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-  var links = document.links;  
-  for (var i = 0, linksLength = links.length; i < linksLength; i++)
-    if (links[i].hostname != window.location.hostname)
-      links[i].target = '_blank';
-});
-</script>
+[![Build
+Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE)
+<!-- badges: end -->
 
 # Introduction
 
