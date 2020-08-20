@@ -17,4 +17,4 @@ RUN apt-get update &&\
 RUN R -e "devtools::install_dev_deps('/ewce', dep = TRUE, quiet=TRUE)"
 
 # install the package
-RUN R -e "devtools::install_github("nathanskene/ewce",quiet=TRUE)"
+RUN R -e "devtools::install_github('nathanskene/ewce',quiet=TRUE)"
