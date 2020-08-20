@@ -15,3 +15,6 @@ RUN apt-get update &&\
 
 # install the dependencies of the R package located at `/ewce`
 RUN R -e "devtools::install_dev_deps('/ewce', dep = TRUE)"
+
+# install the package
+RUN R -e "devtools::install_github("nathanskene/ewce")"
