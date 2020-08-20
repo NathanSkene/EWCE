@@ -90,7 +90,11 @@ you wish to be able to access from within the docker image.
 
 # Getting started
 
-See the vignette for instructions on usage
+See the [vignette
+website](https://nathanskene.github.io/EWCE/articles/EWCE.html) for
+up-to-date instructions on usage.
+
+If you have any problems please do file an issue here on github.
 
 # Citation
 
