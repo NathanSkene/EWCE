@@ -11,21 +11,18 @@ vignette: >
   %\usepackage[utf8]{inputenc}    
 ---
 
-<!-- [![Build Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE) -->
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
-```{r style, echo=FALSE, results='asis', message=FALSE}
-#if (!require("pacman")) install.packages("pacman")
-#if (!require("BiocManager")) install.packages("BiocManager")
-#if (!require("BiocStyle")) BiocManager::install("BiocStyle")
-#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
-
-BiocStyle::markdown()
+```{r, echo=FALSE}
 knitr::opts_chunk$set(tidy         = FALSE,
                       warning      = FALSE,
                       message      = FALSE)
 # rmarkdown::render("Readme.Rmd", envir=.GlobalEnv)
 ```
+
+<!-- badges: start -->
+[![Build Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE)
+<!-- badges: end -->
 
 # Introduction
 
