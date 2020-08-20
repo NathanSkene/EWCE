@@ -31,7 +31,7 @@ deploy:
   script: bash docker_push
   skip_cleanup: true
   on:
-    branch: dev-pkgdown
+    branch: master
     condition: "$TRAVIS_OS_NAME = linux && $TRAVIS_R_VERSION_STRING = 'release'"
 
 # Email me if it fails to build!
