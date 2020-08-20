@@ -1,0 +1,6 @@
+title: EWCE (Expression Weighted Celltype Enrichment)
+url: https://nathanskene.github.io/EWCE/index.html
+template:
+  params:
+    bootswatch: flatly
+    ganalytics: UA-175929032-1
