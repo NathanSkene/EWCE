@@ -3,7 +3,7 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   EWCE: EWCE.html
-last_built: 2020-08-20T09:31Z
+last_built: 2020-08-20T10:39Z
 urls:
   reference: https://nathanskene.github.io/EWCE/index.html/reference
   article: https://nathanskene.github.io/EWCE/index.html/articles
