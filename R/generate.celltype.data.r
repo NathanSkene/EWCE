@@ -62,10 +62,16 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath
             }
             ctd_oneLevel$mean_exp = as.matrix(expMatrix)
         }else{
+            # Sum reads in each cell type
             #mean_exp = apply(expMatrix,1,aggregate.over.celltypes,ctd_oneLevel$annot)
             mm <- model.matrix(~ 0 + ctd_oneLevel$annot)
             colnames(mm) <- names(table(ctd_oneLevel$annot))
             mat.summary.mm1 <- expMatrix %*% mm
+
+            # Divide by the number of cells to get the mean
+            cellCounts = table(ctd_oneLevel$annot)
+            for(i in 1:dim(mat.summary.mm1)[2]){mat.summary.mm1[,i] = mat.summary.mm1[,i]/cellCounts[i]}
+
             ctd_oneLevel$mean_exp = as.matrix(mat.summary.mm1)
         }
         return(ctd_oneLevel)
