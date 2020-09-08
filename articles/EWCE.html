@@ -73,7 +73,7 @@
 </h1>
                         <h4 class="author">Nathan Skene</h4>
             
-            <h4 class="date">2020-08-20</h4>
+            <h4 class="date">2020-09-08</h4>
       
       
       <div class="hidden name"><code>EWCE.Rmd</code></div>
@@ -127,12 +127,14 @@ document.addEventListener("DOMContentLoaded", function() {
 library(devtools)
 install_github("nathanskene/ewce")</a></code></pre>
 <p>You can then load the package:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">EWCE</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cowplot</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">limma</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readxl</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>())</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">EWCE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://wilkelab.org/cowplot">cowplot</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://bioinf.wehi.edu.au/limma">limma</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://readxl.tidyverse.org">readxl</a></span>)
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/cowplot/man/theme_cowplot.html">theme_cowplot</a></span>())
+</pre></div>
 </div>
 <div id="loading-single-cell-transcriptome-data" class="section level1">
 <h1 class="hasAnchor">
@@ -149,10 +151,12 @@ path = "expression_mRNA_17-Aug-2014.txt"
 
 cortex_mrna  = load.linnarsson.sct.data(path)</a></code></pre>
 <p>To check the data we can quickly plot the distribution of expression of a given gene across all the cell types.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cortex_mrna</span>)
-<span class="no">gene</span><span class="kw">=</span><span class="st">"Necab1"</span>
-<span class="no">cellExpDist</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">e</span><span class="kw">=</span><span class="no">cortex_mrna</span>$<span class="no">exp</span>[<span class="no">gene</span>,],<span class="kw">l1</span><span class="kw">=</span><span class="no">cortex_mrna</span>$<span class="no">annot</span>[<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">cortex_mrna</span>$<span class="no">exp</span>),]$<span class="no">level1class</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">cellExpDist</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">l1</span>,<span class="kw">y</span><span class="kw">=</span><span class="no">e</span>)) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Cell type"</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Unique Molecule Count"</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.text.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">1</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">cortex_mrna</span>)
+<span class="kw">gene</span><span class="op">=</span><span class="st">"Necab1"</span>
+<span class="kw">cellExpDist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(e=<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>[<span class="kw">gene</span>,],l1=<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">annot</span>[<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>),]<span class="op">$</span><span class="kw">level1class</span>)
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">cellExpDist</span>) <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">l1</span>,y=<span class="kw">e</span>)) <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Cell type"</span>) <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Unique Molecule Count"</span>) <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.text.x = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(angle = <span class="fl">90</span>, hjust = <span class="fl">1</span>)) 
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. The first time you run it you will need to download the MRK_List2 file from MGI which lists known synonyms for MGI gene symbols. We recommend running this on all input datasets.</p>
 <pre><code>if(!file.exists("MRK_List2.rpt")){
@@ -164,19 +168,23 @@ cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.r
 <h2 class="hasAnchor">
 <a href="#drop-genes" class="anchor"></a>Drop genes</h2>
 <p>The vignette takes a while to go through if you use all genes. So let’s restrict to 1000 random genes.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">nKeep</span> <span class="kw">=</span> <span class="fl">1000</span>
-<span class="no">must_keep</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">nKeep</span> <span class="op">=</span> <span class="fl">1000</span>
+<span class="kw">must_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123458</span>)
-<span class="no">keep_genes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">must_keep</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">cortex_mrna</span>$<span class="no">exp</span>),<span class="fl">997</span>))
-<span class="no">cortex_mrna</span>$<span class="no">exp</span> <span class="kw">=</span> <span class="no">cortex_mrna</span>$<span class="no">exp</span>[<span class="no">keep_genes</span>,]</pre></body></html></div>
+<span class="kw">keep_genes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">must_keep</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>),<span class="fl">997</span>))
+<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span> <span class="op">=</span> <span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>[<span class="kw">keep_genes</span>,]
+</pre></div>
 </div>
 <div id="transform-the-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#transform-the-data" class="anchor"></a>Transform the data</h2>
 <p>A different number of reads is found across each cell. We suggest using scTransform to normalise for differences due to cell size, then linearly scale. Note that this might be slow.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># devtools::install_github(repo = 'ChristophH/sctransform')</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sctransform</span>)
-<span class="no">scT</span> <span class="kw">=</span> <span class="kw pkg">sctransform</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sctransform/man/vst.html">vst</a></span>(<span class="no">cortex_mrna</span>$<span class="no">exp</span>, <span class="kw">return_cell_attr</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co"># devtools::install_github(repo = 'ChristophH/sctransform')</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/ChristophH/sctransform">sctransform</a></span>)
+<span class="kw">scT</span> <span class="op">=</span> <span class="kw">sctransform</span>::<span class="fu"><a href="https://rdrr.io/pkg/sctransform/man/vst.html">vst</a></span>(<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>, return_cell_attr = <span class="fl">TRUE</span>)
+</pre></div>
 <pre><code>## 
   |                                                                            
   |                                                                      |   0%
@@ -199,7 +207,9 @@ cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.r
   |====================================================                  |  75%
   |                                                                            
   |======================================================================| 100%</code></pre>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">cortex_mrna</span>$<span class="no">exp_scT</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sctransform/man/correct_counts.html">correct_counts</a></span>(<span class="no">scT</span>, <span class="no">cortex_mrna</span>$<span class="no">exp</span>) <span class="co"># umi_corrected</span></pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp_scT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sctransform/man/correct_counts.html">correct_counts</a></span>(<span class="kw">scT</span>, <span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp</span>) <span class="co"># umi_corrected</span>
+</pre></div>
 <pre><code>## 
   |                                                                            
   |                                                                      |   0%
@@ -211,7 +221,9 @@ cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.r
   |====================================================                  |  75%
   |                                                                            
   |======================================================================| 100%</code></pre>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">cortex_mrna</span>$<span class="no">exp_scT_normed</span> <span class="kw">=</span> <span class="kw pkg">Matrix</span><span class="kw ns">::</span><span class="fu">t</span>(<span class="kw pkg">Matrix</span><span class="kw ns">::</span><span class="fu">t</span>(<span class="no">cortex_mrna</span>$<span class="no">exp_scT</span>)*(<span class="fl">1</span>/<span class="kw pkg">Matrix</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colSums</a></span>(<span class="no">cortex_mrna</span>$<span class="no">exp_scT</span>)))</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp_scT_normed</span> <span class="op">=</span> <span class="kw">Matrix</span>::<span class="fu">t</span>(<span class="kw">Matrix</span>::<span class="fu">t</span>(<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp_scT</span>)<span class="op">*</span>(<span class="fl">1</span><span class="op">/</span><span class="kw">Matrix</span>::<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colSums</a></span>(<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp_scT</span>)))
+</pre></div>
 <p>Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this scTransform step.</p>
 </div>
 <div id="calculate-specificity-matrices" class="section level2">
@@ -220,18 +232,26 @@ cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.r
 <p>The next steps are as follows: 1) Drop genes which do not show significant evidence of varying between level 2 celltypes (based on ANOVA) 2) Calculate cell type averages and specificity for each gene 3) Drop all genes which do not have 1:1 mouse:human orthologs</p>
 <p>The last step is only neccesary if you plan to compare to human data, i.e. genesets resulting from human genetics.</p>
 <p>Rather than returning the data directly, the functions save the calculated data to a file and the filename is returned.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Generate celltype data for just the cortex/hippocampus data</span>
-<span class="no">exp_CortexOnly_DROPPED</span> <span class="kw">=</span> <span class="fu"><a href="../reference/drop.uninformative.genes.html">drop.uninformative.genes</a></span>(<span class="kw">exp</span><span class="kw">=</span><span class="no">cortex_mrna</span>$<span class="no">exp_scT_normed</span>,<span class="kw">level2annot</span> <span class="kw">=</span> <span class="no">cortex_mrna</span>$<span class="no">annot</span>$<span class="no">level2class</span>)
-<span class="no">annotLevels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">level1class</span><span class="kw">=</span><span class="no">cortex_mrna</span>$<span class="no">annot</span>$<span class="no">level1class</span>,<span class="kw">level2class</span><span class="kw">=</span><span class="no">cortex_mrna</span>$<span class="no">annot</span>$<span class="no">level2class</span>)
-<span class="no">fNames_CortexOnly</span> <span class="kw">=</span> <span class="fu"><a href="../reference/generate.celltype.data.html">generate.celltype.data</a></span>(<span class="kw">exp</span><span class="kw">=</span><span class="no">exp_CortexOnly_DROPPED</span>,<span class="kw">annotLevels</span><span class="kw">=</span><span class="no">annotLevels</span>,<span class="kw">groupName</span><span class="kw">=</span><span class="st">"kiCortexOnly"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="co"># Generate celltype data for just the cortex/hippocampus data</span>
+<span class="kw">exp_CortexOnly_DROPPED</span> <span class="op">=</span> <span class="fu"><a href="../reference/drop.uninformative.genes.html">drop.uninformative.genes</a></span>(exp=<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">exp_scT_normed</span>,level2annot = <span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">annot</span><span class="op">$</span><span class="kw">level2class</span>)
+<span class="kw">annotLevels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(level1class=<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">annot</span><span class="op">$</span><span class="kw">level1class</span>,level2class=<span class="kw">cortex_mrna</span><span class="op">$</span><span class="kw">annot</span><span class="op">$</span><span class="kw">level2class</span>)
+<span class="kw">fNames_CortexOnly</span> <span class="op">=</span> <span class="fu"><a href="../reference/generate.celltype.data.html">generate.celltype.data</a></span>(exp=<span class="kw">exp_CortexOnly_DROPPED</span>,annotLevels=<span class="kw">annotLevels</span>,groupName=<span class="st">"kiCortexOnly"</span>)
+</pre></div>
 <pre><code>## [1] "Using 1 cores"</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">fNames_CortexOnly</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">fNames_CortexOnly</span>)
+</pre></div>
 <pre><code>## [1] "~//CellTypeData_kiCortexOnly.rda"</code></pre>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">fNames_CortexOnly</span> <span class="kw">=</span> <span class="fu"><a href="../reference/filter.genes.without.1to1.homolog.html">filter.genes.without.1to1.homolog</a></span>(<span class="no">fNames_CortexOnly</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">fNames_CortexOnly</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="kw">fNames_CortexOnly</span> <span class="op">=</span> <span class="fu"><a href="../reference/filter.genes.without.1to1.homolog.html">filter.genes.without.1to1.homolog</a></span>(<span class="kw">fNames_CortexOnly</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">fNames_CortexOnly</span>)
+</pre></div>
 <pre><code>## [1] "~//CellTypeData_kiCortexOnly.rda"         
 ## [2] "~//CellTypeData_kiCortexOnly_1to1only.rda"</code></pre>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="no">fNames_CortexOnly</span>[<span class="fl">1</span>])</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw">fNames_CortexOnly</span>[<span class="fl">1</span>])
+</pre></div>
 </div>
 <div id="merging-two-single-cell-datasets" class="section level2">
 <h2 class="hasAnchor">
@@ -290,27 +310,33 @@ load(fNames_MergedKI[2])</code></pre>
 <p>Note firstly, that it is a list such that ctd[[1]] contains data relating to level 1 annotations and ctd[[2]] relates to level 2 annotations.</p>
 <p>Using the ggplot2 package to visualise the data, let us examine the expression of a few genes. If you have not already done so you will need to first install the ggplot2 package with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("ggplot2")</a></code>.</p>
 <p>For this example we use a subset of the genes from the merged dataset generated above, which is accessed using <code><a href="https://rdrr.io/r/utils/data.html">data(ctd)</a></code>. We recommend that you use the code above to regenerate this though and drop the <code>data</code> command from the below section.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"ctd"</span>)
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"ctd"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">reshape2</span>)
-<span class="no">genes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span>)
-<span class="no">exp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="no">ctd</span><span class="kw">[[</span><span class="fl">1</span>]]$<span class="no">mean_exp</span>[<span class="no">genes</span>,],<span class="no">genes</span>),<span class="kw">id.vars</span><span class="kw">=</span><span class="st">"genes"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">exp</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"AvgExp"</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">exp</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">Cell</span>,<span class="kw">y</span><span class="kw">=</span><span class="no">AvgExp</span>),<span class="kw">stat</span><span class="kw">=</span><span class="st">"identity"</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="no">Gene</span>~<span class="no">.</span>)+
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.text.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">1</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/hadley/reshape">reshape2</a></span>)
+<span class="kw">genes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span>)
+<span class="kw">exp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="kw">ctd</span>[[<span class="fl">1</span>]]<span class="op">$</span><span class="kw">mean_exp</span>[<span class="kw">genes</span>,],<span class="kw">genes</span>),id.vars=<span class="st">"genes"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">exp</span>) <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"AvgExp"</span>)
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">exp</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">Cell</span>,y=<span class="kw">AvgExp</span>),stat=<span class="st">"identity"</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="kw">Gene</span><span class="op">~</span><span class="kw">.</span>)<span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.text.x = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(angle = <span class="fl">90</span>, hjust = <span class="fl">1</span>))
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <p>This graph shows the average expression of three genes: <em>Apoe, Gfap</em> and <em>Gapdh</em>. While there are substantial differences in which cell types express these genes, the dominant effect seen here is the overall expression level of the data. For the purposes of this analysis though, we are not interested in overall expression level and only wish to know about the proportion of a genes expression which is found in a particular celltype. We can study this instead using the following code which examines the data frame <em>ctd[[1]]$specificity</em>:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">exp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">ctd</span><span class="kw">[[</span><span class="fl">1</span>]]$<span class="no">specificity</span>[<span class="no">genes</span>,]),<span class="no">genes</span>),<span class="kw">id.vars</span><span class="kw">=</span><span class="st">"genes"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">exp</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"Expression"</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">exp</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">Cell</span>,<span class="kw">y</span><span class="kw">=</span><span class="no">Expression</span>),<span class="kw">stat</span><span class="kw">=</span><span class="st">"identity"</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="no">Gene</span>~<span class="no">.</span>)+
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.text.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">1</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="kw">exp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">ctd</span>[[<span class="fl">1</span>]]<span class="op">$</span><span class="kw">specificity</span>[<span class="kw">genes</span>,]),<span class="kw">genes</span>),id.vars=<span class="st">"genes"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">exp</span>) <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"Expression"</span>)
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">exp</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">Cell</span>,y=<span class="kw">Expression</span>),stat=<span class="st">"identity"</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="kw">Gene</span><span class="op">~</span><span class="kw">.</span>)<span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.text.x = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(angle = <span class="fl">90</span>, hjust = <span class="fl">1</span>))
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 <p>We can now see in this graph that <em>Gfap</em> is the most specific to a cell type (Type 1 Astrocytes) of either of those three genes, with over 60% of it’s expression found in that cell type.</p>
 <p>It can also be seen that the majority of expression of Gapdh is in neurons but because their are a greater number of neuronal subtypes, the total expression proportion appears lower. We can examine expression across level 2 celltype level annotations by looking at <em>ctd[[2]]$specificity</em>:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">exp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">ctd</span><span class="kw">[[</span><span class="fl">2</span>]]$<span class="no">specificity</span>[<span class="no">genes</span>,]),<span class="no">genes</span>),<span class="kw">id.vars</span><span class="kw">=</span><span class="st">"genes"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">exp</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"Specificity"</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">exp</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">Cell</span>,<span class="kw">y</span><span class="kw">=</span><span class="no">Specificity</span>),<span class="kw">stat</span><span class="kw">=</span><span class="st">"identity"</span>)+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="no">Gene</span>~<span class="no">.</span>)+
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.text.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">1</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="kw">exp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">ctd</span>[[<span class="fl">2</span>]]<span class="op">$</span><span class="kw">specificity</span>[<span class="kw">genes</span>,]),<span class="kw">genes</span>),id.vars=<span class="st">"genes"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">exp</span>) <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gene"</span>,<span class="st">"Cell"</span>,<span class="st">"Specificity"</span>)
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">exp</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">Cell</span>,y=<span class="kw">Specificity</span>),stat=<span class="st">"identity"</span>)<span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="kw">Gene</span><span class="op">~</span><span class="kw">.</span>)<span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.text.x = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(angle = <span class="fl">90</span>, hjust = <span class="fl">1</span>))
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </div>
 </div>
@@ -321,8 +347,10 @@ load(fNames_MergedKI[2])</code></pre>
 <h2 class="hasAnchor">
 <a href="#preparing-gene-lists" class="anchor"></a>Preparing gene lists</h2>
 <p>For the first demonstration of EWCE we will test for whether genes that are genetically associated with Alzheimer’s disease are enriched in any particular celltype. This gene list is stored within the package are we access it by first loading the package and then the dataset:</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">example_genelist</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">example_genelist</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb24"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">example_genelist</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">example_genelist</span>)
+</pre></div>
 <pre><code>##  [1] "APOE"     "BIN1"     "CLU"      "ABCA7"    "CR1"      "PICALM"  
 ##  [7] "MS4A6A"   "CD33"     "MS4A4E"   "CD2AP"    "EOGA1"    "INPP5D"  
 ## [13] "MEF2C"    "HLA-DRB5" "ZCWPW1"   "NME8"     "PTK2B"    "CELF1"   
@@ -330,13 +358,17 @@ load(fNames_MergedKI[2])</code></pre>
 <p>All gene IDs are assumed by the package to be provided in gene symbol format (rather than Ensembl/Entrez). Symbols can be provided as either HGNC or MGI symbols, though the genelistSpecies argument will need to be set appropriately. Likewise, the single cell dataset can use either human or mouse gene symbols, but the sctSpecies argument must be set to either “human” or “mouse”. The default species for both is mouse.</p>
 <p>The example gene list here stores the human genes associated with disease, and hence are HGNC symbols.</p>
 <p>The next step is to determine the most suitable background set. The experimental methods used to find these gene are all genome wide, so there is no restriction imposed as a result of that. Thus our initial background set is the set of all human genes. Not all human genes have mouse orthologs however, so we need to drop all genes from the target and background set which do not have mouse orthologs. To save repeatedly querying biomaRt we have a stored dataset containing all the human orthologs of MGI genes, <code>mouse_to_human_homologs</code>. We can use this to obtain the mouse orthologs of the target and background genes at the same time as we drop genes without orthologs:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
-<span class="no">m2h</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
-<span class="no">mouse.hits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>[<span class="no">m2h</span>$<span class="no">HGNC.symbol</span> <span class="kw">%in%</span> <span class="no">example_genelist</span>,<span class="st">"MGI.symbol"</span>])
+<div class="sourceCode" id="cb26"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
+<span class="kw">m2h</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
+<span class="kw">mouse.hits</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span>[<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span> <span class="op">%in%</span> <span class="kw">example_genelist</span>,<span class="st">"MGI.symbol"</span>])
 <span class="co">#mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))</span>
-<span class="no">mouse.bg</span>  <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>$<span class="no">MGI.symbol</span>)</pre></body></html></div>
+<span class="kw">mouse.bg</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span><span class="op">$</span><span class="kw">MGI.symbol</span>)
+</pre></div>
 <p>The target list is now converted to MGI symbols:</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">mouse.hits</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb27"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">mouse.hits</span>)
+</pre></div>
 <pre><code>##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 ## [15] "Fermt2"  "Sorl1"</code></pre>
@@ -346,16 +378,20 @@ load(fNames_MergedKI[2])</code></pre>
 <h2 class="hasAnchor">
 <a href="#setting-analysis-parameters" class="anchor"></a>Setting analysis parameters</h2>
 <p>We now need to set the parameters for the analysis. For a publishable analysis we would want to generate over 10000 random lists and determine their expression levels, but for computational speed let us only use <code>reps=100</code>. We want to analyse level 1 annotations so set level to 1.</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">reps</span><span class="kw">=</span><span class="fl">100</span> <span class="co"># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
-<span class="no">level</span><span class="kw">=</span><span class="fl">1</span> <span class="co"># &lt;- Use level 1 annotations (i.e. Interneurons)</span></pre></body></html></div>
+<div class="sourceCode" id="cb29"><pre class="downlit">
+<span class="kw">reps</span><span class="op">=</span><span class="fl">100</span> <span class="co"># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
+<span class="kw">level</span><span class="op">=</span><span class="fl">1</span> <span class="co"># &lt;- Use level 1 annotations (i.e. Interneurons)</span>
+</pre></div>
 </div>
 <div id="running-ewce-analysis-on-genetic-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-ewce-analysis-on-genetic-data" class="anchor"></a>Running EWCE analysis on genetic data</h2>
 <p>We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows:</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># Bootstrap significance testing, without controlling for transcript length and GC content</span>
-<span class="no">full_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">mouse.hits</span>,<span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,
-                                <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="no">level</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb30"><pre class="downlit">
+<span class="co"># Bootstrap significance testing, without controlling for transcript length and GC content</span>
+<span class="kw">full_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">mouse.hits</span>,bg=<span class="kw">mouse.bg</span>,
+                                reps=<span class="kw">reps</span>,annotLevel=<span class="kw">level</span>)
+</pre></div>
 <pre><code>##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 ## [15] "Fermt2"  "Sorl1"  
@@ -383,7 +419,9 @@ load(fNames_MergedKI[2])</code></pre>
 ## [1] 0.74
 ## [1] ""</code></pre>
 <p>The main table of results is stored in <code>full_results$results</code>. We can see the most significant results using:</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">full_results</span>$<span class="no">results</span>[<span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="no">full_results</span>$<span class="no">results</span>$<span class="no">p</span>),<span class="fl">3</span>:<span class="fl">5</span>][<span class="fl">1</span>:<span class="fl">6</span>,])</pre></body></html></div>
+<div class="sourceCode" id="cb32"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">full_results</span><span class="op">$</span><span class="kw">results</span>[<span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="kw">full_results</span><span class="op">$</span><span class="kw">results</span><span class="op">$</span><span class="kw">p</span>),<span class="fl">3</span><span class="op">:</span><span class="fl">5</span>][<span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,])
+</pre></div>
 <pre><code>##                         p fold_change sd_from_mean
 ## microglia            0.03   1.6545449    2.1707880
 ## astrocytes_ependymal 0.13   1.3475807    1.3843592
@@ -392,28 +430,40 @@ load(fNames_MergedKI[2])</code></pre>
 ## endothelial-mural    0.73   0.8553370   -0.6302660
 ## pyramidal SS         0.74   0.8852074   -0.6913500</code></pre>
 <p>The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean:</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">full_results</span>$<span class="no">results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb34"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">full_results</span><span class="op">$</span><span class="kw">results</span>,mtc_method=<span class="st">"BH"</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 <p>For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. There is no automated way to align the dendrogram (that I’ve figured out yet) with the graph ticks, so this needs to be done manually in Inkscape.</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">full_results</span>$<span class="no">results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>,<span class="kw">ctd</span><span class="kw">=</span><span class="no">ctd</span>)$<span class="no">withDendro</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb35"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">full_results</span><span class="op">$</span><span class="kw">results</span>,mtc_method=<span class="st">"BH"</span>,ctd=<span class="kw">ctd</span>)<span class="op">$</span><span class="kw">withDendro</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <p>If you want to view the characteristics of enrichment for each gene within the list then the <code>generate.bootstrap.plots</code> function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The <code>listFileName</code> argument is used to give the generated graphs a particular file name.</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="../reference/generate.bootstrap.plots.html">generate.bootstrap.plots</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">mouse.hits</span>,<span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">full_results</span><span class="kw">=</span><span class="no">full_results</span>,<span class="kw">listFileName</span><span class="kw">=</span><span class="st">"VignetteGraphs"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb36"><pre class="downlit">
+<span class="fu"><a href="../reference/generate.bootstrap.plots.html">generate.bootstrap.plots</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">mouse.hits</span>,bg=<span class="kw">mouse.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>,full_results=<span class="kw">full_results</span>,listFileName=<span class="st">"VignetteGraphs"</span>)
+</pre></div>
 </div>
 <div id="running-ewce-analysis-on-genetic-data-with-controls-for-transcript-length-and-gc-content" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-ewce-analysis-on-genetic-data-with-controls-for-transcript-length-and-gc-content" class="anchor"></a>Running EWCE analysis on genetic data with controls for transcript length and GC-content</h2>
 <p>When analysing genes found through genetic association studies it is important to consider biases which might be introduced as a result of transcript length and GC-content. The package can control for these by selecting the bootstrap lists such that the <em>i<sup>th</sup></em> gene in the random list has properties similar to the<em>i<sup>th</sup></em> gene in the target list. To enable the algorithm to do this it needs to be passed the gene lists as HGNC symbols rather than MGI.</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="co">#human.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"HGNC.symbol"])</span>
+<div class="sourceCode" id="cb37"><pre class="downlit">
+<span class="co">#human.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"HGNC.symbol"])</span>
 <span class="co">#human.bg = unique(setdiff(m2h$HGNC.symbol,human.hits))</span>
-<span class="no">human.hits</span> <span class="kw">=</span> <span class="no">example_genelist</span>
-<span class="no">human.bg</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">human.hits</span>,<span class="no">m2h</span>$<span class="no">HGNC.symbol</span>))</pre></body></html></div>
+<span class="kw">human.hits</span> <span class="op">=</span> <span class="kw">example_genelist</span>
+<span class="kw">human.bg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">human.hits</span>,<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span>))
+</pre></div>
 <p>The bootstrapping function then takes different arguments:</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="co"># Bootstrap significance testing controlling for transcript length and GC content</span>
-<span class="no">cont_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">human.hits</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">human.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">geneSizeControl</span><span class="kw">=</span><span class="fl">TRUE</span>,<span class="kw">genelistSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb38"><pre class="downlit">
+<span class="co"># Bootstrap significance testing controlling for transcript length and GC content</span>
+<span class="kw">cont_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">human.hits</span>,
+                    bg=<span class="kw">human.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>,geneSizeControl=<span class="fl">TRUE</span>,genelistSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>)
+</pre></div>
 <p>We plot these results using <code>ewce.plot</code>:</p>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">cont_results</span>$<span class="no">results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb39"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">cont_results</span><span class="op">$</span><span class="kw">results</span>,mtc_method=<span class="st">"BH"</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
 <p>This shows that the controlled method generates enrichments that are generally comparable to the standard method.</p>
 </div>
@@ -421,10 +471,12 @@ load(fNames_MergedKI[2])</code></pre>
 <h2 class="hasAnchor">
 <a href="#running-ewce-analysis-on-cell-type-level-annotations" class="anchor"></a>Running EWCE analysis on cell type level annotations</h2>
 <p>Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># Bootstrap significance testing controlling for transcript length and GC content</span>
-<span class="no">cont_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">human.hits</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">human.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">2</span>,<span class="kw">geneSizeControl</span><span class="kw">=</span><span class="fl">TRUE</span>,<span class="kw">genelistSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">cont_results</span>$<span class="no">results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb40"><pre class="downlit">
+<span class="co"># Bootstrap significance testing controlling for transcript length and GC content</span>
+<span class="kw">cont_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">human.hits</span>,
+                    bg=<span class="kw">human.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">2</span>,geneSizeControl=<span class="fl">TRUE</span>,genelistSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">cont_results</span><span class="op">$</span><span class="kw">results</span>,mtc_method=<span class="st">"BH"</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-21-1.png" width="768"></p>
 <p>With the subcell analysis each microglial subtype was enriched and correspondingly we see here that the microglial celltype is enriched.</p>
 </div>
@@ -433,9 +485,11 @@ load(fNames_MergedKI[2])</code></pre>
 <a href="#plotting-results-from-multiple-gene-lists" class="anchor"></a>Plotting results from multiple gene lists</h2>
 <p>It is often useful to plot results from multiple gene list analyses together. The <code>ewce.plot</code> function allows multiple enrichment analyses to be performed together. To achieve this the results data frames are just appended onto each other, with an additional <code>list</code> column added detailing which analysis they relate to.</p>
 <p>To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.</p>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">gene.list.2</span> <span class="kw">=</span> <span class="no">mouse.bg</span>[<span class="fl">1</span>:<span class="fl">30</span>]
-<span class="no">second_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">gene.list.2</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb41"><pre class="downlit">
+<span class="kw">gene.list.2</span> <span class="op">=</span> <span class="kw">mouse.bg</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">30</span>]
+<span class="kw">second_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">gene.list.2</span>,
+                    bg=<span class="kw">mouse.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>)
+</pre></div>
 <pre><code>##  [1] "Rcl1"   "Myom1"  "Gpr12"  "Micu2"  "Pds5b"  "Jagn1"  "Rbm17"  "Trib2" 
 ##  [9] "Theg"   "Itpr1"  "Prmt5"  "Usp6nl" "Fgf9"   "Map1a"  "Samd11" "Noc2l" 
 ## [1] "astrocytes_ependymal"
@@ -461,10 +515,14 @@ load(fNames_MergedKI[2])</code></pre>
 ## [1] "Fold enrichment: 1.33359715224121"
 ## [1] "Standard deviations from mean: 2.00794278588598"
 ## [1] ""</code></pre>
-<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">full_res2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">full_results</span>$<span class="no">results</span>,<span class="kw">list</span><span class="kw">=</span><span class="st">"Alzheimers"</span>)
-<span class="no">scnd_res2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">second_results</span>$<span class="no">results</span>,<span class="kw">list</span><span class="kw">=</span><span class="st">"Second"</span>)
-<span class="no">merged_results</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">full_res2</span>,<span class="no">scnd_res2</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">total_res</span><span class="kw">=</span><span class="no">merged_results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb43"><pre class="downlit">
+<span class="kw">full_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">full_results</span><span class="op">$</span><span class="kw">results</span>,list=<span class="st">"Alzheimers"</span>)
+<span class="kw">scnd_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">second_results</span><span class="op">$</span><span class="kw">results</span>,list=<span class="st">"Second"</span>)
+<span class="kw">merged_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">full_res2</span>,<span class="kw">scnd_res2</span>)
+</pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(total_res=<span class="kw">merged_results</span>,mtc_method=<span class="st">"BH"</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
 <p>As expected, the second randomly generated gene list shows no significant enrichments.</p>
 </div>
@@ -478,10 +536,14 @@ load(fNames_MergedKI[2])</code></pre>
 <p>For the prior analyses the gene lists were not associated with any numeric values or directionality. The methodology for extending this form of analysis to transcriptomic studies simply involves thresholding the most upregulated and downregulated genes.</p>
 <p>To demonstrate this we have an example dataset <code>tt_alzh</code>. This data frame was generated using limma from a set of post-mortem tissue samples from brodmann area 46 which were described in a paper by the Haroutunian lab<span class="citation"><sup>3</sup></span>.</p>
 <p>The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function <code>ewce_expression_data</code> which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">tt_alzh</span>)
-<span class="no">tt_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">tt</span><span class="kw">=</span><span class="no">tt_alzh</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">ttSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb45"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">tt_alzh</span>)
+<span class="kw">tt_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(sct_data=<span class="kw">ctd</span>,tt=<span class="kw">tt_alzh</span>,annotLevel=<span class="fl">1</span>,ttSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>)
+</pre></div>
 <p>The results of this analysis can again be plotted using the <code>ewce.plot</code> function.</p>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">tt_results</span>$<span class="no">joint_results</span>)$<span class="no">plain</span></pre></body></html></div>
+<div class="sourceCode" id="cb46"><pre class="downlit">
+<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">tt_results</span><span class="op">$</span><span class="kw">joint_results</span>)<span class="op">$</span><span class="kw">plain</span>
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
 <p>As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.</p>
 </div>
@@ -489,32 +551,38 @@ load(fNames_MergedKI[2])</code></pre>
 <h2 class="hasAnchor">
 <a href="#generating-bootstrap-plots-for-transcriptomes" class="anchor"></a>Generating bootstrap plots for transcriptomes</h2>
 <p>A common request is to explain which differentially expressed genes are associated with a cell type…</p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="no">full_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/generate.bootstrap.plots.for.transcriptome.html">generate.bootstrap.plots.for.transcriptome</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">tt</span><span class="kw">=</span><span class="no">tt_alzh</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,
-  <span class="kw">full_results</span><span class="kw">=</span><span class="no">tt_results</span>,<span class="kw">listFileName</span><span class="kw">=</span><span class="st">"examples"</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">ttSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>,<span class="kw">onlySignif</span><span class="kw">=</span><span class="fl">FALSE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb47"><pre class="downlit">
+<span class="kw">full_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/generate.bootstrap.plots.for.transcriptome.html">generate.bootstrap.plots.for.transcriptome</a></span>(sct_data=<span class="kw">ctd</span>,tt=<span class="kw">tt_alzh</span>,annotLevel=<span class="fl">1</span>,
+  full_results=<span class="kw">tt_results</span>,listFileName=<span class="st">"examples"</span>,reps=<span class="kw">reps</span>,ttSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>,onlySignif=<span class="fl">FALSE</span>)
+</pre></div>
 </div>
 <div id="merging-multiple-transcriptome-studies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#merging-multiple-transcriptome-studies" class="anchor"></a>Merging multiple transcriptome studies</h2>
 <p>Where multiple transcriptomic studies have been performed with the same purpose, i.e. seeking differential expression in dlPFC of post-mortem schizophrenics, it is common to want to determine whether they exhibit any shared signal. EWCE can be used to merge the results of multiple studies.</p>
 <p>To demonstrate this we use a two further Alzheimer’s transcriptome dataset coming from Brodmann areas 36 and 44: these area stored in <code>tt_alzh_BA36</code> and <code>tt_alzh_BA44</code>. The first step is to run EWCE on each of these individually and store the output into one list.</p>
-<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="co"># Load the data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">tt_alzh_BA36</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">tt_alzh_BA44</span>)
+<div class="sourceCode" id="cb48"><pre class="downlit">
+<span class="co"># Load the data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">tt_alzh_BA36</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">tt_alzh_BA44</span>)
 
 <span class="co"># Run EWCE analysis</span>
-<span class="no">tt_results_36</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">tt</span><span class="kw">=</span><span class="no">tt_alzh_BA36</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">ttSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)
-<span class="no">tt_results_44</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">tt</span><span class="kw">=</span><span class="no">tt_alzh_BA44</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">ttSpecies</span><span class="kw">=</span><span class="st">"human"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)
+<span class="kw">tt_results_36</span> <span class="op">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(sct_data=<span class="kw">ctd</span>,tt=<span class="kw">tt_alzh_BA36</span>,annotLevel=<span class="fl">1</span>,ttSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>)
+<span class="kw">tt_results_44</span> <span class="op">=</span> <span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span>(sct_data=<span class="kw">ctd</span>,tt=<span class="kw">tt_alzh_BA44</span>,annotLevel=<span class="fl">1</span>,ttSpecies=<span class="st">"human"</span>,sctSpecies=<span class="st">"mouse"</span>)
 
 <span class="co"># Fill a list with the results</span>
-<span class="no">results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="no">tt_results</span>)
-<span class="no">results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="no">tt_results_36</span>,<span class="no">results</span>)
-<span class="no">results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="no">tt_results_44</span>,<span class="no">results</span>)
+<span class="kw">results</span> <span class="op">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="kw">tt_results</span>)
+<span class="kw">results</span> <span class="op">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="kw">tt_results_36</span>,<span class="kw">results</span>)
+<span class="kw">results</span> <span class="op">=</span> <span class="fu"><a href="../reference/add.res.to.merging.list.html">add.res.to.merging.list</a></span>(<span class="kw">tt_results_44</span>,<span class="kw">results</span>)
 
 <span class="co"># Perform the merged analysis</span>
-<span class="no">merged_res</span> <span class="kw">=</span> <span class="fu"><a href="../reference/merged_ewce.html">merged_ewce</a></span>(<span class="no">results</span>,<span class="kw">reps</span><span class="kw">=</span><span class="fl">10</span>) <span class="co"># &lt;- For publication reps should be higher</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">merged_res</span>)</pre></body></html></div>
+<span class="kw">merged_res</span> <span class="op">=</span> <span class="fu"><a href="../reference/merged_ewce.html">merged_ewce</a></span>(<span class="kw">results</span>,reps=<span class="fl">10</span>) <span class="co"># &lt;- For publication reps should be higher</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">merged_res</span>)
+</pre></div>
 <p>The results can then be plotted as normal using the <code>ewce.plot</code> function.</p>
-<div class="sourceCode" id="cb49"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="no">merged_res</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb49"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">merged_res</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
 <p>The merged results from all three Alzheimer’s brain regions are found to be remarkably similar, as was reported in our paper.</p>
 </div>
@@ -529,14 +597,16 @@ load(fNames_MergedKI[2])</code></pre>
 <p><a href="https://www.nature.com/articles/s41588-018-0129-5">Skene, et al. Genetic identification of brain cell types underlying schizophrenia. Nature Genetics, 2018.</a></p>
 <p>Those results were generated using an alternative enrichment method designed for use with GWAS Summary Statistics rather than gene sets. The same sort of approach can be extended to EWCE as well, and we have implemented it within this package. When testing for enrichment the other gene sets that are sampled are selected to have equivilent specificity in the controlled celltype.</p>
 <p>We demonstrate it’s use below to test whether the enrichment in astrocytes is still present after controlling for the enrichment within microglia:</p>
-<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
-<span class="no">m2h</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
-<span class="no">mouse.hits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>[<span class="no">m2h</span>$<span class="no">HGNC.symbol</span> <span class="kw">%in%</span> <span class="no">example_genelist</span>,<span class="st">"MGI.symbol"</span>])
-<span class="no">mouse.bg</span>  <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>$<span class="no">MGI.symbol</span>)
+<div class="sourceCode" id="cb50"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
+<span class="kw">m2h</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
+<span class="kw">mouse.hits</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span>[<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span> <span class="op">%in%</span> <span class="kw">example_genelist</span>,<span class="st">"MGI.symbol"</span>])
+<span class="kw">mouse.bg</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span><span class="op">$</span><span class="kw">MGI.symbol</span>)
 
-<span class="no">reps</span><span class="kw">=</span><span class="no">reps</span>
-<span class="no">unconditional_results</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">mouse.hits</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">genelistSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)</pre></body></html></div>
+<span class="kw">reps</span><span class="op">=</span><span class="kw">reps</span>
+<span class="kw">unconditional_results</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">mouse.hits</span>,
+                    bg=<span class="kw">mouse.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>,genelistSpecies=<span class="st">"mouse"</span>,sctSpecies=<span class="st">"mouse"</span>)
+</pre></div>
 <pre><code>##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 ## [15] "Fermt2"  "Sorl1"  
@@ -563,8 +633,10 @@ load(fNames_MergedKI[2])</code></pre>
 ## [1] "pyramidal SS"
 ## [1] 0.7
 ## [1] ""</code></pre>
-<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="no">conditional_results_micro</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">mouse.hits</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"microglia"</span>,<span class="kw">genelistSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb52"><pre class="downlit">
+<span class="kw">conditional_results_micro</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">mouse.hits</span>,
+                    bg=<span class="kw">mouse.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>,controlledCT=<span class="st">"microglia"</span>,genelistSpecies=<span class="st">"mouse"</span>,sctSpecies=<span class="st">"mouse"</span>)
+</pre></div>
 <pre><code>##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 ## [15] "Fermt2"  "Sorl1"  
@@ -591,8 +663,10 @@ load(fNames_MergedKI[2])</code></pre>
 ## [1] "pyramidal SS"
 ## [1] 0.3
 ## [1] ""</code></pre>
-<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="no">conditional_results_astro</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(<span class="kw">sct_data</span><span class="kw">=</span><span class="no">ctd</span>,<span class="kw">hits</span><span class="kw">=</span><span class="no">mouse.hits</span>,
-                    <span class="kw">bg</span><span class="kw">=</span><span class="no">mouse.bg</span>,<span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>,<span class="kw">annotLevel</span><span class="kw">=</span><span class="fl">1</span>,<span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"astrocytes_ependymal"</span>,<span class="kw">genelistSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>,<span class="kw">sctSpecies</span><span class="kw">=</span><span class="st">"mouse"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb54"><pre class="downlit">
+<span class="kw">conditional_results_astro</span> <span class="op">=</span> <span class="fu"><a href="../reference/bootstrap.enrichment.test.html">bootstrap.enrichment.test</a></span>(sct_data=<span class="kw">ctd</span>,hits=<span class="kw">mouse.hits</span>,
+                    bg=<span class="kw">mouse.bg</span>,reps=<span class="kw">reps</span>,annotLevel=<span class="fl">1</span>,controlledCT=<span class="st">"astrocytes_ependymal"</span>,genelistSpecies=<span class="st">"mouse"</span>,sctSpecies=<span class="st">"mouse"</span>)
+</pre></div>
 <pre><code>##  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 ##  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 ## [15] "Fermt2"  "Sorl1"  
@@ -619,11 +693,13 @@ load(fNames_MergedKI[2])</code></pre>
 ## [1] "pyramidal SS"
 ## [1] 0.51
 ## [1] ""</code></pre>
-<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="no">full_res1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">unconditional_results</span>$<span class="no">results</span>,<span class="kw">list</span><span class="kw">=</span><span class="st">"Unconditional Enrichment"</span>)
-<span class="no">full_res2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">conditional_results_micro</span>$<span class="no">results</span>,<span class="kw">list</span><span class="kw">=</span><span class="st">"Conditional Enrichment (Microglia controlled)"</span>)
-<span class="no">full_res3</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">conditional_results_astro</span>$<span class="no">results</span>,<span class="kw">list</span><span class="kw">=</span><span class="st">"Conditional Enrichment (Astrocyte controlled)"</span>)
-<span class="no">merged_results</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">full_res1</span>,<span class="no">full_res2</span>),<span class="no">full_res3</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(<span class="kw">total_res</span><span class="kw">=</span><span class="no">merged_results</span>,<span class="kw">mtc_method</span><span class="kw">=</span><span class="st">"BH"</span>)$<span class="no">plain</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb56"><pre class="downlit">
+<span class="kw">full_res1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">unconditional_results</span><span class="op">$</span><span class="kw">results</span>,list=<span class="st">"Unconditional Enrichment"</span>)
+<span class="kw">full_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">conditional_results_micro</span><span class="op">$</span><span class="kw">results</span>,list=<span class="st">"Conditional Enrichment (Microglia controlled)"</span>)
+<span class="kw">full_res3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">conditional_results_astro</span><span class="op">$</span><span class="kw">results</span>,list=<span class="st">"Conditional Enrichment (Astrocyte controlled)"</span>)
+<span class="kw">merged_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">full_res1</span>,<span class="kw">full_res2</span>),<span class="kw">full_res3</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/ewce.plot.html">ewce.plot</a></span>(total_res=<span class="kw">merged_results</span>,mtc_method=<span class="st">"BH"</span>)<span class="op">$</span><span class="kw">plain</span>)
+</pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 <p>When controlling for astrocytes the enrichment is astrocytes is totally abolished as expected, and vica versa. The enrichment in microglia remains strongly significant however after controlling for microglia, suggesting that this enrichment is independent of that in astrocytes.</p>
 </div>
@@ -631,45 +707,49 @@ load(fNames_MergedKI[2])</code></pre>
 <h2 class="hasAnchor">
 <a href="#gene-set-enrichment-analysis-controlling-for-cell-type-expression" class="anchor"></a>Gene set enrichment analysis controlling for cell type expression</h2>
 <p>Traditionally the standard analysis run on all gene sets was the GO enrichment analysis. Once you have established that a given gene list is enriched for a given celltype, it becomes questionable whether a GO enrichment is driven purely by the underlying cell type enrichment. For instance, it is well established that genes associated with schizophrenia are enriched for the human post-synaptic density genes, however, it has also been shown that schizophrenia is enriched for specificity in CA1 pyramidal neurons (which highly express hPSD genes). These two enrichments can be disassociated using the following analysis:</p>
-<div class="sourceCode" id="cb57"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
-<span class="no">m2h</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
+<div class="sourceCode" id="cb57"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mouse_to_human_homologs"</span>)
+<span class="kw">m2h</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">mouse_to_human_homologs</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span>)])
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"schiz_genes"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"id_genes"</span>)
-<span class="no">mouse.hits.schiz</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>[<span class="no">m2h</span>$<span class="no">HGNC.symbol</span> <span class="kw">%in%</span> <span class="no">schiz_genes</span>,<span class="st">"MGI.symbol"</span>])
-<span class="no">mouse.hits.id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>[<span class="no">m2h</span>$<span class="no">HGNC.symbol</span> <span class="kw">%in%</span> <span class="no">id_genes</span>,<span class="st">"MGI.symbol"</span>])
-<span class="no">mouse.bg</span>  <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>$<span class="no">MGI.symbol</span>)
+<span class="kw">mouse.hits.schiz</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span>[<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span> <span class="op">%in%</span> <span class="kw">schiz_genes</span>,<span class="st">"MGI.symbol"</span>])
+<span class="kw">mouse.hits.id</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span>[<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span> <span class="op">%in%</span> <span class="kw">id_genes</span>,<span class="st">"MGI.symbol"</span>])
+<span class="kw">mouse.bg</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span><span class="op">$</span><span class="kw">MGI.symbol</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"hpsd_genes"</span>)
-<span class="no">mouse.hpsd</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">m2h</span>[<span class="no">m2h</span>$<span class="no">HGNC.symbol</span> <span class="kw">%in%</span> <span class="no">hpsd_genes</span>,<span class="st">"MGI.symbol"</span>])
+<span class="kw">mouse.hpsd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">m2h</span>[<span class="kw">m2h</span><span class="op">$</span><span class="kw">HGNC.symbol</span> <span class="op">%in%</span> <span class="kw">hpsd_genes</span>,<span class="st">"MGI.symbol"</span>])
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"rbfox_genes"</span>)
 
-<span class="no">res_hpsd_schiz</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.schiz</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">mouse.hpsd</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"pyramidal CA1"</span>)
-<span class="no">res_rbfox_schiz</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.schiz</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">rbfox_genes</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"pyramidal CA1"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_hpsd_schiz</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_rbfox_schiz</span>)
+<span class="kw">res_hpsd_schiz</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.schiz</span>, functional_genes = <span class="kw">mouse.hpsd</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="st">"pyramidal CA1"</span>)
+<span class="kw">res_rbfox_schiz</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.schiz</span>, functional_genes = <span class="kw">rbfox_genes</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="st">"pyramidal CA1"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_hpsd_schiz</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_rbfox_schiz</span>)
 
-<span class="no">res_hpsd_id</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.id</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">mouse.hpsd</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"pyramidal SS"</span>)
-<span class="no">res_rbfox_id</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.id</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">rbfox_genes</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="st">"pyramidal SS"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_hpsd_id</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_rbfox_id</span>)</pre></body></html></div>
+<span class="kw">res_hpsd_id</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.id</span>, functional_genes = <span class="kw">mouse.hpsd</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="st">"pyramidal SS"</span>)
+<span class="kw">res_rbfox_id</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.id</span>, functional_genes = <span class="kw">rbfox_genes</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="st">"pyramidal SS"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_hpsd_id</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_rbfox_id</span>)
+</pre></div>
 <p>The analysis also tests for enrichment of Rbfox binding genes in the schizophrenia susceptibility genes, as well as both hPSD and Rbfox genes in Intellectual Disability genes. All of the enrichments are confirmed as still being present after controlling for the associated cell type, apart from the enrichment of PSD genes in Schizophrenia which falls from borderline to non-significant.</p>
 </div>
 <div id="controlling-for-multiple-cell-types" class="section level2">
 <h2 class="hasAnchor">
 <a href="#controlling-for-multiple-cell-types" class="anchor"></a>Controlling for multiple cell types</h2>
-<div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="no">controlledCTs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span>)
+<div class="sourceCode" id="cb58"><pre class="downlit">
+<span class="kw">controlledCTs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span>)
 
-<span class="no">res_hpsd_schiz</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.schiz</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">mouse.hpsd</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="no">controlledCTs</span>)
-<span class="no">res_rbfox_schiz</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.schiz</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">rbfox_genes</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="no">controlledCTs</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_hpsd_schiz</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_rbfox_schiz</span>)
+<span class="kw">res_hpsd_schiz</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.schiz</span>, functional_genes = <span class="kw">mouse.hpsd</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="kw">controlledCTs</span>)
+<span class="kw">res_rbfox_schiz</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.schiz</span>, functional_genes = <span class="kw">rbfox_genes</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="kw">controlledCTs</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_hpsd_schiz</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_rbfox_schiz</span>)
 
-<span class="no">res_hpsd_id</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.id</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">mouse.hpsd</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="no">controlledCTs</span>)
-<span class="no">res_rbfox_id</span> <span class="kw">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(<span class="kw">disease_genes</span><span class="kw">=</span><span class="no">mouse.hits.id</span>, <span class="kw">functional_genes</span> <span class="kw">=</span> <span class="no">rbfox_genes</span>, <span class="kw">bg_genes</span> <span class="kw">=</span> <span class="no">mouse.bg</span>, <span class="kw">sct_data</span> <span class="kw">=</span> <span class="no">ctd</span>, <span class="kw">annotLevel</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">reps</span><span class="kw">=</span><span class="no">reps</span>, <span class="kw">controlledCT</span><span class="kw">=</span><span class="no">controlledCTs</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_hpsd_id</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">res_rbfox_id</span>)</pre></body></html></div>
+<span class="kw">res_hpsd_id</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.id</span>, functional_genes = <span class="kw">mouse.hpsd</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="kw">controlledCTs</span>)
+<span class="kw">res_rbfox_id</span> <span class="op">=</span> <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span>(disease_genes=<span class="kw">mouse.hits.id</span>, functional_genes = <span class="kw">rbfox_genes</span>, bg_genes = <span class="kw">mouse.bg</span>, sct_data = <span class="kw">ctd</span>, annotLevel = <span class="fl">1</span>, reps=<span class="kw">reps</span>, controlledCT=<span class="kw">controlledCTs</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_hpsd_id</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">res_rbfox_id</span>)
+</pre></div>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -704,7 +784,7 @@ load(fNames_MergedKI[2])</code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

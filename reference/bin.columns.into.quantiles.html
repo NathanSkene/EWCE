@@ -125,7 +125,7 @@
     <p><code>bin.columns.into.quantiles</code> is an internal function used to convert a matrix of specificity (with columns of cell types) intom a matrix of specificity quantiles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bin.columns.into.quantiles</span>(<span class='no'>matrixIn</span>, <span class='kw'>numberOfBins</span> <span class='kw'>=</span> <span class='fl'>40</span>)</pre>
+    <pre class="usage"><span class='fu'>bin.columns.into.quantiles</span>(<span class='kw'>matrixIn</span>, numberOfBins = <span class='fl'>40</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,10 +145,11 @@
     <p>A matrix with same shape as matrixIn but with columns storing quantiles instead of specificity</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ctd</span>)
-<span class='no'>ctd</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>specificity_quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='no'>ctd</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>specificity</span>,<span class='fl'>2</span>,
-                                       <span class='kw'>FUN</span><span class='kw'>=</span><span class='no'>bin.columns.into.quantiles</span>,
-                                       <span class='kw'>numberOfBins</span><span class='kw'>=</span><span class='fl'>40</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>ctd</span>)
+<span class='kw'>ctd</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>specificity_quantiles</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='kw'>ctd</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>specificity</span>,<span class='fl'>2</span>,
+                                       FUN=<span class='kw'>bin.columns.into.quantiles</span>,
+                                       numberOfBins=<span class='fl'>40</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -164,7 +165,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -125,7 +125,7 @@
     <p><code>add.res.to.merging.list</code> Adds EWCE results to a list for merging analysis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add.res.to.merging.list</span>(<span class='no'>full_res</span>, <span class='kw'>existing_results</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add.res.to.merging.list</span>(<span class='kw'>full_res</span>, existing_results = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,13 +152,14 @@ this is the first item in the list.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
 
 <span class='co'># Load the data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tt_alzh</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tt_alzh_BA36</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tt_alzh_BA44</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh_BA36</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh_BA44</span>)
 
 <span class='co'># Run EWCE analysis</span>
-<span class='no'>tt_results</span> <span class='kw'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-     <span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div><div class='output co'>#&gt;   [1] "Myom1"         "Rbm17"         "Max"           "Mbd3"         
+<span class='kw'>tt_results</span> <span class='op'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh</span>,annotLevel=<span class='fl'>1</span>,
+     ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+</div><div class='output co'>#&gt;   [1] "Myom1"         "Rbm17"         "Max"           "Mbd3"         
 #&gt;   [5] "Wdr33"         "Acss1"         "Pcyt1b"        "Bcam"         
 #&gt;   [9] "Prpf38b"       "Ppp2r5c"       "Ica1"          "Cobl"         
 #&gt;  [13] "Marveld1"      "Gemin4"        "Zfp668"        "Casc3"        
@@ -319,8 +320,9 @@ this is the first item in the list.</p></td>
 #&gt; [1] 0
 #&gt; [1] "Fold enrichment: 1.29635745327498"
 #&gt; [1] "Standard deviations from mean: 5.82227295327463"
-#&gt; [1] ""</div><div class='input'><span class='no'>tt_results_36</span> <span class='kw'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh_BA36</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-     <span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div><div class='output co'>#&gt;   [1] "Akap14"        "Arsb"          "Pigv"          "Zzz3"         
+#&gt; [1] ""</div><div class='input'><span class='kw'>tt_results_36</span> <span class='op'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh_BA36</span>,annotLevel=<span class='fl'>1</span>,
+     ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+</div><div class='output co'>#&gt;   [1] "Akap14"        "Arsb"          "Pigv"          "Zzz3"         
 #&gt;   [5] "Jtb"           "Slc39a1"       "Gpm6b"         "Heph"         
 #&gt;   [9] "Rps11"         "Cobl"          "Dlg5"          "Mmaa"         
 #&gt;  [13] "Vgll4"         "Pno1"          "Aga"           "Llgl1"        
@@ -472,8 +474,9 @@ this is the first item in the list.</p></td>
 #&gt; [1] ""
 #&gt; [1] "pyramidal SS"
 #&gt; [1] 0.11
-#&gt; [1] ""</div><div class='input'><span class='no'>tt_results_44</span> <span class='kw'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh_BA44</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-     <span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div><div class='output co'>#&gt;   [1] "Creb3"         "Tmem87a"       "Tyk2"          "Wdr31"        
+#&gt; [1] ""</div><div class='input'><span class='kw'>tt_results_44</span> <span class='op'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh_BA44</span>,annotLevel=<span class='fl'>1</span>,
+     ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+</div><div class='output co'>#&gt;   [1] "Creb3"         "Tmem87a"       "Tyk2"          "Wdr31"        
 #&gt;   [5] "Pex5"          "Vwa1"          "Acss1"         "Prmt2"        
 #&gt;   [9] "Htatip2"       "Rgs10"         "Dock1"         "Dennd5a"      
 #&gt;  [13] "Dhx16"         "Mcf2l"         "Flii"          "Cd274"        
@@ -620,9 +623,10 @@ this is the first item in the list.</p></td>
 #&gt; [1] 0.98
 #&gt; [1] ""</div><div class='input'>
 <span class='co'># Fill a list with the results</span>
-<span class='no'>results</span> <span class='kw'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='no'>tt_alzh</span>)
-<span class='no'>results</span> <span class='kw'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='no'>tt_alzh_BA36</span>,<span class='no'>results</span>)
-<span class='no'>results</span> <span class='kw'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='no'>tt_alzh_BA44</span>,<span class='no'>results</span>)</div></pre>
+<span class='kw'>results</span> <span class='op'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='kw'>tt_alzh</span>)
+<span class='kw'>results</span> <span class='op'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='kw'>tt_alzh_BA36</span>,<span class='kw'>results</span>)
+<span class='kw'>results</span> <span class='op'>=</span> <span class='fu'>add.res.to.merging.list</span>(<span class='kw'>tt_alzh_BA44</span>,<span class='kw'>results</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -638,7 +642,7 @@ this is the first item in the list.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

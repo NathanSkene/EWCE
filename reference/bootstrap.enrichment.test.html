@@ -128,15 +128,15 @@ and determines the probability of enrichment and fold changes for each cell type
     </div>
 
     <pre class="usage"><span class='fu'>bootstrap.enrichment.test</span>(
-  <span class='kw'>sct_data</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>hits</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>bg</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>genelistSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>,
-  <span class='kw'>sctSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>,
-  <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>annotLevel</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>geneSizeControl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>controlledCT</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  sct_data = <span class='fl'>NA</span>,
+  hits = <span class='fl'>NA</span>,
+  bg = <span class='fl'>NA</span>,
+  genelistSpecies = <span class='st'>"mouse"</span>,
+  sctSpecies = <span class='st'>"mouse"</span>,
+  reps = <span class='fl'>100</span>,
+  annotLevel = <span class='fl'>1</span>,
+  geneSizeControl = <span class='fl'>FALSE</span>,
+  controlledCT = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -190,31 +190,32 @@ and determines the probability of enrichment and fold changes for each cell type
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Load the single cell data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
 
 <span class='co'># Set the parameters for the analysis</span>
-<span class='no'>reps</span><span class='kw'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
+<span class='kw'>reps</span><span class='op'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
 
 <span class='co'># Load the gene list and get human orthologs</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"example_genelist"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mouse_to_human_homologs"</span>)
-<span class='no'>m2h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
-<span class='no'>mouse.hits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>[<span class='no'>m2h</span>$<span class='no'>HGNC.symbol</span> <span class='kw'>%in%</span> <span class='no'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
-<span class='no'>human.hits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>[<span class='no'>m2h</span>$<span class='no'>HGNC.symbol</span> <span class='kw'>%in%</span> <span class='no'>example_genelist</span>,<span class='st'>"HGNC.symbol"</span>])
-<span class='no'>human.bg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>$<span class='no'>HGNC.symbol</span>)
-<span class='no'>mouse.bg</span>  <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>$<span class='no'>MGI.symbol</span>)
+<span class='kw'>m2h</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
+<span class='kw'>mouse.hits</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span>[<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>HGNC.symbol</span> <span class='op'>%in%</span> <span class='kw'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
+<span class='kw'>human.hits</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span>[<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>HGNC.symbol</span> <span class='op'>%in%</span> <span class='kw'>example_genelist</span>,<span class='st'>"HGNC.symbol"</span>])
+<span class='kw'>human.bg</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>HGNC.symbol</span>)
+<span class='kw'>mouse.bg</span>  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>MGI.symbol</span>)
 
 <span class='co'># Bootstrap significance testing, without controlling for transcript length and GC content</span>
-<span class='no'>full_results</span> <span class='kw'>=</span> <span class='fu'>bootstrap.enrichment.test</span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>hits</span><span class='kw'>=</span><span class='no'>mouse.hits</span>,
-  <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>mouse.bg</span>,<span class='kw'>reps</span><span class='kw'>=</span><span class='no'>reps</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>,<span class='kw'>genelistSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)
+<span class='kw'>full_results</span> <span class='op'>=</span> <span class='fu'>bootstrap.enrichment.test</span>(sct_data=<span class='kw'>ctd</span>,hits=<span class='kw'>mouse.hits</span>,
+  bg=<span class='kw'>mouse.bg</span>,reps=<span class='kw'>reps</span>,annotLevel=<span class='fl'>2</span>,sctSpecies=<span class='st'>"mouse"</span>,genelistSpecies=<span class='st'>"mouse"</span>)
 
 <span class='co'># Bootstrap significance testing controlling for transcript length and GC content</span>
-<span class='no'>full_results</span> <span class='kw'>=</span> <span class='fu'>bootstrap.enrichment.test</span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>hits</span><span class='kw'>=</span><span class='no'>human.hits</span>,
-  <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>human.bg</span>,<span class='kw'>reps</span><span class='kw'>=</span><span class='no'>reps</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>geneSizeControl</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-  <span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>,<span class='kw'>genelistSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>)
-}</div></pre>
+<span class='kw'>full_results</span> <span class='op'>=</span> <span class='fu'>bootstrap.enrichment.test</span>(sct_data=<span class='kw'>ctd</span>,hits=<span class='kw'>human.hits</span>,
+  bg=<span class='kw'>human.bg</span>,reps=<span class='kw'>reps</span>,annotLevel=<span class='fl'>2</span>,geneSizeControl=<span class='fl'>TRUE</span>,
+  sctSpecies=<span class='st'>"mouse"</span>,genelistSpecies=<span class='st'>"human"</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -230,7 +231,7 @@ and determines the probability of enrichment and fold changes for each cell type
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

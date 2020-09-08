@@ -126,11 +126,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>generate.celltype.data</span>(
-  <span class='no'>exp</span>,
-  <span class='no'>annotLevels</span>,
-  <span class='no'>groupName</span>,
-  <span class='kw'>no_cores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>savePath</span> <span class='kw'>=</span> <span class='st'>"~/"</span>
+  <span class='kw'>exp</span>,
+  <span class='kw'>annotLevels</span>,
+  <span class='kw'>groupName</span>,
+  no_cores = <span class='fl'>1</span>,
+  savePath = <span class='st'>"~/"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -165,12 +165,13 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load the single cell data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"cortex_mrna"</span>)
-<span class='no'>expData</span> <span class='kw'>=</span> <span class='no'>cortex_mrna</span>$<span class='no'>exp</span>
-<span class='no'>expData</span> <span class='kw'>=</span> <span class='no'>expData</span>[<span class='fl'>1</span>:<span class='fl'>500</span>,] <span class='co'># Use only a subset to keep the example quick</span>
-<span class='no'>l1</span><span class='kw'>=</span><span class='no'>cortex_mrna</span>$<span class='no'>annot</span>$<span class='no'>level1class</span>
-<span class='no'>l2</span><span class='kw'>=</span><span class='no'>cortex_mrna</span>$<span class='no'>annot</span>$<span class='no'>level2class</span>
-<span class='no'>annotLevels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>l1</span><span class='kw'>=</span><span class='no'>l1</span>,<span class='kw'>l2</span><span class='kw'>=</span><span class='no'>l2</span>)
-<span class='no'>fNames_ALLCELLS</span> <span class='kw'>=</span> <span class='fu'>generate.celltype.data</span>(<span class='kw'>exp</span><span class='kw'>=</span><span class='no'>expData</span>,<span class='no'>annotLevels</span>,<span class='st'>"allKImouse"</span>)</div><div class='output co'>#&gt; [1] "Using 1 cores"</div></pre>
+<span class='kw'>expData</span> <span class='op'>=</span> <span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span>
+<span class='kw'>expData</span> <span class='op'>=</span> <span class='kw'>expData</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>500</span>,] <span class='co'># Use only a subset to keep the example quick</span>
+<span class='kw'>l1</span><span class='op'>=</span><span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>annot</span><span class='op'>$</span><span class='kw'>level1class</span>
+<span class='kw'>l2</span><span class='op'>=</span><span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>annot</span><span class='op'>$</span><span class='kw'>level2class</span>
+<span class='kw'>annotLevels</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(l1=<span class='kw'>l1</span>,l2=<span class='kw'>l2</span>)
+<span class='kw'>fNames_ALLCELLS</span> <span class='op'>=</span> <span class='fu'>generate.celltype.data</span>(exp=<span class='kw'>expData</span>,<span class='kw'>annotLevels</span>,<span class='st'>"allKImouse"</span>)
+</div><div class='output co'>#&gt; [1] "Using 1 cores"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -186,7 +187,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

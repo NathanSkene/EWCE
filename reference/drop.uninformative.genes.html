@@ -129,7 +129,7 @@ Makes this decision based on use of an ANOVA (implemented with Limma). If the F-
 is less than a strict p-threshold, then the gene is dropped.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>drop.uninformative.genes</span>(<span class='no'>exp</span>, <span class='no'>level2annot</span>)</pre>
+    <pre class="usage"><span class='fu'>drop.uninformative.genes</span>(<span class='kw'>exp</span>, <span class='kw'>level2annot</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,8 +150,9 @@ is less than a strict p-threshold, then the gene is dropped.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"cortex_mrna"</span>)
-<span class='no'>cortex_mrna</span>$<span class='no'>exp</span> <span class='kw'>=</span> <span class='no'>cortex_mrna</span>$<span class='no'>exp</span>[<span class='fl'>1</span>:<span class='fl'>300</span>,] <span class='co'># Use only a subset of genes to keep the example quick</span>
-<span class='no'>exp2</span> <span class='kw'>=</span> <span class='fu'>drop.uninformative.genes</span>(<span class='kw'>exp</span><span class='kw'>=</span><span class='no'>cortex_mrna</span>$<span class='no'>exp</span>,<span class='kw'>level2annot</span><span class='kw'>=</span><span class='no'>cortex_mrna</span>$<span class='no'>annot</span>$<span class='no'>level2class</span>)</div></pre>
+<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span> <span class='op'>=</span> <span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span>,] <span class='co'># Use only a subset of genes to keep the example quick</span>
+<span class='kw'>exp2</span> <span class='op'>=</span> <span class='fu'>drop.uninformative.genes</span>(exp=<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span>,level2annot=<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>annot</span><span class='op'>$</span><span class='kw'>level2class</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -167,7 +168,7 @@ is less than a strict p-threshold, then the gene is dropped.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -129,7 +129,7 @@ The table lists how many cells are associated with each celltype, the level of a
 from which it was generated.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get.celltype.table</span>(<span class='no'>annot</span>)</pre>
+    <pre class="usage"><span class='fu'>get.celltype.table</span>(<span class='kw'>annot</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,8 +146,10 @@ from which it was generated.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"cortex_mra"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘cortex_mra’ not found</span></div><div class='input'><span class='no'>cortex_mrna</span>$<span class='no'>annot</span>$<span class='no'>dataset_name</span> <span class='kw'>=</span> <span class='st'>"cortex_mrna"</span>
-<span class='no'>celltype_table</span> <span class='kw'>=</span> <span class='fu'>get.celltype.table</span>(<span class='no'>cortex_mrna</span>$<span class='no'>annot</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"cortex_mra"</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘cortex_mra’ not found</span></div><div class='input'><span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>annot</span><span class='op'>$</span><span class='kw'>dataset_name</span> <span class='op'>=</span> <span class='st'>"cortex_mrna"</span>
+<span class='kw'>celltype_table</span> <span class='op'>=</span> <span class='fu'>get.celltype.table</span>(<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>annot</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -163,7 +165,7 @@ from which it was generated.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

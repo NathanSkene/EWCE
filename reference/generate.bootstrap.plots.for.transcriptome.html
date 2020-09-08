@@ -130,18 +130,18 @@ in randomly generated gene lists</p>
     </div>
 
     <pre class="usage"><span class='fu'>generate.bootstrap.plots.for.transcriptome</span>(
-  <span class='no'>sct_data</span>,
-  <span class='no'>tt</span>,
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>250</span>,
-  <span class='kw'>annotLevel</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>reps</span>,
-  <span class='kw'>full_results</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>listFileName</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>showGNameThresh</span> <span class='kw'>=</span> <span class='fl'>25</span>,
-  <span class='kw'>ttSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>,
-  <span class='kw'>sctSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>,
-  <span class='kw'>sortBy</span> <span class='kw'>=</span> <span class='st'>"t"</span>,
-  <span class='kw'>onlySignif</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>sct_data</span>,
+  <span class='kw'>tt</span>,
+  thresh = <span class='fl'>250</span>,
+  annotLevel = <span class='fl'>1</span>,
+  <span class='kw'>reps</span>,
+  full_results = <span class='fl'>NA</span>,
+  listFileName = <span class='st'>""</span>,
+  showGNameThresh = <span class='fl'>25</span>,
+  ttSpecies = <span class='st'>"mouse"</span>,
+  sctSpecies = <span class='st'>"mouse"</span>,
+  sortBy = <span class='st'>"t"</span>,
+  onlySignif = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -209,24 +209,25 @@ value of listFileName. The files are saved into the 'BootstrapPlot' folder. The 
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Load the single cell data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
 
 <span class='co'># Set the parameters for the analysis</span>
-<span class='no'>reps</span><span class='kw'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
-<span class='no'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
+<span class='kw'>reps</span><span class='op'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
+<span class='kw'>annotLevel</span><span class='op'>=</span><span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
 
 <span class='co'># Load the top table</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tt_alzh</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh</span>)
 
-<span class='no'>tt_results</span> <span class='kw'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-    <span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)
+<span class='kw'>tt_results</span> <span class='op'>=</span> <span class='fu'><a href='ewce_expression_data.html'>ewce_expression_data</a></span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh</span>,annotLevel=<span class='fl'>1</span>,
+    ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
 
 <span class='co'># Bootstrap significance testing, without controlling for transcript length and GC content</span>
-<span class='no'>full_results</span> <span class='kw'>=</span> <span class='fu'>generate.bootstrap.plots.for.transcriptome</span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-     <span class='kw'>full_results</span><span class='kw'>=</span><span class='no'>tt_results</span>,<span class='kw'>listFileName</span><span class='kw'>=</span><span class='st'>"examples"</span>,<span class='kw'>reps</span><span class='kw'>=</span><span class='no'>reps</span>,<span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)
-}</div></pre>
+<span class='kw'>full_results</span> <span class='op'>=</span> <span class='fu'>generate.bootstrap.plots.for.transcriptome</span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh</span>,annotLevel=<span class='fl'>1</span>,
+     full_results=<span class='kw'>tt_results</span>,listFileName=<span class='st'>"examples"</span>,reps=<span class='kw'>reps</span>,ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -242,7 +243,7 @@ value of listFileName. The files are saved into the 'BootstrapPlot' folder. The 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

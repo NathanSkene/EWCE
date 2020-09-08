@@ -126,14 +126,14 @@
     </div>
 
     <pre class="usage"><span class='fu'>ewce_expression_data</span>(
-  <span class='no'>sct_data</span>,
-  <span class='kw'>annotLevel</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>tt</span>,
-  <span class='kw'>sortBy</span> <span class='kw'>=</span> <span class='st'>"t"</span>,
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>250</span>,
-  <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>ttSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>,
-  <span class='kw'>sctSpecies</span> <span class='kw'>=</span> <span class='st'>"mouse"</span>
+  <span class='kw'>sct_data</span>,
+  annotLevel = <span class='fl'>1</span>,
+  <span class='kw'>tt</span>,
+  sortBy = <span class='st'>"t"</span>,
+  thresh = <span class='fl'>250</span>,
+  reps = <span class='fl'>100</span>,
+  ttSpecies = <span class='st'>"mouse"</span>,
+  sctSpecies = <span class='st'>"mouse"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -189,14 +189,15 @@
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
 
 <span class='co'># Set the parameters for the analysis</span>
-<span class='no'>reps</span><span class='kw'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
-<span class='no'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
+<span class='kw'>reps</span><span class='op'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
+<span class='kw'>annotLevel</span><span class='op'>=</span><span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
 
 <span class='co'># Load the top table</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tt_alzh</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh</span>)
 
-<span class='no'>tt_results</span> <span class='kw'>=</span> <span class='fu'>ewce_expression_data</span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>tt</span><span class='kw'>=</span><span class='no'>tt_alzh</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>1</span>,
-    <span class='kw'>ttSpecies</span><span class='kw'>=</span><span class='st'>"human"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div><div class='output co'>#&gt;   [1] "Myom1"         "Rbm17"         "Max"           "Mbd3"         
+<span class='kw'>tt_results</span> <span class='op'>=</span> <span class='fu'>ewce_expression_data</span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh</span>,annotLevel=<span class='fl'>1</span>,
+    ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+</div><div class='output co'>#&gt;   [1] "Myom1"         "Rbm17"         "Max"           "Mbd3"         
 #&gt;   [5] "Wdr33"         "Acss1"         "Pcyt1b"        "Bcam"         
 #&gt;   [9] "Prpf38b"       "Ppp2r5c"       "Ica1"          "Cobl"         
 #&gt;  [13] "Marveld1"      "Gemin4"        "Zfp668"        "Casc3"        
@@ -373,7 +374,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

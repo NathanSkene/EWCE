@@ -128,12 +128,12 @@ Checks all hits genes are in bg. Checks the species match and if not reduces to 
     </div>
 
     <pre class="usage"><span class='fu'>check.ewce.genelist.inputs</span>(
-  <span class='no'>sct_data</span>,
-  <span class='no'>hits</span>,
-  <span class='no'>bg</span>,
-  <span class='no'>genelistSpecies</span>,
-  <span class='no'>sctSpecies</span>,
-  <span class='kw'>geneSizeControl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>sct_data</span>,
+  <span class='kw'>hits</span>,
+  <span class='kw'>bg</span>,
+  <span class='kw'>genelistSpecies</span>,
+  <span class='kw'>sctSpecies</span>,
+  geneSizeControl = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -178,11 +178,12 @@ Checks all hits genes are in bg. Checks the species match and if not reduces to 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"example_genelist"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mouse_to_human_homologs"</span>)
-<span class='no'>m2h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
-<span class='no'>mouse.hits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>[<span class='no'>m2h</span>$<span class='no'>HGNC.symbol</span> <span class='kw'>%in%</span> <span class='no'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
-<span class='no'>mouse.bg</span>  <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>$<span class='no'>MGI.symbol</span>)
-<span class='no'>checkedLists</span> <span class='kw'>=</span> <span class='fu'>check.ewce.genelist.inputs</span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>hits</span><span class='kw'>=</span><span class='no'>mouse.hits</span>,
-    <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>mouse.bg</span>,<span class='kw'>genelistSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div></pre>
+<span class='kw'>m2h</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
+<span class='kw'>mouse.hits</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span>[<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>HGNC.symbol</span> <span class='op'>%in%</span> <span class='kw'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
+<span class='kw'>mouse.bg</span>  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>MGI.symbol</span>)
+<span class='kw'>checkedLists</span> <span class='op'>=</span> <span class='fu'>check.ewce.genelist.inputs</span>(sct_data=<span class='kw'>ctd</span>,hits=<span class='kw'>mouse.hits</span>,
+    bg=<span class='kw'>mouse.bg</span>,genelistSpecies=<span class='st'>"mouse"</span>,sctSpecies=<span class='st'>"mouse"</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -198,7 +199,7 @@ Checks all hits genes are in bg. Checks the species match and if not reduces to 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

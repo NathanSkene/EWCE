@@ -125,7 +125,7 @@
     <p><code>ewce.plot</code> generates plots of EWCE enrichment results</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ewce.plot</span>(<span class='no'>total_res</span>, <span class='kw'>mtc_method</span> <span class='kw'>=</span> <span class='st'>"bonferroni"</span>, <span class='kw'>ctd</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ewce.plot</span>(<span class='kw'>total_res</span>, mtc_method = <span class='st'>"bonferroni"</span>, ctd = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,21 +150,22 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load the single cell data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ctd</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>ctd</span>)
 
 <span class='co'># Set the parameters for the analysis</span>
-<span class='no'>reps</span><span class='kw'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
+<span class='kw'>reps</span><span class='op'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
 
 <span class='co'># Load the gene list and get human orthologs</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"example_genelist"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mouse_to_human_homologs"</span>)
-<span class='no'>m2h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
-<span class='no'>mouse.hits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>[<span class='no'>m2h</span>$<span class='no'>HGNC.symbol</span> <span class='kw'>%in%</span> <span class='no'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
-<span class='no'>mouse.bg</span>  <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>m2h</span>$<span class='no'>MGI.symbol</span>)
+<span class='kw'>m2h</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>mouse_to_human_homologs</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HGNC.symbol"</span>,<span class='st'>"MGI.symbol"</span>)])
+<span class='kw'>mouse.hits</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span>[<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>HGNC.symbol</span> <span class='op'>%in%</span> <span class='kw'>example_genelist</span>,<span class='st'>"MGI.symbol"</span>])
+<span class='kw'>mouse.bg</span>  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>m2h</span><span class='op'>$</span><span class='kw'>MGI.symbol</span>)
 
 <span class='co'># Bootstrap significance testing, without controlling for transcript length and GC content</span>
-<span class='no'>full_results</span> <span class='kw'>=</span> <span class='fu'><a href='bootstrap.enrichment.test.html'>bootstrap.enrichment.test</a></span>(<span class='kw'>sct_data</span><span class='kw'>=</span><span class='no'>ctd</span>,<span class='kw'>hits</span><span class='kw'>=</span><span class='no'>mouse.hits</span>,
-  <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>mouse.bg</span>,<span class='kw'>reps</span><span class='kw'>=</span><span class='no'>reps</span>,<span class='kw'>annotLevel</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>sctSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>,<span class='kw'>genelistSpecies</span><span class='kw'>=</span><span class='st'>"mouse"</span>)</div><div class='output co'>#&gt;  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
+<span class='kw'>full_results</span> <span class='op'>=</span> <span class='fu'><a href='bootstrap.enrichment.test.html'>bootstrap.enrichment.test</a></span>(sct_data=<span class='kw'>ctd</span>,hits=<span class='kw'>mouse.hits</span>,
+  bg=<span class='kw'>mouse.bg</span>,reps=<span class='kw'>reps</span>,annotLevel=<span class='fl'>2</span>,sctSpecies=<span class='st'>"mouse"</span>,genelistSpecies=<span class='st'>"mouse"</span>)
+</div><div class='output co'>#&gt;  [1] "Apoe"    "Inpp5d"  "Cd2ap"   "Nme8"    "Cass4"   "Mef2c"   "Zcwpw1" 
 #&gt;  [8] "Bin1"    "Clu"     "Celf1"   "Abca7"   "Slc24a4" "Ptk2b"   "Picalm" 
 #&gt; [15] "Fermt2"  "Sorl1"  
 #&gt; [1] "(none)"
@@ -316,7 +317,8 @@
 #&gt; [1] 0.74
 #&gt; [1] ""</div><div class='input'>
 <span class='co'># Generate the plot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>ewce.plot</span>(<span class='no'>full_results</span>$<span class='no'>results</span>,<span class='kw'>mtc_method</span><span class='kw'>=</span><span class='st'>"BH"</span>))</div><div class='output co'>#&gt; $plain</div><div class='img'><img src='ewce.plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>ewce.plot</span>(<span class='kw'>full_results</span><span class='op'>$</span><span class='kw'>results</span>,mtc_method=<span class='st'>"BH"</span>))
+</div><div class='output co'>#&gt; $plain</div><div class='img'><img src='ewce.plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -332,7 +334,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

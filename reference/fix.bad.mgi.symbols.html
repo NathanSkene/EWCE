@@ -134,7 +134,7 @@ in the dataset, the combined reads are summed together.</h1>
     <p>Also checks whether any gene names contain "Sep", "Mar" or "Feb". These should be checked for any suggestion that excel has corrupted the gene names.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fix.bad.mgi.symbols</span>(<span class='no'>exp</span>, <span class='kw'>mrk_file_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>printAllBadSymbols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>fix.bad.mgi.symbols</span>(<span class='kw'>exp</span>, mrk_file_path = <span class='kw'>NULL</span>, printAllBadSymbols = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,11 +158,12 @@ in the dataset, the combined reads are summed together.</h1>
     <p>Returns the expression matrix with the rownames corrected and rows representing the same gene merged</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Load the single cell data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"cortex_mrna"</span>)
-<span class='no'>cortex_mrna</span>$<span class='no'>exp</span> <span class='kw'>=</span> <span class='fu'>fix.bad.mgi.symbols</span>(<span class='no'>cortex_mrna</span>$<span class='no'>exp</span>)
-}</div></pre>
+<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span> <span class='op'>=</span> <span class='fu'>fix.bad.mgi.symbols</span>(<span class='kw'>cortex_mrna</span><span class='op'>$</span><span class='kw'>exp</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -178,7 +179,7 @@ in the dataset, the combined reads are summed together.</h1>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
