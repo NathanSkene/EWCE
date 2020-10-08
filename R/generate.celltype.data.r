@@ -5,7 +5,7 @@
 #' @param exp Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.
 #' @param annotLevels List with arrays of strings containing the cell type names associated with each column in exp
 #' @param groupName A human readable name for refering to the dataset being loaded
-#' @param no_cores Number of cores that should be used to speedup the computation
+#' @param no_cores Number of cores that should be used to speedup the computation. Use no_cores = 1 when using this package in windows system.
 #' @param savePath Directory where the CTD file should be saved
 #' @return Filenames for the saved celltype_data files
 #' @examples
@@ -32,8 +32,8 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath
 
     # Calculate the number of cores
 
-    cl <- parallel::makeCluster(no_cores)
-    print(sprintf("Using %s cores",no_cores))
+    #cl <- parallel::makeCluster(no_cores)
+    #print(sprintf("Using %s cores",no_cores))
 
     # First, check the number of annotations equals the number of columns in the expression data
     lapply(annotLevels,test <- function(x,exp){if(length(x)!=dim(exp)[2]){stop("Error: length of all annotation levels must equal the number of columns in exp matrix")}},exp)
@@ -85,7 +85,7 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath
 
     ctd3 = mclapply(ctd2,calculate.specificity.for.level,mc.cores=no_cores)
     ctd=ctd3
-    stopCluster(cl)
+    #stopCluster(cl)
 
     # Use the rank norm transformation on specificity
     rNorm <- function(ctdIN){   bbb = t(apply(ctdIN$specificity,1,RNOmni::rankNorm));  return(bbb)    }
