@@ -41,3 +41,12 @@ notifications:
       - n.skene@imperial.ac.uk
     on_success: never # default: change
     on_failure: always # default: always
+    
+    
+# for codecov
+r_packages:
+  - covr
+
+# only report coverage after build is successful
+after_success:
+  - Rscript -e 'covr::codecov()'

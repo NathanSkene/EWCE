@@ -19,7 +19,7 @@ generate.celltype.data(
 
 \item{groupName}{A human readable name for refering to the dataset being loaded}
 
-\item{no_cores}{Number of cores that should be used to speedup the computation}
+\item{no_cores}{Number of cores that should be used to speedup the computation. Use no_cores = 1 when using this package in windows system.}
 
 \item{savePath}{Directory where the CTD file should be saved}
 }

@@ -33,7 +33,11 @@ Imports:
     RNOmni,
     sctransform
 Remotes: ChristophH/sctransform@*release
-Suggests: knitr, BiocStyle, rmarkdown
+Suggests: 
+    knitr,
+    BiocStyle,
+    rmarkdown,
+    testthat (>= 3.0.0)
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,
@@ -41,3 +45,4 @@ biocViews: GeneExpression, Transcription, DifferentialExpression,
         FunctionalGenomics
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/testthat/edition: 3
