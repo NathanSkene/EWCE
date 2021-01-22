@@ -306,10 +306,11 @@ level=1 # <- Use level 1 annotations (i.e. Interneurons)
 
 ## Running EWCE analysis on genetic data 
 
-We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows:
+We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows, Note we set the seed to ensure reproducibility in the bootstrap sampling function:
 
 ```{r, cache=TRUE }
 # Bootstrap significance testing, without controlling for transcript length and GC content
+set.seed(12345678)
 full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
                                 reps=reps,annotLevel=level)
 ```
@@ -352,6 +353,8 @@ human.bg = unique(c(human.hits,m2h$HGNC.symbol))
 The bootstrapping function then takes different arguments:
 
 ```{r, cache=TRUE, results="hide"}
+# Again, set seed for reproducibility
+set.seed(12345678)
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=1,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -370,6 +373,8 @@ This shows that the controlled method generates enrichments that are generally c
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
 ```{r, cache=TRUE, fig.width = 8, fig.height = 4, results="hide"}
+# Again, set seed for reproducibility
+set.seed(12345678)
 # Bootstrap significance testing controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
@@ -385,6 +390,8 @@ It is often useful to plot results from multiple gene list analyses together. Th
 To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.
 
 ```{r, cache=TRUE }
+# Again, set seed for reproducibility
+set.seed(12345678)
 gene.list.2 = mouse.bg[1:30]
 second_results = bootstrap.enrichment.test(sct_data=ctd,hits=gene.list.2,
                     bg=mouse.bg,reps=reps,annotLevel=1)
@@ -409,6 +416,8 @@ To demonstrate this we have an example dataset `tt_alzh`. This data frame was ge
 The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
 
 ```{r, cache=TRUE, results="hide"}
+# ewce_expression_data calls bootstrap.enrichment.test so set the seed for reproducibility
+set.seed(12345678)
 data(tt_alzh)
 tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
 ```
@@ -426,6 +435,8 @@ As was reported in our paper, neuronal genes are found to be downregulated while
 A common request is to explain which differentially expressed genes are associated with a cell type...
 
 ```{r, cache=TRUE }
+# Set seed for bootstrap reproducibility
+set.seed(12345678)
 full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
   full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse",onlySignif=FALSE)
 ```
@@ -440,6 +451,9 @@ To demonstrate this we use a two further Alzheimer's transcriptome dataset comin
 # Load the data
 data(tt_alzh_BA36)
 data(tt_alzh_BA44)
+
+# set seed for reproducibility
+set.seed(12345678)
 
 # Run EWCE analysis
 tt_results_36 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA36,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
@@ -482,6 +496,10 @@ mouse.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
 
 reps=reps
+
+# set seed for bootstrap reproducibility
+set.seed(12345678)
+
 unconditional_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
                     bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",sctSpecies="mouse")
 conditional_results_micro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
@@ -503,6 +521,9 @@ When controlling for astrocytes the enrichment is astrocytes is totally abolishe
 Traditionally the standard analysis run on all gene sets was the GO enrichment analysis. Once you have established that a given gene list is enriched for a given celltype, it becomes questionable whether a GO enrichment is driven purely by the underlying cell type enrichment. For instance, it is well established that genes associated with schizophrenia are enriched for the human post-synaptic density genes, however, it has also been shown that schizophrenia is enriched for specificity in CA1 pyramidal neurons (which highly express hPSD genes). These two enrichments can be disassociated using the following analysis:
 
 ```{r, results="hide"}
+# set seed for bootstrap reproducibility
+set.seed(12345678)
+
 data("mouse_to_human_homologs")
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 
@@ -533,6 +554,9 @@ The analysis also tests for enrichment of Rbfox binding genes in the schizophren
 ## Controlling for multiple cell types
 
 ```{r, results="hide"}
+# set seed for bootstrap reproducibility
+set.seed(12345678)
+
 controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
 
 res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)

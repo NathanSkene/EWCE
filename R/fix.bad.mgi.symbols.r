@@ -37,7 +37,7 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     #data(all_mgi)
     not_MGI = rownames(exp)[!rownames(exp) %in% EWCE::all_mgi]
     print(sprintf("%s rows do not have proper MGI symbols",length(not_MGI)))
-    if(length(not_MGI)>20){print(not_MGI[1:20])}
+    if(length(not_MGI)>20){print(not_MGI[1:20])}else{print(not_MGI)}
 
     # Checking for presence of bad date genes, i.e. Sept2 --> 02.Sep
     date_like = not_MGI[grep("Sep|Mar|Feb",not_MGI)]
@@ -103,7 +103,12 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     # Replace mis-used synonyms from the expression data
     exp_Good = exp[!rownames(exp) %in% as.character(matchingSYN$syn),]
     exp_Bad  = exp[as.character(matchingSYN$syn),]
-
+    
+    #exp_Bad is a vector if only one bad value so need to convert to a one line matrix
+    if(class(exp_Bad)=="numeric"){
+        exp_Bad <- t(as.matrix(exp_Bad))
+        rownames(exp_Bad) <- as.character(matchingSYN$syn)
+    }
     # Where duplicates exist, sum them together
     for(dG in unique(dupGENES)){
         exp_Good[rownames(exp_Good)==dG,] = apply(rbind(exp_Good[rownames(exp_Good)==dG,],exp_Bad[as.character(matchingSYN$mgi_symbol)==dG,]),2,sum)
