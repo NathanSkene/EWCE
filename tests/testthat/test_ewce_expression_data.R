@@ -15,7 +15,7 @@ test_that("EWCE expression data creation", {
   known_maxmin_dwn_celltypes <- c("pyramidal SS","oligodendrocytes")
   
   # fail if specificity max and min cell types doesn't match 
-  expect_equal((up_celltypes==known_maxmin_up_celltypes && 
-                  dwn_celltypes==known_maxmin_dwn_celltypes), 
+  expect_equal((all(up_celltypes==known_maxmin_up_celltypes) && 
+                  all(dwn_celltypes==known_maxmin_dwn_celltypes)), 
                TRUE)
 })
