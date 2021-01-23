@@ -37,7 +37,7 @@ test_that("method to remove/fix an expected set of genes", {
     #Test 1
     all(is(warning_return,"warning"),
     #Test 2
-    all.equal(sum_exp,EWCE_return[rownames(EWCE_return)=="Tspan12",]),
+    all(sum_exp==EWCE_return[rownames(EWCE_return)=="Tspan12",]),
     #Test 3
     all.equal(EWCE_output_same_input,test_exp_set))
     , TRUE)
