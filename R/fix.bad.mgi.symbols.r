@@ -38,7 +38,9 @@ fix.bad.mgi.symbols <- function(exp,mrk_file_path=NULL,printAllBadSymbols=FALSE)
     not_MGI = rownames(exp)[!rownames(exp) %in% EWCE::all_mgi]
     print(sprintf("%s rows do not have proper MGI symbols",length(not_MGI)))
     if(length(not_MGI)>20){print(not_MGI[1:20])}else{print(not_MGI)}
-
+    #if no improper MGI symbols return input
+    if(length(not_MGI)==0)
+        return(exp)
     # Checking for presence of bad date genes, i.e. Sept2 --> 02.Sep
     date_like = not_MGI[grep("Sep|Mar|Feb",not_MGI)]
     if(length(date_like)>0){
