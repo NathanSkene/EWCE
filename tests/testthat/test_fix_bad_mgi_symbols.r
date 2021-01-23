@@ -29,15 +29,16 @@ test_that("method to remove/fix an expected set of genes", {
   
   #lastly check nothing changes when there are no issues
   test_exp_set <- test_exp_set[1:5,]
+  EWCE_output_same_input <- EWCE::fix.bad.mgi.symbols(test_exp_set,
+                            mrk_file_path="MRK_List2.rpt")
   
   # fail if any of the 3 tests fail
   expect_equal(
     #Test 1
-    (is(warning_return,"warning") &&
+    all(is(warning_return,"warning"),
     #Test 2
-    all.equal(sum_exp,EWCE_return[rownames(EWCE_return)=="Tspan12",]) &&
+    all.equal(sum_exp,EWCE_return[rownames(EWCE_return)=="Tspan12",]),
     #Test 3
-    all.equal(EWCE::fix.bad.mgi.symbols(test_exp_set,
-                                      mrk_file_path="MRK_List2.rpt"),test_exp_set))
+    all.equal(EWCE_output_same_input,test_exp_set))
     , TRUE)
 })
