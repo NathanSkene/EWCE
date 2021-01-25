@@ -17,6 +17,12 @@ test_that("method to remove/fix an expected set of genes", {
              error=function(e) e, 
              warning=function(w) w)
   
+  #running on hgnc rather than mgi should return warnings
+  warning_return2 <- 
+    tryCatch(EWCE::fix.bad.hgnc.symbols(test_exp_set),
+             error=function(e) e, 
+             warning=function(w) w)
+  
   #Now test if a synonym of a gene in the list is added 
   #function should combine them and give sum reads for each sample
   # alt symbol for Tspan12 is Tm4sf12
@@ -39,6 +45,8 @@ test_that("method to remove/fix an expected set of genes", {
   expect_equal(
     #Test 1
     all(is(warning_return,"warning"),
+    #Test 1.2
+    is(warning_return2,"warning"),
     #Test 2
     all(sum_exp==EWCE_return[rownames(EWCE_return)=="Tspan12",]),
     #Test 3
