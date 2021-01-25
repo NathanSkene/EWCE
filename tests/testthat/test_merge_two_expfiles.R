@@ -39,15 +39,16 @@ test_that("merging two expression files", {
   # Fix bad MGI symbols
   #hypo_exp_CORRECTED = fix.bad.mgi.symbols(hypo_exp)
   # Merge the datasets
-  merged_KI = merge_two_expfiles(exp1=cortex_mrna$exp,#hypo_exp,#hypo_exp_CORRECTED,  
+  merged_KI = EWCE::merge_two_expfiles(exp1=cortex_mrna$exp,#hypo_exp,#hypo_exp_CORRECTED,  
                                  exp2=cortex_mrna$exp,
                                  annot1=cortex_mrna$annot,#hypo_annot,        
                                  annot2=cortex_mrna$annot,
                                  name1="Hypothalamus (KI)", name2="Cortex/Hippo (KI)")
   
   #check merge didn't drop any samples
-  test1 <- all(sort(colnames(merged_KI$exp)) == sort(c(colnames(cortex_mrna$exp),
-                                                       colnames(cortex_mrna$exp))))
+  test1 <- all.equal(sort(colnames(merged_KI$exp)),
+                     sort(c(colnames(cortex_mrna$exp),
+                            colnames(cortex_mrna$exp))))
   #remove folder once tested
   #unlink("GSE74672_expressed_mols_with_classes.xlsx")
   

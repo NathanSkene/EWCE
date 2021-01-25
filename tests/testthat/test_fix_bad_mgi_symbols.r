@@ -10,6 +10,30 @@ test_that("method to remove/fix an expected set of genes", {
   #Add in fake gene data for which the gene could have issues with excel:
   #MARCH1 gene would go to Mar-01
   rownames(test_exp_set)[7]<-"Mar-01"
+  
+  #catch error when no exp inputted
+  error_return <- 
+    tryCatch(EWCE::fix.bad.mgi.symbols(exp=NULL,
+                                       mrk_file_path="MRK_List2.rpt"),
+             error=function(e) e, 
+             warning=function(w) w)
+  
+  #catch error when no test_exp_set inputted as character
+  test_exp_set_char <- apply(test_exp_set, 2, as.character)
+  rownames(test_exp_set_char) <- rownames(test_exp_set)
+  error_return2 <- 
+    tryCatch(EWCE::fix.bad.mgi.symbols(exp=test_exp_set_char,
+                                       mrk_file_path="MRK_List2.rpt"),
+             error=function(e) e, 
+             warning=function(w) w)
+  
+  #pass data table rather than data frame or matrix
+  error_return3 <- 
+    tryCatch(EWCE::fix.bad.mgi.symbols(exp=data.table::data.table(as.data.frame(test_exp_set)),
+                                       mrk_file_path="MRK_List2.rpt"),
+             error=function(e) e, 
+             warning=function(w) w)
+  
   #function should warn the user about this -if warning returned function worked
   warning_return <- 
     tryCatch(EWCE::fix.bad.mgi.symbols(test_exp_set,
@@ -28,28 +52,46 @@ test_that("method to remove/fix an expected set of genes", {
   # alt symbol for Tspan12 is Tm4sf12
   rownames(test_exp_set)[7]<-"Tm4sf12"
   EWCE_return = EWCE::fix.bad.mgi.symbols(test_exp_set,
-                                          mrk_file_path="MRK_List2.rpt")
+                                          mrk_file_path="MRK_List2.rpt",
+                                          printAllBadSymbols=T)
   #Now the returned value should be the average of the two
   sum_exp <- 
     colSums(test_exp_set[rownames(test_exp_set) %in% c("Tspan12","Tm4sf12"),])
   
-  #lastly check nothing changes when there are no issues
+  #check nothing changes when there are no issues
   test_exp_set <- test_exp_set[1:5,]
   EWCE_output_same_input <- EWCE::fix.bad.mgi.symbols(test_exp_set,
                             mrk_file_path="MRK_List2.rpt")
+  
+  
+  #check input runs on large size of incorrect mgi gene names
+  #check it catches warning still but doesn't give an error
+  warning_return3 <- 
+    tryCatch(EWCE_output_large <- EWCE::fix.bad.mgi.symbols(cortex_mrna$exp[1:10000,1:1000],
+                                                            mrk_file_path="MRK_List2.rpt"),
+             error=function(e) e, 
+             warning=function(w) w)
   
   #remove folder once tested
   unlink("MRK_List2.rpt",recursive = T)
   
   # fail if any of the 3 tests fail
   expect_equal(
+    #Test 0.1
+    all(is(error_return,"error"),
+    #Test 0.2
+    is(error_return2,"warning"),
+    #Test 0.3
+    is(error_return3,"error"),
     #Test 1
-    all(is(warning_return,"warning"),
+    is(warning_return,"warning"),
     #Test 1.2
     is(warning_return2,"warning"),
     #Test 2
     all(sum_exp==EWCE_return[rownames(EWCE_return)=="Tspan12",]),
     #Test 3
-    all.equal(EWCE_output_same_input,test_exp_set))
+    all.equal(EWCE_output_same_input,test_exp_set),
+    #Test 4
+    is(warning_return2,"warning"))
     , TRUE)
 })
