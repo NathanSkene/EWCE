@@ -8,7 +8,7 @@ test_that("merging two expression files", {
   }
   
   # Read in the hypothalamus data
-  hypo_dat = read_excel("GSE74672_expressed_mols_with_classes.xlsx")
+  hypo_dat = readxl::read_excel("GSE74672_expressed_mols_with_classes.xlsx")
   
   # Extract the expression data, gene symbols and annotation data
   exp = data.matrix(hypo_dat[12:dim(hypo_dat)[1],2:dim(hypo_dat)[2]])
