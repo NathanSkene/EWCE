@@ -17,7 +17,7 @@ fix.bad.mgi.symbols(exp, mrk_file_path = NULL, printAllBadSymbols = FALSE)
 \item{printAllBadSymbols}{Output to console all the bad gene symbols}
 }
 \value{
-Returns the expression matrix with the rownames corrected and rows representing the same gene merged
+Returns the expression matrix with the rownames corrected and rows representing the same gene merged. If no corrections are necessary, input expression matrix is returned.
 }
 \description{
 Also checks whether any gene names contain "Sep", "Mar" or "Feb". These should be checked for any suggestion that excel has corrupted the gene names.

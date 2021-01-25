@@ -32,6 +32,9 @@ test_that("method to remove/fix an expected set of genes", {
   EWCE_output_same_input <- EWCE::fix.bad.mgi.symbols(test_exp_set,
                             mrk_file_path="MRK_List2.rpt")
   
+  #remove folder once tested
+  unlink("MRK_List2.rpt",recursive = T)
+  
   # fail if any of the 3 tests fail
   expect_equal(
     #Test 1

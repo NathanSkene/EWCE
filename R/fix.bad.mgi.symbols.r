@@ -7,7 +7,7 @@
 #' @param exp An expression matrix where the rows are MGI symbols
 #' @param mrk_file_path Path to the MRK_List2 file which can be downloaded from www.informatics.jax.org/downloads/reports/index.html
 #' @param printAllBadSymbols Output to console all the bad gene symbols
-#' @return Returns the expression matrix with the rownames corrected and rows representing the same gene merged
+#' @return Returns the expression matrix with the rownames corrected and rows representing the same gene merged. If no corrections are necessary, input expression matrix is returned.
 #' @examples
 #' \dontrun{
 #' # Load the single cell data
