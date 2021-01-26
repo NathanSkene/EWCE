@@ -7,18 +7,18 @@ test_that("loading of linnarsson dataset", {
   
   path = "expression_mRNA_17-Aug-2014.txt"
   
-  cortex_mrna  = EWCE::load.linnarsson.sct.data(path)
+  cortex_mrna_load  = EWCE::load.linnarsson.sct.data(path)
   
   #remove folder once tested
   unlink("expression_mRNA_17-Aug-2014.txt")
   
   #fail if data didn't load correctly
   expect_equal(
-    all(length(cortex_mrna)==2,
-        class(cortex_mrna$exp) =="matrix",
-        nrow(cortex_mrna$exp)>1,
-        class(cortex_mrna$annot)=="data.frame",
-        nrow(cortex_mrna$annot)>1),
+    all(length(cortex_mrna_load)==2,
+        class(cortex_mrna_load$exp) =="matrix",
+        nrow(cortex_mrna_load$exp)>1,
+        class(cortex_mrna_load$annot)=="data.frame",
+        nrow(cortex_mrna_load$annot)>1),
   TRUE)
   
 })

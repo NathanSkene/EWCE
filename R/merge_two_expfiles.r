@@ -54,7 +54,8 @@ merge_two_expfiles <- function(exp1,exp2,annot1,annot2,name1="",name2=""){
         annot2$dataset_name = name2
     }
     keepTISSUE=FALSE
-    if(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2))){
+    #if(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2))){
+    if(all(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2)))){
         keepTISSUE=TRUE    
         annot1$tissue     = as.character(annot1$tissue)
         annot2$tissue     = as.character(annot2$tissue)
