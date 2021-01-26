@@ -7,6 +7,7 @@
 #' @param groupName A human readable name for refering to the dataset being loaded
 #' @param no_cores Number of cores that should be used to speedup the computation. Use no_cores = 1 when using this package in windows system.
 #' @param savePath Directory where the CTD file should be saved
+#' @param normSpec Boolean indicating whether specificity data should be transformed to a normal distribution by cell type, giving equivalent scores across all cell types.
 #' @return Filenames for the saved celltype_data files
 #' @examples
 #' # Load the single cell data
@@ -26,7 +27,7 @@
 #' @import RNOmni
 #' @import ggdendro
 
-generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath="~/"){
+generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath="~/",normSpec=F){
 
     if(sum(is.na(exp))>0){stop("NA values detected in expresson matrix. All NA values should be removed before calling EWCE.")}
 
@@ -88,8 +89,12 @@ generate.celltype.data <- function(exp,annotLevels,groupName,no_cores=1,savePath
     #stopCluster(cl)
 
     # Use the rank norm transformation on specificity
-    rNorm <- function(ctdIN){   bbb = t(apply(ctdIN$specificity,1,RNOmni::rankNorm));  return(bbb)    }
-
+    rNorm <- function(ctdIN){ ctdIN$specificity = apply(ctdIN$specificity,2,RNOmni::RankNorm); return(ctdIN) }
+    
+    #apply rank norm transformation if hyp param set
+    if(isTRUE(normSpec))
+        ctd <- lapply(ctd,rNorm)
+        
 
     # ADD DENDROGRAM DATA TO CTD
     ctd = lapply(ctd,bin.specificity.into.quantiles,numberOfBins=40)

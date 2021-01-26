@@ -12,7 +12,8 @@ Description: Used to determine which cell types are enriched within gene lists. 
         can be loaded in and used in the analyses.
 License: Artistic-2.0
 LazyData: TRUE
-Depends: R(>= 3.2)
+Depends: R(>= 3.2),
+         RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
     XML,
@@ -30,14 +31,14 @@ Imports:
     Matrix,
     future,
     scales,
-    RNOmni,
     sctransform
 Remotes: ChristophH/sctransform@*release
 Suggests: 
     knitr,
     BiocStyle,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    data.table
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,

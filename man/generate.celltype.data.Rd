@@ -9,7 +9,8 @@ generate.celltype.data(
   annotLevels,
   groupName,
   no_cores = 1,
-  savePath = "~/"
+  savePath = "~/",
+  normSpec = F
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ generate.celltype.data(
 \item{no_cores}{Number of cores that should be used to speedup the computation. Use no_cores = 1 when using this package in windows system.}
 
 \item{savePath}{Directory where the CTD file should be saved}
+
+\item{normSpec}{Boolean indicating whether specificity data should be transformed to a normal distribution by cell type, giving equivalent scores across all cell types.}
 }
 \value{
 Filenames for the saved celltype_data files

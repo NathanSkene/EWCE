@@ -27,8 +27,8 @@ merge_two_expfiles <- function(exp1,exp2,annot1,annot2,name1="",name2=""){
     # If one of the exp matrices is really a matrix (not a dataframe) the code won't work... so force conversion
     #if(class(exp1)=="matrix"){exp1=data.frame(exp1);colnames(exp1)=gsub("X","",colnames(exp1))}
     #if(class(exp2)=="matrix"){exp2=data.frame(exp2);colnames(exp2)=gsub("X","",colnames(exp2))}
-    if(class(exp1)=="matrix"){nn=colnames(exp1);rr=rownames(exp1);exp1=data.frame(exp1,stringsAsFactors = FALSE);colnames(exp1)=nn;rownames(exp1)=rr;}
-    if(class(exp2)=="matrix"){nn=colnames(exp2);rr=rownames(exp2);exp2=data.frame(exp2,stringsAsFactors = FALSE);colnames(exp2)=nn;rownames(exp2)=rr;}
+    if(class(exp1)[1]=="matrix"){nn=colnames(exp1);rr=rownames(exp1);exp1=data.frame(exp1,stringsAsFactors = FALSE);colnames(exp1)=nn;rownames(exp1)=rr;}
+    if(class(exp2)[1]=="matrix"){nn=colnames(exp2);rr=rownames(exp2);exp2=data.frame(exp2,stringsAsFactors = FALSE);colnames(exp2)=nn;rownames(exp2)=rr;}
 
 
     # Merge the expression matrices, setting undetected genes to 0
@@ -54,8 +54,7 @@ merge_two_expfiles <- function(exp1,exp2,annot1,annot2,name1="",name2=""){
         annot2$dataset_name = name2
     }
     keepTISSUE=FALSE
-    #if(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2))){
-    if(all(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2)))){
+    if(("tissue" %in% colnames(annot1)) & ("tissue" %in% colnames(annot2))){
         keepTISSUE=TRUE    
         annot1$tissue     = as.character(annot1$tissue)
         annot2$tissue     = as.character(annot2$tissue)

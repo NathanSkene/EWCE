@@ -31,6 +31,33 @@ test_that("Cell type specificity Aif1, Pvalb", {
   pvalb_interneurons <- names(EWCE_return_Pvalb)[[1]] =="interneurons"
   aif1_microglia <- names(EWCE_return_Aif1)[[1]] =="microglia"
   
+  #Try running with rank norm transformation normSpec set to True
+  #Ensure same most specific cell types remain
+  ctd_not_norm_spec <- ctd
+  fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,annotLevels=annotLevels,
+                                             groupName="kiCortexOnly",normSpec=T)
+  #filter only orthologs
+  fNames_CortexOnly = filter.genes.without.1to1.homolog(fNames_CortexOnly)
+  
+  #load and inspect specificity matrix
+  load(fNames_CortexOnly[1])
+  
+  EWCE_return_Pvalb_norm <- sort(ctd[[1]]$specificity["Pvalb",],decreasing=TRUE)
+  EWCE_return_Aif1_norm <- sort(ctd[[1]]$specificity["Aif1",],decreasing=TRUE)
+  
+  pvalb_interneurons_norm <- names(EWCE_return_Pvalb_norm)[[1]] =="interneurons"
+  aif1_microglia_norm <- names(EWCE_return_Aif1_norm)[[1]] =="microglia"
+  
+  #also check the results appear the same - apart from the transformed, normalised specificity values
+  ctd_comparable <- all(
+  all.equal(ctd_not_norm_spec[[1]]$annot,ctd[[1]]$annot),
+  all.equal(ctd_not_norm_spec[[1]]$mean_exp,ctd[[1]]$mean_exp),
+  all.equal(rownames(ctd_not_norm_spec[[1]]$specificity),rownames(ctd[[1]]$specificity)),
+  all.equal(colnames(ctd_not_norm_spec[[1]]$specificity),colnames(ctd[[1]]$specificity))
+  )
+  
   # fail if most specific cell type for Aif1, Pvalb not microglia and interneurons respectively
-  expect_equal(all(pvalb_interneurons,aif1_microglia),TRUE)
+  expect_equal(all(pvalb_interneurons,aif1_microglia,
+                   pvalb_interneurons_norm,aif1_microglia_norm,
+                   ctd_comparable),TRUE)
 })

@@ -8,3 +8,6 @@ Readme_files/*
 vignettes/EWCE_cache/*
 Dockerfile
 Readme.md
+Readme.Rmd
+docker_push
+_pkgdown.yml
