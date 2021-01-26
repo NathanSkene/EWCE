@@ -21,6 +21,17 @@ test_that("merging EWCE results from multiple sets", {
   results = add.res.to.merging.list(tt_results_36,results)
   results = add.res.to.merging.list(tt_results_44,results)
   
+  #check some non-directional tests
+  tt_results_adj <- tt_results[c(1,2,4)]
+  names(tt_results_adj) <- c("joint_results","hit.cells","bootstrap_data")
+  #run the undirectional
+  results_adj = add.res.to.merging.list(tt_results_adj)
+  #should get error if try to combine directional with undirectional
+  error_return <- 
+    tryCatch(add.res.to.merging.list(tt_results_36,results_adj),
+             error=function(e) e, 
+             warning=function(w) w)
+  
   #check returns
   test1 <- length(results)==6
   #make sure all metrics returned for each
@@ -38,6 +49,10 @@ test_that("merging EWCE results from multiple sets", {
   # fail if any but ggplot returned
   test6 <- all(class(ewce_plot_res)==c("gg","ggplot"))
   
+  #undirectional tests
+  test7 <- length(results_adj[[1]])==2
+  test8 <- is(error_return,"error")
+  
   # fail if any subtest isn't true
-  expect_equal(all(test1,test2,test3,test4,test5,test6),TRUE)
+  expect_equal(all(test1,test2,test3,test4,test5,test6,test7,test8),TRUE)
 })

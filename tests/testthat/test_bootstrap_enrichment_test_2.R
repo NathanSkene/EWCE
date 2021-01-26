@@ -36,7 +36,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
                                       bg=human.bg,reps=reps,annotLevel=1,
                                       geneSizeControl=TRUE,genelistSpecies="human",
                                       sctSpecies="mouse")
-  #chec most significant result
+  #check most significant result
   ewce_sig_cell_types <- 
     as.character(results$results[results$results$p<=0.05 & 
                                    results$results$p==min(results$results$p),"CellType"])
@@ -50,6 +50,16 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
                                         ),
               error=function(e) e, 
               warning=function(w) w)
+  
+  # test adding a fake mouse bg
+  mouse.bg.fake <- mouse.bg[!(mouse.bg %in% EWCE::all_hgnc)]
+  fail_return2_5 <- 
+    tryCatch( bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+                                        bg=mouse.bg.fake,reps=reps,annotLevel=level,
+                                        genelistSpecies="human"
+    ),
+    error=function(e) e, 
+    warning=function(w) w)
   
   #Test 4: test adding a sct species other than mouse or human
   fail_return3 <- 
@@ -74,7 +84,26 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
               error=function(e) e, 
               warning=function(w) w)
   
-
+  #test 7: running human species with mouse gene list
+  #should fail because of gene names
+  fail_return6 <- 
+    tryCatch( bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+                                        bg=mouse.bg,reps=reps,annotLevel=1,
+                                        geneSizeControl=TRUE,genelistSpecies="mouse",
+                                        sctSpecies="human"),
+              error=function(e) e, 
+              warning=function(w) w)
+  ctd_fake <- ctd
+  #just rename genes to hgnc names
+  rownames(ctd_fake[[1]]$mean_exp) <- EWCE::all_hgnc[1:length(rownames(ctd[[1]]$mean_exp))]
+  #should fail as geneSizeControl set to true
+  fail_return7 <- 
+    tryCatch( bootstrap.enrichment.test(sct_data=ctd_fake,hits=mouse.hits,
+                                        bg=mouse.bg,reps=reps,annotLevel=1,
+                                        geneSizeControl=TRUE,genelistSpecies="mouse",
+                                        sctSpecies="human"),
+              error=function(e) e, 
+              warning=function(w) w)
   # fail if any subtest fails
   expect_equal(all(
     #Test 1
@@ -83,10 +112,15 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     ewce_sig_cell_types=="microglia",
     #Test 3
     is(fail_return2,"error"),
+    #Test 3
+    is(fail_return2_5,"error"),
     #Test 4
     is(fail_return3,"error"),
     #Test 5
     is(fail_return4,"error"),
     #Test 6
-    is(fail_return5,"error")),TRUE)
+    is(fail_return5,"error"),
+    #test 7
+    is(fail_return6,"error"),
+    is(fail_return7,"error")),TRUE)
 })

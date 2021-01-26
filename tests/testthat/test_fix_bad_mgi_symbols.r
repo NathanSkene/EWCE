@@ -47,6 +47,16 @@ test_that("method to remove/fix an expected set of genes", {
              error=function(e) e, 
              warning=function(w) w)
   
+  #running on hgnc rather than mgi should return warnings
+  warning_return3 <- 
+    tryCatch(EWCE::fix.bad.hgnc.symbols(data.table::data.table(as.data.frame(test_exp_set))),
+             error=function(e) e, 
+             warning=function(w) w)
+  
+  options(warn=-1)
+  hgnc_return <- EWCE::fix.bad.hgnc.symbols(test_exp_set)
+  options(warn=0)
+  
   #Now test if a synonym of a gene in the list is added 
   #function should combine them and give sum reads for each sample
   # alt symbol for Tspan12 is Tm4sf12
@@ -66,7 +76,7 @@ test_that("method to remove/fix an expected set of genes", {
   
   #check input runs on large size of incorrect mgi gene names
   #check it catches warning still but doesn't give an error
-  warning_return3 <- 
+  warning_return4 <- 
     tryCatch(EWCE_output_large <- EWCE::fix.bad.mgi.symbols(cortex_mrna$exp[1:10000,1:1000],
                                                             mrk_file_path="MRK_List2.rpt"),
              error=function(e) e, 
@@ -87,11 +97,15 @@ test_that("method to remove/fix an expected set of genes", {
     is(warning_return,"warning"),
     #Test 1.2
     is(warning_return2,"warning"),
+    #Test 1.3
+    is(warning_return3,"error"),
+    #Test 1.4
+    class(hgnc_return)[1]=="matrix",
     #Test 2
     all(sum_exp==EWCE_return[rownames(EWCE_return)=="Tspan12",]),
     #Test 3
     all.equal(EWCE_output_same_input,test_exp_set),
     #Test 4
-    is(warning_return2,"warning"))
+    is(warning_return4,"warning"))
     , TRUE)
 })
