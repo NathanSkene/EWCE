@@ -9,18 +9,22 @@ drop.uninformative.genes(exp, level2annot)
 \arguments{
 \item{exp}{Expression matrix with gene names as rownames.}
 
-\item{level2annot}{Array of cell types, with each sequentially corresponding a column in the expression matrix}
+\item{level2annot}{Array of cell types, with each sequentially corresponding 
+a column in the expression matrix}
 }
 \value{
 exp Expression matrix with gene names as rownames.
 }
 \description{
-\code{drop.uninformative.genes} drops genes from an SCT expression matrix if they do not significantly vary between any celltypes.
-Makes this decision based on use of an ANOVA (implemented with Limma). If the F-statistic for variation amongst type2 annotations
+\code{drop.uninformative.genes} drops genes from an SCT expression matrix 
+if they do not significantly vary between any celltypes.
+Makes this decision based on use of an ANOVA (implemented with Limma). If 
+the F-statistic for variation amongst type2 annotations
 is less than a strict p-threshold, then the gene is dropped.
 }
 \examples{
 data("cortex_mrna")
-cortex_mrna$exp = cortex_mrna$exp[1:300,] # Use only a subset of genes to keep the example quick
-exp2 = drop.uninformative.genes(exp=cortex_mrna$exp,level2annot=cortex_mrna$annot$level2class)
+cortex_mrna$exp <- cortex_mrna$exp[1:300, ] 
+exp2 <- drop.uninformative.genes(exp = cortex_mrna$exp, 
+    level2annot = cortex_mrna$annot$level2class)
 }

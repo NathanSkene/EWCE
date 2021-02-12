@@ -7,35 +7,49 @@
 merged_ewce(results, reps = 100)
 }
 \arguments{
-\item{results}{a list of EWCE results generated using \code{\link{add.res.to.merging.list}}}
+\item{results}{a list of EWCE results generated using 
+\code{\link{add.res.to.merging.list}}}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (default=100 but should 
+be over 10000 for publication quality results)}
 }
 \value{
-dataframe in which each row gives the statistics (p-value, fold change and number of standard deviations from the mean) associated with the enrichment of the stated cell type in the gene list
+dataframe in which each row gives the statistics (p-value, fold 
+change and number of standard deviations from the mean) associated with the 
+enrichment of the stated cell type in the gene list
 }
 \description{
-\code{merged_ewce} combines enrichment results from multiple studies targetting the same scientific problem
+\code{merged_ewce} combines enrichment results from multiple studies 
+targetting the same scientific problem
 }
 \examples{
 # Load the single cell data
 data("ctd")
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100 
 
 # Load the data
 data(tt_alzh_BA36)
 data(tt_alzh_BA44)
+
 # Run EWCE analysis
-tt_results_36 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA36,
-     annotLevel=1,ttSpecies="human",sctSpecies="mouse")
-tt_results_44 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA44,
-     annotLevel=1,ttSpecies="human",sctSpecies="mouse")
+tt_results_36 <- ewce_expression_data(
+    sct_data = ctd, tt = tt_alzh_BA36,
+    annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse"
+)
+tt_results_44 <- ewce_expression_data(
+    sct_data = ctd, tt = tt_alzh_BA44,
+    annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse"
+)
+
 # Fill a list with the results
-results = add.res.to.merging.list(tt_results_36)
-results = add.res.to.merging.list(tt_results_44,results)
+results <- add.res.to.merging.list(tt_results_36)
+results <- add.res.to.merging.list(tt_results_44, results)
+
 # Perform the merged analysis
-merged_res = merged_ewce(results,reps=10) # <- For publication reps should be higher
+# For publication reps should be higher
+merged_res <- merged_ewce(results, reps = 10) 
 print(merged_res)
 }

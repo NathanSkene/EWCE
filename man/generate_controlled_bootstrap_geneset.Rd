@@ -21,13 +21,16 @@ generate_controlled_bootstrap_geneset(
 
 \item{reps}{The number of gene lists to sample}
 
-\item{controlledCT}{Name of a celltype (from colnames of sct_data[[x]]$specificity.}
+\item{controlledCT}{Name of a celltype (from colnames of 
+sct_data[[x]]$specificity).}
 }
 \value{
-Matrix of genes (nrows=length(hitGenes),ncols=reps), where each column is a gene list
+Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
+column is a gene list
 }
 \description{
-\code{generate_controlled_bootstrap_geneset} Used to generated celltype controlled bootstraped
+\code{generate_controlled_bootstrap_geneset} Used to generated celltype 
+controlled bootstraped
 }
 \examples{
 # See vignette

@@ -19,58 +19,81 @@ bootstrap.enrichment.test(
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
 
-\item{hits}{Array of MGI gene symbols containing the target gene list. Must be HGNC symbols if geneSizeControl=TRUE}
+\item{hits}{Array of MGI gene symbols containing the target gene list. 
+Must be HGNC symbols if geneSizeControl=TRUE}
 
-\item{bg}{Array of MGI gene symbols containing the background gene list. Must be HGNC symbols if geneSizeControl=TRUE}
+\item{bg}{Array of MGI gene symbols containing the background gene list. 
+Must be HGNC symbols if geneSizeControl=TRUE}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for gene lists}
+\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+or HGNC symbols are used for gene lists}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or 
+HGNC symbols are used for the single cell dataset}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (default=100 but should 
+be over 10000 for publication quality results)}
 
-\item{annotLevel}{an integer indicating which level of the annotation to analyse. Default = 1.}
+\item{annotLevel}{an integer indicating which level of the annotation to 
+analyse. Default = 1.}
 
-\item{geneSizeControl}{a logical indicating whether you want to control for GC content and transcript length. Recommended if the gene list originates from genetic studies. Default is FALSE. If set to TRUE then human gene lists should be used rather than mouse.}
+\item{geneSizeControl}{a logical indicating whether you want to control for 
+GC content and transcript length. Recommended if the gene list originates 
+from genetic studies. Default is FALSE. If set to TRUE then human gene lists 
+should be used rather than mouse.}
 
-\item{controlledCT}{(optional) If not NULL, and instead is the name of a cell type, then the bootstrapping controls for expression within that celltype}
+\item{controlledCT}{(optional) If not NULL, and instead is the name of a 
+cell type, then the bootstrapping controls for expression within that 
+cell type}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{results}: dataframe in which each row gives the statistics (p-value, fold change and number of standard deviations from the mean) associated with the enrichment of the stated cell type in the gene list
-  \item \code{hit.cells}: vector containing the summed proportion of expression in each cell type for the target list
-  \item \code{bootstrap_data}: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists
+  \item \code{results}: dataframe in which each row gives the statistics 
+  (p-value, fold change and number of standard deviations from the mean) 
+  associated with the enrichment of the stated cell type in the gene list
+  \item \code{hit.cells}: vector containing the summed proportion of 
+  expression in each cell type for the target list
+  \item \code{bootstrap_data}: matrix in which each row represents the 
+  summed proportion of expression in each cell type for one of the 
+  random lists
 }
 }
 \description{
-\code{bootstrap.enrichment.test} takes a genelist and a single cell type transcriptome dataset
-and determines the probability of enrichment and fold changes for each cell type.
+\code{bootstrap.enrichment.test} takes a genelist and a single cell type 
+transcriptome dataset and determines the probability of enrichment and fold 
+changes for each cell type.
 }
 \examples{
-\dontrun{
 # Load the single cell data
 data("ctd")
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100 
 
 # Load the gene list and get human orthologs
 data("example_genelist")
 data("mouse_to_human_homologs")
-m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-mouse.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"MGI.symbol"])
-human.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"HGNC.symbol"])
-human.bg = unique(m2h$HGNC.symbol)
-mouse.bg  = unique(m2h$MGI.symbol)
+m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+mouse.hits <- 
+    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
+human.hits <- 
+    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "HGNC.symbol"])
+human.bg <- unique(m2h$HGNC.symbol)
+mouse.bg <- unique(m2h$MGI.symbol)
 
-# Bootstrap significance testing, without controlling for transcript length and GC content
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-  bg=mouse.bg,reps=reps,annotLevel=2,sctSpecies="mouse",genelistSpecies="mouse")
+# Bootstrap significance test, no control for transcript length or GC content
+full_results <- bootstrap.enrichment.test(
+    sct_data = ctd, hits = mouse.hits,
+    bg = mouse.bg, reps = reps, annotLevel = 2, sctSpecies = "mouse", 
+    genelistSpecies = "mouse"
+)
 
-# Bootstrap significance testing controlling for transcript length and GC content
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
-  bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,
-  sctSpecies="mouse",genelistSpecies="human")
-}
+# Bootstrap significance test control for transcript length and GC content
+full_results <- bootstrap.enrichment.test(
+    sct_data = ctd, hits = human.hits,
+    bg = human.bg, reps = reps, annotLevel = 2, geneSizeControl = TRUE,
+    sctSpecies = "mouse", genelistSpecies = "human"
+)
 }

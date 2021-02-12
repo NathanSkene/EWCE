@@ -13,18 +13,22 @@ filter.genes.without.1to1.homolog(filenames)
 Array of filenames included the ones with only 1:1 homologs
 }
 \description{
-\code{filter.genes.without.1to1.homolog} Takes the filenames of celltype_data files, loads them, and drops any genes
-which don't have a 1:1 homolog based on biomart. The new files are saved to disc, appending '_1to1only' to the file
+\code{filter.genes.without.1to1.homolog} Takes the filenames of 
+celltype_data files, loads them, and drops any genes
+which don't have a 1:1 homolog based on biomart. The new files are saved to 
+disc, appending '_1to1only' to the file
 tag of the previous file.
 }
 \examples{
 # Load the single cell data
 data(cortex_mrna)
-expData = cortex_mrna$exp
-expData = expData[1:500,] # Use only a subset to keep the example quick
-l1=cortex_mrna$annot$level1class
-l2=cortex_mrna$annot$level2class
-annotLevels = list(level1class=l1,level2class=l2)
-fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels=annotLevels,groupName="allKImouse")
-fNames_ALLCELLS = filter.genes.without.1to1.homolog(fNames_ALLCELLS)
+expData <- cortex_mrna$exp
+expData <- expData[1:500, ] # Use only a subset to keep the example quick
+l1 <- cortex_mrna$annot$level1class
+l2 <- cortex_mrna$annot$level2class
+annotLevels <- list(level1class = l1, level2class = l2)
+fNames_ALLCELLS <- generate.celltype.data(exp = expData, 
+    annotLevels = annotLevels, 
+    groupName = "allKImouse")
+fNames_ALLCELLS <- filter.genes.without.1to1.homolog(fNames_ALLCELLS)
 }

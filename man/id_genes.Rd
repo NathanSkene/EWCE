@@ -9,7 +9,9 @@ An object of class \code{character} of length 1159.
 }
 \source{
 from http://compbio.charite.de/hpoweb/showterm?id=HP:0001249
-id_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/Intellectual Disability July2017.txt",stringsAsFactors = FALSE)[-1,1]
+file3 <- paste0("/Users/ns9/Google Drive/DiseaseLists/",
+                     "Intellectual Disability July2017.txt")
+id_genes <- read.csv(file3,stringsAsFactors = FALSE)[-1,1]
 save(id_genes,file="data/id_genes.rda")
 }
 \usage{

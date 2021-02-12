@@ -22,60 +22,84 @@ generate.bootstrap.plots.for.transcriptome(
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
 
-\item{tt}{Differential expression table. Can be output of limma::topTable function. Minimum requirement is that one column stores a metric of increased/decreased expression (i.e. log fold change, t-statistic for differential expression etc) and another contains either HGNC or MGI symbols.}
+\item{tt}{Differential expression table. Can be output of limma::topTable 
+function. Minimum requirement is that one column stores a metric of 
+increased/decreased expression (i.e. log fold change, t-statistic for 
+differential expression etc) and another contains either HGNC or MGI symbols.}
 
-\item{thresh}{The number of up- and down- regulated genes to be included in each analysis. Dafault=250}
+\item{thresh}{The number of up- and down- regulated genes to be included in 
+each analysis. Dafault=250}
 
-\item{annotLevel}{an integer indicating which level of the annotation to analyse. Default = 1.}
+\item{annotLevel}{an integer indicating which level of the annotation to 
+analyse. Default = 1.}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (default=100 but should 
+be over 10000 for publication quality results)}
 
-\item{full_results}{The full output of \code{\link{bootstrap.enrichment.test}} for the same genelist}
+\item{full_results}{The full output of 
+\code{\link{bootstrap.enrichment.test}} for the same genelist}
 
-\item{listFileName}{String used as the root for files saved using this function}
+\item{listFileName}{String used as the root for files saved using 
+this function}
 
-\item{showGNameThresh}{Integer. If a gene has over X percent of it's expression proportion in a celltype, then list the gene name}
+\item{showGNameThresh}{Integer. If a gene has over X percent of it's 
+expression proportion in a celltype, then list the gene name}
 
-\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the differential expression table was generated from}
+\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the 
+differential expression table was generated from}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the single cell data was generated from}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the 
+single cell data was generated from}
 
-\item{sortBy}{Column name of metric in tt which should be used to sort up- from down- regulated genes. Default="t"}
+\item{sortBy}{Column name of metric in tt which should be used to sort up- 
+from down- regulated genes. Default="t"}
 
-\item{onlySignif}{Should plots only be generated for cells which have significant changes?}
+\item{onlySignif}{Should plots only be generated for cells which have 
+significant changes?}
 }
 \value{
-Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
-value of listFileName. The files are saved into the 'BootstrapPlot' folder. The files start with one of the following:
+Saves a set of pdf files containing graphs. These will be saved 
+with the filename adjusted using the value of listFileName. The files are 
+saved into the 'BootstrapPlot' folder. Files start with one of the following:
 \itemize{
-  \item \code{qqplot_noText}: sorts the gene list according to how enriched it is in the relevant celltype. Plots the value in the target list against the mean value in the bootstrapped lists.
-  \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the highest expressed genes.
-  \item \code{bootDists}: rather than just showing the mean of the bootstrapped lists, a boxplot shows the distribution of values
-  \item \code{bootDists_LOG}: shows the bootstrapped distributions with the y-axis shown on a log scale
+  \item \code{qqplot_noText}: sorts the gene list according to how enriched 
+  it is in the relevant celltype. Plots the value in the target list against 
+  the mean value in the bootstrapped lists.
+  \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the 
+  highest expressed genes.
+  \item \code{bootDists}: rather than just showing the mean of the 
+  bootstrapped lists, a boxplot shows the distribution of values
+  \item \code{bootDists_LOG}: shows the bootstrapped distributions with the 
+  y-axis shown on a log scale
 }
 }
 \description{
-\code{generate.bootstrap.plots.for.transcriptome} takes a genelist and a single cell type transcriptome dataset
-and generates plots which show how the expression of the genes in the list compares to those
-in randomly generated gene lists
+\code{generate.bootstrap.plots.for.transcriptome} takes a genelist and a 
+single cell type transcriptome dataset and generates plots which show how 
+the expression of the genes in the list compares to those in randomly 
+generated gene lists
 }
 \examples{
-\dontrun{
 # Load the single cell data
 data("ctd")
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
-annotLevel=1 # <- Use cell level annotations (i.e. Interneurons)
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100 
+annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 
 # Load the top table
 data(tt_alzh)
 
-tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-    ttSpecies="human",sctSpecies="mouse")
+tt_results <- ewce_expression_data(
+    sct_data = ctd, tt = tt_alzh, annotLevel = 1,
+    ttSpecies = "human", sctSpecies = "mouse"
+)
 
-# Bootstrap significance testing, without controlling for transcript length and GC content
-full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-     full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse")
-}
+# Bootstrap significance test, no control for transcript length or GC content
+full_results <- generate.bootstrap.plots.for.transcriptome(
+    sct_data = ctd, tt = tt_alzh, annotLevel = 1,
+    full_results = tt_results, listFileName = "examples", reps = reps, 
+    ttSpecies = "human", sctSpecies = "mouse"
+)
 }

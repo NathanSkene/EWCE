@@ -11,15 +11,21 @@ An object of class \code{data.frame} with 217589 rows and 3 columns.
 The code to prepare the .Rda file file from the marker file is:
 \code{
 listMarts(host="www.ensembl.org")
-human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
-ensembl_transript_lengths_GCcontent = getBM(attributes=c("transcript_length","percentage_gene_gc_content","ensembl_gene_id"), mart= human)
-save(ensembl_transript_lengths_GCcontent,file="ensembl_transcript_lengths_GCcontent.Rda")
+human <- 
+    useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", 
+                dataset="hsapiens_gene_ensembl")
+ensembl_transript_lengths_GCcontent <- 
+     getBM(attributes=c("transcript_length","percentage_gene_gc_content",
+                             "ensembl_gene_id"), mart= human)
+save(ensembl_transript_lengths_GCcontent,
+          file="ensembl_transcript_lengths_GCcontent.Rda")
 }
 }
 \usage{
 ensembl_transcript_lengths_GCcontent
 }
 \description{
-A dataset containing the transcript lengths and GC content for each human ensembl gene
+A dataset containing the transcript lengths and GC content for each human 
+ensembl gene
 }
 \keyword{datasets}

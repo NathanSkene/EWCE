@@ -24,56 +24,76 @@ generate.bootstrap.plots(
 
 \item{bg}{Array of MGI/HGNC gene symbols containing the background gene list.}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for gene lists}
+\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+or HGNC symbols are used for gene lists}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or 
+HGNC symbols are used for the single cell dataset}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (default=100 but should 
+be over 10000 for publication quality results)}
 
-\item{annotLevel}{an integer indicating which level of the annotation to analyse. Default = 1.}
+\item{annotLevel}{an integer indicating which level of the annotation to 
+analyse. Default = 1.}
 
-\item{full_results}{The full output of \code{\link{bootstrap.enrichment.test}} for the same genelist}
+\item{full_results}{The full output of 
+\code{\link{bootstrap.enrichment.test}} for the same genelist}
 
-\item{listFileName}{String used as the root for files saved using this function}
+\item{listFileName}{String used as the root for files saved using this 
+function}
 
 \item{savePath}{Directory where the BootstrapPlots folder should be saved}
 }
 \value{
-Saves a set of pdf files containing graphs. These will be saved with the filename adjusted using the
-value of listFileName. The files are saved into the 'BootstrapPlot' folder. The files start with one of the following:
+Saves a set of pdf files containing graphs. These will be saved 
+with the filename adjusted using the value of listFileName. The files are 
+saved into the 'BootstrapPlot' folder. Files start with one of the following:
 \itemize{
-  \item \code{qqplot_noText}: sorts the gene list according to how enriched it is in the relevant celltype. Plots the value in the target list against the mean value in the bootstrapped lists.
-  \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the highest expressed genes.
-  \item \code{bootDists}: rather than just showing the mean of the bootstrapped lists, a boxplot shows the distribution of values
-  \item \code{bootDists_LOG}: shows the bootstrapped distributions with the y-axis shown on a log scale
+  \item \code{qqplot_noText}: sorts the gene list according to how enriched 
+  it is in the relevant celltype. Plots the value in the target list against 
+  the mean value in the bootstrapped lists.
+  \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the 
+  highest expressed genes.
+  \item \code{bootDists}: rather than just showing the mean of the 
+  bootstrapped lists, a boxplot shows the distribution of values
+  \item \code{bootDists_LOG}: shows the bootstrapped distributions with the 
+  y-axis shown on a log scale
 }
 }
 \description{
-\code{generate.bootstrap.plots} takes a genelist and a single cell type transcriptome dataset
-and generates plots which show how the expression of the genes in the list compares to those
-in randomly generated gene lists
+\code{generate.bootstrap.plots} takes a genelist and a single cell type 
+transcriptome dataset and generates plots which show how the expression of 
+the genes in the list compares to those in randomly generated gene lists
 }
 \examples{
 # Load the single cell data
 data("ctd")
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100 
 
 # Load the gene list and get human orthologs
 data("example_genelist")
 data("mouse_to_human_homologs")
-m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-mouse.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"MGI.symbol"])
-human.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"HGNC.symbol"])
-human.bg = unique(m2h$HGNC.symbol)
-mouse.bg  = unique(m2h$MGI.symbol)
+m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+mouse.hits <- 
+    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
+human.hits <- 
+    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "HGNC.symbol"])
+human.bg <- unique(m2h$HGNC.symbol)
+mouse.bg <- unique(m2h$MGI.symbol)
 
-# Bootstrap significance testing, without controlling for transcript length and GC content
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-  bg=mouse.bg,reps=reps,annotLevel=1,sctSpecies="mouse",genelistSpecies="mouse")
+# Bootstrap significance test, no control for transcript length or GC content
+full_results <- bootstrap.enrichment.test(
+    sct_data = ctd, hits = mouse.hits,
+    bg = mouse.bg, reps = reps, annotLevel = 1, sctSpecies = "mouse", 
+    genelistSpecies = "mouse"
+)
 
-generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits, bg=mouse.bg,
-     reps=reps,full_results=full_results,listFileName="Example",
-     genelistSpecies="mouse",sctSpecies="mouse", annotLevel=1)
+generate.bootstrap.plots(
+    sct_data = ctd, hits = mouse.hits, bg = mouse.bg,
+    reps = reps, full_results = full_results, listFileName = "Example",
+    genelistSpecies = "mouse", sctSpecies = "mouse", annotLevel = 1
+)
 }

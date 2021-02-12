@@ -7,17 +7,25 @@
 merge_two_expfiles(exp1, exp2, annot1, annot2, name1 = "", name2 = "")
 }
 \arguments{
-\item{exp1}{Numerical expression matrix for dataset1 with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
+\item{exp1}{Numerical expression matrix for dataset1 with row for each gene 
+and column for each cell. Row names are MGI/HGNC gene symbols. Column names 
+are cell IDs which can be cross referenced against the annot data frame.}
 
-\item{exp2}{Numerical expression matrix for dataset2 with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
+\item{exp2}{Numerical expression matrix for dataset2 with row for each gene 
+and column for each cell. Row names are MGI/HGNC gene symbols. Column names 
+are cell IDs which can be cross referenced against the annot data frame.}
 
-\item{annot1}{Annotation data frame for dataset1 which contains three columns at least: cell_id, level1class and level2class}
+\item{annot1}{Annotation data frame for dataset1 which contains three 
+columns at least: cell_id, level1class and level2class}
 
-\item{annot2}{Annotation data frame for dataset2 which contains three columns at least: cell_id, level1class and level2class}
+\item{annot2}{Annotation data frame for dataset2 which contains three 
+columns at least: cell_id, level1class and level2class}
 
-\item{name1}{Name used to refer to dataset 1. Leave blank if it's already a merged dataset.}
+\item{name1}{Name used to refer to dataset 1. Leave blank if it's already a 
+merged dataset.}
 
-\item{name2}{Name used to refer to dataset 2. Leave blank if it's already a merged dataset.}
+\item{name2}{Name used to refer to dataset 2. Leave blank if it's already a 
+merged dataset.}
 }
 \value{
 List containing merged exp and annot
@@ -26,5 +34,61 @@ List containing merged exp and annot
 \code{merge_two_expfiles} Used to combine two single cell type datasets
 }
 \examples{
-# See the EWCE vignette
+# See the EWCE vignette for further explanation
+# Download the hypothalamus data and unzip
+if (!file.exists("GSE74672_expressed_mols_with_classes.xlsx")) {
+    file_link1 <- "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/"
+    file_link2 <- "suppl/GSE74672_expressed_mols_with_classes.xlsx.gz"
+    download.file(paste0(file_link1, file_link2),
+                   destfile = "GSE74672_expressed_mols_with_classes.xlsx.gz"
+    )
+    system("gunzip GSE74672_expressed_mols_with_classes.xlsx.gz")
+}
+# Read in the hypothalamus data
+hypo_dat <- readxl::read_excel("GSE74672_expressed_mols_with_classes.xlsx")
+# Extract the expression data, gene symbols and annotation data
+exp <- data.matrix(hypo_dat[12:dim(hypo_dat)[1], 2:dim(hypo_dat)[2]])
+rownames(exp) <- data.frame(hypo_dat[12:dim(hypo_dat)[1], 1])[, 1]
+level1class <- data.frame(level1class = t(hypo_dat[1, 2:dim(hypo_dat)[2]]), 
+                              stringsAsFactors = FALSE)[, 1]
+level2class <- data.frame(leve2class = t(hypo_dat[2, 2:dim(hypo_dat)[2]]), 
+                              stringsAsFactors = FALSE)[, 1]
+cell_id <- colnames(hypo_dat)[2:dim(hypo_dat)[2]]
+hypo_annot <- data.frame(
+    cell_id = cell_id, level1class = level1class,
+    level2class = level2class, stringsAsFactors = FALSE
+)
+# Drop the glia and unclassified cells(which don't have level 2  annotations)
+hypo_annot <- 
+    hypo_annot[!is.na(hypo_annot$level2class) & 
+        !hypo_annot$level2class == "uc", ]
+hypo_exp <- exp[, hypo_annot$cell_id]
+# Make the celltype names more aesthetically pleasing
+hypo_annot$level2class <- gsub(",", ";", hypo_annot$level2class)
+hypo_annot$level1class[grep("Oxt;|^Avp", hypo_annot$level2class)] <-
+    "Oxytocin / Vasopressin Expressing Neurons"
+hypo_annot$level1class[grep("^Th;|^Dopamine", hypo_annot$level2class)] <-
+    "Hypothalamic Dopaminergic Neurons"
+hypo_annot$level1class[grepl("^Vglut2|^Trh|^Qrfp|^Hcrt|^Pmch|^Adcyap1|
+                                   ^Npvf|^Ghrh|^Hmit|
+                                   ^Nms|^Vip;|^Per2|Tnr$|^Gad-low;Gnrh",
+    hypo_annot$level2class
+) & grepl("neurons", hypo_annot$level1class)] <-
+    "Hypothalamic Glutamatergic Neurons"
+hypo_annot$level1class[grepl(
+    "GABA|^Sst|^Crh|^Npy|^Pomc|^Galanin|^Otof|Pnoc$|^Calcr-high",
+    hypo_annot$level2class
+) & grepl("^neurons$", hypo_annot$level1class)] <-
+    "Hypothalamic GABAergic Neurons"
+hypo_annot$level2class[hypo_annot$level2class != ""] <-
+    sprintf("Hypothalamic \%s Neuron", 
+        hypo_annot$level2class[hypo_annot$level2class != ""])
+# Fix bad MGI symbols
+hypo_exp_CORRECTED <- fix.bad.mgi.symbols(hypo_exp)
+# Merge hypothalamus data with the cortex dataset
+merged_KI <- merge_two_expfiles(
+    exp1 = hypo_exp_CORRECTED, exp2 = cortex_mrna$exp,
+    annot1 = hypo_annot, annot2 = cortex_mrna$annot,
+    name1 = "Hypothalamus (KI)", name2 = "Cortex/Hippo (KI)"
+)
 }

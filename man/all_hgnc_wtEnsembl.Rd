@@ -11,8 +11,10 @@ An object of class \code{data.frame} with 64029 rows and 2 columns.
 The code to prepare the .Rda file file from the marker file is:
 \code{
 listMarts(host="www.ensembl.org")
-human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
-all_hgnc_wtEnsembl = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), mart=human)
+human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", 
+                      dataset="hsapiens_gene_ensembl")
+all_hgnc_wtEnsembl = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), 
+                               mart=human)
 save(all_hgnc_wtEnsembl,file="all_hgnc_wtEnsembl.Rda")
 }
 }
@@ -20,6 +22,7 @@ save(all_hgnc_wtEnsembl,file="all_hgnc_wtEnsembl.Rda")
 all_hgnc_wtEnsembl
 }
 \description{
-A dataset containing all HGNC symbols in first column, then ensembl_gene_id in second column
+A dataset containing all HGNC symbols in first column, then ensembl_gene_id 
+in second column
 }
 \keyword{datasets}

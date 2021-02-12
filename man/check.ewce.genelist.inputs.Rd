@@ -20,31 +20,42 @@ check.ewce.genelist.inputs(
 
 \item{bg}{Array of MGI/HGNC gene symbols containing the background gene list.}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for gene lists}
+\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+or HGNC symbols are used for gene lists}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+or HGNC symbols are used for the single cell dataset}
 
-\item{geneSizeControl}{Will genelists sampled control for GC content and transcript length? Boolean.}
+\item{geneSizeControl}{Will genelists sampled control for GC content and 
+transcript length? Boolean.}
 }
 \value{
 A list containing
 \itemize{
-  \item \code{hits}: Array of MGI/HGNC gene symbols containing the target gene list.
-  \item \code{bg}: Array of MGI/HGNC gene symbols containing the background gene list.
+  \item \code{hits}: Array of MGI/HGNC gene symbols containing the target 
+  gene list.
+  \item \code{bg}: Array of MGI/HGNC gene symbols containing the background 
+  gene list.
 }
 }
 \description{
-\code{check.ewce.genelist.inputs} Is used to check that hits and bg gene lists passed to EWCE are setup correctly. Checks they are the appropriate length.
-Checks all hits genes are in bg. Checks the species match and if not reduces to 1:1 orthologs.
+\code{check.ewce.genelist.inputs} Is used to check that hits and bg gene 
+lists passed to EWCE are setup correctly. Checks they are the 
+appropriate length.
+Checks all hits genes are in bg. Checks the species match and if not 
+reduces to 1:1 orthologs.
 }
 \examples{
 # Called from "bootstrap.enrichment.test()" and "generate.bootstrap.plots()"
 data("ctd")
 data("example_genelist")
 data("mouse_to_human_homologs")
-m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-mouse.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"MGI.symbol"])
-mouse.bg  = unique(m2h$MGI.symbol)
-checkedLists = check.ewce.genelist.inputs(sct_data=ctd,hits=mouse.hits,
-    bg=mouse.bg,genelistSpecies="mouse",sctSpecies="mouse")
+m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+mouse.hits <- 
+     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
+mouse.bg <- unique(m2h$MGI.symbol)
+checkedLists <- check.ewce.genelist.inputs(
+    sct_data = ctd, hits = mouse.hits,
+    bg = mouse.bg, genelistSpecies = "mouse", sctSpecies = "mouse"
+)
 }

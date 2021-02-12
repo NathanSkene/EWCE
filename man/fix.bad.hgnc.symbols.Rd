@@ -3,21 +3,27 @@
 \name{fix.bad.hgnc.symbols}
 \alias{fix.bad.hgnc.symbols}
 \title{fix.bad.hgnc.symbols
-- Given an expression matrix, wherein the rows are supposed to be HGNC symbols, find those symbols which are not official HGNC symbols, then
-correct them if possible. Return the expression matrix with corrected symbols.}
+- Given an expression matrix, wherein the rows are supposed to be HGNC 
+symbols, find those symbols which are not official HGNC symbols, then
+correct them if possible. Return the expression matrix with corrected 
+symbols.}
 \usage{
 fix.bad.hgnc.symbols(exp, dropNonHGNC = FALSE)
 }
 \arguments{
 \item{exp}{An expression matrix where the rows are MGI symbols}
 
-\item{dropNonHGNC}{Boolean. Should symbols not recognised as HGNC symbols be dropped?}
+\item{dropNonHGNC}{Boolean. Should symbols not recognised as HGNC symbols 
+be dropped?}
 }
 \value{
-Returns the expression matrix with the rownames corrected and rows representing the same gene merged
+Returns the expression matrix with the rownames corrected and rows 
+representing the same gene merged
 }
 \description{
 fix.bad.hgnc.symbols
-- Given an expression matrix, wherein the rows are supposed to be HGNC symbols, find those symbols which are not official HGNC symbols, then
-correct them if possible. Return the expression matrix with corrected symbols.
+- Given an expression matrix, wherein the rows are supposed to be HGNC 
+symbols, find those symbols which are not official HGNC symbols, then
+correct them if possible. Return the expression matrix with corrected 
+symbols.
 }

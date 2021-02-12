@@ -16,7 +16,8 @@ vignette: >
 #if (!require("pacman")) install.packages("pacman")
 #if (!require("BiocManager")) install.packages("BiocManager")
 #if (!require("BiocStyle")) BiocManager::install("BiocStyle")
-#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",try.bioconductor=TRUE)
+#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",
+#    try.bioconductor=TRUE)
 
 BiocStyle::markdown()
 knitr::opts_chunk$set(tidy         = FALSE,
@@ -29,13 +30,12 @@ knitr::opts_chunk$set(tidy         = FALSE,
 
 If you use the EWCE package as well then please cite
 
-[Skene, et al. Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment.
-Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
+[Skene, et al. Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment.Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
 
-If you use the cortex/hippocampus single cell data associated with this package then please cite the following papers:
+If you use the cortex/hippocampus single cell data associated with this package 
+then please cite the following papers:
 
-[Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq.
-Science, 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
+[Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science, 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
 
 # Introduction
 
@@ -55,8 +55,7 @@ The process for using *EWCE* essentially involves three steps.
 
 First, one needs to load the relevant single cell transcriptome dataset. Single cell transcriptome data is read in from a text file using the `read_celltype_data`.
 
-The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated
-publication.
+The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associatedpublication.
 
 Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
 
@@ -102,17 +101,23 @@ To check the data we can quickly plot the distribution of expression of a given 
 ```{r }
 data(cortex_mrna)
 gene="Necab1"
-cellExpDist = data.frame(e=cortex_mrna$exp[gene,],l1=cortex_mrna$annot[colnames(cortex_mrna$exp),]$level1class)
-ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + ylab("Unique Molecule Count") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+cellExpDist = data.frame(e=cortex_mrna$exp[gene,],
+                          l1=cortex_mrna$annot[
+                            colnames(cortex_mrna$exp),]$level1class)
+ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + 
+  ylab("Unique Molecule Count") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
 It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. The first time you run it you will need to download the MRK_List2 file from MGI which lists known synonyms for MGI gene symbols. We recommend running this on all input datasets.
 
 ```
 if(!file.exists("MRK_List2.rpt")){
-    download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile="MRK_List2.rpt")
+    file <- "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt"
+    download.file(file, destfile="MRK_List2.rpt")
 }
-cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,mrk_file_path="MRK_List2.rpt")
+cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,
+                                        mrk_file_path="MRK_List2.rpt")
 ```
 
 ## Drop genes
@@ -137,7 +142,9 @@ library(sctransform)
 scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
 cortex_mrna$exp_scT = correct_counts(scT, cortex_mrna$exp) # umi_corrected
 
-cortex_mrna$exp_scT_normed = Matrix::t(Matrix::t(cortex_mrna$exp_scT)*(1/Matrix::colSums(cortex_mrna$exp_scT)))
+cortex_mrna$exp_scT_normed = 
+  Matrix::t(Matrix::t(cortex_mrna$exp_scT)*(1/Matrix::colSums(
+      cortex_mrna$exp_scT)))
 ```
 
 Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this scTransform step.
@@ -145,7 +152,8 @@ Note that this is optional (and was not used in the original EWCE publication) s
 ## Calculate specificity matrices
 
 The next steps are as follows:
-1) Drop genes which do not show significant evidence of varying between level 2 celltypes (based on ANOVA)
+1) Drop genes which do not show significant evidence of varying between level 
+2 celltypes (based on ANOVA)
 2) Calculate cell type averages and specificity for each gene
 3) Drop all genes which do not have 1:1 mouse:human orthologs
 
@@ -155,9 +163,14 @@ Rather than returning the data directly, the functions save the calculated data 
 
 ```{r  }
 # Generate celltype data for just the cortex/hippocampus data
-exp_CortexOnly_DROPPED = drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,level2annot = cortex_mrna$annot$level2class)
-annotLevels = list(level1class=cortex_mrna$annot$level1class,level2class=cortex_mrna$annot$level2class)
-fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,annotLevels=annotLevels,groupName="kiCortexOnly")
+exp_CortexOnly_DROPPED = 
+  drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,
+                            level2annot = cortex_mrna$annot$level2class)
+annotLevels = list(level1class=cortex_mrna$annot$level1class,
+                    level2class=cortex_mrna$annot$level2class)
+fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,
+                                            annotLevels=annotLevels,
+                                            groupName="kiCortexOnly")
 print(fNames_CortexOnly)
 fNames_CortexOnly = filter.genes.without.1to1.homolog(fNames_CortexOnly)
 print(fNames_CortexOnly)
@@ -171,7 +184,9 @@ Often it is useful to merge two single cell datasets. For instance, there are se
 ```
 # Download the hypothalamus data and unzip
 if(!file.exists("GSE74672_expressed_mols_with_classes.xlsx")){
-    download.file("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/suppl/GSE74672_expressed_mols_with_classes.xlsx.gz", destfile="GSE74672_expressed_mols_with_classes.xlsx.gz")
+    file <- paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/",
+                    "suppl/GSE74672_expressed_mols_with_classes.xlsx.gz")
+    download.file(file, destfile="GSE74672_expressed_mols_with_classes.xlsx.gz")
     system("gunzip GSE74672_expressed_mols_with_classes.xlsx.gz")
 }
 
@@ -181,21 +196,32 @@ hypo_dat = read_excel("GSE74672_expressed_mols_with_classes.xlsx")
 # Extract the expression data, gene symbols and annotation data
 exp = data.matrix(hypo_dat[12:dim(hypo_dat)[1],2:dim(hypo_dat)[2]])
 rownames(exp) = data.frame(hypo_dat[12:dim(hypo_dat)[1],1])[,1]
-level1class = data.frame(level1class=t(hypo_dat[1,2:dim(hypo_dat)[2]]),stringsAsFactors = FALSE)[,1]
-level2class = data.frame(leve2class=t(hypo_dat[2,2:dim(hypo_dat)[2]]),stringsAsFactors = FALSE)[,1]
+level1class = data.frame(level1class=t(hypo_dat[1,2:dim(hypo_dat)[2]]),
+                          stringsAsFactors = FALSE)[,1]
+level2class = data.frame(leve2class=t(hypo_dat[2,2:dim(hypo_dat)[2]]),
+                          stringsAsFactors = FALSE)[,1]
 cell_id     = colnames(hypo_dat)[2:dim(hypo_dat)[2]]
-hypo_annot  = data.frame(cell_id=cell_id,level1class=level1class,level2class=level2class,stringsAsFactors = FALSE)
+hypo_annot  = data.frame(cell_id=cell_id,level1class=level1class,
+                          level2class=level2class,stringsAsFactors = FALSE)
 
 # Drop the glia and unclassified cells (which don't have level 2  annotations)
-hypo_annot  = hypo_annot[!is.na(hypo_annot$level2class) & !hypo_annot$level2class=="uc",]
+hypo_annot  = hypo_annot[!is.na(hypo_annot$level2class) & 
+                          !hypo_annot$level2class=="uc",]
 hypo_exp    = exp[,hypo_annot$cell_id]
 
 # Make the celltype names more aesthetically pleasing
 hypo_annot$level2class=gsub(",",";",hypo_annot$level2class)
-hypo_annot$level1class[grep("Oxt;|^Avp",hypo_annot$level2class)] = "Oxytocin / Vasopressin Expressing Neurons"
-hypo_annot$level1class[grep("^Th;|^Dopamine",hypo_annot$level2class)] = "Hypothalamic Dopaminergic Neurons"
-hypo_annot$level1class[grepl("^Vglut2|^Trh|^Qrfp|^Hcrt|^Pmch|^Adcyap1|^Npvf|^Ghrh|^Hmit|^Nms|^Vip;|^Per2|Tnr$|^Gad-low;Gnrh",hypo_annot$level2class) & grepl("neurons",hypo_annot$level1class)] = "Hypothalamic Glutamatergic Neurons"
-hypo_annot$level1class[grepl("GABA|^Sst|^Crh|^Npy|^Pomc|^Galanin|^Otof|Pnoc$|^Calcr-high",hypo_annot$level2class) & grepl("^neurons$",hypo_annot$level1class)] = "Hypothalamic GABAergic Neurons"
+hypo_annot$level1class[grep("Oxt;|^Avp",hypo_annot$level2class)] = 
+  "Oxytocin / Vasopressin Expressing Neurons"
+hypo_annot$level1class[grep("^Th;|^Dopamine",hypo_annot$level2class)] = 
+  "Hypothalamic Dopaminergic Neurons"
+hypo_annot$level1class[grepl("^Vglut2|^Trh|^Qrfp|^Hcrt|^Pmch|^Adcyap1|
+  ^Npvf|^Ghrh|^Hmit|^Nms|^Vip;|^Per2|Tnr$|^Gad-low;Gnrh",
+  hypo_annot$level2class) & grepl("neurons",hypo_annot$level1class)] = 
+    "Hypothalamic Glutamatergic Neurons"
+hypo_annot$level1class[grepl("GABA|^Sst|^Crh|^Npy|^Pomc|^Galanin|^Otof|Pnoc$|
+  ^Calcr-high",hypo_annot$level2class) & 
+  grepl("^neurons$",hypo_annot$level1class)] = "Hypothalamic GABAergic Neurons"
 hypo_annot$level2class[hypo_annot$level2class!=""] = sprintf("Hypothalamic %s Neuron",hypo_annot$level2class[hypo_annot$level2class!=""])
 
 # Fix bad MGI symbols
@@ -206,16 +232,21 @@ Now that the hypothalamus data is prepared, we merge it with the cortex dataset 
 
 ```
 # Merge the datasets
-merged_KI = merge_two_expfiles(exp1=hypo_exp_CORRECTED,  exp2=cortex_mrna$exp,
-                                     annot1=hypo_annot,        annot2=cortex_mrna$annot,
-                                     name1="Hypothalamus (KI)", name2="Cortex/Hippo (KI)")
+merged_KI = merge_two_expfiles(exp1=hypo_exp_CORRECTED, exp2=cortex_mrna$exp,
+                                     annot1=hypo_annot, 
+                                     annot2=cortex_mrna$annot,
+                                     name1="Hypothalamus (KI)", 
+                                     name2="Cortex/Hippo (KI)")
 
 # Drop genes which don't vary significantly between cell types
-exp_merged_DROPPED = drop.uninformative.genes(exp=merged_KI$exp, level2annot = merged_KI$annot$level2class)
+exp_merged_DROPPED = drop.uninformative.genes(exp=merged_KI$exp, 
+  level2annot = merged_KI$annot$level2class)
 
 # Calculate specificity data
-annotLevels = list(level1class=merged_KI$annot$level1class,level2class=merged_KI$annot$level2class)
-fNames_MergedKI = generate.celltype.data(exp=exp_merged_DROPPED,annotLevels,"MergedKI")
+annotLevels = list(level1class=merged_KI$annot$level1class,
+  level2class=merged_KI$annot$level2class)
+fNames_MergedKI = generate.celltype.data(exp=exp_merged_DROPPED,
+  annotLevels,"MergedKI")
 fNames_MergedKI = filter.genes.without.1to1.homolog(fNames_MergedKI)
 load(fNames_MergedKI[2])
 ```
@@ -244,9 +275,11 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=AvgExp),stat="identity")+facet_grid(Gene~.)+
 This graph shows the average expression of three genes: *Apoe, Gfap* and *Gapdh*. While there are substantial differences in which cell types express these genes, the dominant effect seen here is the overall expression level of the data. For the purposes of this analysis though, we are not interested in overall expression level and only wish to know about the proportion of a genes expression which is found in a particular celltype. We can study this instead using the following code which examines the data frame *ctd[[1]]$specificity*:
 
 ```{r, fig.width = 7, fig.height = 4}
-exp = melt(cbind(data.frame(ctd[[1]]$specificity[genes,]),genes),id.vars="genes")
+exp = melt(cbind(data.frame(ctd[[1]]$specificity[genes,]),genes),
+            id.vars="genes")
 colnames(exp) = c("Gene","Cell","Expression")
-ggplot(exp)+geom_bar(aes(x=Cell,y=Expression),stat="identity")+facet_grid(Gene~.)+ 
+ggplot(exp)+geom_bar(aes(x=Cell,y=Expression),stat="identity")+
+  facet_grid(Gene~.)+ 
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
@@ -256,9 +289,11 @@ It can also be seen that the majority of expression of Gapdh is in neurons but b
 
 
 ```{r, fig.width = 7, fig.height = 4}
-exp = melt(cbind(data.frame(ctd[[2]]$specificity[genes,]),genes),id.vars="genes")
+exp = melt(cbind(data.frame(ctd[[2]]$specificity[genes,]),genes),
+            id.vars="genes")
 colnames(exp) = c("Gene","Cell","Specificity")
-ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+facet_grid(Gene~.)+ 
+ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+
+    facet_grid(Gene~.)+ 
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
@@ -300,7 +335,8 @@ And we have `r length(unique(mouse.bg))` genes in background set.
 We now need to set the parameters for the analysis. For a publishable analysis we would want to generate over 10000 random lists and determine their expression levels, but for computational speed let us only use `reps=100`. We want to analyse level 1 annotations so set level to 1.
 
 ```{r }
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps=100 
 level=1 # <- Use level 1 annotations (i.e. Interneurons)
 ```
 
@@ -309,10 +345,11 @@ level=1 # <- Use level 1 annotations (i.e. Interneurons)
 We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows, Note we set the seed to ensure reproducibility in the bootstrap sampling function:
 
 ```{r, cache=TRUE }
-# Bootstrap significance testing, without controlling for transcript length and GC content
+# Bootstrap significance test, no control for transcript length and GC content
 set.seed(12345678)
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
-                                reps=reps,annotLevel=level)
+full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+                                          bg=mouse.bg,
+                                          reps=reps,annotLevel=level)
 ```
 
 The main table of results is stored in `full_results$results`. We can see the most significant results using:
@@ -336,7 +373,10 @@ print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 If you want to view the characteristics of enrichment for each gene within the list then the `generate.bootstrap.plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
 
 ```{r, cache=TRUE }
-generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,reps=reps,annotLevel=1,full_results=full_results,listFileName="VignetteGraphs")
+generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,
+                          bg=mouse.bg,reps=reps,annotLevel=1,
+                          full_results=full_results,
+                          listFileName="VignetteGraphs")
 ```
     
 ## Running EWCE analysis on genetic data with controls for transcript length and GC-content
@@ -355,9 +395,11 @@ The bootstrapping function then takes different arguments:
 ```{r, cache=TRUE, results="hide"}
 # Again, set seed for reproducibility
 set.seed(12345678)
-# Bootstrap significance testing controlling for transcript length and GC content
+# Bootstrap significance test controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
-                    bg=human.bg,reps=reps,annotLevel=1,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
+                      bg=human.bg,reps=reps,annotLevel=1,
+                      geneSizeControl=TRUE,genelistSpecies="human",
+                      sctSpecies="mouse")
 ```
 
 We plot these results using `ewce.plot`:
@@ -375,9 +417,10 @@ Both the analyses shown above were run on level 1 annotations. It is possible to
 ```{r, cache=TRUE, fig.width = 8, fig.height = 4, results="hide"}
 # Again, set seed for reproducibility
 set.seed(12345678)
-# Bootstrap significance testing controlling for transcript length and GC content
+# Bootstrap significance test controlling for transcript length and GC content
 cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
-                    bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,genelistSpecies="human",sctSpecies="mouse")
+                    bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,
+                    genelistSpecies="human",sctSpecies="mouse")
 print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
@@ -416,13 +459,15 @@ To demonstrate this we have an example dataset `tt_alzh`. This data frame was ge
 The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
 
 ```{r, cache=TRUE, results="hide"}
-# ewce_expression_data calls bootstrap.enrichment.test so set the seed for reproducibility
+# ewce_expression_data calls bootstrap.enrichment.test so 
+# set the seed for reproducibility
 set.seed(12345678)
 data(tt_alzh)
-tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
+tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,
+                                    ttSpecies="human",sctSpecies="mouse")
 ```
 
-The results of this analysis can again be plotted using the `ewce.plot` function.
+The results of this analysis can be plotted using the `ewce.plot` function.
 
 ```{r fig.width = 7, fig.height = 4}
 ewce.plot(tt_results$joint_results)$plain
@@ -437,8 +482,15 @@ A common request is to explain which differentially expressed genes are associat
 ```{r, cache=TRUE }
 # Set seed for bootstrap reproducibility
 set.seed(12345678)
-full_results = generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-  full_results=tt_results,listFileName="examples",reps=reps,ttSpecies="human",sctSpecies="mouse",onlySignif=FALSE)
+full_results = 
+  generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,
+                                              annotLevel=1,
+                                              full_results=tt_results,
+                                              listFileName="examples",
+                                              reps=reps,ttSpecies="human",
+                                              sctSpecies="mouse",
+                                              onlySignif=FALSE)
+                                            
 ```
 
 ## Merging multiple transcriptome studies
@@ -456,8 +508,10 @@ data(tt_alzh_BA44)
 set.seed(12345678)
 
 # Run EWCE analysis
-tt_results_36 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA36,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
-tt_results_44 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA44,annotLevel=1,ttSpecies="human",sctSpecies="mouse")
+tt_results_36 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA36,annotLevel=1,
+                                      ttSpecies="human",sctSpecies="mouse")
+tt_results_44 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA44,annotLevel=1,
+                                      ttSpecies="human",sctSpecies="mouse")
 
 # Fill a list with the results
 results = add.res.to.merging.list(tt_results)
@@ -465,7 +519,8 @@ results = add.res.to.merging.list(tt_results_36,results)
 results = add.res.to.merging.list(tt_results_44,results)
 
 # Perform the merged analysis
-merged_res = merged_ewce(results,reps=10) # <- For publication reps should be higher
+# For publication reps should be higher
+merged_res = merged_ewce(results,reps=10) 
 print(merged_res)
 ```
 
@@ -482,8 +537,7 @@ The merged results from all three Alzheimer's brain regions are found to be rema
 
 In a followup paper we found that an enrichment detected for Schizophrenia in Somatosensory Pyramidal neurons could be explained by accounting for expression in Hippocampal CA1 pyramidal neurons. These results are described here:
 
-[Skene, et al. Genetic identification of brain cell types underlying schizophrenia.
-Nature Genetics, 2018.](https://www.nature.com/articles/s41588-018-0129-5)
+[Skene, et al. Genetic identification of brain cell types underlying schizophrenia.Nature Genetics, 2018.](https://www.nature.com/articles/s41588-018-0129-5)
 
 Those results were generated using an alternative enrichment method designed for use with GWAS Summary Statistics rather than gene sets. The same sort of approach can be extended to EWCE as well, and we have implemented it within this package. When testing for enrichment the other gene sets that are sampled are selected to have equivilent specificity in the controlled celltype.
 
@@ -501,15 +555,25 @@ reps=reps
 set.seed(12345678)
 
 unconditional_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-                    bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",sctSpecies="mouse")
-conditional_results_micro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-                    bg=mouse.bg,reps=reps,annotLevel=1,controlledCT="microglia",genelistSpecies="mouse",sctSpecies="mouse")
-conditional_results_astro = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-                    bg=mouse.bg,reps=reps,annotLevel=1,controlledCT="astrocytes_ependymal",genelistSpecies="mouse",sctSpecies="mouse")
+                    bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",
+                    sctSpecies="mouse")
+conditional_results_micro = 
+  bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+                              bg=mouse.bg,reps=reps,annotLevel=1,
+                              controlledCT="microglia",genelistSpecies="mouse",
+                              sctSpecies="mouse")
+conditional_results_astro = 
+  bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
+                              reps=reps,annotLevel=1,
+                              controlledCT="astrocytes_ependymal",
+                              genelistSpecies="mouse",sctSpecies="mouse")
 
-full_res1 = data.frame(unconditional_results$results,list="Unconditional Enrichment")
-full_res2 = data.frame(conditional_results_micro$results,list="Conditional Enrichment (Microglia controlled)")
-full_res3 = data.frame(conditional_results_astro$results,list="Conditional Enrichment (Astrocyte controlled)")
+full_res1 = data.frame(unconditional_results$results,
+                        list="Unconditional Enrichment")
+full_res2 = data.frame(conditional_results_micro$results,
+                        list="Conditional Enrichment (Microglia controlled)")
+full_res3 = data.frame(conditional_results_astro$results,
+                        list="Conditional Enrichment (Astrocyte controlled)")
 merged_results = rbind(rbind(full_res1,full_res2),full_res3)
 print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
@@ -538,13 +602,33 @@ mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
 
 data("rbfox_genes")
 
-res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal CA1")
-res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal CA1")
+res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                                functional_genes = mouse.hpsd, 
+                                                bg_genes = mouse.bg, 
+                                                sct_data = ctd, annotLevel = 1, 
+                                                reps=reps, 
+                                                controlledCT="pyramidal CA1")
+res_rbfox_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = rbfox_genes, 
+                                  bg_genes = mouse.bg, sct_data = ctd, 
+                                  annotLevel = 1, reps=reps, 
+                                  controlledCT="pyramidal CA1")
 print(res_hpsd_schiz)
 print(res_rbfox_schiz)
 
-res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal SS")
-res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT="pyramidal SS")
+res_hpsd_id = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, sct_data = ctd, 
+                                  annotLevel = 1, reps=reps, 
+                                  controlledCT="pyramidal SS")
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                              functional_genes = rbfox_genes, 
+                                              bg_genes = mouse.bg, 
+                                              sct_data = ctd, annotLevel = 1, 
+                                              reps=reps, 
+                                              controlledCT="pyramidal SS")
 print(res_hpsd_id)
 print(res_rbfox_id)
 ```
@@ -559,13 +643,33 @@ set.seed(12345678)
 
 controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
 
-res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
-res_rbfox_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
+res_hpsd_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, sct_data = ctd, 
+                                  annotLevel = 1, reps=reps, 
+                                  controlledCT=controlledCTs)
+res_rbfox_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = rbfox_genes, 
+                                  bg_genes = mouse.bg, sct_data = ctd, 
+                                  annotLevel = 1, reps=reps, 
+                                  controlledCT=controlledCTs)
 print(res_hpsd_schiz)
 print(res_rbfox_schiz)
 
-res_hpsd_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = mouse.hpsd, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
-res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, functional_genes = rbfox_genes, bg_genes = mouse.bg, sct_data = ctd, annotLevel = 1, reps=reps, controlledCT=controlledCTs)
+res_hpsd_id = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, 
+                                  sct_data = ctd, annotLevel = 1, reps=reps, 
+                                  controlledCT=controlledCTs)
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                              functional_genes = rbfox_genes, 
+                                              bg_genes = mouse.bg, 
+                                              sct_data = ctd, annotLevel = 1, 
+                                              reps=reps, 
+                                              controlledCT=controlledCTs)
 print(res_hpsd_id)
 print(res_rbfox_id)
 

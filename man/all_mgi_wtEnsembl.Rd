@@ -11,8 +11,10 @@ An object of class \code{data.frame} with 53952 rows and 2 columns.
 The code to prepare the .Rda file file from the marker file is:
 \code{
 listMarts(host="www.ensembl.org")
-mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="mmusculus_gene_ensembl")
-all_mgi_wtEnsembl = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
+mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", 
+                     dataset="mmusculus_gene_ensembl")
+all_mgi_wtEnsembl = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), 
+                               mart=mouse)
 save(all_mgi_wtEnsembl,file="all_mgi_wtEnsembl.Rda")
 }
 }
@@ -20,6 +22,7 @@ save(all_mgi_wtEnsembl,file="all_mgi_wtEnsembl.Rda")
 all_mgi_wtEnsembl
 }
 \description{
-A dataset containing all MGI symbols in first column, then ensembl_gene_id in second column
+A dataset containing all MGI symbols in first column, then ensembl_gene_id 
+in second column
 }
 \keyword{datasets}

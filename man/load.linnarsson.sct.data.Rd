@@ -12,20 +12,23 @@ load.linnarsson.sct.data(fName)
 \value{
 A list containing 'exp' and 'annot'.
 \itemize{
-  \item \code{exp}: Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.
-  \item \code{annot}: Annotation data frame which must contain at least three columns: cell_id, level1class and level2class. Can also contain other columns.
+  \item \code{exp}: Numerical matrix with row for each gene and column for 
+  each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs 
+  which can be cross referenced against the annot data frame.
+  \item \code{annot}: Annotation data frame which must contain at least 
+  three columns: cell_id, level1class and level2class. Can also contain 
+  other columns.
 }
 }
 \description{
-\code{load.linnarsson.sct.data} Function which was specifically written for extracting the expression and annotation data from the publically downloadable
-Linnarsson lab Cortex/Hippocampus dataset
+\code{load.linnarsson.sct.data} Function which was specifically written for 
+extracting the expression and annotation data from the publically 
+downloadable Linnarsson lab Cortex/Hippocampus dataset
 }
 \examples{
-\dontrun{
 # Load the single cell data
-linURL = "goo.gl/r5Y24y"
-download.file(linURL, destfile="expression_mRNA_17-Aug-2014.txt")
-path = "expression_mRNA_17-Aug-2014.txt"
-cortex_mrna  = load.linnarsson.sct.data(path)
-}
+linURL <- "goo.gl/r5Y24y"
+download.file(linURL, destfile = "expression_mRNA_17-Aug-2014.txt")
+path <- "expression_mRNA_17-Aug-2014.txt"
+cortex_mrna <- load.linnarsson.sct.data(path)
 }

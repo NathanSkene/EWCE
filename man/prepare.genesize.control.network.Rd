@@ -7,23 +7,31 @@
 prepare.genesize.control.network(hits, bg, numBOOT = 10000, sctSpecies)
 }
 \arguments{
-\item{hits}{Array of MGI gene symbols containing the target gene list. Must be HGNC symbols.}
+\item{hits}{Array of MGI gene symbols containing the target gene list. 
+Must be HGNC symbols.}
 
-\item{bg}{Array of MGI gene symbols containing the background gene list (including hit genes). Must be HGNC symbols.}
+\item{bg}{Array of MGI gene symbols containing the background gene list 
+(including hit genes). Must be HGNC symbols.}
 
 \item{numBOOT}{Number of gene lists to sample}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or 
+HGNC symbols are used for the single cell dataset}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{hitGenes}: Array of HGNC symbols containing the hit genes. May be slightly reduced if gene length / GC content could not be found for all genes.
-  \item \code{list_network}: The control gene lists as a data frame of HGNC symbols
+  \item \code{hitGenes}: Array of HGNC symbols containing the hit genes. 
+  May be slightly reduced if gene length / GC content could not be found 
+  for all genes.
+  \item \code{list_network}: The control gene lists as a data frame of HGNC 
+  symbols
 }
 }
 \description{
-\code{prepare.genesize.control.network} takes a genelist and finds semi-randomly selected gene lists which are matched for gene length and GC content
+\code{prepare.genesize.control.network} takes a genelist and finds 
+semi-randomly selected gene lists which are matched for gene length and 
+GC content
 }
 \examples{
 # Called by bootstrap.enrichment.t

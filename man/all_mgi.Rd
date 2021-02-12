@@ -11,8 +11,10 @@ An object of class \code{character} of length 48440.
 The code to prepare the .Rda file file from the marker file is:
 \code{
 listMarts(host="www.ensembl.org")
-mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="mmusculus_gene_ensembl")
-mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), mart=mouse)
+mouse <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", 
+                      dataset="mmusculus_gene_ensembl")
+mgi_symbols = getBM(attributes=c("mgi_symbol","ensembl_gene_id"), 
+                        mart=mouse)
 all_mgi = unique(mgi_symbols$mgi_symbol)
 save(all_mgi,file="all_mgi.Rda")
 }

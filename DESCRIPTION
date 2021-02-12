@@ -2,7 +2,6 @@ Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
 Version: 0.99.2
-Date: 2017-8-04
 Author: Dr Nathan Skene
 Maintainer: Nathan Skene <nathan.skene@gmail.com>
 Description: Used to determine which cell types are enriched within gene lists. The package
@@ -10,40 +9,44 @@ Description: Used to determine which cell types are enriched within gene lists. 
         associated genes) and those resulting from differential expression studies. The package does
         not depend upon any particular Single Cell Transcriptome dataset and user defined datasets
         can be loaded in and used in the analyses.
+URL:https://github.com/NathanSkene/EWCE
 License: Artistic-2.0
 LazyData: TRUE
-Depends: R(>= 3.2),
+Depends: R(>= 3.6),
          RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
-    XML,
     ggplot2,
+    grDevices,
+    grid,
     reshape2,
     biomaRt,
     limma,
     stringr,
-    stringi,
     cowplot,
-    readxl,
     HGNChelper,
     ggdendro,
     gridExtra,
     Matrix,
+    methods,
+    parallel,
     future,
     scales,
-    sctransform
-Remotes: ChristophH/sctransform@*release
+    stats,
+    utils
 Suggests: 
     knitr,
     BiocStyle,
     rmarkdown,
     testthat (>= 3.0.0),
-    data.table
+    data.table,
+    sctransform,
+    readxl
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,
         BiomedicalInformatics, Proteomics, Visualization,
-        FunctionalGenomics
+        FunctionalGenomics, SingleCell
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 Config/testthat/edition: 3

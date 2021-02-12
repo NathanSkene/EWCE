@@ -15,5 +15,6 @@ convert_new_ewce_to_old(ctd, lvl)
 celltype_data The old style data structure
 }
 \description{
-\code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file from a new one
+\code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file 
+from a new one
 }

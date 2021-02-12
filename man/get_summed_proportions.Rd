@@ -23,22 +23,29 @@ get_summed_proportions(
 
 \item{reps}{The number of gene lists to sample}
 
-\item{geneSizeControl}{Boolean. Should the sampled gene lists control for GC content and transcript length?}
+\item{geneSizeControl}{Boolean. Should the sampled gene lists control for 
+GC content and transcript length?}
 
-\item{controlledCT}{Name of a celltype (from colnames of sct_data[[x]]$specificity.}
+\item{controlledCT}{Name of a celltype (from colnames of 
+sct_data[[x]]$specificity).}
 
-\item{control_network}{If geneSizeControl=TRUE, then must provide the control network}
+\item{control_network}{If geneSizeControl=TRUE, then must provide the 
+control network}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{hit.cells}: vector containing the summed proportion of expression in each cell type for the target list
-  \item \code{bootstrap_data}: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists
+  \item \code{hit.cells}: vector containing the summed proportion of 
+  expression in each cell type for the target list
+  \item \code{bootstrap_data}: matrix in which each row represents the 
+  summed proportion of expression in each cell type for one of the 
+  random lists
   \item \code{controlledCT}: the controlled celltype (if applicable)
 }
 }
 \description{
-\code{get_summed_proportions} Given the target geneset, randomly sample genelists of equal length, obtain the specificity of these and then
+\code{get_summed_proportions} Given the target geneset, randomly sample 
+genelists of equal length, obtain the specificity of these and then
 obtain the mean specificity in each sampled list (and the target list)
 }
 \examples{

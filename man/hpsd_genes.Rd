@@ -8,8 +8,10 @@
 An object of class \code{character} of length 1461.
 }
 \source{
-From Supplementary Table 2 of https://www.nature.com/neuro/journal/v14/n1/full/nn.2719.html
-hpsd_genes = read.csv("/Users/ns9/Google Drive/DiseaseLists/hPSD.txt",stringsAsFactors = FALSE)[-1,1]
+From Supplementary Table 2 of 
+https://www.nature.com/neuro/journal/v14/n1/full/nn.2719.html
+file2 <- "Users/ns9/Google Drive/DiseaseLists/hPSD.txt"
+hpsd_genes <- read.csv(file2,stringsAsFactors = FALSE)[-1,1]
 save(hpsd_genes,file="data/hpsd_genes.rda")
 }
 \usage{

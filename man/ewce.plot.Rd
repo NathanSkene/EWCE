@@ -7,11 +7,18 @@
 ewce.plot(total_res, mtc_method = "bonferroni", ctd = NULL)
 }
 \arguments{
-\item{total_res}{results dataframe generated using \code{\link{bootstrap.enrichment.test}} or \code{\link{ewce_expression_data}} functions. Multiple results tables can be merged into one results table, as long as the 'list' column is set to distinguish them.}
+\item{total_res}{results dataframe generated using 
+\code{\link{bootstrap.enrichment.test}} or 
+\code{\link{ewce_expression_data}} functions. Multiple results tables can be 
+merged into one results table, as long as the 'list' column is set to 
+distinguish them.}
 
-\item{mtc_method}{method to be used for multiple testing correction. Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", "hochberg", "hommel", "bonferroni", "BH", "BY",}
+\item{mtc_method}{method to be used for multiple testing correction. 
+Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", 
+"hochberg", "hommel", "bonferroni", "BH", "BY",}
 
-\item{ctd}{Should be provided so that the dendrogram can be taken from it and added to plots}
+\item{ctd}{Should be provided so that the dendrogram can be taken from it 
+and added to plots}
 }
 \value{
 A ggplot containing the plot
@@ -24,19 +31,24 @@ A ggplot containing the plot
 data(ctd)
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100
 
 # Load the gene list and get human orthologs
 data("example_genelist")
 data("mouse_to_human_homologs")
-m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-mouse.hits = unique(m2h[m2h$HGNC.symbol \%in\% example_genelist,"MGI.symbol"])
-mouse.bg  = unique(m2h$MGI.symbol)
+m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+mouse.hits <- 
+     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
+mouse.bg <- unique(m2h$MGI.symbol)
 
-# Bootstrap significance testing, without controlling for transcript length and GC content
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
-  bg=mouse.bg,reps=reps,annotLevel=2,sctSpecies="mouse",genelistSpecies="mouse")
+# Bootstrap significance test, no control for transcript length or GC content
+full_results <- bootstrap.enrichment.test(
+    sct_data = ctd, hits = mouse.hits,
+    bg = mouse.bg, reps = reps, annotLevel = 2, 
+    sctSpecies = "mouse", genelistSpecies = "mouse"
+)
 
 # Generate the plot
-print(ewce.plot(full_results$results,mtc_method="BH"))
+print(ewce.plot(full_results$results, mtc_method = "BH"))
 }

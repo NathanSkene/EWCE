@@ -11,8 +11,10 @@ An object of class \code{character} of length 36591.
 The code to prepare the .Rda file file from the marker file is:
 \code{
 listMarts(host="www.ensembl.org")
-human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
-hgnc_symbols = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), mart=human)
+human <- useMart(host="www.ensembl.org", "ENSEMBL_MART_ENSEMBL", 
+                      dataset="hsapiens_gene_ensembl")
+hgnc_symbols = getBM(attributes=c("hgnc_symbol","ensembl_gene_id"), 
+                         mart=human)
 all_hgnc = unique(hgnc_symbols$hgnc_symbol)
 save(all_hgnc,file="all_hgnc.Rda")
 }

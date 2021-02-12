@@ -18,44 +18,68 @@ ewce_expression_data(
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
 
-\item{annotLevel}{an integer indicating which level of the annotation to analyse. Default = 1.}
+\item{annotLevel}{an integer indicating which level of the annotation to 
+analyse. Default = 1.}
 
-\item{tt}{Differential expression table. Can be output of limma::topTable function. Minimum requirement is that one column stores a metric of increased/decreased expression (i.e. log fold change, t-statistic for differential expression etc) and another contains either HGNC or MGI symbols.}
+\item{tt}{Differential expression table. Can be output of limma::topTable 
+function. Minimum requirement is that one column stores a metric of 
+increased/decreased expression (i.e. log fold change, t-statistic for 
+differential expression etc) and another contains either HGNC or MGI symbols.}
 
-\item{sortBy}{Column name of metric in tt which should be used to sort up- from down- regulated genes. Default="t"}
+\item{sortBy}{Column name of metric in tt which should be used to sort up- 
+from down- regulated genes. Default="t"}
 
-\item{thresh}{The number of up- and down- regulated genes to be included in each analysis. Dafault=250}
+\item{thresh}{The number of up- and down- regulated genes to be included in 
+each analysis. Dafault=250}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (default=100 but should 
+be over 10000 for publication quality results)}
 
-\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the differential expression table was generated from}
+\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the 
+differential expression table was generated from}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the single cell data was generated from}
+\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the 
+single cell data was generated from}
 }
 \value{
 A list containing five data frames:
 \itemize{
-  \item \code{results}: dataframe in which each row gives the statistics (p-value, fold change and number of standard deviations from the mean) associated with the enrichment of the stated cell type in the gene list. An additional column *Direction* stores whether it the result is from the up or downregulated set.
-  \item \code{hit.cells.up}: vector containing the summed proportion of expression in each cell type for the target list
-  \item \code{hit.cells.down}: vector containing the summed proportion of expression in each cell type for the target list#'
-  \item \code{bootstrap_data.up}: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists
-  \item \code{bootstrap_data.down}: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists
+  \item \code{results}: dataframe in which each row gives the statistics 
+  (p-value, fold change and number of standard deviations from the mean) 
+  associated with the enrichment of the stated cell type in the gene list. 
+  An additional column *Direction* stores whether it the result is from the 
+  up or downregulated set.
+  \item \code{hit.cells.up}: vector containing the summed proportion of 
+  expression in each cell type for the target list
+  \item \code{hit.cells.down}: vector containing the summed proportion of 
+  expression in each cell type for the target list#'
+  \item \code{bootstrap_data.up}: matrix in which each row represents the 
+  summed proportion of expression in each cell type for one of the random 
+  lists
+  \item \code{bootstrap_data.down}: matrix in which each row represents the 
+  summed proportion of expression in each cell type for one of the random 
+  lists
 }
 }
 \description{
-\code{ewce_expression_data} takes a differential expression table and determines the probability of cell-type enrichment in the up & down regulated genes
+\code{ewce_expression_data} takes a differential expression table and 
+determines the probability of cell-type enrichment in the up & down 
+regulated genes
 }
 \examples{
 # Load the single cell data
 data("ctd")
 
 # Set the parameters for the analysis
-reps=100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
-annotLevel=1 # <- Use cell level annotations (i.e. Interneurons)
+# Use 100 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 100 
+annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 
 # Load the top table
 data(tt_alzh)
 
-tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,
-    ttSpecies="human",sctSpecies="mouse")
+tt_results <- ewce_expression_data(
+    sct_data = ctd, tt = tt_alzh, annotLevel = 1,
+    ttSpecies = "human", sctSpecies = "mouse"
+)
 }

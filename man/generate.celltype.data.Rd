@@ -10,35 +10,44 @@ generate.celltype.data(
   groupName,
   no_cores = 1,
   savePath = "~/",
-  normSpec = F
+  normSpec = FALSE
 )
 }
 \arguments{
-\item{exp}{Numerical matrix with row for each gene and column for each cell. Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be cross referenced against the annot data frame.}
+\item{exp}{Numerical matrix with row for each gene and column for each cell. 
+Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be 
+cross referenced against the annot data frame.}
 
-\item{annotLevels}{List with arrays of strings containing the cell type names associated with each column in exp}
+\item{annotLevels}{List with arrays of strings containing the cell type 
+names associated with each column in exp}
 
-\item{groupName}{A human readable name for refering to the dataset being loaded}
+\item{groupName}{A human readable name for refering to the dataset being 
+loaded}
 
-\item{no_cores}{Number of cores that should be used to speedup the computation. Use no_cores = 1 when using this package in windows system.}
+\item{no_cores}{Number of cores that should be used to speedup the 
+computation. Use no_cores = 1 when using this package in windows system.}
 
 \item{savePath}{Directory where the CTD file should be saved}
 
-\item{normSpec}{Boolean indicating whether specificity data should be transformed to a normal distribution by cell type, giving equivalent scores across all cell types.}
+\item{normSpec}{Boolean indicating whether specificity data should be 
+transformed to a normal distribution by cell type, giving equivalent scores 
+across all cell types.}
 }
 \value{
 Filenames for the saved celltype_data files
 }
 \description{
-\code{generate.celltype.data} Takes expression & cell type annotations and creates celltype_data files which contain the mean and specificity matrices
+\code{generate.celltype.data} Takes expression & cell type annotations and 
+creates celltype_data files which contain the mean and specificity matrices
 }
 \examples{
 # Load the single cell data
 data("cortex_mrna")
-expData = cortex_mrna$exp
-expData = expData[1:500,] # Use only a subset to keep the example quick
-l1=cortex_mrna$annot$level1class
-l2=cortex_mrna$annot$level2class
-annotLevels = list(l1=l1,l2=l2)
-fNames_ALLCELLS = generate.celltype.data(exp=expData,annotLevels,"allKImouse")
+expData <- cortex_mrna$exp
+expData <- expData[1:500, ] # Use only a subset to keep the example quick
+l1 <- cortex_mrna$annot$level1class
+l2 <- cortex_mrna$annot$level2class
+annotLevels <- list(l1 = l1, l2 = l2)
+fNames_ALLCELLS <- 
+    generate.celltype.data(exp = expData, annotLevels, "allKImouse")
 }

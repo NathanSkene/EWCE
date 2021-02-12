@@ -7,19 +7,21 @@
 get.celltype.table(annot)
 }
 \arguments{
-\item{annot}{An annotation dataframe, which columns named 'level1class', 'level2class' and 'dataset_name'}
+\item{annot}{An annotation dataframe, which columns named 'level1class', 
+'level2class' and 'dataset_name'}
 }
 \value{
 A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
 }
 \description{
-\code{get.celltype.table} Generates a table that can be used for supplemenary tables of publications.
-The table lists how many cells are associated with each celltype, the level of annotation, and the dataset
-from which it was generated.
+\code{get.celltype.table} Generates a table that can be used for 
+supplemenary tables of publications.
+The table lists how many cells are associated with each celltype, the level 
+of annotation, and the dataset from which it was generated.
 }
 \examples{
 # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
 data("cortex_mra")
-cortex_mrna$annot$dataset_name = "cortex_mrna"
-celltype_table = get.celltype.table(cortex_mrna$annot)
+cortex_mrna$annot$dataset_name <- "cortex_mrna"
+celltype_table <- get.celltype.table(cortex_mrna$annot)
 }
