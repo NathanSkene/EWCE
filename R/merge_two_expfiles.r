@@ -28,8 +28,10 @@
 #'     )
 #'     system("gunzip GSE74672_expressed_mols_with_classes.xlsx.gz")
 #' }
-#' # Read in the hypothalamus data
-#' hypo_dat <- readxl::read_excel("GSE74672_expressed_mols_with_classes.xlsx")
+#' # Read in the hypothalamus data -
+#' # first 100 genes and subset of samples only to speed up computation
+#' hypo_dat <- readxl::read_excel("GSE74672_expressed_mols_with_classes.xlsx",
+#'     range="A1:CBD113")
 #' # Extract the expression data, gene symbols and annotation data
 #' exp <- data.matrix(hypo_dat[12:dim(hypo_dat)[1], 2:dim(hypo_dat)[2]])
 #' rownames(exp) <- data.frame(hypo_dat[12:dim(hypo_dat)[1], 1])[, 1]
