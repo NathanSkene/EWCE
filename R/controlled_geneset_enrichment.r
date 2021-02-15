@@ -39,7 +39,31 @@
 #'   functional and disease gene sets
 #' }
 #' @examples
-#' # See the vignette
+#' # See the vignette for more detailed explanations
+#' # Gene set enrichment analysis controlling for cell type expression
+#' # set seed for bootstrap reproducibility
+#' set.seed(12345678)
+# load merged dataset from vignette
+#' data("ctd")
+#' data("mouse_to_human_homologs")
+#' m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
+#' data("schiz_genes")
+#' data("id_genes")
+#' mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol %in% schiz_genes,"MGI.symbol"])
+#' mouse.hits.id = unique(m2h[m2h$HGNC.symbol %in% id_genes,"MGI.symbol"])
+#' mouse.bg  = unique(m2h$MGI.symbol)
+#' data("hpsd_genes")
+#' mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
+#' data("rbfox_genes")
+#' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
+#' reps=100 
+#' res_hpsd_schiz = 
+#'     controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+#'                                     functional_genes = mouse.hpsd, 
+#'                                     bg_genes = mouse.bg, 
+#'                                     sct_data = ctd, annotLevel = 1, 
+#'                                     reps=reps, 
+#'                                     controlledCT="pyramidal CA1")
 #' @export
 controlled_geneset_enrichment <- function(disease_genes, functional_genes, 
                                             bg_genes, sct_data, annotLevel, 
