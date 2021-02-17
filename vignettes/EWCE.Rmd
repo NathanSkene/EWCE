@@ -72,6 +72,10 @@ install_github("nathanskene/ewce")
 You can then load the package:
 
 ```{r }
+#install data package for vignette
+library(devtools)
+install_github("neurogenomics/ewceData")
+library(ewceData)
 library(EWCE)
 library(ggplot2)
 library(cowplot)
@@ -137,7 +141,6 @@ cortex_mrna$exp = cortex_mrna$exp[keep_genes,]
 A different number of reads is found across each cell. We suggest using scTransform to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
 
 ```{r, cache=TRUE }
-# devtools::install_github(repo = 'ChristophH/sctransform')
 library(sctransform)
 scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
 cortex_mrna$exp_scT = correct_counts(scT, cortex_mrna$exp) # umi_corrected

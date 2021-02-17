@@ -59,7 +59,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
 
     # test adding a fake mouse bg
-    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% EWCE::all_hgnc)]
+    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% ewceData::all_hgnc)]
     fail_return2_5 <-
         tryCatch(bootstrap.enrichment.test(
             sct_data = ctd, hits = mouse.hits,
@@ -116,7 +116,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
     ctd_fake <- ctd
     # just rename genes to hgnc names
-    rownames(ctd_fake[[1]]$mean_exp) <- EWCE::all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
+    rownames(ctd_fake[[1]]$mean_exp) <- ewceData::all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
     fail_return7 <-
         tryCatch(bootstrap.enrichment.test(

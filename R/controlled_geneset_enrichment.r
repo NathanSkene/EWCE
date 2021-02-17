@@ -44,17 +44,17 @@
 #' # set seed for bootstrap reproducibility
 #' set.seed(12345678)
 # load merged dataset from vignette
-#' data("ctd")
-#' data("mouse_to_human_homologs")
+#' data("ctd", package="ewceData")
+#' data("mouse_to_human_homologs", package="ewceData")
 #' m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-#' data("schiz_genes")
-#' data("id_genes")
+#' data("schiz_genes", package="ewceData")
+#' data("id_genes", package="ewceData")
 #' mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol %in% schiz_genes,"MGI.symbol"])
 #' mouse.hits.id = unique(m2h[m2h$HGNC.symbol %in% id_genes,"MGI.symbol"])
 #' mouse.bg  = unique(m2h$MGI.symbol)
-#' data("hpsd_genes")
+#' data("hpsd_genes", package="ewceData")
 #' mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
-#' data("rbfox_genes")
+#' data("rbfox_genes", package="ewceData")
 #' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 #' reps=100 
 #' res_hpsd_schiz = 

@@ -19,7 +19,7 @@
 #' @return Filenames for the saved celltype_data files
 #' @examples
 #' # Load the single cell data
-#' data("cortex_mrna")
+#' data("cortex_mrna", package="ewceData")
 #' expData <- cortex_mrna$exp
 #' expData <- expData[1:500, ] # Use only a subset to keep the example quick
 #' l1 <- cortex_mrna$annot$level1class

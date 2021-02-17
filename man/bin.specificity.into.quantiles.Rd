@@ -20,7 +20,7 @@ A ctd with $specificity_quantiles
 add '$specificity_quantiles' to a ctd
 }
 \examples{
-data(ctd)
+data(ctd, package="ewceData")
 ctd <- lapply(ctd, bin.specificity.into.quantiles, numberOfBins = 40)
 print(ctd[[1]]$specificity_quantiles[1:3, ])
 }

@@ -16,15 +16,15 @@
 #' @return A ggplot containing the plot
 #' @examples
 #' # Load the single cell data
-#' data(ctd)
+#' data(ctd, package="ewceData")
 #'
 #' # Set the parameters for the analysis
 #' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 #' reps <- 100
 #'
 #' # Load the gene list and get human orthologs
-#' data("example_genelist")
-#' data("mouse_to_human_homologs")
+#' data("example_genelist", package="ewceData")
+#' data("mouse_to_human_homologs", package="ewceData")
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 #' mouse.hits <- 
 #'      unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])

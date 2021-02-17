@@ -17,10 +17,11 @@
 #' expression matrix is returned.
 #' @examples
 #' # Load the single cell data
-#' data("cortex_mrna")
+#' data("cortex_mrna", package="ewceData")
 #' cortex_mrna$exp <- fix.bad.mgi.symbols(cortex_mrna$exp)
 #' @export
 #' @import biomaRt
+#' @import ewceData
 fix.bad.mgi.symbols <- function(exp, mrk_file_path = NULL, 
                                     printAllBadSymbols = FALSE) {
     err_msg <- paste0("ERROR: 'exp' is null. It should be a numerical",
@@ -48,7 +49,7 @@ fix.bad.mgi.symbols <- function(exp, mrk_file_path = NULL,
     }
 
     # Check for symbols which are not real MGI symbols
-    not_MGI <- rownames(exp)[!rownames(exp) %in% EWCE::all_mgi]
+    not_MGI <- rownames(exp)[!rownames(exp) %in% ewceData::all_mgi]
     print(sprintf("%s rows do not have proper MGI symbols", length(not_MGI)))
     if (length(not_MGI) > 20) {
         print(not_MGI[seq_len(20)])
@@ -78,7 +79,7 @@ fix.bad.mgi.symbols <- function(exp, mrk_file_path = NULL,
     # Load data from MGI to check for synonyms
     if (is.null(mrk_file_path)) {
         # data("mgi_synonym_data")
-        mgi_data <- EWCE::mgi_synonym_data
+        mgi_data <- ewceData::mgi_synonym_data
     } else {
         if (!file.exists(mrk_file_path)) {
             stop(err_msg3)
@@ -86,7 +87,7 @@ fix.bad.mgi.symbols <- function(exp, mrk_file_path = NULL,
         mgi_data <- read.csv(mrk_file_path, sep = "\t", 
                                 stringsAsFactors = FALSE)
         if (!"Marker.Synonyms..pipe.separated." %in% 
-                colnames(EWCE::mgi_synonym_data)) {
+                colnames(ewceData::mgi_synonym_data)) {
             stop(err_msg4)
         }
         # file is downloaded from: 
@@ -186,7 +187,7 @@ fix.bad.mgi.symbols <- function(exp, mrk_file_path = NULL,
     print(sprintf("%s rows should have been corrected by checking synonms", 
                     dim(matchingSYN)[1]))
     still_not_MGI <- sort(rownames(new_exp)[!rownames(new_exp) %in% 
-                                                EWCE::all_mgi])
+                                                ewceData::all_mgi])
     print(sprintf("%s rows STILL do not have proper MGI symbols", 
                     length(still_not_MGI)))
     if (printAllBadSymbols == TRUE) {

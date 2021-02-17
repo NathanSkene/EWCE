@@ -24,15 +24,15 @@ targetting the same scientific problem
 }
 \examples{
 # Load the single cell data
-data("ctd")
+data("ctd", package="ewceData")
 
 # Set the parameters for the analysis
 # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 reps <- 100 
 
 # Load the data
-data(tt_alzh_BA36)
-data(tt_alzh_BA44)
+data(tt_alzh_BA36, package="ewceData")
+data(tt_alzh_BA44, package="ewceData")
 
 # Run EWCE analysis
 tt_results_36 <- ewce_expression_data(

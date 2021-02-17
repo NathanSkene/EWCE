@@ -47,9 +47,9 @@ reduces to 1:1 orthologs.
 }
 \examples{
 # Called from "bootstrap.enrichment.test()" and "generate.bootstrap.plots()"
-data("ctd")
-data("example_genelist")
-data("mouse_to_human_homologs")
+data("ctd", package="ewceData")
+data("example_genelist", package="ewceData")
+data("mouse_to_human_homologs", package="ewceData")
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 mouse.hits <- 
      unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])

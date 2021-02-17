@@ -9,7 +9,7 @@
 #' @return A matrix with same shape as matrixIn but with columns storing 
 #' quantiles instead of specificity
 #' @examples
-#' data(ctd)
+#' data(ctd, package="ewceData")
 #' ctd[[1]]$specificity_quantiles <- apply(ctd[[1]]$specificity, 2,
 #'     FUN = bin.columns.into.quantiles,
 #'     numberOfBins = 40

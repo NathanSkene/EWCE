@@ -48,7 +48,7 @@
 #'
 #' @examples
 #' # Load the single cell data
-#' data("ctd")
+#' data("ctd", package="ewceData")
 #'
 #' # Set the parameters for the analysis
 #' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
@@ -56,7 +56,7 @@
 #' annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 #'
 #' # Load the top table
-#' data(tt_alzh)
+#' data(tt_alzh, package="ewceData")
 #'
 #' tt_results <- ewce_expression_data(
 #'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
@@ -71,6 +71,7 @@
 #' )
 #' @export
 #' @import ggplot2
+#' @import ewceData
 #' @importFrom reshape2 melt
 #' @importFrom scales comma
 # @import plyr
@@ -218,7 +219,7 @@ check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh,
     if (ttSpecies == "human" & sctSpecies == "human") {
         tt$MGI.symbol <- tt$HGNC.symbol
     }
-    m2h <- EWCE::mouse_to_human_homologs[, c("MGI.symbol", "HGNC.symbol")]
+    m2h <- ewceData::mouse_to_human_homologs[, c("MGI.symbol", "HGNC.symbol")]
     if (ttSpecies == "human" & sctSpecies == "mouse") {
         tt <- merge(tt, m2h, by = "HGNC.symbol")
     }

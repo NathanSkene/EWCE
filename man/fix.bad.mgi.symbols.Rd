@@ -31,6 +31,6 @@ gene names.
 }
 \examples{
 # Load the single cell data
-data("cortex_mrna")
+data("cortex_mrna", package="ewceData")
 cortex_mrna$exp <- fix.bad.mgi.symbols(cortex_mrna$exp)
 }

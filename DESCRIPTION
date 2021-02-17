@@ -16,6 +16,7 @@ Depends: R(>= 3.6),
          RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
+    ewceData,
     ggplot2,
     grDevices,
     grid,
@@ -35,6 +36,7 @@ Imports:
     stats,
     utils
 Suggests: 
+    devtools,
     knitr,
     BiocStyle,
     rmarkdown,

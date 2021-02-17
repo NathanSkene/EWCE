@@ -26,9 +26,9 @@
 #'
 #' @examples
 #' # Called from "bootstrap.enrichment.test()" and "generate.bootstrap.plots()"
-#' data("ctd")
-#' data("example_genelist")
-#' data("mouse_to_human_homologs")
+#' data("ctd", package="ewceData")
+#' data("example_genelist", package="ewceData")
+#' data("mouse_to_human_homologs", package="ewceData")
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 #' mouse.hits <- 
 #'      unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
@@ -39,6 +39,7 @@
 #' )
 #' @export
 #' @import utils
+#' @import ewceData
 
 check.ewce.genelist.inputs <- function(sct_data, hits, bg, genelistSpecies, 
                                         sctSpecies, geneSizeControl = FALSE) {
@@ -46,9 +47,9 @@ check.ewce.genelist.inputs <- function(sct_data, hits, bg, genelistSpecies,
     # data("mouse_to_human_homologs")
     # data("all_mgi")
     # data("all_hgnc")
-    mouse_to_human_homologs <- EWCE::mouse_to_human_homologs
-    all_mgi <- EWCE::all_mgi
-    all_hgnc <- EWCE::all_hgnc
+    mouse_to_human_homologs <- ewceData::mouse_to_human_homologs
+    all_mgi <- ewceData::all_mgi
+    all_hgnc <- ewceData::all_hgnc
     orthologsOnly <- FALSE
 
     # CHECK THE ARGUMENTS ARE PROPERLY STRUCTURED

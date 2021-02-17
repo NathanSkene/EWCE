@@ -17,6 +17,7 @@ A ctd with dendrogram plotting info added
 \code{prep.dendro} adds a dendrogram to a cts
 }
 \examples{
+data("ctd", package="ewceData")
 ctd <- lapply(ctd, EWCE::bin.specificity.into.quantiles, numberOfBins = 40)
 ctd <- lapply(ctd, EWCE::prep.dendro)
 }

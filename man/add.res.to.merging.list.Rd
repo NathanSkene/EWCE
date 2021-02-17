@@ -24,12 +24,12 @@ for merging analysis
 }
 \examples{
 # Load the single cell data
-data("ctd")
+data("ctd", package="ewceData")
 
 # Load the data
-data(tt_alzh)
-data(tt_alzh_BA36)
-data(tt_alzh_BA44)
+data(tt_alzh, package="ewceData")
+data(tt_alzh_BA36, package="ewceData")
+data(tt_alzh_BA44, package="ewceData")
 
 # Run EWCE analysis
 tt_results <- ewce_expression_data(

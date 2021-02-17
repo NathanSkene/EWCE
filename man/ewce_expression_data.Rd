@@ -68,7 +68,7 @@ regulated genes
 }
 \examples{
 # Load the single cell data
-data("ctd")
+data("ctd", package="ewceData")
 
 # Set the parameters for the analysis
 # Use 100 bootstrap lists for speed, for publishable analysis use >10000
@@ -76,7 +76,7 @@ reps <- 100
 annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 
 # Load the top table
-data(tt_alzh)
+data(tt_alzh, package="ewceData")
 
 tt_results <- ewce_expression_data(
     sct_data = ctd, tt = tt_alzh, annotLevel = 1,

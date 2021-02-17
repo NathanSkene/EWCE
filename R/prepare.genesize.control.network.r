@@ -24,6 +24,7 @@
 #' @import stats
 #' @import utils
 #' @import biomaRt
+#' @import ewceData
 prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000, 
                                                 sctSpecies) {
     ### PREPARE TO QUERY BIOMART
@@ -31,8 +32,9 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
 
     ### FIRST GET ALL ENSEMBL GENE IDS FOR THE HUMAN GENES
     hum_ens <- 
-        EWCE::all_hgnc_wtEnsembl[
-            EWCE::all_hgnc_wtEnsembl$hgnc_symbol %in% combined_human_genes, ]
+        ewceData::all_hgnc_wtEnsembl[
+            ewceData::all_hgnc_wtEnsembl$hgnc_symbol %in% 
+                combined_human_genes, ]
 
     # CHECK THE GENELISTS WERE HUMAN HGNC SYMBOLS
     err_msg <- paste0("ERROR: No hits recognised as human HGNC symbols.",
@@ -52,8 +54,8 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
 
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM BIOMART
     all_lengths <- 
-        EWCE::ensembl_transcript_lengths_GCcontent[
-            EWCE::ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% 
+        ewceData::ensembl_transcript_lengths_GCcontent[
+            ewceData::ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% 
                 hum_ens$ensembl_gene_id, ]
     all_lengths <- all_lengths[!is.na(all_lengths$transcript_length), ]
     all_lens <- merge(all_lengths, hum_ens, by = "ensembl_gene_id")
@@ -66,15 +68,14 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
                                                 by = list(all_lens$hgnc_symbol),
                                                 FUN = mean)
     data_byGene <- cbind(transcript_lengths, percentage_gene_gc_content[, 2])
-    colnames(data_byGene) <- c("HGNC.symbol", "transcript_lengths", 
+    colnames(data_byGene) <- c("HGNC.symbol", "transcript_lengths",
                                 "percentage_gene_gc_content")
     data_byGene <- data_byGene[data_byGene$HGNC.symbol != "", ]
 
     if (sctSpecies == "mouse") {
         ### DROP ANY HUMAN GENES WITHOUT HOMOLOGOUS MOUSE GENES
-        mouse_to_human_homologs <- NULL # <--INCLUDED TO FOOL devtools::check()
-        data("mouse_to_human_homologs", envir = environment())
-        m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+        m2h <- unique(ewceData::mouse_to_human_homologs[, c("HGNC.symbol", 
+                                                                "MGI.symbol")])
         data_byGene2 <- 
             data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol, ]
 
