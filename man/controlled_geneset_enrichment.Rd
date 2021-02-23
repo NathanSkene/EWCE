@@ -68,17 +68,17 @@ disease geneset's enrichment in a particular cell type (the 'controlledCT')
 # Gene set enrichment analysis controlling for cell type expression
 # set seed for bootstrap reproducibility
 set.seed(12345678)
-data("ctd", package="ewceData")
-data("mouse_to_human_homologs", package="ewceData")
+ctd <- ctd()
+mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-data("schiz_genes", package="ewceData")
-data("id_genes", package="ewceData")
+schiz_genes <- schiz_genes()
+id_genes <- id_genes()
 mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol \%in\% schiz_genes,"MGI.symbol"])
 mouse.hits.id = unique(m2h[m2h$HGNC.symbol \%in\% id_genes,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
-data("hpsd_genes", package="ewceData")
+hpsd_genes <- hpsd_genes()
 mouse.hpsd = unique(m2h[m2h$HGNC.symbol \%in\% hpsd_genes,"MGI.symbol"])
-data("rbfox_genes", package="ewceData")
+rbfox_genes <- rbfox_genes()
 # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 reps=100 
 res_hpsd_schiz = 

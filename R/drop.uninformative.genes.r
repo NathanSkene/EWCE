@@ -11,7 +11,7 @@
 #' a column in the expression matrix
 #' @return exp Expression matrix with gene names as rownames.
 #' @examples
-#' data("cortex_mrna", package="ewceData")
+#' cortex_mrna <- cortex_mrna()
 #  # Use only a subset of genes to keep the example quick
 #' cortex_mrna$exp <- cortex_mrna$exp[1:300, ] 
 #' exp2 <- drop.uninformative.genes(exp = cortex_mrna$exp, 

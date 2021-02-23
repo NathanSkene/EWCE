@@ -31,9 +31,10 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
     combined_human_genes <- unique(c(hits, bg))
 
     ### FIRST GET ALL ENSEMBL GENE IDS FOR THE HUMAN GENES
+    all_hgnc_wtEnsembl <- ewceData::all_hgnc_wtEnsembl()
     hum_ens <- 
-        ewceData::all_hgnc_wtEnsembl[
-            ewceData::all_hgnc_wtEnsembl$hgnc_symbol %in% 
+        all_hgnc_wtEnsembl[
+            all_hgnc_wtEnsembl$hgnc_symbol %in% 
                 combined_human_genes, ]
 
     # CHECK THE GENELISTS WERE HUMAN HGNC SYMBOLS
@@ -53,9 +54,11 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
     }
 
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM BIOMART
+    ensembl_transcript_lengths_GCcontent <- 
+        ewceData::ensembl_transcript_lengths_GCcontent()
     all_lengths <- 
-        ewceData::ensembl_transcript_lengths_GCcontent[
-            ewceData::ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% 
+        ensembl_transcript_lengths_GCcontent[
+            ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% 
                 hum_ens$ensembl_gene_id, ]
     all_lengths <- all_lengths[!is.na(all_lengths$transcript_length), ]
     all_lens <- merge(all_lengths, hum_ens, by = "ensembl_gene_id")
@@ -74,7 +77,7 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
 
     if (sctSpecies == "mouse") {
         ### DROP ANY HUMAN GENES WITHOUT HOMOLOGOUS MOUSE GENES
-        m2h <- unique(ewceData::mouse_to_human_homologs[, c("HGNC.symbol", 
+        m2h <- unique(ewceData::mouse_to_human_homologs()[, c("HGNC.symbol", 
                                                                 "MGI.symbol")])
         data_byGene2 <- 
             data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol, ]

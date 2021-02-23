@@ -66,15 +66,15 @@ changes for each cell type.
 }
 \examples{
 # Load the single cell data
-data("ctd", package="ewceData")
+ctd <- ctd()
 
 # Set the parameters for the analysis
 # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 reps <- 100 
 
 # Load the gene list and get human orthologs
-data("example_genelist", package="ewceData")
-data("mouse_to_human_homologs", package="ewceData")
+example_genelist <- example_genelist()
+mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 mouse.hits <- 
     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])

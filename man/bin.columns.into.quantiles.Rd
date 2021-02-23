@@ -21,7 +21,7 @@ matrix of specificity (with columns of cell types) intom a matrix of
 specificity quantiles
 }
 \examples{
-data(ctd, package="ewceData")
+ctd <- ctd()
 ctd[[1]]$specificity_quantiles <- apply(ctd[[1]]$specificity, 2,
     FUN = bin.columns.into.quantiles,
     numberOfBins = 40

@@ -13,12 +13,6 @@ vignette: >
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
-#if (!require("pacman")) install.packages("pacman")
-#if (!require("BiocManager")) install.packages("BiocManager")
-#if (!require("BiocStyle")) BiocManager::install("BiocStyle")
-#pacman::p_load("BiocManager","BiocStyle","ggplot2","cowplot",
-#    try.bioconductor=TRUE)
-
 BiocStyle::markdown()
 knitr::opts_chunk$set(tidy         = FALSE,
                       warning      = FALSE,
@@ -61,20 +55,19 @@ Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
 
 # Installing EWCE
 
-The *EWCE* package is available from github. The old version available from the Bioconductor archives is depreciated and should not be used. To be able to install the package one needs first to install R then run the following lines of code:
+The *EWCE* package is available on Bioconductor. To install the package one needs first to install R then run the following lines of code:
 
 ```
-install.packages("devtools")
-library(devtools)
-install_github("nathanskene/ewce")
+install.packages("BiocManager")
+BiocManager::install("EWCE")
 ```
 
 You can then load the package:
 
 ```{r }
 #install data package for vignette
-library(devtools)
-install_github("neurogenomics/ewceData")
+#library(devtools)
+#install_github("neurogenomics/ewceData")
 library(ewceData)
 library(EWCE)
 library(ggplot2)
@@ -103,7 +96,8 @@ cortex_mrna  = load.linnarsson.sct.data(path)
 To check the data we can quickly plot the distribution of expression of a given gene across all the cell types.
 
 ```{r }
-data(cortex_mrna)
+#data(cortex_mrna)
+cortex_mrna <- cortex_mrna()
 gene="Necab1"
 cellExpDist = data.frame(e=cortex_mrna$exp[gene,],
                           l1=cortex_mrna$annot[
@@ -265,7 +259,7 @@ Using the ggplot2 package to visualise the data, let us examine the expression o
 For this example we use a subset of the genes from the merged dataset generated above, which is accessed using `data(ctd)`. We recommend that you use the code above to regenerate this though and drop the `data` command from the below section.
 
 ```{r, fig.width = 7, fig.height = 4}
-data("ctd")
+ctd <- ctd()
 set.seed(1234)
 library(reshape2)
 genes = c("Apoe","Gfap","Gapdh")
@@ -307,7 +301,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+
 For the first demonstration of EWCE we will test for whether genes that are genetically associated with Alzheimer's disease are enriched in any particular celltype. This gene list is stored within the package are we access it by first loading the package and then the dataset:
 
 ```{r}
-data(example_genelist)
+example_genelist <- example_genelist()
 print(example_genelist)
 ```
 
@@ -465,7 +459,7 @@ The first step is to load the data, obtain the MGI ids, sort the rows by t-stati
 # ewce_expression_data calls bootstrap.enrichment.test so 
 # set the seed for reproducibility
 set.seed(12345678)
-data(tt_alzh)
+tt_alzh <- tt_alzh()
 tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,
                                     ttSpecies="human",sctSpecies="mouse")
 ```
@@ -504,8 +498,8 @@ To demonstrate this we use a two further Alzheimer's transcriptome dataset comin
 
 ```{r results="hide"}
 # Load the data
-data(tt_alzh_BA36)
-data(tt_alzh_BA44)
+tt_alzh_BA36 <- tt_alzh_BA36()
+tt_alzh_BA44 <- tt_alzh_BA44()
 
 # set seed for reproducibility
 set.seed(12345678)
@@ -547,7 +541,7 @@ Those results were generated using an alternative enrichment method designed for
 We demonstrate it's use below to test whether the enrichment in astrocytes is still present after controlling for the enrichment within microglia:
 
 ```{r }
-data("mouse_to_human_homologs")
+mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 mouse.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
@@ -591,19 +585,19 @@ Traditionally the standard analysis run on all gene sets was the GO enrichment a
 # set seed for bootstrap reproducibility
 set.seed(12345678)
 
-data("mouse_to_human_homologs")
+mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 
-data("schiz_genes")
-data("id_genes")
+schiz_genes <- schiz_genes()
+id_genes <- id_genes()
 mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol %in% schiz_genes,"MGI.symbol"])
 mouse.hits.id = unique(m2h[m2h$HGNC.symbol %in% id_genes,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
 
-data("hpsd_genes")
+hpsd_genes <- hpsd_genes()
 mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
 
-data("rbfox_genes")
+rbfox_genes <- rbfox_genes()
 
 res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
                                                 functional_genes = mouse.hpsd, 

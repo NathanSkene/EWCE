@@ -6,7 +6,7 @@
 #' intended to be used via apply)
 #' @return A ctd with dendrogram plotting info added
 #' @examples
-#' data("ctd", package="ewceData")
+#' ctd <- ctd()
 #' ctd <- lapply(ctd, EWCE::bin.specificity.into.quantiles, numberOfBins = 40)
 #' ctd <- lapply(ctd, EWCE::prep.dendro)
 #' @export

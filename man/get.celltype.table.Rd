@@ -21,7 +21,7 @@ of annotation, and the dataset from which it was generated.
 }
 \examples{
 # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
-data("cortex_mrna", package="ewceData")
+cortex_mrna <- cortex_mrna()
 cortex_mrna$annot$dataset_name <- "cortex_mrna"
 celltype_table <- get.celltype.table(cortex_mrna$annot)
 }

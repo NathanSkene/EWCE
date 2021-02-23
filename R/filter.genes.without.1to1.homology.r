@@ -10,7 +10,7 @@
 #' @return Array of filenames included the ones with only 1:1 homologs
 #' @examples
 #' # Load the single cell data
-#' data(cortex_mrna, package="ewceData")
+#' cortex_mrna <- cortex_mrna()
 #' expData <- cortex_mrna$exp
 #' expData <- expData[1:500, ] # Use only a subset to keep the example quick
 #' l1 <- cortex_mrna$annot$level1class
@@ -27,7 +27,7 @@
 filter.genes.without.1to1.homolog <- function(filenames) {
     newFilenames <- filenames
     # data("mouse_to_human_homologs")
-    mouse_to_human_homologs <- ewceData::mouse_to_human_homologs
+    mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
     orthologs <- mouse_to_human_homologs
     mgi_1to1 <- orthologs$MGI.symbol
     hgnc_1to1 <- orthologs$HGNC.symbol

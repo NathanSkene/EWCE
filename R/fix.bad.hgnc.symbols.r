@@ -21,7 +21,7 @@ fix.bad.hgnc.symbols <- function(exp, dropNonHGNC = FALSE) {
     }
 
     # First, find which gene symbols are not proper HGNC symbols
-    not_HGNC <- rownames(exp)[!rownames(exp) %in% ewceData::all_hgnc]
+    not_HGNC <- rownames(exp)[!rownames(exp) %in% ewceData::all_hgnc()]
     print(sprintf("%s of %s are not proper HGNC symbols", 
                     length(unique(not_HGNC)), dim(exp)[1]))
 

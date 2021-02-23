@@ -8,7 +8,7 @@
 #' @param numberOfBins Number of quantile 'bins' to use (40 is recommended)
 #' @return A ctd with $specificity_quantiles
 #' @examples
-#' data(ctd, package="ewceData")
+#' ctd <- ctd()
 #' ctd <- lapply(ctd, bin.specificity.into.quantiles, numberOfBins = 40)
 #' print(ctd[[1]]$specificity_quantiles[1:3, ])
 #' @export

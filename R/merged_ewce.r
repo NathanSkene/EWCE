@@ -12,15 +12,15 @@
 #' enrichment of the stated cell type in the gene list
 #' @examples
 #' # Load the single cell data
-#' data("ctd", package="ewceData")
+#' ctd <- ctd()
 #'
 #' # Set the parameters for the analysis
 #' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
 #' reps <- 100 
 #'
 #' # Load the data
-#' data(tt_alzh_BA36, package="ewceData")
-#' data(tt_alzh_BA44, package="ewceData")
+#' tt_alzh_BA36 <- tt_alzh_BA36()
+#' tt_alzh_BA44 <- tt_alzh_BA44()
 #'
 #' # Run EWCE analysis
 #' tt_results_36 <- ewce_expression_data(
