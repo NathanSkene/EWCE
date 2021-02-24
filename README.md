@@ -61,8 +61,9 @@ function.
 
 The *EWCE* package is in the process of being added to Bioconductor but,
 in the meantime, is available from github. To be able to install the
-package one needs first to install R then run the following lines of
-code:
+package one needs first to install the devel version of R (version 4.1)
+which can be found at <https://cran.r-project.org/> and then run the
+following lines of code:
 
     if (!require("devtools")) {
       install.packages("devtools")
