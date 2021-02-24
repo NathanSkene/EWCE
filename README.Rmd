@@ -55,8 +55,8 @@ The *EWCE* package is in the process of being added to Bioconductor but, in the 
 if (!require("devtools")) {
   install.packages("devtools")
 }
-devtools::install_github("nathanskene/ewce")
 devtools::install_github("neurogenomics/ewceData")
+devtools::install_github("nathanskene/ewce")
 ```
 
 You can then load the package and data package:
