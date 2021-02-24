@@ -27,6 +27,7 @@ A ggplot containing the plot
 \code{ewce.plot} generates plots of EWCE enrichment results
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 ctd <- ctd()
 

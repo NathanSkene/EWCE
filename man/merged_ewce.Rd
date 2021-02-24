@@ -23,6 +23,7 @@ enrichment of the stated cell type in the gene list
 targetting the same scientific problem
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 ctd <- ctd()
 

@@ -30,6 +30,7 @@ These should be checked for any suggestion that excel has corrupted the
 gene names.
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 cortex_mrna$exp <- fix.bad.mgi.symbols(cortex_mrna$exp)

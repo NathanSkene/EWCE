@@ -18,6 +18,7 @@
 #' across all cell types.
 #' @return Filenames for the saved celltype_data files
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' cortex_mrna <- cortex_mrna()
 #' expData <- cortex_mrna$exp

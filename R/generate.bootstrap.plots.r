@@ -37,6 +37,7 @@
 #'
 #'
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
 #'
@@ -46,7 +47,7 @@
 #'
 #' # Load the gene list and get human orthologs
 #' example_genelist <- example_genelist()
-#' mouse_to_human_homologs <- mouse_to_human_homologs
+#' mouse_to_human_homologs <- mouse_to_human_homologs()
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 #' mouse.hits <- 
 #'     unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])

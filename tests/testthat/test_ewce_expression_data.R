@@ -3,7 +3,8 @@
 test_that("EWCE expression data creation", {
     # bootstrap.enrichment.test tested in depth separately, testing returned specificity here
     set.seed(12345678)
-    data(tt_alzh)
+    tt_alzh <- tt_alzh()
+    ctd <- ctd()
     tt_results <- ewce_expression_data(sct_data = ctd, tt = tt_alzh, annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse")
     up_celltypes <- c(
         names(tt_results$hit.cells.up)[tt_results$hit.cells.up == max(tt_results$hit.cells.up)],

@@ -64,6 +64,7 @@ still enriched in a disease gene set after controlling for the
 disease geneset's enrichment in a particular cell type (the 'controlledCT')
 }
 \examples{
+library(ewceData)
 # See the vignette for more detailed explanations
 # Gene set enrichment analysis controlling for cell type expression
 # set seed for bootstrap reproducibility

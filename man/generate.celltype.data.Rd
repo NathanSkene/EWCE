@@ -41,6 +41,7 @@ Filenames for the saved celltype_data files
 creates celltype_data files which contain the mean and specificity matrices
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 expData <- cortex_mrna$exp

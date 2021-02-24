@@ -65,6 +65,7 @@ transcriptome dataset and determines the probability of enrichment and fold
 changes for each cell type.
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 ctd <- ctd()
 

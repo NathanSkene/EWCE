@@ -39,6 +39,7 @@
 #'   functional and disease gene sets
 #' }
 #' @examples
+#' library(ewceData)
 #' # See the vignette for more detailed explanations
 #' # Gene set enrichment analysis controlling for cell type expression
 #' # set seed for bootstrap reproducibility

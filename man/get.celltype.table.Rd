@@ -20,6 +20,7 @@ The table lists how many cells are associated with each celltype, the level
 of annotation, and the dataset from which it was generated.
 }
 \examples{
+library(ewceData)
 # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
 cortex_mrna <- cortex_mrna()
 cortex_mrna$annot$dataset_name <- "cortex_mrna"

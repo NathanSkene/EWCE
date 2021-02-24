@@ -2,10 +2,10 @@
 test_that("merging EWCE results from multiple sets", {
     # load vignette data
     # Load some vignette data
-    data(tt_alzh)
-    data(tt_alzh_BA36)
-    data(tt_alzh_BA44)
-    data("ctd")
+    tt_alzh <- tt_alzh()
+    tt_alzh_BA36 <- tt_alzh_BA36()
+    tt_alzh_BA44 <- tt_alzh_BA44()
+    ctd <- ctd()
 
     # Run EWCE analysis
     tt_results <- ewce_expression_data(

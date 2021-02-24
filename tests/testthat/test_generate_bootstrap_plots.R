@@ -1,8 +1,9 @@
 # test generate.bootstrap.plots and generate.bootstrap.plots.for.transcriptome
 test_that("Filter genes without 1 to 1 homolog test", {
     # use vignette data
-    data("ctd")
-    data("mouse_to_human_homologs")
+    ctd <- ctd()
+    mouse_to_human_homologs <- mouse_to_human_homologs()
+    example_genelist <- example_genelist()
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))
@@ -25,7 +26,7 @@ test_that("Filter genes without 1 to 1 homolog test", {
     # remove folder once tested
     unlink("~/BootstrapPlots", recursive = TRUE)
 
-    data(tt_alzh)
+    tt_alzh <- tt_alzh()
     tt_results <- ewce_expression_data(
         sct_data = ctd, tt = tt_alzh, annotLevel = 1,
         ttSpecies = "human", sctSpecies = "mouse"

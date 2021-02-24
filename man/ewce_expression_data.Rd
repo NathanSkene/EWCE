@@ -67,6 +67,7 @@ determines the probability of cell-type enrichment in the up & down
 regulated genes
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 ctd <- ctd()
 

@@ -9,6 +9,7 @@
 #' 'level2class' and 'dataset_name'
 #' @return A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
 #' @examples
+#' library(ewceData)
 #' # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
 #' cortex_mrna <- cortex_mrna()
 #' cortex_mrna$annot$dataset_name <- "cortex_mrna"

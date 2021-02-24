@@ -16,6 +16,7 @@
 #' representing the same gene merged. If no corrections are necessary, input 
 #' expression matrix is returned.
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' cortex_mrna <- cortex_mrna()
 #' cortex_mrna$exp <- fix.bad.mgi.symbols(cortex_mrna$exp)

@@ -36,6 +36,7 @@
 #'   random lists
 #' }
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
 #'

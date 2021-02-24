@@ -46,6 +46,7 @@ Checks all hits genes are in bg. Checks the species match and if not
 reduces to 1:1 orthologs.
 }
 \examples{
+library(ewceData)
 # Called from "bootstrap.enrichment.test()" and "generate.bootstrap.plots()"
 ctd <- ctd()
 example_genelist <- example_genelist()

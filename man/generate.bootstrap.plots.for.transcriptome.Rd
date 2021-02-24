@@ -80,6 +80,7 @@ the expression of the genes in the list compares to those in randomly
 generated gene lists
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 ctd <- ctd()
 

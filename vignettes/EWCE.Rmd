@@ -49,7 +49,7 @@ The process for using *EWCE* essentially involves three steps.
 
 First, one needs to load the relevant single cell transcriptome dataset. Single cell transcriptome data is read in from a text file using the `read_celltype_data`.
 
-The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associatedpublication.
+The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated publication.
 
 Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
 
@@ -62,14 +62,11 @@ install.packages("BiocManager")
 BiocManager::install("EWCE")
 ```
 
-You can then load the package:
+You can then load the packages necessary for this tutorial:
 
 ```{r }
-#install data package for vignette
-#library(devtools)
-#install_github("neurogenomics/ewceData")
-library(ewceData)
 library(EWCE)
+library(ewceData)
 library(ggplot2)
 library(cowplot)
 library(limma)
@@ -96,7 +93,7 @@ cortex_mrna  = load.linnarsson.sct.data(path)
 To check the data we can quickly plot the distribution of expression of a given gene across all the cell types.
 
 ```{r }
-#data(cortex_mrna)
+#example datasets held in ewceData package
 cortex_mrna <- cortex_mrna()
 gene="Necab1"
 cellExpDist = data.frame(e=cortex_mrna$exp[gene,],
@@ -219,7 +216,9 @@ hypo_annot$level1class[grepl("^Vglut2|^Trh|^Qrfp|^Hcrt|^Pmch|^Adcyap1|
 hypo_annot$level1class[grepl("GABA|^Sst|^Crh|^Npy|^Pomc|^Galanin|^Otof|Pnoc$|
   ^Calcr-high",hypo_annot$level2class) & 
   grepl("^neurons$",hypo_annot$level1class)] = "Hypothalamic GABAergic Neurons"
-hypo_annot$level2class[hypo_annot$level2class!=""] = sprintf("Hypothalamic %s Neuron",hypo_annot$level2class[hypo_annot$level2class!=""])
+hypo_annot$level2class[hypo_annot$level2class!=""] = 
+sprintf("Hypothalamic %s Neuron",
+    hypo_annot$level2class[hypo_annot$level2class!=""])
 
 # Fix bad MGI symbols
 hypo_exp_CORRECTED = fix.bad.mgi.symbols(hypo_exp)
@@ -256,7 +255,7 @@ Note firstly, that it is a list such that ctd[[1]] contains data relating to lev
 
 Using the ggplot2 package to visualise the data, let us examine the expression of a few genes. If you have not already done so you will need to first install the ggplot2 package with `install.packages("ggplot2")`. 
 
-For this example we use a subset of the genes from the merged dataset generated above, which is accessed using `data(ctd)`. We recommend that you use the code above to regenerate this though and drop the `data` command from the below section.
+For this example we use a subset of the genes from the merged dataset generated above, which is accessed using `ctd()`. We recommend that you use the code above to regenerate this though and drop the first command from the below section.
 
 ```{r, fig.width = 7, fig.height = 4}
 ctd <- ctd()
@@ -280,7 +279,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Expression),stat="identity")+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-We can now see in this graph that *Gfap* is the most specific to a cell type (Type 1 Astrocytes) of either of those three genes, with over 60% of it's expression found in that cell type. 
+We can now see in this graph that *Gfap* is the most specific to a cell type (Type 1 Astrocytes) of any of those three genes, with over 60% of it's expression found in that cell type. 
 
 It can also be seen that the majority of expression of Gapdh is in neurons but because their are a greater number of neuronal subtypes, the total expression proportion appears lower. We can examine expression across level 2 celltype level annotations by looking at *ctd[[2]]$specificity*:
 
@@ -298,7 +297,7 @@ ggplot(exp)+geom_bar(aes(x=Cell,y=Specificity),stat="identity")+
 # Application to genetic data
 ## Preparing gene lists
 
-For the first demonstration of EWCE we will test for whether genes that are genetically associated with Alzheimer's disease are enriched in any particular celltype. This gene list is stored within the package are we access it by first loading the package and then the dataset:
+For the first demonstration of EWCE we will test for whether genes that are genetically associated with Alzheimer's disease are enriched in any particular celltype. This gene list is stored within the package:
 
 ```{r}
 example_genelist <- example_genelist()
@@ -309,10 +308,10 @@ All gene IDs are assumed by the package to be provided in gene symbol format (ra
 
 The example gene list here stores the human genes associated with disease, and hence are HGNC symbols.
 
-The next step is to determine the most suitable background set. The experimental methods used to find these gene are all genome wide, so there is no restriction imposed as a result of that. Thus our initial background set is the set of all human genes. Not all human genes have mouse orthologs however, so we need to drop all genes from the target and background set which do not have mouse orthologs. To save repeatedly querying biomaRt we have a stored dataset containing all the human orthologs of MGI genes, `mouse_to_human_homologs`. We can use this to obtain the mouse orthologs of the target and background genes at the same time as we drop genes without orthologs:
+The next step is to determine the most suitable background set. The experimental methods used to find these genes are all genome wide, so there is no restriction imposed as a result of that. Thus our initial background set is the set of all human genes. Not all human genes have mouse orthologs however, so we need to drop all genes from the target and background set which do not have mouse orthologs. To save repeatedly querying biomaRt we have a stored dataset containing all the human orthologs of MGI genes, `mouse_to_human_homologs`. We can use this to obtain the mouse orthologs of the target and background genes at the same time as we drop genes without orthologs:
  
 ```{r }
-data("mouse_to_human_homologs")
+mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 mouse.hits = unique(m2h[m2h$HGNC.symbol %in% example_genelist,"MGI.symbol"])
 #mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))

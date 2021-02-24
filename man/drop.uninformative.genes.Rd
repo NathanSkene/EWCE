@@ -23,6 +23,7 @@ the F-statistic for variation amongst type2 annotations
 is less than a strict p-threshold, then the gene is dropped.
 }
 \examples{
+library(ewceData)
 cortex_mrna <- cortex_mrna()
 cortex_mrna$exp <- cortex_mrna$exp[1:300, ] 
 exp2 <- drop.uninformative.genes(exp = cortex_mrna$exp, 

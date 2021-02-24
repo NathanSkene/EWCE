@@ -1,9 +1,9 @@
 # Test for bootstrap.enrichment.test error handling and geneSizeControl, using sample data in vignette ensure
 test_that("bootstrap enrichment function error handling and geneSizeControl runs as expected", {
     # load vignette data
-    data("ctd")
-    data(example_genelist)
-    data("mouse_to_human_homologs")
+    ctd <- ctd()
+    example_genelist <- example_genelist()
+    mouse_to_human_homologs <- mouse_to_human_homologs()
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))
@@ -46,7 +46,8 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         as.character(results$results[results$results$p <= 0.05 &
             results$results$p == min(results$results$p), "CellType"])
 
-    # Test 3: Next we want to test error handling of check.ewce.genelist.inputs called from bootstrap.enrichment.test
+    # Test 3: Next we want to test error handling of check.ewce.genelist.inputs 
+    # called from bootstrap.enrichment.test
     # test adding a fake mouse hit
     mouse.hits.fake <- c(mouse.hits, "fake")
     fail_return2 <-
@@ -59,7 +60,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
 
     # test adding a fake mouse bg
-    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% ewceData::all_hgnc)]
+    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% all_hgnc())]
     fail_return2_5 <-
         tryCatch(bootstrap.enrichment.test(
             sct_data = ctd, hits = mouse.hits,
@@ -116,7 +117,8 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
     ctd_fake <- ctd
     # just rename genes to hgnc names
-    rownames(ctd_fake[[1]]$mean_exp) <- ewceData::all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
+    rownames(ctd_fake[[1]]$mean_exp) <- 
+        all_hgnc()[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
     fail_return7 <-
         tryCatch(bootstrap.enrichment.test(

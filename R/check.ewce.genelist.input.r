@@ -25,6 +25,7 @@
 #'
 #'
 #' @examples
+#' library(ewceData)
 #' # Called from "bootstrap.enrichment.test()" and "generate.bootstrap.plots()"
 #' ctd <- ctd()
 #' example_genelist <- example_genelist()

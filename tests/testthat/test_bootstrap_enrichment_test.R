@@ -2,9 +2,9 @@
 # gives microglia as the only significant enrichment
 test_that("bootstrap enrichment runs as expected", {
     # load vignette data
-    data("ctd")
-    data(example_genelist)
-    data("mouse_to_human_homologs")
+    ctd <- ctd()
+    example_genelist <- example_genelist()
+    mouse_to_human_homologs <- mouse_to_human_homologs()
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))

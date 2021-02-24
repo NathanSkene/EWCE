@@ -9,6 +9,7 @@
 #' @param filenames Array of filenames for sct_data saved as .Rda files
 #' @return Array of filenames included the ones with only 1:1 homologs
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' cortex_mrna <- cortex_mrna()
 #' expData <- cortex_mrna$exp

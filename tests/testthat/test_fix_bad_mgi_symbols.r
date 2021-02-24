@@ -1,7 +1,7 @@
 # Test for fix.bad.mgi.symbols
 test_that("method to remove/fix an expected set of genes", {
     # Use Vignette Dataset to check function, alter input gene names
-    data(cortex_mrna)
+    cortex_mrna <- cortex_mrna()
     if (!file.exists("MRK_List2.rpt")) {
         download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
     }

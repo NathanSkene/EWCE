@@ -1,13 +1,13 @@
 # Test for controlled_geneset_enrichment
 test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
     # Run test based on vignette data
-    data("ctd")
-    data("mouse_to_human_homologs")
+    ctd <- ctd()
+    mouse_to_human_homologs <- mouse_to_human_homologs()
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-    data("schiz_genes")
+    schiz_genes <- schiz_genes()
     mouse.hits.schiz <- unique(m2h[m2h$HGNC.symbol %in% schiz_genes, "MGI.symbol"])
     mouse.bg <- unique(m2h$MGI.symbol)
-    data("hpsd_genes")
+    hpsd_genes <- hpsd_genes()
     mouse.hpsd <- unique(m2h[m2h$HGNC.symbol %in% hpsd_genes, "MGI.symbol"])
     # hyperparameters
     reps <- 100

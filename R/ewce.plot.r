@@ -15,6 +15,7 @@
 #' and added to plots
 #' @return A ggplot containing the plot
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
 #'

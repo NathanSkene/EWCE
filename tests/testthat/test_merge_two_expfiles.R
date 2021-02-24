@@ -2,7 +2,7 @@
 test_that("merging two expression files", {
     # use vignette data
 
-    data(cortex_mrna)
+    cortex_mrna <- cortex_mrna()
     # NOTE: Can't use hypothalamus data for test as issue with travis and read_xl::read_excel()
 
 

@@ -2,14 +2,18 @@ Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
 Version: 0.99.2
-Author: Dr Nathan Skene
-Maintainer: Nathan Skene <nathan.skene@gmail.com>
+Authors@R:
+    person(given = "Nathan",
+           family = "Skene",
+           role = c("aut","cre"),
+           email = "nathan.skene@gmail.com",
+           comment = c(ORCID = "0000-0002-6807-3180")) 
 Description: Used to determine which cell types are enriched within gene lists. The package
         provides tools for testing enrichments within simple gene lists (such as human disease
         associated genes) and those resulting from differential expression studies. The package does
         not depend upon any particular Single Cell Transcriptome dataset and user defined datasets
         can be loaded in and used in the analyses.
-URL:https://github.com/NathanSkene/EWCE
+URL: https://github.com/NathanSkene/EWCE
 License: Artistic-2.0
 LazyData: TRUE
 Depends: R(>= 4.1),

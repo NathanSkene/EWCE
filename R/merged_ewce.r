@@ -11,6 +11,7 @@
 #' change and number of standard deviations from the mean) associated with the 
 #' enrichment of the stated cell type in the gene list
 #' @examples
+#' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
 #'

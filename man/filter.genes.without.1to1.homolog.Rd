@@ -20,6 +20,7 @@ disc, appending '_1to1only' to the file
 tag of the previous file.
 }
 \examples{
+library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 expData <- cortex_mrna$exp
