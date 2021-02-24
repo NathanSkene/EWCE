@@ -49,19 +49,21 @@ Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
 
 # Installing EWCE
 
-The *EWCE* package is available from github. The old version available from the Bioconductor archives is depreciated and should not be used. To be able to install the package one needs first to install R then run the following lines of code:
+The *EWCE* package is in the process of being added to Bioconductor but, in the meantime, is available from github. To be able to install the package one needs first to install R then run the following lines of code:
 
 ```
 if (!require("devtools")) {
   install.packages("devtools")
 }
 devtools::install_github("nathanskene/ewce")
+devtools::install_github("neurogenomics/ewceData")
 ```
 
-You can then load the package:
+You can then load the package and data package:
 
 ```{r }
 library(EWCE)
+library(ewceData)
 ```
 
 # Using with docker
