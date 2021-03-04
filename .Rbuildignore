@@ -11,3 +11,6 @@ Readme.md
 Readme.Rmd
 docker_push
 _pkgdown.yml
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
