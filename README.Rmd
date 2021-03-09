@@ -1,6 +1,6 @@
 ---
 title: "Expression Weighted Celltype Enrichment with *EWCE*"
-author: "Nathan Skene"
+author: "Alan Murphy and Nathan Skene"
 date: "`r Sys.Date()`"
 bibliography: inst/extdata/EWCE.bib
 csl: inst/extdata/nature.csl

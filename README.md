@@ -1,7 +1,7 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
-Nathan Skene
-2021-02-24
+Alan Murphy and Nathan Skene
+2021-03-09
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 <!-- badges: start -->
