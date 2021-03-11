@@ -1,7 +1,7 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
 Alan Murphy and Nathan Skene
-2021-03-09
+2021-03-11
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 <!-- badges: start -->
@@ -9,6 +9,17 @@ Alan Murphy and Nathan Skene
 [![Build
 Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE)
 <!-- badges: end -->
+
+# Note
+
+Do not use the package in this repository, instead use
+[neurogenomics/EWCE](https://github.com/neurogenomics/EWCE). This
+package is ready for submission to Bioconductor and thus, will not work
+with R &lt; 4.1. The package [vignette
+website](https://nathanskene.github.io/EWCE/articles/EWCE.html) also
+relates to neurogenomics/EWCE. This is a temporary solution until EWCE
+goes live on Bioconductor (likely to happen in April/May 2021). This
+README file will be updated when EWCE is available from Bioconductor.
 
 # Introduction
 
