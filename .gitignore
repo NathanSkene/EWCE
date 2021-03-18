@@ -12,6 +12,9 @@ Meta
 vignettes/.build.timestamp
 vignettes/EWCE_cache/*
 vignettes/EWCE_files/*
-
+EWCE.Rproj
+.DS_Store
+inst/.DS_Store
+vignettes/.DS_Store
 docs
 docs/

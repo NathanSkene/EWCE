@@ -50,5 +50,6 @@ l1 <- cortex_mrna$annot$level1class
 l2 <- cortex_mrna$annot$level2class
 annotLevels <- list(l1 = l1, l2 = l2)
 fNames_ALLCELLS <- 
-    generate.celltype.data(exp = expData, annotLevels, "allKImouse")
+    generate.celltype.data(exp = expData, annotLevels, "allKImouse",
+        savePath=tempdir())
 }

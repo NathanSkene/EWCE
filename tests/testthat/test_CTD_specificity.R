@@ -21,7 +21,8 @@ test_that("Correct specificity values of CDT calculated", {
     fNames <- EWCE::generate.celltype.data(
         exp = exp_set,
         annotLevels = grouping,
-        groupName = "testthat"
+        groupName = "testthat",
+        savePath = tempdir()
     )
     # load res - named ctd
     load(fNames)

@@ -19,7 +19,10 @@ test_that("Filter genes without 1 to 1 homolog test", {
         level2annot = cortex_mrna$annot$level2class
     )
     annotLevels <- list(level1class = cortex_mrna$annot$level1class, level2class = cortex_mrna$annot$level2class)
-    fNames_CortexOnly <- generate.celltype.data(exp = exp_CortexOnly_DROPPED, annotLevels = annotLevels, groupName = "kiCortexOnly")
+    fNames_CortexOnly <- generate.celltype.data(exp = exp_CortexOnly_DROPPED, 
+                                                    annotLevels = annotLevels, 
+                                                    groupName = "kiCortexOnly",
+                                                    savePath = tempdir())
 
     # filter only orthologs
     fNames_CortexOnly <- filter.genes.without.1to1.homolog(fNames_CortexOnly)

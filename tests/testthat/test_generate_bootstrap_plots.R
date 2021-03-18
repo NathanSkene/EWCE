@@ -18,7 +18,8 @@ test_that("Filter genes without 1 to 1 homolog test", {
     generate.bootstrap.plots(
         sct_data = ctd, hits = mouse.hits,
         bg = mouse.bg, reps = reps, annotLevel = 1,
-        full_results = full_results, listFileName = "VignetteGraphs"
+        full_results = full_results, listFileName = "VignetteGraphs",
+        savePath=tempdir()
     )
     options(warn = 0)
     # check the BootstrapPlots folder exists and is non-empty
