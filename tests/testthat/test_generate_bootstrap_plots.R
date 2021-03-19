@@ -23,9 +23,12 @@ test_that("Filter genes without 1 to 1 homolog test", {
     )
     options(warn = 0)
     # check the BootstrapPlots folder exists and is non-empty
-    test1 <- dir.exists("~/BootstrapPlots") && length(list.files("~/BootstrapPlots")) > 0
+    #test1 <- dir.exists("~/BootstrapPlots") && length(list.files("~/BootstrapPlots")) > 0
+    test1 <- 
+        dir.exists(sprintf("%s/BootstrapPlots", tempdir())) && 
+        length(list.files(sprintf("%s/BootstrapPlots", tempdir()))) > 0
     # remove folder once tested
-    unlink("~/BootstrapPlots", recursive = TRUE)
+    #unlink("~/BootstrapPlots", recursive = TRUE)
 
     tt_alzh <- tt_alzh()
     tt_results <- ewce_expression_data(
