@@ -70,8 +70,8 @@ library(ewceData)
 ctd <- ctd()
 
 # Set the parameters for the analysis
-# Use 100 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 100 
+# Use 10 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 10 
 
 # Load the gene list and get human orthologs
 example_genelist <- example_genelist()
@@ -79,9 +79,6 @@ mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
 mouse.hits <- 
     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-human.hits <- 
-    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "HGNC.symbol"])
-human.bg <- unique(m2h$HGNC.symbol)
 mouse.bg <- unique(m2h$MGI.symbol)
 
 # Bootstrap significance test, no control for transcript length or GC content
@@ -91,10 +88,4 @@ full_results <- bootstrap.enrichment.test(
     genelistSpecies = "mouse"
 )
 
-# Bootstrap significance test control for transcript length and GC content
-full_results <- bootstrap.enrichment.test(
-    sct_data = ctd, hits = human.hits,
-    bg = human.bg, reps = reps, annotLevel = 2, geneSizeControl = TRUE,
-    sctSpecies = "mouse", genelistSpecies = "human"
-)
 }

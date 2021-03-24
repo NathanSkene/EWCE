@@ -5,7 +5,13 @@ test_that("EWCE expression data creation", {
     set.seed(12345678)
     tt_alzh <- tt_alzh()
     ctd <- ctd()
-    tt_results <- ewce_expression_data(sct_data = ctd, tt = tt_alzh, annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse")
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #tt_alzh <- eh[["EH5373"]]
+    #ctd <- eh[["EH5376"]]
+    
+    tt_results <- ewce_expression_data(sct_data = ctd, tt = tt_alzh, reps = 10,
+                                        annotLevel = 1, ttSpecies = "human", 
+                                        sctSpecies = "mouse")
     up_celltypes <- c(
         names(tt_results$hit.cells.up)[tt_results$hit.cells.up == max(tt_results$hit.cells.up)],
         names(tt_results$hit.cells.up)[tt_results$hit.cells.up == min(tt_results$hit.cells.up)]

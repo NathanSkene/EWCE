@@ -12,6 +12,8 @@
 #' @import HGNChelper
 #' @import biomaRt
 #' @import ewceData
+#' @import ExperimentHub
+#' @importFrom AnnotationHub query 
 fix.bad.hgnc.symbols <- function(exp, dropNonHGNC = FALSE) {
 
     # Check that exp is not some weird input format like those generated 
@@ -21,7 +23,10 @@ fix.bad.hgnc.symbols <- function(exp, dropNonHGNC = FALSE) {
     }
 
     # First, find which gene symbols are not proper HGNC symbols
-    not_HGNC <- rownames(exp)[!rownames(exp) %in% ewceData::all_hgnc()]
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #all_hgnc <- eh[["EH5371"]]
+    all_hgnc <- ewceData::all_hgnc()
+    not_HGNC <- rownames(exp)[!rownames(exp) %in% all_hgnc]
     print(sprintf("%s of %s are not proper HGNC symbols", 
                     length(unique(not_HGNC)), dim(exp)[1]))
 

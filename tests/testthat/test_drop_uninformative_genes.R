@@ -3,6 +3,9 @@ test_that("Drop uninformative genes", {
     # inspect drop.uninformative.genes
     # Use Vignette Dataset to check function output
     cortex_mrna <- cortex_mrna()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #cortex_mrna <- eh[["EH5381"]]
+    
     if (!file.exists("MRK_List2.rpt")) {
         download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
     }

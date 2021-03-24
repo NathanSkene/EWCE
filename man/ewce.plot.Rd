@@ -32,8 +32,8 @@ library(ewceData)
 ctd <- ctd()
 
 # Set the parameters for the analysis
-# Use 100 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 100
+# Use 10 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 10
 
 # Load the gene list and get human orthologs
 example_genelist <- example_genelist()

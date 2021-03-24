@@ -75,13 +75,11 @@ m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
 schiz_genes <- schiz_genes()
 id_genes <- id_genes()
 mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol \%in\% schiz_genes,"MGI.symbol"])
-mouse.hits.id = unique(m2h[m2h$HGNC.symbol \%in\% id_genes,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
 hpsd_genes <- hpsd_genes()
 mouse.hpsd = unique(m2h[m2h$HGNC.symbol \%in\% hpsd_genes,"MGI.symbol"])
-rbfox_genes <- rbfox_genes()
-# Use 100 bootstrap lists for speed, for publishable analysis use >10000
-reps=100 
+# Use 10 bootstrap lists for speed, for publishable analysis use >10000
+reps=10 
 res_hpsd_schiz = 
     controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
                                     functional_genes = mouse.hpsd, 

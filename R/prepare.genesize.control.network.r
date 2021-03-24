@@ -25,6 +25,8 @@
 #' @import utils
 #' @import biomaRt
 #' @import ewceData
+#' @import ExperimentHub 
+#' @importFrom AnnotationHub query 
 prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000, 
                                                 sctSpecies) {
     ### PREPARE TO QUERY BIOMART
@@ -32,6 +34,8 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
 
     ### FIRST GET ALL ENSEMBL GENE IDS FOR THE HUMAN GENES
     all_hgnc_wtEnsembl <- ewceData::all_hgnc_wtEnsembl()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #all_hgnc_wtEnsembl <- eh[["EH5370"]]
     hum_ens <- 
         all_hgnc_wtEnsembl[
             all_hgnc_wtEnsembl$hgnc_symbol %in% 
@@ -56,6 +60,7 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM BIOMART
     ensembl_transcript_lengths_GCcontent <- 
         ewceData::ensembl_transcript_lengths_GCcontent()
+    #ensembl_transcript_lengths_GCcontent <- eh[["EH5366"]]
     all_lengths <- 
         ensembl_transcript_lengths_GCcontent[
             ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in% 
@@ -77,8 +82,9 @@ prepare.genesize.control.network <- function(hits, bg, numBOOT = 10000,
 
     if (sctSpecies == "mouse") {
         ### DROP ANY HUMAN GENES WITHOUT HOMOLOGOUS MOUSE GENES
-        m2h <- unique(ewceData::mouse_to_human_homologs()[, c("HGNC.symbol", 
-                                                                "MGI.symbol")])
+        #mouse_to_human_homologs <- eh[["EH5367"]]
+        mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
+        m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
         data_byGene2 <- 
             data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol, ]
 

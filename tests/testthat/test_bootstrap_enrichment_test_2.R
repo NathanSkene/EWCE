@@ -4,12 +4,19 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     ctd <- ctd()
     example_genelist <- example_genelist()
     mouse_to_human_homologs <- mouse_to_human_homologs()
+    all_hgnc <- all_hgnc()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #ctd <- eh[["EH5376"]]
+    #example_genelist <- eh[["EH5372"]]
+    #mouse_to_human_homologs <- eh[["EH5367"]]
+    #all_hgnc <- eh[["EH5371"]]
+    
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))
     mouse.bg <- unique(m2h$MGI.symbol)
     # set input variables
-    reps <- 100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+    reps <- 60 # <- Use 60 bootstrap lists so it runs quickly, for publishable analysis use >10000
     level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
 
     # Test 1: first we want the stop error messages if bad CT controlled passed
@@ -60,7 +67,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
 
     # test adding a fake mouse bg
-    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% all_hgnc())]
+    mouse.bg.fake <- mouse.bg[!(mouse.bg %in% all_hgnc)]
     fail_return2_5 <-
         tryCatch(bootstrap.enrichment.test(
             sct_data = ctd, hits = mouse.hits,
@@ -118,7 +125,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     ctd_fake <- ctd
     # just rename genes to hgnc names
     rownames(ctd_fake[[1]]$mean_exp) <- 
-        all_hgnc()[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
+        all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
     fail_return7 <-
         tryCatch(bootstrap.enrichment.test(

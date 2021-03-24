@@ -15,9 +15,6 @@
 #' # Load the single cell data
 #' ctd <- ctd()
 #'
-#' # Set the parameters for the analysis
-#' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
-#' reps <- 100 
 #'
 #' # Load the data
 #' tt_alzh_BA36 <- tt_alzh_BA36()
@@ -39,7 +36,7 @@
 #'
 #' # Perform the merged analysis
 #' # For publication reps should be higher
-#' merged_res <- merged_ewce(results, reps = 10) 
+#' merged_res <- merged_ewce(results, reps = 5) 
 #' print(merged_res)
 #' @export
 # @import ggplot2

@@ -3,8 +3,13 @@ test_that("Filter genes without 1 to 1 homolog test", {
     # inspect drop.uninformative.genes
     # Use Vignette Dataset to check function output
     cortex_mrna <- cortex_mrna()
-    if (!file.exists("MRK_List2.rpt")) {
-        download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #cortex_mrna <- eh[["EH5381"]]
+    
+    #if (!file.exists("MRK_List2.rpt")) {
+    if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))){
+        download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", 
+                        destfile = sprintf("%s/MRK_List2.rpt", tempdir()))
     }
     nKeep <- 1000
     must_keep <- c("Apoe", "Gfap", "Gapdh")
@@ -31,7 +36,7 @@ test_that("Filter genes without 1 to 1 homolog test", {
     nrow(ctd[[1]]$specificity)
 
     # remove folder once tested
-    unlink("MRK_List2.rpt", recursive = TRUE)
+   # unlink("MRK_List2.rpt", recursive = TRUE)
 
     # check the number of dropped genes is the same as expected from past runs: 248 else fail
     expect_equal(nrow(ctd[[1]]$specificity), nrow(exp_CortexOnly_DROPPED))

@@ -5,6 +5,11 @@ test_that("bootstrap enrichment runs as expected", {
     ctd <- ctd()
     example_genelist <- example_genelist()
     mouse_to_human_homologs <- mouse_to_human_homologs()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #ctd <- eh[["EH5376"]]
+    #example_genelist <- eh[["EH5372"]]
+    #mouse_to_human_homologs <- eh[["EH5367"]]
+    
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))

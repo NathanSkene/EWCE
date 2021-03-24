@@ -33,5 +33,7 @@ gene names.
 library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
+#take a subset for speed
+cortex_mrna$exp <- cortex_mrna$exp[1:100,1:10]
 cortex_mrna$exp <- fix.bad.mgi.symbols(cortex_mrna$exp)
 }

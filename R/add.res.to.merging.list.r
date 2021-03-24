@@ -18,26 +18,21 @@
 #' # Load the data
 #' tt_alzh <- tt_alzh()
 #' tt_alzh_BA36 <- tt_alzh_BA36()
-#' tt_alzh_BA44 <- tt_alzh_BA44()
-#'
+#' # Use 10 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 10 
 #' # Run EWCE analysis
 #' tt_results <- ewce_expression_data(
 #'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
-#'     ttSpecies = "human", sctSpecies = "mouse"
+#'     reps = reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #' tt_results_36 <- ewce_expression_data(
 #'     sct_data = ctd, tt = tt_alzh_BA36, annotLevel = 1,
-#'     ttSpecies = "human", sctSpecies = "mouse"
-#' )
-#' tt_results_44 <- ewce_expression_data(
-#'     sct_data = ctd, tt = tt_alzh_BA44, annotLevel = 1,
-#'     ttSpecies = "human", sctSpecies = "mouse"
+#'     reps = reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #'
 #' # Fill a list with the results
 #' results <- add.res.to.merging.list(tt_alzh)
 #' results <- add.res.to.merging.list(tt_alzh_BA36, results)
-#' results <- add.res.to.merging.list(tt_alzh_BA44, results)
 #' @export
 add.res.to.merging.list <- function(full_res, existing_results = NULL) {
     msg <- "ERROR: Cannot merge directional with non-directional results table"

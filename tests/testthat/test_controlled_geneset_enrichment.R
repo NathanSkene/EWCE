@@ -3,6 +3,10 @@ test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
     # Run test based on vignette data
     ctd <- ctd()
     mouse_to_human_homologs <- mouse_to_human_homologs()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #ctd <- eh[["EH5376"]]
+    #mouse_to_human_homologs <- eh[["EH5367"]]
+    
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     schiz_genes <- schiz_genes()
     mouse.hits.schiz <- unique(m2h[m2h$HGNC.symbol %in% schiz_genes, "MGI.symbol"])

@@ -3,6 +3,9 @@ test_that("merging two expression files", {
     # use vignette data
 
     cortex_mrna <- cortex_mrna()
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #cortex_mrna <- eh[["EH5381"]]
+    
     # NOTE: Can't use hypothalamus data for test as issue with travis and read_xl::read_excel()
 
 

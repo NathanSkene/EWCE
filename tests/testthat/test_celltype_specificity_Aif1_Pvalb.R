@@ -3,6 +3,9 @@ test_that("Cell type specificity Aif1, Pvalb", {
     # inspect specificity matrix for type 1 cell types from generate.celltype.data
     # Use Vignette Dataset to check function output
     cortex_mrna <- cortex_mrna()
+   # eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #cortex_mrna <- eh[["EH5381"]]
+    
     if (!file.exists("MRK_List2.rpt")) {
         download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
     }

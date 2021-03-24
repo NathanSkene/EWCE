@@ -25,10 +25,14 @@
 #' @import utils
 #' @import stringr
 #' @import ewceData
+#' @import ExperimentHub
+#' @importFrom AnnotationHub query 
 filter.genes.without.1to1.homolog <- function(filenames) {
     newFilenames <- filenames
-    # data("mouse_to_human_homologs")
     mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
+    #quicker to load with ID
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #mouse_to_human_homologs <- eh[["EH5367"]]
     orthologs <- mouse_to_human_homologs
     mgi_1to1 <- orthologs$MGI.symbol
     hgnc_1to1 <- orthologs$HGNC.symbol

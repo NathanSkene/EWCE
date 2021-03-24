@@ -6,7 +6,12 @@ test_that("merging EWCE results from multiple sets", {
     tt_alzh_BA36 <- tt_alzh_BA36()
     tt_alzh_BA44 <- tt_alzh_BA44()
     ctd <- ctd()
-
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #tt_alzh <- eh[["EH5373"]]
+    #tt_alzh_BA36 <- eh[["EH5374"]]
+    #tt_alzh_BA44 <- eh[["EH5375"]]
+    #ctd <- eh[["EH5376"]]
+    
     # Run EWCE analysis
     tt_results <- ewce_expression_data(
         sct_data = ctd, tt = tt_alzh, annotLevel = 1,

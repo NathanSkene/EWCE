@@ -1,7 +1,7 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 0.99.5
+Version: 0.99.6
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",
@@ -25,7 +25,9 @@ Depends: R(>= 4.1),
          RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
+    AnnotationHub,
     ewceData,
+    ExperimentHub,
     ggplot2,
     grDevices,
     grid,
@@ -52,7 +54,8 @@ Suggests:
     testthat (>= 3.0.0),
     data.table,
     sctransform,
-    readxl
+    readxl,
+    memoise
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,

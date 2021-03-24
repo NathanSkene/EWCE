@@ -46,8 +46,8 @@
 #' ctd <- ctd()
 #'
 #' # Set the parameters for the analysis
-#' # Use 100 bootstrap lists for speed, for publishable analysis use >10000
-#' reps <- 100 
+#' # Use 10 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 10 
 #' annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 #'
 #' # Load the top table
@@ -55,7 +55,7 @@
 #'
 #' tt_results <- ewce_expression_data(
 #'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
-#'     ttSpecies = "human", sctSpecies = "mouse"
+#'     reps = reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #' @export
 # @import reshape2

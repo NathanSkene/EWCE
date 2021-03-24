@@ -41,16 +41,20 @@
 #' @export
 #' @import utils
 #' @import ewceData
+#' @import ExperimentHub
+#' @importFrom AnnotationHub query 
 
 check.ewce.genelist.inputs <- function(sct_data, hits, bg, genelistSpecies, 
                                         sctSpecies, geneSizeControl = FALSE) {
     sct_genes <- rownames(sct_data[[1]]$mean_exp)
-    # data("mouse_to_human_homologs")
-    # data("all_mgi")
-    # data("all_hgnc")
     mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
     all_mgi <- ewceData::all_mgi()
-    all_hgnc <- ewceData::all_hgnc()
+    all_hgnc <- ewceData::all_hgnc() #quicker to ref by ID rather than number
+    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
+    #mouse_to_human_homologs <- eh[["EH5367"]]
+    #all_mgi <- eh[["EH5369"]]
+    #all_hgnc <- eh[["EH5371"]]
+    
     orthologsOnly <- FALSE
 
     # CHECK THE ARGUMENTS ARE PROPERLY STRUCTURED
