@@ -16,7 +16,7 @@ ewce_expression_data(
 )
 }
 \arguments{
-\item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
+\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
 
 \item{annotLevel}{an integer indicating which level of the annotation to 
 analyse. Default = 1.}

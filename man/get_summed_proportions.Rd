@@ -49,5 +49,5 @@ genelists of equal length, obtain the specificity of these and then
 obtain the mean specificity in each sampled list (and the target list)
 }
 \examples{
-# See bootstrap.enrichment.test.r
+# See bootstrap_enrichment_test.r
 }

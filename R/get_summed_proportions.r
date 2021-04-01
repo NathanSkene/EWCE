@@ -24,7 +24,7 @@
 #'   \item \code{controlledCT}: the controlled celltype (if applicable)
 #' }
 #' @examples
-#' # See bootstrap.enrichment.test.r
+#' # See bootstrap_enrichment_test.r
 #' @export
 get_summed_proportions <- function(hitGenes, sct_data, annotLevel, reps, 
                                     geneSizeControl, controlledCT = NULL, 
@@ -34,8 +34,8 @@ get_summed_proportions <- function(hitGenes, sct_data, annotLevel, reps,
             nrow = reps)
     combinedGenes <- rownames(sct_data[[annotLevel]]$mean_exp)
     hitGenes <- hitGenes[hitGenes %in% combinedGenes]
-    hit.cells <- cell.list.dist(hitGenes, sct_data, annotLevel)
-    # cell.list.dist gets the summed proportion of 'hitGenes' across all 
+    hit.cells <- cell_list_dist(hitGenes, sct_data, annotLevel)
+    # cell_list_dist gets the summed proportion of 'hitGenes' across all 
     # cell types at annotLevel
 
     # Check control_network provided if geneSizeControl=TRUE
@@ -69,7 +69,7 @@ get_summed_proportions <- function(hitGenes, sct_data, annotLevel, reps,
             bootstrap_set <- control_network[s, ]
         }
         # 'bootstrap_data' is a matrix of the summed proportions
-        bootstrap_data[s, ] <- cell.list.dist(bootstrap_set, sct_data, 
+        bootstrap_data[s, ] <- cell_list_dist(bootstrap_set, sct_data, 
                                                 annotLevel)
     }
     colnames(bootstrap_data) <- names(hit.cells)

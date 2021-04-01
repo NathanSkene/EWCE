@@ -4,7 +4,7 @@
 #' targetting the same scientific problem
 #'
 #' @param results a list of EWCE results generated using 
-#' \code{\link{add.res.to.merging.list}}
+#' \code{\link{add_res_to_merging_list}}
 #' @param reps Number of random gene lists to generate (default=100 but should 
 #' be over 10000 for publication quality results)
 #' @return dataframe in which each row gives the statistics (p-value, fold 
@@ -31,8 +31,8 @@
 #' )
 #'
 #' # Fill a list with the results
-#' results <- add.res.to.merging.list(tt_results_36)
-#' results <- add.res.to.merging.list(tt_results_44, results)
+#' results <- add_res_to_merging_list(tt_results_36)
+#' results <- add_res_to_merging_list(tt_results_44, results)
 #'
 #' # Perform the merged analysis
 #' # For publication reps should be higher
@@ -46,7 +46,7 @@
 #' @import stats
 merged_ewce <- function(results, reps = 100) {
     err_msg <- paste0("ERROR: results list is not valid. Use",
-                        " 'add.res.to.merging.list' to generate valid list.")
+                        " 'add_res_to_merging_list' to generate valid list.")
     # Check arguments are valid
     if (length(results) <= 1) {
         stop(err_msg)

@@ -48,7 +48,7 @@ First, one needs to load the relevant single cell transcriptome dataset. Single 
 The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated
 publication.
 
-Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
+Bootstrapping is then performed using the `bootstrap_enrichment_test` function.
 
 # Installing EWCE
 

@@ -1,6 +1,6 @@
-# Test for filter.genes.without.1to1.homolog, using sample data in vignette
+# Test for filter_genes_without_1to1_homolog, using sample data in vignette
 test_that("Filter genes without 1 to 1 homolog test", {
-    # inspect drop.uninformative.genes
+    # inspect drop_uninformative_genes
     # Use Vignette Dataset to check function output
     cortex_mrna <- cortex_mrna()
     #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
@@ -19,18 +19,18 @@ test_that("Filter genes without 1 to 1 homolog test", {
 
     # NOTE not normalising for this test, too time intensive
 
-    exp_CortexOnly_DROPPED <- drop.uninformative.genes(
+    exp_CortexOnly_DROPPED <- drop_uninformative_genes(
         exp = cortex_mrna$exp,
         level2annot = cortex_mrna$annot$level2class
     )
     annotLevels <- list(level1class = cortex_mrna$annot$level1class, level2class = cortex_mrna$annot$level2class)
-    fNames_CortexOnly <- generate.celltype.data(exp = exp_CortexOnly_DROPPED, 
+    fNames_CortexOnly <- generate_celltype_data(exp = exp_CortexOnly_DROPPED, 
                                                     annotLevels = annotLevels, 
                                                     groupName = "kiCortexOnly",
                                                     savePath = tempdir())
 
     # filter only orthologs
-    fNames_CortexOnly <- filter.genes.without.1to1.homolog(fNames_CortexOnly)
+    fNames_CortexOnly <- filter_genes_without_1to1_homolog(fNames_CortexOnly)
     # load and inspect that none were removed
     load(fNames_CortexOnly[1])
     nrow(ctd[[1]]$specificity)

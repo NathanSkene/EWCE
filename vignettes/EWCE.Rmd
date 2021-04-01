@@ -51,7 +51,7 @@ First, one needs to load the relevant single cell transcriptome dataset. Single 
 
 The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated publication.
 
-Bootstrapping is then performed using the `bootstrap.enrichment.test` function.
+Bootstrapping is then performed using the `bootstrap_enrichment_test` function.
 
 # Installing EWCE
 
@@ -114,7 +114,7 @@ if(!file.exists("MRK_List2.rpt")){
     file <- "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt"
     download.file(file, destfile="MRK_List2.rpt")
 }
-cortex_mrna$exp = fix.bad.mgi.symbols(cortex_mrna$exp,
+cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp,
                                         mrk_file_path="MRK_List2.rpt")
 ```
 
@@ -134,7 +134,7 @@ cortex_mrna$exp = cortex_mrna$exp[keep_genes,]
 
 A different number of reads is found across each cell. We suggest using scTransform to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
 
-```{r, cache=TRUE }
+```{r }
 library(sctransform)
 scT = sctransform::vst(cortex_mrna$exp, return_cell_attr = TRUE)
 cortex_mrna$exp_scT = correct_counts(scT, cortex_mrna$exp) # umi_corrected
@@ -161,15 +161,15 @@ Rather than returning the data directly, the functions save the calculated data 
 ```{r  }
 # Generate celltype data for just the cortex/hippocampus data
 exp_CortexOnly_DROPPED = 
-  drop.uninformative.genes(exp=cortex_mrna$exp_scT_normed,
+  drop_uninformative_genes(exp=cortex_mrna$exp_scT_normed,
                             level2annot = cortex_mrna$annot$level2class)
 annotLevels = list(level1class=cortex_mrna$annot$level1class,
                     level2class=cortex_mrna$annot$level2class)
-fNames_CortexOnly = generate.celltype.data(exp=exp_CortexOnly_DROPPED,
+fNames_CortexOnly = generate_celltype_data(exp=exp_CortexOnly_DROPPED,
                                             annotLevels=annotLevels,
                                             groupName="kiCortexOnly")
 print(fNames_CortexOnly)
-fNames_CortexOnly = filter.genes.without.1to1.homolog(fNames_CortexOnly)
+fNames_CortexOnly = filter_genes_without_1to1_homolog(fNames_CortexOnly)
 print(fNames_CortexOnly)
 load(fNames_CortexOnly[1])
 ```
@@ -224,7 +224,7 @@ sprintf("Hypothalamic %s Neuron",
     hypo_annot$level2class[hypo_annot$level2class!=""])
 
 # Fix bad MGI symbols
-hypo_exp_CORRECTED = fix.bad.mgi.symbols(hypo_exp)
+hypo_exp_CORRECTED = fix_bad_mgi_symbols(hypo_exp)
 ```
 
 Now that the hypothalamus data is prepared, we merge it with the cortex dataset then calculate specificity:
@@ -238,15 +238,15 @@ merged_KI = merge_two_expfiles(exp1=hypo_exp_CORRECTED, exp2=cortex_mrna$exp,
                                      name2="Cortex/Hippo (KI)")
 
 # Drop genes which don't vary significantly between cell types
-exp_merged_DROPPED = drop.uninformative.genes(exp=merged_KI$exp, 
+exp_merged_DROPPED = drop_uninformative_genes(exp=merged_KI$exp, 
   level2annot = merged_KI$annot$level2class)
 
 # Calculate specificity data
 annotLevels = list(level1class=merged_KI$annot$level1class,
   level2class=merged_KI$annot$level2class)
-fNames_MergedKI = generate.celltype.data(exp=exp_merged_DROPPED,
+fNames_MergedKI = generate_celltype_data(exp=exp_merged_DROPPED,
   annotLevels,"MergedKI")
-fNames_MergedKI = filter.genes.without.1to1.homolog(fNames_MergedKI)
+fNames_MergedKI = filter_genes_without_1to1_homolog(fNames_MergedKI)
 load(fNames_MergedKI[2])
 ```
 
@@ -343,10 +343,10 @@ level=1 # <- Use level 1 annotations (i.e. Interneurons)
 
 We have now loaded the SCT data, prepared the gene lists and set the parameters. We run the model as follows, Note we set the seed to ensure reproducibility in the bootstrap sampling function:
 
-```{r, cache=TRUE }
+```{r }
 # Bootstrap significance test, no control for transcript length and GC content
 set.seed(12345678)
-full_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+full_results = bootstrap_enrichment_test(sct_data=ctd,hits=mouse.hits,
                                           bg=mouse.bg,
                                           reps=reps,annotLevel=level)
 ```
@@ -360,19 +360,19 @@ print(full_results$results[order(full_results$results$p),3:5][1:6,])
 The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean:
 
 ```{r, fig.width = 7, fig.height = 4}
-print(ewce.plot(full_results$results,mtc_method="BH")$plain)
+print(ewce_plot(full_results$results,mtc_method="BH")$plain)
 ```
 
 For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. There is no automated way to align the dendrogram (that I've figured out yet) with the graph ticks, so this needs to be done manually in Inkscape.
 
 ```{r }
-print(ewce.plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
+print(ewce_plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 ```
 
-If you want to view the characteristics of enrichment for each gene within the list then the `generate.bootstrap.plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
+If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
 
-```{r, cache=TRUE }
-generate.bootstrap.plots(sct_data=ctd,hits=mouse.hits,
+```{r }
+generate_bootstrap_plots(sct_data=ctd,hits=mouse.hits,
                           bg=mouse.bg,reps=reps,annotLevel=1,
                           full_results=full_results,
                           listFileName="VignetteGraphs")
@@ -391,20 +391,20 @@ human.bg = unique(c(human.hits,m2h$HGNC.symbol))
 
 The bootstrapping function then takes different arguments:
 
-```{r, cache=TRUE, results="hide"}
+```{r, results="hide"}
 # Again, set seed for reproducibility
 set.seed(12345678)
 # Bootstrap significance test controlling for transcript length and GC content
-cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
+cont_results = bootstrap_enrichment_test(sct_data=ctd,hits=human.hits,
                       bg=human.bg,reps=reps,annotLevel=1,
                       geneSizeControl=TRUE,genelistSpecies="human",
                       sctSpecies="mouse")
 ```
 
-We plot these results using `ewce.plot`:
+We plot these results using `ewce_plot`:
 
 ```{r, fig.width = 7, fig.height = 4}
-print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
+print(ewce_plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
 This shows that the controlled method generates enrichments that are generally comparable to the standard method.
@@ -413,29 +413,29 @@ This shows that the controlled method generates enrichments that are generally c
 
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
-```{r, cache=TRUE, fig.width = 8, fig.height = 4, results="hide"}
+```{r, fig.width = 8, fig.height = 4, results="hide"}
 # Again, set seed for reproducibility
 set.seed(12345678)
 # Bootstrap significance test controlling for transcript length and GC content
-cont_results = bootstrap.enrichment.test(sct_data=ctd,hits=human.hits,
+cont_results = bootstrap_enrichment_test(sct_data=ctd,hits=human.hits,
                     bg=human.bg,reps=reps,annotLevel=2,geneSizeControl=TRUE,
                     genelistSpecies="human",sctSpecies="mouse")
-print(ewce.plot(cont_results$results,mtc_method="BH")$plain)
+print(ewce_plot(cont_results$results,mtc_method="BH")$plain)
 ```
 
 With the subcell analysis each microglial subtype was enriched and correspondingly we see here that the microglial celltype is enriched.
 
 ## Plotting results from multiple gene lists
 
-It is often useful to plot results from multiple gene list analyses together. The `ewce.plot` function allows multiple enrichment analyses to be performed together. To achieve this the results data frames are just appended onto each other, with an additional `list` column added detailing which analysis they relate to.
+It is often useful to plot results from multiple gene list analyses together. The `ewce_plot` function allows multiple enrichment analyses to be performed together. To achieve this the results data frames are just appended onto each other, with an additional `list` column added detailing which analysis they relate to.
 
 To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.
 
-```{r, cache=TRUE }
+```{r }
 # Again, set seed for reproducibility
 set.seed(12345678)
 gene.list.2 = mouse.bg[1:30]
-second_results = bootstrap.enrichment.test(sct_data=ctd,hits=gene.list.2,
+second_results = bootstrap_enrichment_test(sct_data=ctd,hits=gene.list.2,
                     bg=mouse.bg,reps=reps,annotLevel=1)
 full_res2 = data.frame(full_results$results,list="Alzheimers")
 scnd_res2 = data.frame(second_results$results,list="Second")
@@ -443,7 +443,7 @@ merged_results = rbind(full_res2,scnd_res2)
 ```
 
 ```{r fig.width = 7, fig.height = 4}
-print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
+print(ewce_plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
 As expected, the second randomly generated gene list shows no significant enrichments.
@@ -457,8 +457,8 @@ To demonstrate this we have an example dataset `tt_alzh`. This data frame was ge
 
 The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
 
-```{r, cache=TRUE, results="hide"}
-# ewce_expression_data calls bootstrap.enrichment.test so 
+```{r, results="hide"}
+# ewce_expression_data calls bootstrap_enrichment_test so 
 # set the seed for reproducibility
 set.seed(12345678)
 tt_alzh <- tt_alzh()
@@ -466,10 +466,10 @@ tt_results = ewce_expression_data(sct_data=ctd,tt=tt_alzh,annotLevel=1,
                                     ttSpecies="human",sctSpecies="mouse")
 ```
 
-The results of this analysis can be plotted using the `ewce.plot` function.
+The results of this analysis can be plotted using the `ewce_plot` function.
 
 ```{r fig.width = 7, fig.height = 4}
-ewce.plot(tt_results$joint_results)$plain
+ewce_plot(tt_results$joint_results)$plain
 ```
 
 As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.
@@ -478,11 +478,11 @@ As was reported in our paper, neuronal genes are found to be downregulated while
 
 A common request is to explain which differentially expressed genes are associated with a cell type...
 
-```{r, cache=TRUE }
+```{r }
 # Set seed for bootstrap reproducibility
 set.seed(12345678)
 full_results = 
-  generate.bootstrap.plots.for.transcriptome(sct_data=ctd,tt=tt_alzh,
+  generate_bootstrap_plots_for_transcriptome(sct_data=ctd,tt=tt_alzh,
                                               annotLevel=1,
                                               full_results=tt_results,
                                               listFileName="examples",
@@ -513,9 +513,9 @@ tt_results_44 = ewce_expression_data(sct_data=ctd,tt=tt_alzh_BA44,annotLevel=1,
                                       ttSpecies="human",sctSpecies="mouse")
 
 # Fill a list with the results
-results = add.res.to.merging.list(tt_results)
-results = add.res.to.merging.list(tt_results_36,results)
-results = add.res.to.merging.list(tt_results_44,results)
+results = add_res_to_merging_list(tt_results)
+results = add_res_to_merging_list(tt_results_36,results)
+results = add_res_to_merging_list(tt_results_44,results)
 
 # Perform the merged analysis
 # For publication reps should be higher
@@ -523,10 +523,10 @@ merged_res = merged_ewce(results,reps=10)
 print(merged_res)
 ```
 
-The results can then be plotted as normal using the `ewce.plot` function.
+The results can then be plotted as normal using the `ewce_plot` function.
 
 ```{r fig.width = 7, fig.height = 4}
-print(ewce.plot(merged_res)$plain)
+print(ewce_plot(merged_res)$plain)
 ```
 
 The merged results from all three Alzheimer's brain regions are found to be remarkably similar, as was reported in our paper.  
@@ -553,16 +553,16 @@ reps=reps
 # set seed for bootstrap reproducibility
 set.seed(12345678)
 
-unconditional_results = bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+unconditional_results = bootstrap_enrichment_test(sct_data=ctd,hits=mouse.hits,
                     bg=mouse.bg,reps=reps,annotLevel=1,genelistSpecies="mouse",
                     sctSpecies="mouse")
 conditional_results_micro = 
-  bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,
+  bootstrap_enrichment_test(sct_data=ctd,hits=mouse.hits,
                               bg=mouse.bg,reps=reps,annotLevel=1,
                               controlledCT="microglia",genelistSpecies="mouse",
                               sctSpecies="mouse")
 conditional_results_astro = 
-  bootstrap.enrichment.test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
+  bootstrap_enrichment_test(sct_data=ctd,hits=mouse.hits,bg=mouse.bg,
                               reps=reps,annotLevel=1,
                               controlledCT="astrocytes_ependymal",
                               genelistSpecies="mouse",sctSpecies="mouse")
@@ -574,7 +574,7 @@ full_res2 = data.frame(conditional_results_micro$results,
 full_res3 = data.frame(conditional_results_astro$results,
                         list="Conditional Enrichment (Astrocyte controlled)")
 merged_results = rbind(rbind(full_res1,full_res2),full_res3)
-print(ewce.plot(total_res=merged_results,mtc_method="BH")$plain)
+print(ewce_plot(total_res=merged_results,mtc_method="BH")$plain)
 ```
 
 When controlling for astrocytes the enrichment is astrocytes is totally abolished as expected, and vica versa. The enrichment in microglia remains strongly significant however after controlling for microglia, suggesting that this enrichment is independent of that in astrocytes. 

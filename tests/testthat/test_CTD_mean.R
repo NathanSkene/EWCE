@@ -1,4 +1,4 @@
-# Test for mean calculation from calculate.meanexp.for.level in generate.celltype.data
+# Test for mean calculation from calculate_meanexp_for_level in generate_celltype_data
 test_that("Correct mean expression values of CDT calculated", {
     # create some fake exp data
     set.seed(101)
@@ -18,7 +18,7 @@ test_that("Correct mean expression values of CDT calculated", {
       })
 
     # Now apply EWCE function
-    fNames <- EWCE::generate.celltype.data(
+    fNames <- EWCE::generate_celltype_data(
         exp = exp_set,
         annotLevels = grouping,
         groupName = "testthat",

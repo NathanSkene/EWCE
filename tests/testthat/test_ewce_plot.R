@@ -1,4 +1,4 @@
-# Test for ewce.plot ensure ggplot object returned
+# Test for ewce_plot ensure ggplot object returned
 test_that("EWCE plots a ggplot", {
     # load vignette data
     ctd <- ctd()
@@ -18,12 +18,12 @@ test_that("EWCE plots a ggplot", {
     level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
     set.seed(12345678)
     full_results <-
-        bootstrap.enrichment.test(
+        bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = level
         )
 
-    ewce_plot_res <- ewce.plot(full_results$results, mtc_method = "BH")$plain
+    ewce_plot_res <- ewce_plot(full_results$results, mtc_method = "BH")$plain
 
     # fail if any but ggplot returned
     expect_equal(class(ewce_plot_res)[1] == "gg", TRUE)

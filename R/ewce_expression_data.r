@@ -5,7 +5,7 @@
 #' regulated genes
 #'
 #'
-#' @param sct_data List generated using \code{\link{generate.celltype.data}}
+#' @param sct_data List generated using \code{\link{generate_celltype_data}}
 #' @param tt Differential expression table. Can be output of limma::topTable 
 #' function. Minimum requirement is that one column stores a metric of 
 #' increased/decreased expression (i.e. log fold change, t-statistic for 
@@ -105,7 +105,7 @@ ewce_expression_data <- function(sct_data, annotLevel = 1, tt, sortBy = "t",
     mouse.bg <- unique(tt3$MGI.symbol)
 
     # Do EWCE analysis
-    full_res_up <- EWCE::bootstrap.enrichment.test(sct_data = sct_data, 
+    full_res_up <- EWCE::bootstrap_enrichment_test(sct_data = sct_data, 
                                                     hits = mouse.upreg.hits, 
                                                     bg = mouse.bg, reps = reps, 
                                                     annotLevel = annotLevel, 
@@ -113,7 +113,7 @@ ewce_expression_data <- function(sct_data, annotLevel = 1, tt, sortBy = "t",
                                                     genelistSpecies = ttSpecies,
                                                     sctSpecies = sctSpecies)
     full_res_down <- 
-        EWCE::bootstrap.enrichment.test(sct_data = sct_data,
+        EWCE::bootstrap_enrichment_test(sct_data = sct_data,
                                             hits = mouse.downreg.hits, 
                                             bg = mouse.bg, reps = reps, 
                                             annotLevel = annotLevel, 

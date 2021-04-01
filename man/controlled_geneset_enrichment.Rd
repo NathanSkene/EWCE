@@ -25,7 +25,7 @@ Must be from same species as the single cell transcriptome dataset.}
 
 \item{bg_genes}{Array of gene symbols containing the background gene list.}
 
-\item{sct_data}{List generated using \code{\link{generate.celltype.data}}}
+\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
 
 \item{annotLevel}{an integer indicating which level of the annotation to 
 analyse. Default = 1.}

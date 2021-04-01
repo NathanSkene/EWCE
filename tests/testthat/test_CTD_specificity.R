@@ -1,4 +1,4 @@
-# Test for specificity return from generate.celltype.data
+# Test for specificity return from generate_celltype_data
 test_that("Correct specificity values of CDT calculated", {
     # create some fake exp data
     set.seed(101)
@@ -18,7 +18,7 @@ test_that("Correct specificity values of CDT calculated", {
       })
 
     # Now apply EWCE function
-    fNames <- EWCE::generate.celltype.data(
+    fNames <- EWCE::generate_celltype_data(
         exp = exp_set,
         annotLevels = grouping,
         groupName = "testthat",

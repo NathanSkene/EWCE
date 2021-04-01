@@ -1,4 +1,4 @@
-# Test for bootstrap.enrichment.test error handling and geneSizeControl, using sample data in vignette ensure
+# Test for bootstrap_enrichment_test error handling and geneSizeControl, using sample data in vignette ensure
 test_that("bootstrap enrichment function error handling and geneSizeControl runs as expected", {
     # load vignette data
     ctd <- ctd()
@@ -26,7 +26,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
 
     # should return an error if the function caught the fake cell type
     fail_return <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = level,
             controlledCT = controlledCTfail
@@ -42,7 +42,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     human.hits <- example_genelist
     human.bg <- unique(c(human.hits, m2h$HGNC.symbol))
     set.seed(12345678)
-    results <- bootstrap.enrichment.test(
+    results <- bootstrap_enrichment_test(
         sct_data = ctd, hits = human.hits,
         bg = human.bg, reps = reps, annotLevel = 1,
         geneSizeControl = TRUE, genelistSpecies = "human",
@@ -53,12 +53,12 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         as.character(results$results[results$results$p <= 0.05 &
             results$results$p == min(results$results$p), "CellType"])
 
-    # Test 3: Next we want to test error handling of check.ewce.genelist.inputs 
-    # called from bootstrap.enrichment.test
+    # Test 3: Next we want to test error handling of check_ewce_genelist_inputs 
+    # called from bootstrap_enrichment_test
     # test adding a fake mouse hit
     mouse.hits.fake <- c(mouse.hits, "fake")
     fail_return2 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits.fake,
             bg = mouse.bg, reps = reps, annotLevel = level,
         ),
@@ -69,7 +69,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     # test adding a fake mouse bg
     mouse.bg.fake <- mouse.bg[!(mouse.bg %in% all_hgnc)]
     fail_return2_5 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg.fake, reps = reps, annotLevel = level,
             genelistSpecies = "human"
@@ -80,7 +80,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
 
     # Test 4: test adding a sct species other than mouse or human
     fail_return3 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = level,
             sctSpecies = "rat"
@@ -91,7 +91,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
 
     # Test 5: test supplying less than 4 hits for mouse
     fail_return4 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits[1:3],
             bg = mouse.bg, reps = reps, annotLevel = level
         ),
@@ -101,7 +101,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
 
     # Test 6: test supplying less than 4 hits for human
     fail_return5 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits[1:3],
             bg = mouse.bg, reps = reps, annotLevel = level,
             genelistSpecies = "human"
@@ -113,7 +113,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     # test 7: running human species with mouse gene list
     # should fail because of gene names
     fail_return6 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = 1,
             geneSizeControl = TRUE, genelistSpecies = "mouse",
@@ -128,7 +128,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
     fail_return7 <-
-        tryCatch(bootstrap.enrichment.test(
+        tryCatch(bootstrap_enrichment_test(
             sct_data = ctd_fake, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = 1,
             geneSizeControl = TRUE, genelistSpecies = "mouse",

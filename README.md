@@ -1,7 +1,7 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
 Alan Murphy and Nathan Skene
-2021-03-11
+2021-04-01
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 <!-- badges: start -->
@@ -65,7 +65,7 @@ the choice of gene sets is up to the user we do not provide functions
 for doing this. Appropriate choice of background set is discussed in the
 associated publication.
 
-Bootstrapping is then performed using the `bootstrap.enrichment.test`
+Bootstrapping is then performed using the `bootstrap_enrichment_test`
 function.
 
 # Installing EWCE

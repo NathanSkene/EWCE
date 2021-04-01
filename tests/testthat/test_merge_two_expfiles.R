@@ -40,7 +40,7 @@ test_that("merging two expression files", {
     #  hypo_annot$level2class[hypo_annot$level2class!=""] = sprintf("Hypothalamic %s Neuron",hypo_annot$level2class[hypo_annot$level2class!=""])
 
     # Fix bad MGI symbols
-    # hypo_exp_CORRECTED = fix.bad.mgi.symbols(hypo_exp)
+    # hypo_exp_CORRECTED = fix_bad_mgi_symbols(hypo_exp)
     # Merge the datasets
     merged_KI <- EWCE::merge_two_expfiles(
         exp1 = cortex_mrna$exp, # hypo_exp,#hypo_exp_CORRECTED,

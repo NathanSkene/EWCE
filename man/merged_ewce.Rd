@@ -8,7 +8,7 @@ merged_ewce(results, reps = 100)
 }
 \arguments{
 \item{results}{a list of EWCE results generated using 
-\code{\link{add.res.to.merging.list}}}
+\code{\link{add_res_to_merging_list}}}
 
 \item{reps}{Number of random gene lists to generate (default=100 but should 
 be over 10000 for publication quality results)}
@@ -43,8 +43,8 @@ tt_results_44 <- ewce_expression_data(
 )
 
 # Fill a list with the results
-results <- add.res.to.merging.list(tt_results_36)
-results <- add.res.to.merging.list(tt_results_44, results)
+results <- add_res_to_merging_list(tt_results_36)
+results <- add_res_to_merging_list(tt_results_44, results)
 
 # Perform the merged analysis
 # For publication reps should be higher

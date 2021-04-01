@@ -1,4 +1,4 @@
-# Test for add.res.to.merging.list, using sample data in vignette
+# Test for add_res_to_merging_list, using sample data in vignette
 test_that("merging EWCE results from multiple sets", {
     # load vignette data
     # Load some vignette data
@@ -28,18 +28,18 @@ test_that("merging EWCE results from multiple sets", {
         sctSpecies = "mouse"
     )
     # Fill a list with the results
-    results <- add.res.to.merging.list(tt_results)
-    results <- add.res.to.merging.list(tt_results_36, results)
-    results <- add.res.to.merging.list(tt_results_44, results)
+    results <- add_res_to_merging_list(tt_results)
+    results <- add_res_to_merging_list(tt_results_36, results)
+    results <- add_res_to_merging_list(tt_results_44, results)
 
     # check some non-directional tests
     tt_results_adj <- tt_results[c(1, 2, 4)]
     names(tt_results_adj) <- c("joint_results", "hit.cells", "bootstrap_data")
     # run the undirectional
-    results_adj <- add.res.to.merging.list(tt_results_adj)
+    results_adj <- add_res_to_merging_list(tt_results_adj)
     # should get error if try to combine directional with undirectional
     error_return <-
-        tryCatch(add.res.to.merging.list(tt_results_36, results_adj),
+        tryCatch(add_res_to_merging_list(tt_results_36, results_adj),
             error = function(e) e,
             warning = function(w) w
         )
@@ -59,7 +59,7 @@ test_that("merging EWCE results from multiple sets", {
     # Perform the merged analysis
     merged_res <- merged_ewce(results, reps = 10) # <- For publication reps should be higher
 
-    ewce_plot_res <- ewce.plot(merged_res)$plain
+    ewce_plot_res <- ewce_plot(merged_res)$plain
     # fail if any but ggplot returned
     test6 <- is(ewce_plot_res)[1] == "gg"
 

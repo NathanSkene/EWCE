@@ -1,4 +1,4 @@
-# Test for bootstrap.enrichment.test, using sample data in vignette ensure
+# Test for bootstrap_enrichment_test, using sample data in vignette ensure
 # gives microglia as the only significant enrichment
 test_that("bootstrap enrichment runs as expected", {
     # load vignette data
@@ -19,7 +19,7 @@ test_that("bootstrap enrichment runs as expected", {
     level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
     set.seed(12345678)
     full_results <-
-        bootstrap.enrichment.test(
+        bootstrap_enrichment_test(
             sct_data = ctd, hits = mouse.hits,
             bg = mouse.bg, reps = reps, annotLevel = level
         )

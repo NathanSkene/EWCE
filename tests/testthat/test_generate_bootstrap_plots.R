@@ -1,4 +1,4 @@
-# test generate.bootstrap.plots and generate.bootstrap.plots.for.transcriptome
+# test generate_bootstrap_plots and generate_bootstrap_plots_for_transcriptome
 test_that("test bootstrap plots and bootstrap plots for transcriptome", {
     # use vignette data
     ctd <- ctd()
@@ -15,12 +15,12 @@ test_that("test bootstrap plots and bootstrap plots for transcriptome", {
     mouse.bg <- unique(m2h$MGI.symbol)
     reps <- 10 # <- Use 2 bootstrap lists so it runs quickly, for publishable analysis use >10000
     level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
-    full_results <- bootstrap.enrichment.test(
+    full_results <- bootstrap_enrichment_test(
         sct_data = ctd, hits = mouse.hits, bg = mouse.bg,
         reps = reps, annotLevel = level
     )
     options(warn = -1) # turn off warnings for plot warning
-    generate.bootstrap.plots(
+    generate_bootstrap_plots(
         sct_data = ctd, hits = mouse.hits,
         bg = mouse.bg, reps = reps, annotLevel = 1,
         full_results = full_results, listFileName = "VignetteGraphs",
@@ -42,7 +42,7 @@ test_that("test bootstrap plots and bootstrap plots for transcriptome", {
         ttSpecies = "human", sctSpecies = "mouse"
     )
     options(warn = -1) # turn off warnings for plot warning
-    full_results <- generate.bootstrap.plots.for.transcriptome(
+    full_results <- generate_bootstrap_plots_for_transcriptome(
         sct_data = ctd, tt = tt_alzh,
         annotLevel = 1, full_results = tt_results,
         listFileName = "examples",

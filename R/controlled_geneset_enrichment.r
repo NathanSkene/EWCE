@@ -4,7 +4,7 @@
 #' still enriched in a disease gene set after controlling for the
 #' disease geneset's enrichment in a particular cell type (the 'controlledCT')
 #'
-#' @param sct_data List generated using \code{\link{generate.celltype.data}}
+#' @param sct_data List generated using \code{\link{generate_celltype_data}}
 #' @param disease_genes Array of gene symbols containing the disease gene list. 
 #' Does not have to be disease genes. Must be from same species as the single 
 #' cell transcriptome dataset.

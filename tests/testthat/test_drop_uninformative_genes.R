@@ -1,6 +1,6 @@
-# Test for add.res.to.merging.list, using sample data in vignette
+# Test for add_res_to_merging_list, using sample data in vignette
 test_that("Drop uninformative genes", {
-    # inspect drop.uninformative.genes
+    # inspect drop_uninformative_genes
     # Use Vignette Dataset to check function output
     cortex_mrna <- cortex_mrna()
     #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
@@ -18,7 +18,7 @@ test_that("Drop uninformative genes", {
 
     # NOTE not normalising for this test, too time intensive
 
-    exp_CortexOnly_DROPPED <- drop.uninformative.genes(
+    exp_CortexOnly_DROPPED <- drop_uninformative_genes(
         exp = cortex_mrna$exp,
         level2annot = cortex_mrna$annot$level2class
     )

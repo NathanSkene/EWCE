@@ -1,7 +1,7 @@
-# test ewce_expression_data which calls bootstrap.enrichment.test
-# Test for specificity return from generate.celltype.data
+# test ewce_expression_data which calls bootstrap_enrichment_test
+# Test for specificity return from generate_celltype_data
 test_that("EWCE expression data creation", {
-    # bootstrap.enrichment.test tested in depth separately, testing returned specificity here
+    # bootstrap_enrichment_test tested in depth separately, testing returned specificity here
     set.seed(12345678)
     tt_alzh <- tt_alzh()
     ctd <- ctd()

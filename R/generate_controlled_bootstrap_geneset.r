@@ -46,7 +46,7 @@ generate_controlled_bootstrap_geneset <- function(hitGenes, sct_data,
     if (length(hitGenes) == 0) {
         stop(err_msg4)
     }
-    hit.cells <- cell.list.dist(hitGenes, sct_data, annotLevel) 
+    hit.cells <- cell_list_dist(hitGenes, sct_data, annotLevel) 
 
     # quantile_probs = seq(from=0,to=1,by=0.001)
     if (length(controlledCT) == 1) {
