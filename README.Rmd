@@ -2,8 +2,8 @@
 title: "Expression Weighted Celltype Enrichment with *EWCE*"
 author: "Alan Murphy and Nathan Skene"
 date: "`r Sys.Date()`"
-bibliography: inst/extdata/EWCE.bib
-csl: inst/extdata/nature.csl
+bibliography: inst/cit/EWCE.bib
+csl: inst/cit/nature.csl
 output: rmarkdown::github_document
 vignette: >
   %\VignetteIndexEntry{Expression Weighted Celltype Enrichment with EWCE}
@@ -61,6 +61,17 @@ if (!require("devtools")) {
 devtools::install_github("neurogenomics/ewceData")
 devtools::install_github("nathanskene/ewce")
 ```
+To install *EWCE* on Bioconductor run:
+
+```
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+
+BiocManager::install(version = "devel")
+BiocManager::install("EWCE")
+
+```
+
 
 You can then load the package and data package:
 

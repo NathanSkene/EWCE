@@ -164,7 +164,7 @@ generate_bootstrap_plots <- function(sct_data, hits, bg,
         # Plot without text
         pdf(sprintf("%s/BootstrapPlots/qqplot_noText____%s____%s.pdf", savePath,
                         listFileName, cc), width = 3.5, height = 3.5)
-        print(basic_graph)
+        message(basic_graph)
         dev.off()
 
         dat$symLab <- ifelse(dat$hit > 25, sprintf("  %s", dat$Gnames), "")
@@ -179,7 +179,7 @@ generate_bootstrap_plots <- function(sct_data, hits, bg,
         # Plot with gene names
         pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSym____%s____%s.pdf", savePath,
                         listFileName, cc), width = 3.5, height = 3.5)
-        print(basic_graph +
+        message(basic_graph +
             geom_text(aes_string(label = "symLab"), 
                         hjust = 0, vjust = 0, size = 3) + xlim(c(0, maxX)))
         dev.off()
@@ -194,7 +194,7 @@ generate_bootstrap_plots <- function(sct_data, hits, bg,
                         listFileName, cc), width = 3.5, height = 3.5)
         melt_boot$Pos <- as.factor(melt_boot$Pos)
 
-        print(ggplot(melt_boot) +
+        message(ggplot(melt_boot) +
             geom_boxplot(aes_string(x = "Pos", y = "Exp"), outlier.size = 0) +
             geom_point(aes_string(x = "pos", y = "vals"), 
                         col = "red", data = actVals) +
@@ -241,7 +241,7 @@ generate_bootstrap_plots <- function(sct_data, hits, bg,
                     savePath, listFileName, cc), width = wd, height = 4)
         # melt_boot$Exp=melt_boot$Exp+0.00000001
         melt_boot <- melt_boot[melt_boot$Exp != 0, ]
-        print(ggplot(melt_boot) +
+        message(ggplot(melt_boot) +
             geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +
             graph_theme +
             theme(axis.text.x = element_text(angle = 90, hjust = 1)) +

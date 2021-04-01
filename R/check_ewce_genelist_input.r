@@ -80,11 +80,11 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     ## Check that the gene lists are really from the correct species
     if (genelistSpecies == "mouse") {
         if (sum(hits %in% all_mgi) < 4) {
-            print(sprintf("Passed: %s", paste(hits, collapse = ", ")))
+            message(sprintf("Passed: %s", paste(hits, collapse = ", ")))
             stop(err_msg2)
         }
         if (sum(bg %in% all_mgi) < 4) {
-            print(sprintf("Passed: %s", paste(hits, collapse = ", ")))
+            message(sprintf("Passed: %s", paste(hits, collapse = ", ")))
             stop(err_msg2)
         }
         if (sum(bg %in% all_mgi) < sum(bg %in% all_hgnc)) {

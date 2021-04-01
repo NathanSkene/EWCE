@@ -47,7 +47,7 @@ generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1,
     }
     # Calculate the number of cores
     # cl <- parallel::makeCluster(no_cores)
-    # print(sprintf("Using %s cores",no_cores))
+    # message(sprintf("Using %s cores",no_cores))
     # First, check the number of annotations equals the number of columns 
     # in the expression data
     err_msg2 <- paste0("Error: length of all annotation levels must equal",
@@ -103,8 +103,8 @@ calculate_meanexp_for_level <- function(ctd_oneLevel, expMatrix) {
     err_msg <- paste0("There are an equal number of celltypes in expMatrix",
                         " and ctd_oneLevel but the names do not match")
     if (dim(expMatrix)[2] == length(unique(ctd_oneLevel$annot))) {
-        print(dim(expMatrix)[2])
-        print(length(ctd_oneLevel$annot))
+        message(dim(expMatrix)[2])
+        message(length(ctd_oneLevel$annot))
         if (sum(!colnames(expMatrix) == ctd_oneLevel$annot) != 0) {
             stop(err_msg)
         }

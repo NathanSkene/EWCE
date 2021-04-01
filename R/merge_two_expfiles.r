@@ -117,7 +117,7 @@ merge_two_expfiles <- function(exp1, exp2, annot1, annot2,
     if (numMissingAnnot > 0) {
         txt <- paste0("Warning: %s cells are missing annotation data",
                         " and have been dropped")
-        print(sprintf(txt, numMissingAnnot))
+        message(sprintf(txt, numMissingAnnot))
         exp <- exp[, as.character(annot$cell_id)]
     }
 

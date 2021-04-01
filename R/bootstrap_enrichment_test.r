@@ -132,7 +132,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
     cells <- unique(colnames(sct_data[[annotLevel]]$specificity))
 
     # GENERATE hit.cells and bootstrap_data IN ONE GO
-    print(hitGenes)
+    message(hitGenes)
     if (!geneSizeControl) {
         control_network <- NULL
     }
@@ -153,7 +153,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
     # - CALCULATING P-VALUE, FOLD CHANGE AND MARKERS ETC
     count <- 0
     for (ct in cells) {
-        print(ct)
+        message(ct)
         count <- count + 1
         # For cell type 'ct' get the bootstrap and target list values
         ct_boot_dist <- 
@@ -161,14 +161,14 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
         hit_sum <- hit.cells[colnames(sct_data[[annotLevel]]$specificity) == ct]
         # Get propability and fold change of enrichment
         p <- sum(ct_boot_dist >= hit_sum) / reps
-        print(p)
+        message(p)
         fold_change <- hit_sum / mean(ct_boot_dist)
         sd_from_mean <- (hit_sum - mean(ct_boot_dist)) / sd(ct_boot_dist)
         ct_root <- ct
         if (p < 0.05) {
             # If cell type is significant, print the contributing genes:
-            print(sprintf("Fold enrichment: %s", fold_change))
-            print(sprintf("Standard deviations from mean: %s", sd_from_mean))
+            message(sprintf("Fold enrichment: %s", fold_change))
+            message(sprintf("Standard deviations from mean: %s", sd_from_mean))
         }
         if (count == 1) {
             results <- data.frame(
@@ -190,7 +190,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
                 )
             )
         }
-        print("")
+        message("")
     }
 
     full_results <- list(

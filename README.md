@@ -82,6 +82,14 @@ following lines of code:
     devtools::install_github("neurogenomics/ewceData")
     devtools::install_github("nathanskene/ewce")
 
+To install *EWCE* on Bioconductor run:
+
+    if (!require("BiocManager"))
+        install.packages("BiocManager")
+
+    BiocManager::install(version = "devel")
+    BiocManager::install("EWCE")
+
 You can then load the package and data package:
 
 ``` r

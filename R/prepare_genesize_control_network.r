@@ -152,6 +152,6 @@ prepare_genesize_control_network <- function(hits, bg, numBOOT = 10000,
         candidates <- as.vector(unlist(quad_genes[this_gene_quad]))
         list_network[, count] <- sample(candidates, numBOOT, replace = TRUE)
     }
-    print("CONTROLLED BOOTSTRAPPING NETWORK GENERATED")
+    message("CONTROLLED BOOTSTRAPPING NETWORK GENERATED")
     return(list(hitGenes = hitGenes_NEW, list_network = list_network))
 }

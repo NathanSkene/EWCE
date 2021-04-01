@@ -47,13 +47,12 @@ test_that("test bootstrap plots and bootstrap plots for transcriptome", {
         annotLevel = 1, full_results = tt_results,
         listFileName = "examples",
         reps = reps, ttSpecies = "human",
-        sctSpecies = "mouse", onlySignif = FALSE
+        sctSpecies = "mouse", onlySignif = FALSE, savePath=tempdir(),
     )
     options(warn = 0)
     # check the BootstrapPlots folder exists and is non-empty
-    test2 <- dir.exists("BootstrapPlots") && length(list.files("BootstrapPlots")) > 0
-    # remove folder once tested
-    unlink("BootstrapPlots", recursive = TRUE)
+    test2 <- dir.exists(sprintf("%s/BootstrapPlots", tempdir())) && 
+                length(list.files(sprintf("%s/BootstrapPlots",tempdir()))) > 0
 
     # fail if either function didn't create directory and add files
     expect_equal(all(test1, test2), TRUE)

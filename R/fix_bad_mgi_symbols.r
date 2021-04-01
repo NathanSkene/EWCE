@@ -43,7 +43,7 @@ fix_bad_mgi_symbols <- function(exp, mrk_file_path = NULL,
     warn_msg <- paste0("Warning: Input 'exp' stored as characters. Converting",
                         " to numeric. Check that it looks correct.")
     if (is(exp[1, 3])[1] == "character") {
-        print(warn_msg)
+        message(warn_msg)
         exp <- as.matrix(exp)
         storage.mode(exp) <- "numeric"
     }
@@ -58,11 +58,11 @@ fix_bad_mgi_symbols <- function(exp, mrk_file_path = NULL,
     #all_mgi <- eh[["EH5369"]]
     all_mgi <- ewceData::all_mgi()
     not_MGI <- rownames(exp)[!rownames(exp) %in% all_mgi]
-    print(sprintf("%s rows do not have proper MGI symbols", length(not_MGI)))
+    message(sprintf("%s rows do not have proper MGI symbols", length(not_MGI)))
     if (length(not_MGI) > 20) {
-        print(not_MGI[seq_len(20)])
+        message(not_MGI[seq_len(20)])
     } else {
-        print(not_MGI)
+        message(not_MGI)
     }
     # if no improper MGI symbols return input
     if (length(not_MGI) == 0) {
@@ -162,8 +162,8 @@ fix_bad_mgi_symbols <- function(exp, mrk_file_path = NULL,
                                                         rownames(exp)])
     msg <- paste0("%s poorly annotated genes are replicates of existing genes.",
                     " These are: ")
-    print(sprintf(msg, length(unique(dupGENES))))
-    print(unique(dupGENES))
+    message(sprintf(msg, length(unique(dupGENES))))
+    message(unique(dupGENES))
 
     # Replace mis-used synonyms from the expression data
     exp_Good <- exp[!rownames(exp) %in% as.character(matchingSYN$syn), ]
@@ -195,14 +195,14 @@ fix_bad_mgi_symbols <- function(exp, mrk_file_path = NULL,
     rownames(exp_Bad) <- as.character(matchingSYN_deDup$mgi_symbol)
     new_exp <- rbind(exp_Good, exp_Bad)
 
-    print(sprintf("%s rows should have been corrected by checking synonms", 
+    message(sprintf("%s rows should have been corrected by checking synonms", 
                     dim(matchingSYN)[1]))
     #all_mgi <- eh[["EH5369"]]
     still_not_MGI <- sort(rownames(new_exp)[!rownames(new_exp) %in% all_mgi])
-    print(sprintf("%s rows STILL do not have proper MGI symbols", 
+    message(sprintf("%s rows STILL do not have proper MGI symbols", 
                     length(still_not_MGI)))
     if (printAllBadSymbols == TRUE) {
-        print(still_not_MGI)
+        message(still_not_MGI)
     }
     return(new_exp)
 }

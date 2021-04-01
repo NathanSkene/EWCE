@@ -2,12 +2,15 @@
 title: "Expression Weighted Celltype Enrichment with *EWCE*"
 author: "Alan Murphy and Nathan Skene"
 date: "`r Sys.Date()`"
-bibliography: ../inst/extdata/EWCE.bib
-csl: ../inst/extdata/nature.csl
+bibliography: ../inst/cit/EWCE.bib
+csl: ../inst/cit/nature.csl
 vignette: >
   %\VignetteIndexEntry{Expression Weighted Celltype Enrichment with EWCE}
   %\VignetteEngine{knitr::knitr}
   %\usepackage[utf8]{inputenc}    
+output: 
+  html_document:
+    toc: true # table of content true  
 ---
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
@@ -65,6 +68,17 @@ devtools::install_github("neurogenomics/ewceData")
 devtools::install_github("nathanskene/ewce")
 ```
 
+To install *EWCE* on Bioconductor run:
+
+```
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+
+BiocManager::install(version = "devel")
+BiocManager::install("EWCE")
+
+```
+
 You can then load the packages necessary for this tutorial:
 
 ```{r }
@@ -80,20 +94,11 @@ theme_set(theme_cowplot())
 # Loading single cell transcriptome data
 ## Loading datasets
 
-The first step for all analyses is to load the single cell transcriptome (SCT) data. For the purposes of this example we will use the dataset described in *"Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq", Science, 2015*. The following code downloads this file, passes it to the load.linnarsson.sct.data() function which extracts the expression and annotation data and returns these as a list. 
+The first step for all analyses is to load the single cell transcriptome (SCT) data. For the purposes of this example we will use the dataset described in *"Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq", Science, 2015*. This is stored and can be loaded as follows from `ewceData` package.
 
-Important note: you do NOT have to format your input single cell data like the Linnarsson data. Just read it into R such that you have an expression matrix and an annotation data frame. The three columns that you must have in the annotation data frame are "cell_id", "level1class" and "level2class". 
+Important note: The code (available in inst/scripts/make-data.R) to derive this data can be used on other downloaded paper's data. Note you do NOT have to format your input single cell data like the Linnarsson data. Just read it into R such that you have an expression matrix and an annotation data frame. The three columns that you must have in the annotation data frame are "cell_id", "level1class" and "level2class". 
 
-```
-download.file("goo.gl/r5Y24y",
-    destfile="expression_mRNA_17-Aug-2014.txt") 
-
-path = "expression_mRNA_17-Aug-2014.txt"
-
-cortex_mrna  = load.linnarsson.sct.data(path)
-```
-
-To check the data we can quickly plot the distribution of expression of a given gene across all the cell types.
+To check the data, we can quickly plot the distribution of expression of a given gene across all the cell types.
 
 ```{r }
 #example datasets held in ewceData package
@@ -107,15 +112,10 @@ ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
-It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. The first time you run it you will need to download the MRK_List2 file from MGI which lists known synonyms for MGI gene symbols. We recommend running this on all input datasets.
+It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. This function can be used with a downloaded reference file like the [MRK_List2 file]("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt") from MGI which lists known synonyms for MGI gene symbols. If no file path is passed, there is a loaded reference dataset of the MRK_List2 which will be used: `mgi_synonym_data()`. We recommend running this function on all input datasets.
 
 ```
-if(!file.exists("MRK_List2.rpt")){
-    file <- "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt"
-    download.file(file, destfile="MRK_List2.rpt")
-}
-cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp,
-                                        mrk_file_path="MRK_List2.rpt")
+cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp)
 ```
 
 ## Drop genes
@@ -167,7 +167,8 @@ annotLevels = list(level1class=cortex_mrna$annot$level1class,
                     level2class=cortex_mrna$annot$level2class)
 fNames_CortexOnly = generate_celltype_data(exp=exp_CortexOnly_DROPPED,
                                             annotLevels=annotLevels,
-                                            groupName="kiCortexOnly")
+                                            groupName="kiCortexOnly",
+                                            savePath=tempdir())
 print(fNames_CortexOnly)
 fNames_CortexOnly = filter_genes_without_1to1_homolog(fNames_CortexOnly)
 print(fNames_CortexOnly)
@@ -176,7 +177,9 @@ load(fNames_CortexOnly[1])
 
 ## Merging two single cell datasets
 
-Often it is useful to merge two single cell datasets. For instance, there are seperate files for the cortex and hypothalamus datasets generated by the Karolinska. This dataset is first downloaded from GEO, unzipped and read into R. Because the file is in xlsx format you may need to install the readxl package. So first we just read in and prepare the expression matrix and annotation data frame:
+Often it is useful to merge two single cell datasets. For instance, there are seperate files for the cortex and hypothalamus datasets generated by the Karolinska. The resulting merged dataset is loaded using `ctd()` but it is worth understanding the approach (outlined below) if you want to repeat this for other single cell datasets. Feel free to skip this section if it is not applicable. 
+
+The dataset is first downloaded from GEO, unzipped and read into R. Because the file is in xlsx format you may need to install the readxl package. So first we just read in and prepare the expression matrix and annotation data frame:
 
 ```
 # Download the hypothalamus data and unzip
@@ -369,13 +372,14 @@ For publications it can be useful to plot a dendrogram alongside the plot. This 
 print(ewce_plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 ```
 
-If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name.
+If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name. The `savePath` argument is used here to save the files to a temporary directory, this can be updated to your preferred location.
 
 ```{r }
 generate_bootstrap_plots(sct_data=ctd,hits=mouse.hits,
                           bg=mouse.bg,reps=reps,annotLevel=1,
                           full_results=full_results,
-                          listFileName="VignetteGraphs")
+                          listFileName="VignetteGraphs",
+                          savePath = tempdir())
 ```
     
 ## Running EWCE analysis on genetic data with controls for transcript length and GC-content
@@ -488,7 +492,8 @@ full_results =
                                               listFileName="examples",
                                               reps=reps,ttSpecies="human",
                                               sctSpecies="mouse",
-                                              onlySignif=FALSE)
+                                              onlySignif=FALSE,
+                                              savePath=tempdir())
                                             
 ```
 

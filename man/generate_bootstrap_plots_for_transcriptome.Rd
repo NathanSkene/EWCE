@@ -16,7 +16,8 @@ generate_bootstrap_plots_for_transcriptome(
   ttSpecies = "mouse",
   sctSpecies = "mouse",
   sortBy = "t",
-  onlySignif = TRUE
+  onlySignif = TRUE,
+  savePath = "~/"
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ from down- regulated genes. Default="t"}
 
 \item{onlySignif}{Should plots only be generated for cells which have 
 significant changes?}
+
+\item{savePath}{Directory where the BootstrapPlots folder should be saved}
 }
 \value{
 Saves a set of pdf files containing graphs. These will be saved 
@@ -101,6 +104,6 @@ tt_results <- ewce_expression_data(
 full_results <- generate_bootstrap_plots_for_transcriptome(
     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
     full_results = tt_results, listFileName = "examples", reps = reps, 
-    ttSpecies = "human", sctSpecies = "mouse"
+    ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
 )
 }

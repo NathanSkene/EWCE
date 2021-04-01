@@ -30,6 +30,7 @@
 #' from down- regulated genes. Default="t"
 #' @param onlySignif Should plots only be generated for cells which have 
 #' significant changes?
+#' @param savePath Directory where the BootstrapPlots folder should be saved
 #' @return Saves a set of pdf files containing graphs. These will be saved 
 #' with the filename adjusted using the value of listFileName. The files are 
 #' saved into the 'BootstrapPlot' folder. Files start with one of the following:
@@ -68,7 +69,7 @@
 #' full_results <- generate_bootstrap_plots_for_transcriptome(
 #'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
 #'     full_results = tt_results, listFileName = "examples", reps = reps, 
-#'     ttSpecies = "human", sctSpecies = "mouse"
+#'     ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
 #' )
 #' @export
 #' @import ggplot2
@@ -88,7 +89,8 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
                                                         ttSpecies = "mouse", 
                                                         sctSpecies = "mouse", 
                                                         sortBy = "t", 
-                                                        onlySignif = TRUE) {
+                                                        onlySignif = TRUE,
+                                                        savePath = "~/") {
     tt <- check_args_for_bootstrap_plot_generation(sct_data, tt, thresh, 
                                                     annotLevel, reps, 
                                                     full_results, listFileName, 
@@ -141,8 +143,8 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
                 axis.title.y = element_text(vjust = 0.6)
             ) + theme(legend.title = element_blank())
 
-        if (!file.exists("BootstrapPlots")) {
-            dir.create(file.path(getwd(), "BootstrapPlots"))
+        if (!file.exists(sprintf("%s/BootstrapPlots", savePath))) {
+            dir.create(file.path(savePath, "BootstrapPlots"))
         }
 
         tag <- sprintf("thresh%s__dir%s", thresh, dirS)
@@ -162,15 +164,17 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
             # Plot several variants of the graph
             basic_graph <- plot_bootstrap_plots(dat, tag, listFileName, cc, 
                                                     showGNameThresh, 
-                                                    graph_theme, maxX)
+                                                    graph_theme, maxX, savePath)
 
             # Plot with bootstrap distribution
             plot_with_bootstrap_distributions(exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme)
+                                                listFileName, graph_theme,
+                                                savePath)
 
             # Plot with LOG bootstrap distribution
             plot_log_bootstrap_distributions(dat, exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme)
+                                                listFileName, graph_theme, 
+                                                savePath)
         }
     }
 }
@@ -260,15 +264,16 @@ get_exp_data_for_bootstrapped_genes <- function(results, signif_res, sct_data,
 }
 
 plot_with_bootstrap_distributions <- function(exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme) {
+                                                listFileName, graph_theme, 
+                                                savePath) {
     melt_boot <- reshape2::melt(exp_mats[[cc]])
     colnames(melt_boot) <- c("Rep", "Pos", "Exp")
     actVals <- data.frame(pos = as.factor(seq_len(length(hit_exp))), 
                             vals = hit_exp)
-    pdf(sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf", 
-                    tag, listFileName, cc), width = 3.5, height = 3.5)
+    pdf(sprintf("%s/BootstrapPlots/bootDists_%s___%s____%s.pdf", 
+                    savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
     melt_boot$Pos <- as.factor(melt_boot$Pos)
-    print(ggplot(melt_boot) +
+    message(ggplot(melt_boot) +
         geom_boxplot(aes_string(x = "Pos", y = "Exp"), outlier.size = 0) +
         geom_point(aes_string(x = "pos", y = "vals"), 
                     col = "red", data = actVals) +
@@ -280,7 +285,7 @@ plot_with_bootstrap_distributions <- function(exp_mats, cc, hit_exp, tag,
 }
 
 plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh, 
-                                    graph_theme, maxX) {
+                                    graph_theme, maxX, savePath) {
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +
         xlab("Mean Bootstrap Expression") +
@@ -289,9 +294,9 @@ plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot without text
-    pdf(sprintf("BootstrapPlots/qqplot_noText_%s____%s____%s.pdf", 
-                    tag, listFileName, cc), width = 3.5, height = 3.5)
-    print(basic_graph + ggtitle(cc))
+    pdf(sprintf("%s/BootstrapPlots/qqplot_noText_%s___%s____%s.pdf", 
+                savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
+    message(basic_graph + ggtitle(cc))
     dev.off()
 
     # If a gene has over 25% of it's expression proportion in a celltype, 
@@ -307,18 +312,18 @@ plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot with gene names
-    pdf(sprintf("BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf", 
-                    tag, listFileName, cc), width = 3.5, height = 3.5)
-    print(basic_graph +
+    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf", 
+                    savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
+    message(basic_graph +
         geom_text(aes_string(label = "symLab"), 
                     hjust = 0, vjust = 0, size = 3) + xlim(c(0, maxX)) + 
             ggtitle(cc))
     dev.off()
 
     # Plot BIG with gene names
-    pdf(sprintf("BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf", tag, 
-                    listFileName, cc), width = 15, height = 15)
-    print(basic_graph +
+    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf", 
+                    savePath, tag, listFileName, cc), width = 15, height = 15)
+    message(basic_graph +
         geom_text(aes_string(label = "symLab"), hjust = 0, 
                     vjust = 0, size = 3) + xlim(c(0, maxX)) + ggtitle(cc))
     dev.off()
@@ -331,7 +336,8 @@ myScalesComma <- function(x) {
 }
 
 plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme) {
+                                                listFileName, graph_theme, 
+                                                savePath) {
     # - First get the ordered gene names
     rownames(dat) <- dat$Gnames
     datOrdered <- data.frame(GSym = rownames(dat), Pos = seq_len(dim(dat)[1]))
@@ -363,9 +369,9 @@ plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag,
     actVals <- cbind(actVals[order(actVals$Pos), ], ast)
     # - Plot the graph!
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
-    pdf(sprintf("BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf", 
-                    tag, listFileName, cc), width = wd, height = 4)
-    print(
+    pdf(sprintf("%s/BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf", 
+                    savePath, tag, listFileName, cc), width = wd, height = 4)
+    message(
         ggplot(melt_boot) +
             geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +
             graph_theme +

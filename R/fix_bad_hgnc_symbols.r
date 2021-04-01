@@ -27,8 +27,8 @@ fix_bad_hgnc_symbols <- function(exp, dropNonHGNC = FALSE) {
     #all_hgnc <- eh[["EH5371"]]
     all_hgnc <- ewceData::all_hgnc()
     not_HGNC <- rownames(exp)[!rownames(exp) %in% all_hgnc]
-    print(sprintf("%s of %s are not proper HGNC symbols", 
-                    length(unique(not_HGNC)), dim(exp)[1]))
+    message(sprintf("%s of %s are not proper HGNC symbols", 
+                        length(unique(not_HGNC)), dim(exp)[1]))
 
     # If dropNonHGNC==TRUE then dropNonHGNC symbols
     if (dropNonHGNC == TRUE) {
@@ -38,7 +38,7 @@ fix_bad_hgnc_symbols <- function(exp, dropNonHGNC = FALSE) {
     # First, check if any gene symbols have been corrupted by excel
     date_like <- not_HGNC[grep("SEP|MAR|FEB|DEC|Sep|Mar|Feb|Dec", not_HGNC)]
     if (length(date_like) > 0) {
-        print(sprintf("Possible corruption of gene names by excel: %s", 
+        message(sprintf("Possible corruption of gene names by excel: %s", 
                         paste(date_like, collapse = ", ")))
         warning(sprintf("Possible corruption of gene names by excel: %s", 
                             paste(date_like, collapse = ", ")))
@@ -50,8 +50,10 @@ fix_bad_hgnc_symbols <- function(exp, dropNonHGNC = FALSE) {
     xx <- checkGeneSymbols(rownames(exp_CORRECTED), unmapped.as.na = FALSE)
     numCorrected <- dim(xx[!xx$x == xx$Suggested.Symbol, ])[1]
     numBad <- sum(is.na(yy$Suggested.Symbol))
-    print(sprintf("%s of %s gene symbols corrected", numCorrected, dim(xx)[1]))
-    print(sprintf("%s of %s gene symbols cannot be mapped", numBad, dim(xx)[1]))
+    message(sprintf("%s of %s gene symbols corrected", 
+                        numCorrected, dim(xx)[1]))
+    message(sprintf("%s of %s gene symbols cannot be mapped", 
+                        numBad, dim(xx)[1]))
     newGnames <- xx$Suggested.Symbol
     exp_CORRECTED <- exp_CORRECTED[!duplicated(newGnames), ]
     newGnames <- newGnames[!duplicated(newGnames)]
