@@ -1,20 +1,20 @@
 #' generate_celltype_data
 #'
-#' \code{generate_celltype_data} Takes expression & cell type annotations and 
+#' \code{generate_celltype_data} Takes expression & cell type annotations and
 #' creates celltype_data files which contain the mean and specificity matrices
 #'
-#' @param exp Numerical matrix with row for each gene and column for each cell. 
-#' Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be 
+#' @param exp Numerical matrix with row for each gene and column for each cell.
+#' Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be
 #' cross referenced against the annot data frame.
-#' @param annotLevels List with arrays of strings containing the cell type 
+#' @param annotLevels List with arrays of strings containing the cell type
 #' names associated with each column in exp
-#' @param groupName A human readable name for refering to the dataset being 
+#' @param groupName A human readable name for refering to the dataset being
 #' loaded
-#' @param no_cores Number of cores that should be used to speedup the 
+#' @param no_cores Number of cores that should be used to speedup the
 #' computation. Use no_cores = 1 when using this package in windows system.
 #' @param savePath Directory where the CTD file should be saved
-#' @param normSpec Boolean indicating whether specificity data should be 
-#' transformed to a normal distribution by cell type, giving equivalent scores 
+#' @param normSpec Boolean indicating whether specificity data should be
+#' transformed to a normal distribution by cell type, giving equivalent scores
 #' across all cell types.
 #' @return Filenames for the saved celltype_data files
 #' @examples
@@ -22,11 +22,11 @@
 #' # Load the single cell data
 #' cortex_mrna <- cortex_mrna()
 #' expData <- cortex_mrna$exp
-#' expData <- expData[1:500, ] # Use only a subset to keep the example quick
+#' expData <- expData[1:100, ] # Use only a subset to keep the example quick
 #' l1 <- cortex_mrna$annot$level1class
 #' l2 <- cortex_mrna$annot$level2class
 #' annotLevels <- list(l1 = l1, l2 = l2)
-#' fNames_ALLCELLS <- 
+#' fNames_ALLCELLS <-
 #'     generate_celltype_data(exp = expData, annotLevels, "allKImouse",
 #'         savePath=tempdir())
 #' @export
@@ -38,7 +38,7 @@
 #' @import RNOmni
 #' @import ggdendro
 
-generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1, 
+generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1,
                                     savePath = "~/", normSpec = FALSE) {
     err_msg <- paste0("NA values detected in expresson matrix. All NA values",
                         " should be removed before calling EWCE.")
@@ -48,7 +48,7 @@ generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1,
     # Calculate the number of cores
     # cl <- parallel::makeCluster(no_cores)
     # message(sprintf("Using %s cores",no_cores))
-    # First, check the number of annotations equals the number of columns 
+    # First, check the number of annotations equals the number of columns
     # in the expression data
     err_msg2 <- paste0("Error: length of all annotation levels must equal",
                         " the number of columns in exp matrix")
@@ -116,22 +116,22 @@ calculate_meanexp_for_level <- function(ctd_oneLevel, expMatrix) {
         mm <- model.matrix(~ 0 + ctd_oneLevel$annot)
         colnames(mm) <- names(table(ctd_oneLevel$annot))
         mat.summary.mm1 <- expMatrix %*% mm
-        
+
         # Divide by the number of cells to get the mean
         cellCounts <- table(ctd_oneLevel$annot)
         for (i in seq_len(dim(mat.summary.mm1)[2])) {
             mat.summary.mm1[, i] <- mat.summary.mm1[, i] / cellCounts[i]
         }
-        
+
         ctd_oneLevel$mean_exp <- as.matrix(mat.summary.mm1)
     }
     return(ctd_oneLevel)
 }
 
 calculate_specificity_for_level <- function(ctd_oneLevel) {
-    normalised_meanExp <- t(t(ctd_oneLevel$mean_exp) * 
+    normalised_meanExp <- t(t(ctd_oneLevel$mean_exp) *
                                 (1 / colSums(ctd_oneLevel$mean_exp)))
-    ctd_oneLevel$specificity <- normalised_meanExp / 
+    ctd_oneLevel$specificity <- normalised_meanExp /
         (apply(normalised_meanExp, 1, sum) + 0.000000000001)
     return(ctd_oneLevel)
 }

@@ -1,25 +1,25 @@
 #' check_ewce_genelist_inputs
 #'
-#' \code{check_ewce_genelist_inputs} Is used to check that hits and bg gene 
-#' lists passed to EWCE are setup correctly. Checks they are the 
+#' \code{check_ewce_genelist_inputs} Is used to check that hits and bg gene
+#' lists passed to EWCE are setup correctly. Checks they are the
 #' appropriate length.
-#' Checks all hits genes are in bg. Checks the species match and if not 
+#' Checks all hits genes are in bg. Checks the species match and if not
 #' reduces to 1:1 orthologs.
 #'
 #' @param sct_data List generated using \code{\link{generate_celltype_data}}
 #' @param hits Array of MGI/HGNC gene symbols containing the target gene list.
 #' @param bg Array of MGI/HGNC gene symbols containing the background gene list.
-#' @param genelistSpecies Either 'mouse' or 'human' depending on whether MGI 
+#' @param genelistSpecies Either 'mouse' or 'human' depending on whether MGI
 #' or HGNC symbols are used for gene lists
-#' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI 
+#' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI
 #' or HGNC symbols are used for the single cell dataset
-#' @param geneSizeControl Will genelists sampled control for GC content and 
+#' @param geneSizeControl Will genelists sampled control for GC content and
 #' transcript length? Boolean.
 #' @return A list containing
 #' \itemize{
-#'   \item \code{hits}: Array of MGI/HGNC gene symbols containing the target 
+#'   \item \code{hits}: Array of MGI/HGNC gene symbols containing the target
 #'   gene list.
-#'   \item \code{bg}: Array of MGI/HGNC gene symbols containing the background 
+#'   \item \code{bg}: Array of MGI/HGNC gene symbols containing the background
 #'   gene list.
 #' }
 #'
@@ -31,9 +31,10 @@
 #' example_genelist <- example_genelist()
 #' mouse_to_human_homologs <- mouse_to_human_homologs()
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-#' mouse.hits <- 
+#' mouse.hits <-
 #'      unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
-#' mouse.bg <- unique(m2h$MGI.symbol)
+#' #subset mouse.bg for speed but ensure it still contains the hits
+#' mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 #' checkedLists <- check_ewce_genelist_inputs(
 #'     sct_data = ctd, hits = mouse.hits,
 #'     bg = mouse.bg, genelistSpecies = "mouse", sctSpecies = "mouse"
@@ -42,9 +43,9 @@
 #' @import utils
 #' @import ewceData
 #' @import ExperimentHub
-#' @importFrom AnnotationHub query 
+#' @importFrom AnnotationHub query
 
-check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies, 
+check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
                                         sctSpecies, geneSizeControl = FALSE) {
     sct_genes <- rownames(sct_data[[1]]$mean_exp)
     mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
@@ -54,7 +55,7 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     #mouse_to_human_homologs <- eh[["EH5367"]]
     #all_mgi <- eh[["EH5369"]]
     #all_hgnc <- eh[["EH5371"]]
-    
+
     orthologsOnly <- FALSE
 
     # CHECK THE ARGUMENTS ARE PROPERLY STRUCTURED
@@ -116,7 +117,7 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
         }
     }
 
-    ## If gene lists and single cell data are from different species... 
+    ## If gene lists and single cell data are from different species...
     # then convert the gene lists to match
     if (geneSizeControl == FALSE) {
         if (sctSpecies == "mouse" & genelistSpecies == "human") {
@@ -157,7 +158,7 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     err_msg6 <-paste0("ERROR: geneSizeControl assumes the genesets are from",
                         " human genetics... so genelistSpecies must be set to",
                         " 'human'")
-    # geneSizeControl assumes the genesets are from human genetics... 
+    # geneSizeControl assumes the genesets are from human genetics...
     # so genelistSpecies must equal "human"
     if (geneSizeControl == TRUE & genelistSpecies != "human") {
         stop(err_msg6)

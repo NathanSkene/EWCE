@@ -10,7 +10,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     #example_genelist <- eh[["EH5372"]]
     #mouse_to_human_homologs <- eh[["EH5367"]]
     #all_hgnc <- eh[["EH5371"]]
-    
+
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))
@@ -40,7 +40,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     # transcript length. If set to TRUE then human gene lists should be used rather than mouse.
     # need different dataset from vignette to test
     human.hits <- example_genelist
-    human.bg <- unique(c(human.hits, m2h$HGNC.symbol))
+    human.bg <- unique(c(human.hits, m2h$HGNC.symbol))[1:100]#subset for speed
     set.seed(12345678)
     results <- bootstrap_enrichment_test(
         sct_data = ctd, hits = human.hits,
@@ -53,7 +53,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         as.character(results$results[results$results$p <= 0.05 &
             results$results$p == min(results$results$p), "CellType"])
 
-    # Test 3: Next we want to test error handling of check_ewce_genelist_inputs 
+    # Test 3: Next we want to test error handling of check_ewce_genelist_inputs
     # called from bootstrap_enrichment_test
     # test adding a fake mouse hit
     mouse.hits.fake <- c(mouse.hits, "fake")
@@ -124,7 +124,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
     ctd_fake <- ctd
     # just rename genes to hgnc names
-    rownames(ctd_fake[[1]]$mean_exp) <- 
+    rownames(ctd_fake[[1]]$mean_exp) <-
         all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
     fail_return7 <-

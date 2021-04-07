@@ -3,30 +3,32 @@
 \name{fix_bad_mgi_symbols}
 \alias{fix_bad_mgi_symbols}
 \title{fix_bad_mgi_symbols
-- Given an expression matrix, wherein the rows are supposed to be MGI 
+- Given an expression matrix, wherein the rows are supposed to be MGI
 symbols, find those symbols which are not official MGI symbols, then
-check in the MGI synonm database for whether they match to a proper MGI 
+check in the MGI synonm database for whether they match to a proper MGI
 symbol. Where a symbol is found to be an aliases for a gene that is already
 in the dataset, the combined reads are summed together.}
 \usage{
 fix_bad_mgi_symbols(exp, mrk_file_path = NULL, printAllBadSymbols = FALSE)
 }
 \arguments{
-\item{exp}{An expression matrix where the rows are MGI symbols}
+\item{exp}{An expression matrix where the rows are MGI symbols or an SingleCellExperiment (SCE) or other Ranged Summarized Experiment (SE) type object.}
 
-\item{mrk_file_path}{Path to the MRK_List2 file which can be downloaded 
+\item{mrk_file_path}{Path to the MRK_List2 file which can be downloaded
 from www.informatics.jax.org/downloads/reports/index.html}
 
 \item{printAllBadSymbols}{Output to console all the bad gene symbols}
 }
 \value{
-Returns the expression matrix with the rownames corrected and rows 
-representing the same gene merged. If no corrections are necessary, input 
-expression matrix is returned.
+Returns the expression matrix with the rownames corrected and rows
+representing the same gene merged. If no corrections are necessary, input
+expression matrix is returned. If a SingleCellExperiment (SCE) or other
+Ranged Summarized Experiment (SE) type object was inputted this will be
+returned with the corrected expression matrix under counts.
 }
 \description{
-Also checks whether any gene names contain "Sep", "Mar" or "Feb". 
-These should be checked for any suggestion that excel has corrupted the 
+Also checks whether any gene names contain "Sep", "Mar" or "Feb".
+These should be checked for any suggestion that excel has corrupted the
 gene names.
 }
 \examples{
@@ -34,6 +36,6 @@ library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 #take a subset for speed
-cortex_mrna$exp <- cortex_mrna$exp[1:100,1:10]
+cortex_mrna$exp <- cortex_mrna$exp[1:50,1:5]
 cortex_mrna$exp <- fix_bad_mgi_symbols(cortex_mrna$exp)
 }

@@ -11,19 +11,24 @@ test_that("merging EWCE results from multiple sets", {
     #tt_alzh_BA36 <- eh[["EH5374"]]
     #tt_alzh_BA44 <- eh[["EH5375"]]
     #ctd <- eh[["EH5376"]]
-    
+
+    # Use 10 up/down regulated genes (thresh) for speed, default is 250
+    thresh = 10
+    # For speed set reps to 10, for publication reps should be higher
+    reps = 10
+
     # Run EWCE analysis
     tt_results <- ewce_expression_data(
-        sct_data = ctd, tt = tt_alzh, annotLevel = 1,
+        sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh=thresh, reps=reps,
         ttSpecies = "human", sctSpecies = "mouse"
     )
     tt_results_36 <- ewce_expression_data(
-        sct_data = ctd, tt = tt_alzh_BA36,
+        sct_data = ctd, tt = tt_alzh_BA36,thresh=thresh, reps=reps,
         annotLevel = 1, ttSpecies = "human",
         sctSpecies = "mouse"
     )
     tt_results_44 <- ewce_expression_data(
-        sct_data = ctd, tt = tt_alzh_BA44,
+        sct_data = ctd, tt = tt_alzh_BA44,thresh=thresh, reps=reps,
         annotLevel = 1, ttSpecies = "human",
         sctSpecies = "mouse"
     )
@@ -57,7 +62,7 @@ test_that("merging EWCE results from multiple sets", {
     test5 <- all.equal(tt_results_36$bootstrap_data.up, results[[3]]$bootstrap_data)
 
     # Perform the merged analysis
-    merged_res <- merged_ewce(results, reps = 10) # <- For publication reps should be higher
+    merged_res <- merged_ewce(results, reps = reps)
 
     ewce_plot_res <- ewce_plot(merged_res)$plain
     # fail if any but ggplot returned

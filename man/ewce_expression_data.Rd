@@ -18,52 +18,52 @@ ewce_expression_data(
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
 
-\item{annotLevel}{an integer indicating which level of the annotation to 
+\item{annotLevel}{an integer indicating which level of the annotation to
 analyse. Default = 1.}
 
-\item{tt}{Differential expression table. Can be output of limma::topTable 
-function. Minimum requirement is that one column stores a metric of 
-increased/decreased expression (i.e. log fold change, t-statistic for 
+\item{tt}{Differential expression table. Can be output of limma::topTable
+function. Minimum requirement is that one column stores a metric of
+increased/decreased expression (i.e. log fold change, t-statistic for
 differential expression etc) and another contains either HGNC or MGI symbols.}
 
-\item{sortBy}{Column name of metric in tt which should be used to sort up- 
+\item{sortBy}{Column name of metric in tt which should be used to sort up-
 from down- regulated genes. Default="t"}
 
-\item{thresh}{The number of up- and down- regulated genes to be included in 
-each analysis. Dafault=250}
+\item{thresh}{The number of up- and down- regulated genes to be included in
+each analysis. Default=250}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should 
+\item{reps}{Number of random gene lists to generate (default=100 but should
 be over 10000 for publication quality results)}
 
-\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the 
+\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the
 differential expression table was generated from}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the 
+\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the
 single cell data was generated from}
 }
 \value{
 A list containing five data frames:
 \itemize{
-  \item \code{results}: dataframe in which each row gives the statistics 
-  (p-value, fold change and number of standard deviations from the mean) 
-  associated with the enrichment of the stated cell type in the gene list. 
-  An additional column *Direction* stores whether it the result is from the 
+  \item \code{results}: dataframe in which each row gives the statistics
+  (p-value, fold change and number of standard deviations from the mean)
+  associated with the enrichment of the stated cell type in the gene list.
+  An additional column *Direction* stores whether it the result is from the
   up or downregulated set.
-  \item \code{hit.cells.up}: vector containing the summed proportion of 
+  \item \code{hit.cells.up}: vector containing the summed proportion of
   expression in each cell type for the target list
-  \item \code{hit.cells.down}: vector containing the summed proportion of 
+  \item \code{hit.cells.down}: vector containing the summed proportion of
   expression in each cell type for the target list#'
-  \item \code{bootstrap_data.up}: matrix in which each row represents the 
-  summed proportion of expression in each cell type for one of the random 
+  \item \code{bootstrap_data.up}: matrix in which each row represents the
+  summed proportion of expression in each cell type for one of the random
   lists
-  \item \code{bootstrap_data.down}: matrix in which each row represents the 
-  summed proportion of expression in each cell type for one of the random 
+  \item \code{bootstrap_data.down}: matrix in which each row represents the
+  summed proportion of expression in each cell type for one of the random
   lists
 }
 }
 \description{
-\code{ewce_expression_data} takes a differential expression table and 
-determines the probability of cell-type enrichment in the up & down 
+\code{ewce_expression_data} takes a differential expression table and
+determines the probability of cell-type enrichment in the up & down
 regulated genes
 }
 \examples{
@@ -72,15 +72,17 @@ library(ewceData)
 ctd <- ctd()
 
 # Set the parameters for the analysis
-# Use 10 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 10 
+# Use 3 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 3
+# Use 5 up/down regulated genes (thresh) for speed, default is 250
+thresh = 5
 annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
 
 # Load the top table
 tt_alzh <- tt_alzh()
 
 tt_results <- ewce_expression_data(
-    sct_data = ctd, tt = tt_alzh, annotLevel = 1,
+    sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh = thresh,
     reps = reps, ttSpecies = "human", sctSpecies = "mouse"
 )
 }

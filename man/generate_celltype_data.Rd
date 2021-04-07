@@ -14,30 +14,30 @@ generate_celltype_data(
 )
 }
 \arguments{
-\item{exp}{Numerical matrix with row for each gene and column for each cell. 
-Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be 
+\item{exp}{Numerical matrix with row for each gene and column for each cell.
+Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be
 cross referenced against the annot data frame.}
 
-\item{annotLevels}{List with arrays of strings containing the cell type 
+\item{annotLevels}{List with arrays of strings containing the cell type
 names associated with each column in exp}
 
-\item{groupName}{A human readable name for refering to the dataset being 
+\item{groupName}{A human readable name for refering to the dataset being
 loaded}
 
-\item{no_cores}{Number of cores that should be used to speedup the 
+\item{no_cores}{Number of cores that should be used to speedup the
 computation. Use no_cores = 1 when using this package in windows system.}
 
 \item{savePath}{Directory where the CTD file should be saved}
 
-\item{normSpec}{Boolean indicating whether specificity data should be 
-transformed to a normal distribution by cell type, giving equivalent scores 
+\item{normSpec}{Boolean indicating whether specificity data should be
+transformed to a normal distribution by cell type, giving equivalent scores
 across all cell types.}
 }
 \value{
 Filenames for the saved celltype_data files
 }
 \description{
-\code{generate_celltype_data} Takes expression & cell type annotations and 
+\code{generate_celltype_data} Takes expression & cell type annotations and
 creates celltype_data files which contain the mean and specificity matrices
 }
 \examples{
@@ -45,11 +45,11 @@ library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 expData <- cortex_mrna$exp
-expData <- expData[1:500, ] # Use only a subset to keep the example quick
+expData <- expData[1:100, ] # Use only a subset to keep the example quick
 l1 <- cortex_mrna$annot$level1class
 l2 <- cortex_mrna$annot$level2class
 annotLevels <- list(l1 = l1, l2 = l2)
-fNames_ALLCELLS <- 
+fNames_ALLCELLS <-
     generate_celltype_data(exp = expData, annotLevels, "allKImouse",
         savePath=tempdir())
 }

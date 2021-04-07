@@ -4,12 +4,12 @@ test_that("method to remove/fix an expected set of genes", {
     cortex_mrna <- cortex_mrna()
     #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
     #cortex_mrna <- eh[["EH5381"]]
-    
+
     #if (!file.exists("MRK_List2.rpt")) {
-    if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))){
-        download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", 
-                        destfile = sprintf("%s/MRK_List2.rpt", tempdir()))
-    }
+    #if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))){
+    #    download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
+    #                    destfile = sprintf("%s/MRK_List2.rpt", tempdir()))
+    #}
     # take a subset for testing
     test_exp_set <- cortex_mrna$exp[1:10, 1:50] # causes error when no mismatch
     # Add in fake gene data for which the gene could have issues with excel:
@@ -19,8 +19,8 @@ test_that("method to remove/fix an expected set of genes", {
     # catch error when no exp inputted
     error_return <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = NULL,
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = NULL#,
+            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -31,8 +31,8 @@ test_that("method to remove/fix an expected set of genes", {
     rownames(test_exp_set_char) <- rownames(test_exp_set)
     error_return2 <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = test_exp_set_char,
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = test_exp_set_char#,
+            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -41,8 +41,8 @@ test_that("method to remove/fix an expected set of genes", {
     # pass data table rather than data frame or matrix
     error_return3 <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = data.table::data.table(as.data.frame(test_exp_set)),
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = data.table::data.table(as.data.frame(test_exp_set))#,
+            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -50,8 +50,8 @@ test_that("method to remove/fix an expected set of genes", {
 
     # function should warn the user about this -if warning returned function worked
     warning_return <-
-        tryCatch(EWCE::fix_bad_mgi_symbols(test_exp_set,
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+        tryCatch(EWCE::fix_bad_mgi_symbols(test_exp_set#,
+            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -66,7 +66,9 @@ test_that("method to remove/fix an expected set of genes", {
 
     # running on hgnc rather than mgi should return warnings
     warning_return3 <-
-        tryCatch(EWCE::fix_bad_hgnc_symbols(data.table::data.table(as.data.frame(test_exp_set))),
+        tryCatch(
+            EWCE::fix_bad_hgnc_symbols(
+                data.table::data.table(as.data.frame(test_exp_set))),
             error = function(e) e,
             warning = function(w) w
         )
@@ -85,20 +87,23 @@ test_that("method to remove/fix an expected set of genes", {
     )
     # Now the returned value should be the average of the two
     sum_exp <-
-        colSums(test_exp_set[rownames(test_exp_set) %in% c("Tspan12", "Tm4sf12"), ])
+        colSums(test_exp_set[rownames(test_exp_set) %in%
+                                 c("Tspan12", "Tm4sf12"), ])
 
     # check nothing changes when there are no issues
     test_exp_set <- test_exp_set[1:5, ]
-    EWCE_output_same_input <- EWCE::fix_bad_mgi_symbols(test_exp_set,
-        mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+    EWCE_output_same_input <- EWCE::fix_bad_mgi_symbols(test_exp_set#,
+        #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
     )
 
 
     # check input runs on large size of incorrect mgi gene names
     # check it catches warning still but doesn't give an error
     warning_return4 <-
-        tryCatch(EWCE_output_large <- EWCE::fix_bad_mgi_symbols(cortex_mrna$exp[1:10000, 1:1000],
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+        tryCatch(
+            EWCE_output_large <-
+                EWCE::fix_bad_mgi_symbols(cortex_mrna$exp[1:10000, 1:1000]#,
+            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w

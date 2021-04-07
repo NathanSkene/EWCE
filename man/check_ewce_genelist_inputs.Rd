@@ -20,29 +20,29 @@ check_ewce_genelist_inputs(
 
 \item{bg}{Array of MGI/HGNC gene symbols containing the background gene list.}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI
 or HGNC symbols are used for gene lists}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI
 or HGNC symbols are used for the single cell dataset}
 
-\item{geneSizeControl}{Will genelists sampled control for GC content and 
+\item{geneSizeControl}{Will genelists sampled control for GC content and
 transcript length? Boolean.}
 }
 \value{
 A list containing
 \itemize{
-  \item \code{hits}: Array of MGI/HGNC gene symbols containing the target 
+  \item \code{hits}: Array of MGI/HGNC gene symbols containing the target
   gene list.
-  \item \code{bg}: Array of MGI/HGNC gene symbols containing the background 
+  \item \code{bg}: Array of MGI/HGNC gene symbols containing the background
   gene list.
 }
 }
 \description{
-\code{check_ewce_genelist_inputs} Is used to check that hits and bg gene 
-lists passed to EWCE are setup correctly. Checks they are the 
+\code{check_ewce_genelist_inputs} Is used to check that hits and bg gene
+lists passed to EWCE are setup correctly. Checks they are the
 appropriate length.
-Checks all hits genes are in bg. Checks the species match and if not 
+Checks all hits genes are in bg. Checks the species match and if not
 reduces to 1:1 orthologs.
 }
 \examples{
@@ -52,9 +52,10 @@ ctd <- ctd()
 example_genelist <- example_genelist()
 mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <- 
+mouse.hits <-
      unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-mouse.bg <- unique(m2h$MGI.symbol)
+#subset mouse.bg for speed but ensure it still contains the hits
+mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 checkedLists <- check_ewce_genelist_inputs(
     sct_data = ctd, hits = mouse.hits,
     bg = mouse.bg, genelistSpecies = "mouse", sctSpecies = "mouse"

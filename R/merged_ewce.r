@@ -1,20 +1,24 @@
 #' Multiple EWCE results from multiple studies
 #'
-#' \code{merged_ewce} combines enrichment results from multiple studies 
+#' \code{merged_ewce} combines enrichment results from multiple studies
 #' targetting the same scientific problem
 #'
-#' @param results a list of EWCE results generated using 
+#' @param results a list of EWCE results generated using
 #' \code{\link{add_res_to_merging_list}}
-#' @param reps Number of random gene lists to generate (default=100 but should 
+#' @param reps Number of random gene lists to generate (default=100 but should
 #' be over 10000 for publication quality results)
-#' @return dataframe in which each row gives the statistics (p-value, fold 
-#' change and number of standard deviations from the mean) associated with the 
+#' @return dataframe in which each row gives the statistics (p-value, fold
+#' change and number of standard deviations from the mean) associated with the
 #' enrichment of the stated cell type in the gene list
 #' @examples
 #' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
 #'
+#' # Use 3 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 3
+#' # Use 5 up/down regulated genes (thresh) for speed, default is 250
+#' thresh = 5
 #'
 #' # Load the data
 #' tt_alzh_BA36 <- tt_alzh_BA36()
@@ -22,12 +26,12 @@
 #'
 #' # Run EWCE analysis
 #' tt_results_36 <- ewce_expression_data(
-#'     sct_data = ctd, tt = tt_alzh_BA36,
-#'     annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse"
+#'     sct_data = ctd, tt = tt_alzh_BA36, thresh= thresh,
+#'     annotLevel = 1, reps=reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #' tt_results_44 <- ewce_expression_data(
-#'     sct_data = ctd, tt = tt_alzh_BA44,
-#'     annotLevel = 1, ttSpecies = "human", sctSpecies = "mouse"
+#'     sct_data = ctd, tt = tt_alzh_BA44, thresh = thresh,
+#'     annotLevel = 1, reps=reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #'
 #' # Fill a list with the results
@@ -36,7 +40,7 @@
 #'
 #' # Perform the merged analysis
 #' # For publication reps should be higher
-#' merged_res <- merged_ewce(results, reps = 5) 
+#' merged_res <- merged_ewce(results, reps = 2)
 #' print(merged_res)
 #' @export
 # @import ggplot2
@@ -52,7 +56,7 @@ merged_ewce <- function(results, reps = 100) {
         stop(err_msg)
     }
 
-    # If results are directional then seperate directions 
+    # If results are directional then seperate directions
     # and call function recursively
     if (!is.null(results[[1]]$Direction)) {
         for (dir in c("Up", "Down")) {
@@ -69,11 +73,11 @@ merged_ewce <- function(results, reps = 100) {
                 }
             }
             if (dir == "Up") {
-                merged_res <- 
-                    cbind(merged_ewce(dir_results, reps = reps), 
+                merged_res <-
+                    cbind(merged_ewce(dir_results, reps = reps),
                             Direction = dir)
             } else {
-                tmp <- cbind(merged_ewce(dir_results, reps = reps), 
+                tmp <- cbind(merged_ewce(dir_results, reps = reps),
                                 Direction = dir)
                 merged_res <- rbind(merged_res, tmp)
             }
@@ -87,20 +91,20 @@ merged_ewce <- function(results, reps = 100) {
             hit.cells <- hit.cells + results[[i]]$hitCells
         }
         # Then:
-        # - results[[x]]$bootstrap_data has the enrichment values for the each 
+        # - results[[x]]$bootstrap_data has the enrichment values for the each
         # of the 10000 original reps
         # - Add these to each other 'reps' times
         count <- 0
         for (i in seq_len(reps)) {
-            randomSamples <- 
-                sample(seq_len(dim(results[[1]]$bootstrap_data)[1]), 
+            randomSamples <-
+                sample(seq_len(dim(results[[1]]$bootstrap_data)[1]),
                         10000, replace = TRUE)
             boot.cells <- results[[1]]$bootstrap_data[randomSamples, ]
             for (i in 2:length(results)) {
-                randomSamples <- 
-                    sample(seq_len(dim(results[[1]]$bootstrap_data)[1]), 
+                randomSamples <-
+                    sample(seq_len(dim(results[[1]]$bootstrap_data)[1]),
                             10000, replace = TRUE)
-                boot.cells <- 
+                boot.cells <-
                     boot.cells + results[[i]]$bootstrap_data[randomSamples, ]
             }
             count <- count + 1
@@ -114,13 +118,13 @@ merged_ewce <- function(results, reps = 100) {
         p <- fc <- sd_from_mean <- rep(0, length(hit.cells))
         names(p) <- names(fc) <- names(results[[1]]$hitCells)
         for (i in seq_len(length(hit.cells))) {
-            p[i] <- 
+            p[i] <-
                 sum(hit.cells[i] < boot.cells[, i]) / length(boot.cells[, i])
             fc[i] <- hit.cells[i] / mean(boot.cells[, i])
-            sd_from_mean[i] <- 
+            sd_from_mean[i] <-
                 (hit.cells[i] - mean(boot.cells[, i])) / sd(boot.cells[, i])
         }
-        return(data.frame(CellType = names(p), p = p, fc = fc, 
+        return(data.frame(CellType = names(p), p = p, fc = fc,
                             sd_from_mean = sd_from_mean))
     }
 }

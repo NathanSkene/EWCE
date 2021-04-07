@@ -9,13 +9,13 @@ test_that("bootstrap enrichment runs as expected", {
     #ctd <- eh[["EH5376"]]
     #example_genelist <- eh[["EH5372"]]
     #mouse_to_human_homologs <- eh[["EH5367"]]
-    
+
     m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
     mouse.hits <- unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
     # mouse.bg  = unique(setdiff(m2h$MGI.symbol,mouse.hits))
     mouse.bg <- unique(m2h$MGI.symbol)
     # set input variables
-    reps <- 100 # <- Use 100 bootstrap lists so it runs quickly, for publishable analysis use >10000
+    reps <- 10 # <- Use 10 bootstrap lists so it runs quickly, for publishable analysis use >10000
     level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
     set.seed(12345678)
     full_results <-

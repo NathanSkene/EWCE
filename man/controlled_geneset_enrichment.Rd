@@ -15,51 +15,51 @@ controlled_geneset_enrichment(
 )
 }
 \arguments{
-\item{disease_genes}{Array of gene symbols containing the disease gene list. 
-Does not have to be disease genes. Must be from same species as the single 
+\item{disease_genes}{Array of gene symbols containing the disease gene list.
+Does not have to be disease genes. Must be from same species as the single
 cell transcriptome dataset.}
 
-\item{functional_genes}{Array of gene symbols containing the functional gene 
-list. The enrichment of this geneset within the disease_genes is tested. 
+\item{functional_genes}{Array of gene symbols containing the functional gene
+list. The enrichment of this geneset within the disease_genes is tested.
 Must be from same species as the single cell transcriptome dataset.}
 
 \item{bg_genes}{Array of gene symbols containing the background gene list.}
 
 \item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
 
-\item{annotLevel}{an integer indicating which level of the annotation to 
+\item{annotLevel}{an integer indicating which level of the annotation to
 analyse. Default = 1.}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should 
+\item{reps}{Number of random gene lists to generate (default=100 but should
 be over 10000 for publication quality results)}
 
-\item{controlledCT}{(optional) If not NULL, and instead is the name of a 
-cell type, then the bootstrapping controls for expression within that 
+\item{controlledCT}{(optional) If not NULL, and instead is the name of a
+cell type, then the bootstrapping controls for expression within that
 cell type}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{p_controlled} The probability that functional_genes are 
-  enriched in disease_genes while controlling for the level of specificity 
+  \item \code{p_controlled} The probability that functional_genes are
+  enriched in disease_genes while controlling for the level of specificity
   in controlledCT
-  \item \code{z_controlled} The z-score that functional_genes are enriched 
-  in disease_genes while controlling for the level of specificity in 
+  \item \code{z_controlled} The z-score that functional_genes are enriched
+  in disease_genes while controlling for the level of specificity in
   controlledCT
-  \item \code{p_uncontrolled} The probability that functional_genes are 
-  enriched in disease_genes WITHOUT controlling for the level of 
+  \item \code{p_uncontrolled} The probability that functional_genes are
+  enriched in disease_genes WITHOUT controlling for the level of
   specificity in controlledCT
-  \item \code{z_uncontrolled} The z-score that functional_genes are enriched 
-  in disease_genes WITHOUT controlling for the level of specificity in 
+  \item \code{z_uncontrolled} The z-score that functional_genes are enriched
+  in disease_genes WITHOUT controlling for the level of specificity in
   controlledCT
   \item \code{reps=reps}
   \item \code{controlledCT}
-  \item \code{actualOverlap=actual} The number of genes that overlap between 
+  \item \code{actualOverlap=actual} The number of genes that overlap between
   functional and disease gene sets
 }
 }
 \description{
-\code{controlled_geneset_enrichment} tests whether a functional geneset is 
+\code{controlled_geneset_enrichment} tests whether a functional geneset is
 still enriched in a disease gene set after controlling for the
 disease geneset's enrichment in a particular cell type (the 'controlledCT')
 }
@@ -78,13 +78,13 @@ mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol \%in\% schiz_genes,"MGI.symbol"])
 mouse.bg  = unique(m2h$MGI.symbol)
 hpsd_genes <- hpsd_genes()
 mouse.hpsd = unique(m2h[m2h$HGNC.symbol \%in\% hpsd_genes,"MGI.symbol"])
-# Use 10 bootstrap lists for speed, for publishable analysis use >10000
-reps=10 
-res_hpsd_schiz = 
-    controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
-                                    functional_genes = mouse.hpsd, 
-                                    bg_genes = mouse.bg, 
-                                    sct_data = ctd, annotLevel = 1, 
-                                    reps=reps, 
+# Use 3 bootstrap lists for speed, for publishable analysis use >10000
+reps=3
+res_hpsd_schiz =
+    controlled_geneset_enrichment(disease_genes=mouse.hits.schiz,
+                                    functional_genes = mouse.hpsd,
+                                    bg_genes = mouse.bg,
+                                    sct_data = ctd, annotLevel = 1,
+                                    reps=reps,
                                     controlledCT="pyramidal CA1")
 }

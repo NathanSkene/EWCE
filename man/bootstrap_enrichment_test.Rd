@@ -19,49 +19,49 @@ bootstrap_enrichment_test(
 \arguments{
 \item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
 
-\item{hits}{Array of MGI gene symbols containing the target gene list. 
+\item{hits}{Array of MGI gene symbols containing the target gene list.
 Must be HGNC symbols if geneSizeControl=TRUE}
 
-\item{bg}{Array of MGI gene symbols containing the background gene list. 
+\item{bg}{Array of MGI gene symbols containing the background gene list.
 Must be HGNC symbols if geneSizeControl=TRUE}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI 
+\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI
 or HGNC symbols are used for gene lists}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or 
+\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or
 HGNC symbols are used for the single cell dataset}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should 
+\item{reps}{Number of random gene lists to generate (default=100 but should
 be over 10000 for publication quality results)}
 
-\item{annotLevel}{an integer indicating which level of the annotation to 
+\item{annotLevel}{an integer indicating which level of the annotation to
 analyse. Default = 1.}
 
-\item{geneSizeControl}{a logical indicating whether you want to control for 
-GC content and transcript length. Recommended if the gene list originates 
-from genetic studies. Default is FALSE. If set to TRUE then human gene lists 
+\item{geneSizeControl}{a logical indicating whether you want to control for
+GC content and transcript length. Recommended if the gene list originates
+from genetic studies. Default is FALSE. If set to TRUE then human gene lists
 should be used rather than mouse.}
 
-\item{controlledCT}{(optional) If not NULL, and instead is the name of a 
-cell type, then the bootstrapping controls for expression within that 
+\item{controlledCT}{(optional) If not NULL, and instead is the name of a
+cell type, then the bootstrapping controls for expression within that
 cell type}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{results}: dataframe in which each row gives the statistics 
-  (p-value, fold change and number of standard deviations from the mean) 
+  \item \code{results}: dataframe in which each row gives the statistics
+  (p-value, fold change and number of standard deviations from the mean)
   associated with the enrichment of the stated cell type in the gene list
-  \item \code{hit.cells}: vector containing the summed proportion of 
+  \item \code{hit.cells}: vector containing the summed proportion of
   expression in each cell type for the target list
-  \item \code{bootstrap_data}: matrix in which each row represents the 
-  summed proportion of expression in each cell type for one of the 
+  \item \code{bootstrap_data}: matrix in which each row represents the
+  summed proportion of expression in each cell type for one of the
   random lists
 }
 }
 \description{
-\code{bootstrap_enrichment_test} takes a genelist and a single cell type 
-transcriptome dataset and determines the probability of enrichment and fold 
+\code{bootstrap_enrichment_test} takes a genelist and a single cell type
+transcriptome dataset and determines the probability of enrichment and fold
 changes for each cell type.
 }
 \examples{
@@ -70,21 +70,22 @@ library(ewceData)
 ctd <- ctd()
 
 # Set the parameters for the analysis
-# Use 10 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 10 
+# Use 3 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 3
 
 # Load the gene list and get human orthologs
 example_genelist <- example_genelist()
 mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <- 
+mouse.hits <-
     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-mouse.bg <- unique(m2h$MGI.symbol)
+#subset mouse.bg for speed but ensure it still contains the hits
+mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 
 # Bootstrap significance test, no control for transcript length or GC content
 full_results <- bootstrap_enrichment_test(
     sct_data = ctd, hits = mouse.hits,
-    bg = mouse.bg, reps = reps, annotLevel = 2, sctSpecies = "mouse", 
+    bg = mouse.bg, reps = reps, annotLevel = 2, sctSpecies = "mouse",
     genelistSpecies = "mouse"
 )
 

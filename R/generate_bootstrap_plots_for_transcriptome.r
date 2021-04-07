@@ -1,48 +1,48 @@
 #' Generate bootstrap plots
 #'
-#' \code{generate_bootstrap_plots_for_transcriptome} takes a genelist and a 
-#' single cell type transcriptome dataset and generates plots which show how 
-#' the expression of the genes in the list compares to those in randomly 
+#' \code{generate_bootstrap_plots_for_transcriptome} takes a genelist and a
+#' single cell type transcriptome dataset and generates plots which show how
+#' the expression of the genes in the list compares to those in randomly
 #' generated gene lists
 #'
 #' @param sct_data List generated using \code{\link{generate_celltype_data}}
-#' @param reps Number of random gene lists to generate (default=100 but should 
+#' @param reps Number of random gene lists to generate (default=100 but should
 #' be over 10000 for publication quality results)
-#' @param full_results The full output of 
+#' @param full_results The full output of
 #' \code{\link{bootstrap_enrichment_test}} for the same genelist
-#' @param listFileName String used as the root for files saved using 
+#' @param listFileName String used as the root for files saved using
 #' this function
-#' @param tt Differential expression table. Can be output of limma::topTable 
-#' function. Minimum requirement is that one column stores a metric of 
-#' increased/decreased expression (i.e. log fold change, t-statistic for 
+#' @param tt Differential expression table. Can be output of limma::topTable
+#' function. Minimum requirement is that one column stores a metric of
+#' increased/decreased expression (i.e. log fold change, t-statistic for
 #' differential expression etc) and another contains either HGNC or MGI symbols.
-#' @param thresh The number of up- and down- regulated genes to be included in 
+#' @param thresh The number of up- and down- regulated genes to be included in
 #' each analysis. Dafault=250
-#' @param annotLevel an integer indicating which level of the annotation to 
+#' @param annotLevel an integer indicating which level of the annotation to
 #' analyse. Default = 1.
-#' @param showGNameThresh Integer. If a gene has over X percent of it's 
+#' @param showGNameThresh Integer. If a gene has over X percent of it's
 #' expression proportion in a celltype, then list the gene name
-#' @param ttSpecies Either 'mouse' or 'human' depending on which species the 
+#' @param ttSpecies Either 'mouse' or 'human' depending on which species the
 #' differential expression table was generated from
-#' @param sctSpecies Either 'mouse' or 'human' depending on which species the 
+#' @param sctSpecies Either 'mouse' or 'human' depending on which species the
 #' single cell data was generated from
-#' @param sortBy Column name of metric in tt which should be used to sort up- 
+#' @param sortBy Column name of metric in tt which should be used to sort up-
 #' from down- regulated genes. Default="t"
-#' @param onlySignif Should plots only be generated for cells which have 
+#' @param onlySignif Should plots only be generated for cells which have
 #' significant changes?
 #' @param savePath Directory where the BootstrapPlots folder should be saved
-#' @return Saves a set of pdf files containing graphs. These will be saved 
-#' with the filename adjusted using the value of listFileName. The files are 
+#' @return Saves a set of pdf files containing graphs. These will be saved
+#' with the filename adjusted using the value of listFileName. The files are
 #' saved into the 'BootstrapPlot' folder. Files start with one of the following:
 #' \itemize{
-#'   \item \code{qqplot_noText}: sorts the gene list according to how enriched 
-#'   it is in the relevant celltype. Plots the value in the target list against 
+#'   \item \code{qqplot_noText}: sorts the gene list according to how enriched
+#'   it is in the relevant celltype. Plots the value in the target list against
 #'   the mean value in the bootstrapped lists.
-#'   \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the 
+#'   \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the
 #'   highest expressed genes.
-#'   \item \code{bootDists}: rather than just showing the mean of the 
+#'   \item \code{bootDists}: rather than just showing the mean of the
 #'   bootstrapped lists, a boxplot shows the distribution of values
-#'   \item \code{bootDists_LOG}: shows the bootstrapped distributions with the 
+#'   \item \code{bootDists_LOG}: shows the bootstrapped distributions with the
 #'   y-axis shown on a log scale
 #' }
 #'
@@ -53,22 +53,24 @@
 #' ctd <- ctd()
 #'
 #' # Set the parameters for the analysis
-#' # Use 10 bootstrap lists for speed, for publishable analysis use >10000
-#' reps <- 10 
+#' # Use 3 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 3
 #' annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
+#' # Use 5 up/down regulated genes (thresh) for speed, default is 250
+#' thresh = 5
 #'
 #' # Load the top table
 #' tt_alzh <- tt_alzh()
 #'
 #' tt_results <- ewce_expression_data(
-#'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,reps = reps,
-#'     ttSpecies = "human", sctSpecies = "mouse"
+#'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,thresh = thresh,
+#'     reps = reps, ttSpecies = "human", sctSpecies = "mouse"
 #' )
 #'
 #' # Bootstrap significance test, no control for transcript length or GC content
 #' full_results <- generate_bootstrap_plots_for_transcriptome(
-#'     sct_data = ctd, tt = tt_alzh, annotLevel = 1,
-#'     full_results = tt_results, listFileName = "examples", reps = reps, 
+#'     sct_data = ctd, tt = tt_alzh, thresh = thresh, annotLevel = 1,
+#'     full_results = tt_results, listFileName = "examples", reps = reps,
 #'     ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
 #' )
 #' @export
@@ -78,23 +80,23 @@
 #' @importFrom scales comma
 # @import plyr
 #' @import grDevices
-#' @import ExperimentHub 
-#' @importFrom AnnotationHub query 
-generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt, 
-                                                        thresh = 250, 
-                                                        annotLevel = 1, 
+#' @import ExperimentHub
+#' @importFrom AnnotationHub query
+generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
+                                                        thresh = 250,
+                                                        annotLevel = 1,
                                                         reps, full_results = NA,
-                                                        listFileName = "", 
-                                                        showGNameThresh = 25, 
-                                                        ttSpecies = "mouse", 
-                                                        sctSpecies = "mouse", 
-                                                        sortBy = "t", 
+                                                        listFileName = "",
+                                                        showGNameThresh = 25,
+                                                        ttSpecies = "mouse",
+                                                        sctSpecies = "mouse",
+                                                        sortBy = "t",
                                                         onlySignif = TRUE,
                                                         savePath = "~/") {
-    tt <- check_args_for_bootstrap_plot_generation(sct_data, tt, thresh, 
-                                                    annotLevel, reps, 
-                                                    full_results, listFileName, 
-                                                    showGNameThresh, ttSpecies, 
+    tt <- check_args_for_bootstrap_plot_generation(sct_data, tt, thresh,
+                                                    annotLevel, reps,
+                                                    full_results, listFileName,
+                                                    showGNameThresh, ttSpecies,
                                                     sctSpecies, sortBy)
 
     for (dirS in c("Up", "Down")) {
@@ -109,7 +111,7 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
             tt <- tt[order(tt[, sortBy], decreasing = FALSE), ]
         }
         mouse.hits <- as.character(unique(tt$MGI.symbol[seq_len(thresh)]))
-        mouse.hits <- 
+        mouse.hits <-
             mouse.hits[
                 mouse.hits %in% rownames(sct_data[[annotLevel]]$specificity)]
         mouse.bg <- as.character(unique(tt$MGI.symbol))
@@ -124,22 +126,22 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
         } else {
             signif_res <- as.character(results$CellType)
         }
-        exp_mats <- get_exp_data_for_bootstrapped_genes(results, signif_res, 
-                                                            sct_data, 
-                                                            mouse.hits, 
-                                                            combinedGenes, 
-                                                            annotLevel, 
+        exp_mats <- get_exp_data_for_bootstrapped_genes(results, signif_res,
+                                                            sct_data,
+                                                            mouse.hits,
+                                                            combinedGenes,
+                                                            annotLevel,
                                                             nReps = reps)
 
         # Get expression levels of the hit genes
-        hit.exp <- sct_data[[annotLevel]]$specificity[mouse.hits, ] 
+        hit.exp <- sct_data[[annotLevel]]$specificity[mouse.hits, ]
 
         graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +
             theme(
                 panel.grid.major = element_line(size = .5, color = "grey"),
-                axis.line = element_line(size = .7, color = "black"), 
+                axis.line = element_line(size = .7, color = "black"),
                 legend.position = c(0.75, 0.7), text = element_text(size = 14),
-                axis.title.x = element_text(vjust = -0.35), 
+                axis.title.x = element_text(vjust = -0.35),
                 axis.title.y = element_text(vjust = 0.6)
             ) + theme(legend.title = element_blank())
 
@@ -153,8 +155,8 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
         for (cc in signif_res) {
             mean_boot_exp <- apply(exp_mats[[cc]], 2, mean)
             hit_exp <- sort(hit.exp[, cc])
-            hit_exp_names <- rownames(hit.exp)[order(hit.exp[, cc])] 
-            dat <- data.frame(boot = mean_boot_exp, hit = hit_exp, 
+            hit_exp_names <- rownames(hit.exp)[order(hit.exp[, cc])]
+            dat <- data.frame(boot = mean_boot_exp, hit = hit_exp,
                                 Gnames = hit_exp_names)
             dat$hit <- dat$hit * 100
             dat$boot <- dat$boot * 100
@@ -162,34 +164,34 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
             maxX <- max(dat$boot) + 0.1 * max(dat$boot)
 
             # Plot several variants of the graph
-            basic_graph <- plot_bootstrap_plots(dat, tag, listFileName, cc, 
-                                                    showGNameThresh, 
+            basic_graph <- plot_bootstrap_plots(dat, tag, listFileName, cc,
+                                                    showGNameThresh,
                                                     graph_theme, maxX, savePath)
 
             # Plot with bootstrap distribution
-            plot_with_bootstrap_distributions(exp_mats, cc, hit_exp, tag, 
+            plot_with_bootstrap_distributions(exp_mats, cc, hit_exp, tag,
                                                 listFileName, graph_theme,
                                                 savePath)
 
             # Plot with LOG bootstrap distribution
-            plot_log_bootstrap_distributions(dat, exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme, 
+            plot_log_bootstrap_distributions(dat, exp_mats, cc, hit_exp, tag,
+                                                listFileName, graph_theme,
                                                 savePath)
         }
     }
 }
 
-check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh, 
-                                                        annotLevel, reps, 
-                                                        full_results, 
-                                                        listFileName, 
-                                                        showGNameThresh, 
-                                                        ttSpecies, sctSpecies, 
+check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh,
+                                                        annotLevel, reps,
+                                                        full_results,
+                                                        listFileName,
+                                                        showGNameThresh,
+                                                        ttSpecies, sctSpecies,
                                                         sortBy) {
     # Check the arguments
     correct_length <- length(full_results) == 5
-    required_names <- c("joint_results", "hit.cells.up", 
-                            "hit.cells.down", "bootstrap_data.up", 
+    required_names <- c("joint_results", "hit.cells.up",
+                            "hit.cells.down", "bootstrap_data.up",
                             "bootstrap_data.down")
     all_required_names <- sum(names(full_results) %in% required_names) == 5
     err_msg <- paste0("ERROR: full_results is not valid output from the",
@@ -241,8 +243,8 @@ check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh,
 }
 
 
-get_exp_data_for_bootstrapped_genes <- function(results, signif_res, sct_data, 
-                                                    mouse.hits, combinedGenes, 
+get_exp_data_for_bootstrapped_genes <- function(results, signif_res, sct_data,
+                                                    mouse.hits, combinedGenes,
                                                     annotLevel, nReps = NA) {
     exp_mats <- list()
     for (cc in signif_res) {
@@ -263,19 +265,19 @@ get_exp_data_for_bootstrapped_genes <- function(results, signif_res, sct_data,
     return(exp_mats)
 }
 
-plot_with_bootstrap_distributions <- function(exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme, 
+plot_with_bootstrap_distributions <- function(exp_mats, cc, hit_exp, tag,
+                                                listFileName, graph_theme,
                                                 savePath) {
     melt_boot <- reshape2::melt(exp_mats[[cc]])
     colnames(melt_boot) <- c("Rep", "Pos", "Exp")
-    actVals <- data.frame(pos = as.factor(seq_len(length(hit_exp))), 
+    actVals <- data.frame(pos = as.factor(seq_len(length(hit_exp))),
                             vals = hit_exp)
-    pdf(sprintf("%s/BootstrapPlots/bootDists_%s___%s____%s.pdf", 
+    pdf(sprintf("%s/BootstrapPlots/bootDists_%s___%s____%s.pdf",
                     savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
     melt_boot$Pos <- as.factor(melt_boot$Pos)
-    message(ggplot(melt_boot) +
+    print(ggplot(melt_boot) +
         geom_boxplot(aes_string(x = "Pos", y = "Exp"), outlier.size = 0) +
-        geom_point(aes_string(x = "pos", y = "vals"), 
+        geom_point(aes_string(x = "pos", y = "vals"),
                     col = "red", data = actVals) +
         ylab("Expression in cell type (%)\n") +
         xlab("Least specific --> Most specific") +
@@ -284,7 +286,7 @@ plot_with_bootstrap_distributions <- function(exp_mats, cc, hit_exp, tag,
     dev.off()
 }
 
-plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh, 
+plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh,
                                     graph_theme, maxX, savePath) {
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +
@@ -294,14 +296,14 @@ plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot without text
-    pdf(sprintf("%s/BootstrapPlots/qqplot_noText_%s___%s____%s.pdf", 
+    pdf(sprintf("%s/BootstrapPlots/qqplot_noText_%s___%s____%s.pdf",
                 savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
-    message(basic_graph + ggtitle(cc))
+    print(basic_graph + ggtitle(cc))
     dev.off()
 
-    # If a gene has over 25% of it's expression proportion in a celltype, 
+    # If a gene has over 25% of it's expression proportion in a celltype,
     # then list the genename
-    dat$symLab <- 
+    dat$symLab <-
         ifelse(dat$hit > showGNameThresh, sprintf("  %s", dat$Gnames), "")
 
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
@@ -312,19 +314,19 @@ plot_bootstrap_plots <- function(dat, tag, listFileName, cc, showGNameThresh,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot with gene names
-    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf", 
+    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf",
                     savePath, tag, listFileName, cc), width = 3.5, height = 3.5)
-    message(basic_graph +
-        geom_text(aes_string(label = "symLab"), 
-                    hjust = 0, vjust = 0, size = 3) + xlim(c(0, maxX)) + 
+    print(basic_graph +
+        geom_text(aes_string(label = "symLab"),
+                    hjust = 0, vjust = 0, size = 3) + xlim(c(0, maxX)) +
             ggtitle(cc))
     dev.off()
 
     # Plot BIG with gene names
-    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf", 
+    pdf(sprintf("%s/BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf",
                     savePath, tag, listFileName, cc), width = 15, height = 15)
-    message(basic_graph +
-        geom_text(aes_string(label = "symLab"), hjust = 0, 
+    print(basic_graph +
+        geom_text(aes_string(label = "symLab"), hjust = 0,
                     vjust = 0, size = 3) + xlim(c(0, maxX)) + ggtitle(cc))
     dev.off()
 
@@ -335,8 +337,8 @@ myScalesComma <- function(x) {
     return(scales::comma(x = x, accuracy = 0.01))
 }
 
-plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag, 
-                                                listFileName, graph_theme, 
+plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag,
+                                                listFileName, graph_theme,
                                                 savePath) {
     # - First get the ordered gene names
     rownames(dat) <- dat$Gnames
@@ -347,21 +349,21 @@ plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag,
     colnames(melt_boot) <- c("Rep", "Pos", "Exp")
     melt_boot$Exp <- melt_boot$Exp * 100
     melt_boot <- merge(melt_boot, datOrdered, by = "Pos")
-    melt_boot$GSym <- factor(as.character(melt_boot$GSym), 
+    melt_boot$GSym <- factor(as.character(melt_boot$GSym),
                                 levels = as.character(datOrdered$GSym))
 
     # - Prepare the values of the list genes to be plotted as red dots
-    actVals <- data.frame(Pos = as.factor(seq_len(length(hit_exp))), 
+    actVals <- data.frame(Pos = as.factor(seq_len(length(hit_exp))),
                             vals = hit_exp * 100)
     actVals <- merge(actVals, datOrdered, by = "Pos")
-    actVals$GSym <- factor(as.character(actVals$GSym), 
+    actVals$GSym <- factor(as.character(actVals$GSym),
                             levels = as.character(datOrdered$GSym))
 
     # - Determine whether changes are significant
     p <- rep(1, max(melt_boot$Pos))
     for (i in seq_len(max(melt_boot$Pos))) {
-        p[i] <- sum(actVals[actVals$Pos == i, "vals"] < 
-                        melt_boot[melt_boot$Pos == i, "Exp"]) / 
+        p[i] <- sum(actVals[actVals$Pos == i, "vals"] <
+                        melt_boot[melt_boot$Pos == i, "Exp"]) /
                 length(melt_boot[melt_boot$Pos == i, "Exp"])
     }
     ast <- rep("*", max(melt_boot$Pos))
@@ -369,16 +371,16 @@ plot_log_bootstrap_distributions <- function(dat, exp_mats, cc, hit_exp, tag,
     actVals <- cbind(actVals[order(actVals$Pos), ], ast)
     # - Plot the graph!
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
-    pdf(sprintf("%s/BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf", 
+    pdf(sprintf("%s/BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf",
                     savePath, tag, listFileName, cc), width = wd, height = 4)
-    message(
+    print(
         ggplot(melt_boot) +
             geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +
             graph_theme +
             theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-            geom_point(aes_string(x = "GSym", y = "vals"), col = "red", 
+            geom_point(aes_string(x = "GSym", y = "vals"), col = "red",
                         data = actVals) +
-            geom_text(aes_string(x = "GSym", y = "vals", label = "ast"), 
+            geom_text(aes_string(x = "GSym", y = "vals", label = "ast"),
                         colour = "black", col = "black", data = actVals) +
             ylab("Expression in cell type (%)\n") +
             xlab("Least specific --> Most specific") +

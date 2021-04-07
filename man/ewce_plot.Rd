@@ -7,17 +7,17 @@
 ewce_plot(total_res, mtc_method = "bonferroni", ctd = NULL)
 }
 \arguments{
-\item{total_res}{results dataframe generated using 
-\code{\link{bootstrap_enrichment_test}} or 
-\code{\link{ewce_expression_data}} functions. Multiple results tables can be 
-merged into one results table, as long as the 'list' column is set to 
+\item{total_res}{results dataframe generated using
+\code{\link{bootstrap_enrichment_test}} or
+\code{\link{ewce_expression_data}} functions. Multiple results tables can be
+merged into one results table, as long as the 'list' column is set to
 distinguish them.}
 
-\item{mtc_method}{method to be used for multiple testing correction. 
-Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", 
+\item{mtc_method}{method to be used for multiple testing correction.
+Argument is passed to \code{\link{p.adjust}}. Valid options are "holm",
 "hochberg", "hommel", "bonferroni", "BH", "BY",}
 
-\item{ctd}{Should be provided so that the dendrogram can be taken from it 
+\item{ctd}{Should be provided so that the dendrogram can be taken from it
 and added to plots}
 }
 \value{
@@ -32,21 +32,21 @@ library(ewceData)
 ctd <- ctd()
 
 # Set the parameters for the analysis
-# Use 10 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 10
+# Use 3 bootstrap lists for speed, for publishable analysis use >10000
+reps <- 3
 
 # Load the gene list and get human orthologs
 example_genelist <- example_genelist()
 mouse_to_human_homologs <- mouse_to_human_homologs()
 m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <- 
+mouse.hits <-
      unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-mouse.bg <- unique(m2h$MGI.symbol)
+mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 
 # Bootstrap significance test, no control for transcript length or GC content
 full_results <- bootstrap_enrichment_test(
     sct_data = ctd, hits = mouse.hits,
-    bg = mouse.bg, reps = reps, annotLevel = 2, 
+    bg = mouse.bg, reps = reps, annotLevel = 2,
     sctSpecies = "mouse", genelistSpecies = "mouse"
 )
 

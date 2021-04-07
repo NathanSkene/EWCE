@@ -13,9 +13,9 @@ filter_genes_without_1to1_homolog(filenames)
 Array of filenames included the ones with only 1:1 homologs
 }
 \description{
-\code{filter_genes_without_1to1_homolog} Takes the filenames of 
+\code{filter_genes_without_1to1_homolog} Takes the filenames of
 celltype_data files, loads them, and drops any genes
-which don't have a 1:1 homolog based on biomart. The new files are saved to 
+which don't have a 1:1 homolog based on biomart. The new files are saved to
 disc, appending '_1to1only' to the file
 tag of the previous file.
 }
@@ -24,12 +24,12 @@ library(ewceData)
 # Load the single cell data
 cortex_mrna <- cortex_mrna()
 expData <- cortex_mrna$exp
-expData <- expData[1:500, ] # Use only a subset to keep the example quick
+expData <- expData[1:100, ] # Use only a subset to keep the example quick
 l1 <- cortex_mrna$annot$level1class
 l2 <- cortex_mrna$annot$level2class
 annotLevels <- list(level1class = l1, level2class = l2)
-fNames_ALLCELLS <- generate_celltype_data(exp = expData, 
-    annotLevels = annotLevels, 
+fNames_ALLCELLS <- generate_celltype_data(exp = expData,
+    annotLevels = annotLevels,
     groupName = "allKImouse")
 fNames_ALLCELLS <- filter_genes_without_1to1_homolog(fNames_ALLCELLS)
 }

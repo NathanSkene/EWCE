@@ -2,16 +2,16 @@
 #'
 #' \code{ewce_plot} generates plots of EWCE enrichment results
 #'
-#' @param total_res results dataframe generated using 
-#' \code{\link{bootstrap_enrichment_test}} or 
-#' \code{\link{ewce_expression_data}} functions. Multiple results tables can be 
-#' merged into one results table, as long as the 'list' column is set to 
+#' @param total_res results dataframe generated using
+#' \code{\link{bootstrap_enrichment_test}} or
+#' \code{\link{ewce_expression_data}} functions. Multiple results tables can be
+#' merged into one results table, as long as the 'list' column is set to
 #' distinguish them.
-#' @param mtc_method method to be used for multiple testing correction. 
-#' Argument is passed to \code{\link{p.adjust}}. Valid options are "holm", 
+#' @param mtc_method method to be used for multiple testing correction.
+#' Argument is passed to \code{\link{p.adjust}}. Valid options are "holm",
 #' "hochberg", "hommel", "bonferroni", "BH", "BY",
 #   "fdr" or "none". Default method is bonferroni.
-#' @param ctd Should be provided so that the dendrogram can be taken from it 
+#' @param ctd Should be provided so that the dendrogram can be taken from it
 #' and added to plots
 #' @return A ggplot containing the plot
 #' @examples
@@ -20,21 +20,21 @@
 #' ctd <- ctd()
 #'
 #' # Set the parameters for the analysis
-#' # Use 10 bootstrap lists for speed, for publishable analysis use >10000
-#' reps <- 10
+#' # Use 3 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 3
 #'
 #' # Load the gene list and get human orthologs
 #' example_genelist <- example_genelist()
 #' mouse_to_human_homologs <- mouse_to_human_homologs()
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-#' mouse.hits <- 
+#' mouse.hits <-
 #'      unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
-#' mouse.bg <- unique(m2h$MGI.symbol)
+#' mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 #'
 #' # Bootstrap significance test, no control for transcript length or GC content
 #' full_results <- bootstrap_enrichment_test(
 #'     sct_data = ctd, hits = mouse.hits,
-#'     bg = mouse.bg, reps = reps, annotLevel = 2, 
+#'     bg = mouse.bg, reps = reps, annotLevel = 2,
 #'     sctSpecies = "mouse", genelistSpecies = "mouse"
 #' )
 #'
@@ -51,7 +51,7 @@
 ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
     err_msg <- paste0("ERROR: Invalid mtc_method argument. Please see",
                         " '?p.adjust' for valid methods.")
-    if (!mtc_method %in% c("holm", "hochberg", "hommel", 
+    if (!mtc_method %in% c("holm", "hochberg", "hommel",
                             "bonferroni", "BH", "BY", "fdr", "none")) {
         stop(err_msg)
     }
@@ -73,8 +73,8 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
             }
         }
         if (length(ctd[[1]]$plotting) > 0) {
-            annotLevel <- 
-                which(unlist(lapply(ctd, FUN = cells_in_ctd, 
+            annotLevel <-
+                which(unlist(lapply(ctd, FUN = cells_in_ctd,
                                         cells = as.character(
                                                     total_res$CellType))) == 1)
             err_msg2 <- paste0("All of the cells within total_res should come",
@@ -86,8 +86,8 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
 
         # Set order of cells
         if (length(ctd[[annotLevel]]$plotting) > 0) {
-            total_res$CellType <- 
-                factor(total_res$CellType, 
+            total_res$CellType <-
+                factor(total_res$CellType,
                         levels = ctd[[annotLevel]]$plotting$cell_ordering)
         }
     }
@@ -105,7 +105,7 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
     graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +
         theme(
             panel.grid.major = element_line(size = .5, color = "grey"),
-            axis.line = element_line(size = .7, color = "black"), 
+            axis.line = element_line(size = .7, color = "black"),
                 text = element_text(size = 14),
             axis.title.y = element_text(vjust = 0.6)
         ) # + theme(legend.position="none")
@@ -119,13 +119,13 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
 
     if ("Direction" %in% colnames(total_res)) {
         the_plot <- ggplot(total_res) +
-            geom_bar(aes_string(x = "CellType", y = "abs_sd", 
-                                    fill = "Direction"), 
+            geom_bar(aes_string(x = "CellType", y = "abs_sd",
+                                    fill = "Direction"),
                         position = "dodge", stat = "identity") +
             graph_theme
     } else {
         the_plot <- ggplot(total_res) +
-            geom_bar(aes_string(x = "CellType", y = "abs_sd"), 
+            geom_bar(aes_string(x = "CellType", y = "abs_sd"),
                         fill = "red", stat = "identity") +
             graph_theme +
             theme(legend.position = "none")
@@ -133,22 +133,22 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
 
     # Setup the main plot
     the_plot <- the_plot +
-        theme(plot.margin = unit(c(1, 0, 0, 0), "mm"), 
+        theme(plot.margin = unit(c(1, 0, 0, 0), "mm"),
                 axis.text.x = element_text(angle = 55, hjust = 1)) +
-        theme(panel.border = element_rect(colour = "black", 
+        theme(panel.border = element_rect(colour = "black",
                                             fill = NA, size = 1)) +
         xlab("") +
         theme(strip.text.y = element_text(angle = 0)) +
         coord_cartesian(ylim = c(0, 1.1 * upperLim)) +
-        ylab("Std.Devs. from the mean") + 
+        ylab("Std.Devs. from the mean") +
         theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
-    the_plot <- the_plot + 
-        scale_y_continuous(breaks = c(0, ceiling(upperLim * 0.66))) + 
-        geom_text(aes_string(label = "ast_q", x = "CellType", y = "y_ast"), 
+    the_plot <- the_plot +
+        scale_y_continuous(breaks = c(0, ceiling(upperLim * 0.66))) +
+        geom_text(aes_string(label = "ast_q", x = "CellType", y = "y_ast"),
                     size = 10)
     if (multiList) {
-        the_plot <- the_plot + 
+        the_plot <- the_plot +
             facet_grid("list ~ .", scales = "free", space = "free_x")
     }
 
@@ -157,11 +157,11 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
     output$plain <- the_plot
 
     if (make_dendro) {
-        the_dendrogram <- 
-            ctd[[annotLevel]]$plotting$ggdendro_horizontal + 
+        the_dendrogram <-
+            ctd[[annotLevel]]$plotting$ggdendro_horizontal +
                 theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"))
-        combined_plot <- 
-            cowplot::plot_grid(the_dendrogram, the_plot, align = "hv", 
+        combined_plot <-
+            cowplot::plot_grid(the_dendrogram, the_plot, align = "hv",
                                 ncol = 1, rel_heights = c(1, 1))
         output$withDendro <- combined_plot
     }

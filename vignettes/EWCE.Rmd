@@ -38,7 +38,7 @@ then please cite the following papers:
 
 The *EWCE* package is designed to facilitate expression weighted celltype enrichment analysis as described in our Frontiers in Neuroscience paper [@skene_2016].
 
-The package was originally designed to work with the single cell cortical transcriptome data from the Linnarsson lab[@zeisel2015cell] which is available at http://linnarssonlab.org/cortex/. Using this package it is possible to read in any single cell transcriptome data, provided that you have a cell by gene expression matrix (with each cell as a seperate column) and a seperate annotation dataframe, with a row for each cell.
+The package was originally designed to work with the single cell cortical transcriptome data from the Linnarsson lab[@zeisel2015cell] which is available at http://linnarssonlab.org/cortex/. Using this package it is possible to read in any single cell transcriptome data, provided that you have a cell by gene expression matrix (with each cell as a separate column) and a separate annotation dataframe, with a row for each cell. EWCE can also handle SingleCellExperiment (SCE) objects or other Ranged SummarizedExperiment (SE) datatypes as input.
 
 The *EWCE* process involves testing for whether the genes in a target list have higher levels of expression in a given cell type than can reasonably be expected by chance. The probability distribution for this is estimated by randomly generating gene lists of equal length from a set of background genes.
 
@@ -50,7 +50,7 @@ Note that throughout this vignette we use the terms 'cell type' and 'sub-cell ty
 
 The process for using *EWCE* essentially involves three steps.
 
-First, one needs to load the relevant single cell transcriptome dataset. Single cell transcriptome data is read in from a text file using the `read_celltype_data`.
+First, one needs to load the relevant single cell transcriptome dataset. Single cell transcriptome data can be read in from a text file using the `read_celltype_data` if necessary.
 
 The user then obtains a gene set and a suitable background gene set. As the choice of gene sets is up to the user we do not provide functions for doing this. Appropriate choice of background set is discussed in the associated publication.
 
@@ -96,7 +96,7 @@ theme_set(theme_cowplot())
 
 The first step for all analyses is to load the single cell transcriptome (SCT) data. For the purposes of this example we will use the dataset described in *"Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq", Science, 2015*. This is stored and can be loaded as follows from `ewceData` package.
 
-Important note: The code (available in inst/scripts/make-data.R) to derive this data can be used on other downloaded paper's data. Note you do NOT have to format your input single cell data like the Linnarsson data. Just read it into R such that you have an expression matrix and an annotation data frame. The three columns that you must have in the annotation data frame are "cell_id", "level1class" and "level2class". 
+Important note: The code (available in inst/scripts/make-data.R) to derive this data can be used on other downloaded paper's data. Note you do NOT have to format your input single cell data like the Linnarsson data. Just read it into R such that you have an expression matrix and an annotation data frame or as an SCE or other Ranged SummarisedExperiment object. The three columns that you must have in the annotation data frame are "cell_id", "level1class" and "level2class". 
 
 To check the data, we can quickly plot the distribution of expression of a given gene across all the cell types.
 
@@ -112,10 +112,42 @@ ggplot(cellExpDist) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
+To note for the analysis of the `cortex_mrna` dataset,I will proved the alternative for an SCE object under each segment of code if there is any difference. If you would like to try running the functions on an SCE object instead, we can convert `cortex_mrna` as follows:
+
+```
+if (!"SingleCellExperiment" %in% rownames(installed.packages()))
+  BiocManager::install("SingleCellExperiment")
+library(SingleCellExperiment)
+
+#Make SCE object
+cortex_mrna <- cortex_mrna()
+cortex_mrna_sce <-
+  SingleCellExperiment::SingleCellExperiment(
+    assays=list(counts=cortex_mrna$exp),
+    colData=cortex_mrna$annot)
+
+# Now to plot the SCE dataset:
+gene="Necab1"
+cellExpDist_sce = data.frame(e=assays(cortex_mrna_sce)$counts[gene,],
+                             l1=colData(cortex_mrna_sce)[
+                               colnames(assays(cortex_mrna_sce)$counts),
+                             ]$level1class)
+ggplot(cellExpDist_sce) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + 
+  ylab("Unique Molecule Count") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
+
 It is very common for publically available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel). A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. This function can be used with a downloaded reference file like the [MRK_List2 file]("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt") from MGI which lists known synonyms for MGI gene symbols. If no file path is passed, there is a loaded reference dataset of the MRK_List2 which will be used: `mgi_synonym_data()`. We recommend running this function on all input datasets.
 
 ```
 cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp)
+```
+
+For the SCE version, pass the whole SCE object
+```
+#Note that data in SCE object must be in 'counts' assay
+#The fix_bad_hgnc_symbols fucntion can similarly take an SCE object as an input
+cortex_mrna_sce = fix_bad_mgi_symbols(cortex_mrna_sce)
 ```
 
 ## Drop genes
@@ -128,6 +160,15 @@ must_keep = c("Apoe","Gfap","Gapdh")
 set.seed(123458)
 keep_genes = c(must_keep,sample(rownames(cortex_mrna$exp),997))
 cortex_mrna$exp = cortex_mrna$exp[keep_genes,]
+```
+
+```
+#SCE
+nKeep = 1000
+must_keep = c("Apoe","Gfap","Gapdh")
+set.seed(123458)
+keep_genes = c(must_keep,sample(names(rowRanges(cortex_mrna_sce)),997))
+cortex_mrna_sce = cortex_mrna_sce[keep_genes,]
 ```
 
 ## Transform the data
@@ -144,6 +185,17 @@ cortex_mrna$exp_scT_normed =
       cortex_mrna$exp_scT)))
 ```
 
+```
+#SCE
+library(sctransform)
+scT = sctransform::vst(assays(cortex_mrna_sce)$counts,return_cell_attr = TRUE)
+exp_scT = correct_counts(scT, assays(cortex_mrna_sce)$counts) # umi_corrected
+#filter SCE object to only the 885 genes returned by sctransform
+cortex_mrna_sce <- cortex_mrna_sce[rownames(exp_scT),]
+assays(cortex_mrna_sce)$normcounts = 
+  Matrix::t(Matrix::t(exp_scT)*(1/Matrix::colSums(exp_scT)))
+```
+
 Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this scTransform step.
 
 ## Calculate specificity matrices
@@ -154,9 +206,9 @@ The next steps are as follows:
 2) Calculate cell type averages and specificity for each gene
 3) Drop all genes which do not have 1:1 mouse:human orthologs
 
-The last step is only neccesary if you plan to compare to human data, i.e. genesets resulting from human genetics.
+The last step is only necessary if you plan to compare to human data, i.e. genesets resulting from human genetics.
 
-Rather than returning the data directly, the functions save the calculated data to a file and the filename is returned.
+Rather than returning the data directly, the functions save the calculated data to a file and the file name is returned.
 
 ```{r  }
 # Generate celltype data for just the cortex/hippocampus data
@@ -175,82 +227,64 @@ print(fNames_CortexOnly)
 load(fNames_CortexOnly[1])
 ```
 
+```
+#SCE
+# Generate celltype data for just the cortex/hippocampus data
+exp_CortexOnly_DROPPED = 
+  drop_uninformative_genes(exp=assays(cortex_mrna_sce)$normcounts,
+                           level2annot = colData(cortex_mrna_sce)$level2class)
+annotLevels = list(level1class=colData(cortex_mrna_sce)$level1class,
+                   level2class=colData(cortex_mrna_sce)$level2class)
+fNames_CortexOnly = generate_celltype_data(exp=exp_CortexOnly_DROPPED,
+                                           annotLevels=annotLevels,
+                                           groupName="kiCortexOnly",
+                                           savePath=tempdir())
+print(fNames_CortexOnly)
+fNames_CortexOnly = filter_genes_without_1to1_homolog(fNames_CortexOnly)
+print(fNames_CortexOnly)
+load(fNames_CortexOnly[1])
+```
+
+To note on the SCE approach, these are the only differences for handling the analysis of an SCE object. All downstream analysis on `cortex_mrna` would be the same. The same approach can be used for other datasets in the vignette if converted such as `hypothalamus_mrna` or your own SCE object.
+
 ## Merging two single cell datasets
 
-Often it is useful to merge two single cell datasets. For instance, there are seperate files for the cortex and hypothalamus datasets generated by the Karolinska. The resulting merged dataset is loaded using `ctd()` but it is worth understanding the approach (outlined below) if you want to repeat this for other single cell datasets. Feel free to skip this section if it is not applicable. 
+Often it is useful to merge two single cell datasets. For instance, there are seperate files for the cortex and hypothalamus datasets generated by the Karolinska institute. A subset of the resulting merged dataset is loaded using `ctd()` but it is worth understanding the approach (outlined below) if you want to repeat this for other single cell datasets.
 
-The dataset is first downloaded from GEO, unzipped and read into R. Because the file is in xlsx format you may need to install the readxl package. So first we just read in and prepare the expression matrix and annotation data frame:
+The dataset is available from the [GEO](ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/suppl/GSE74672_expressed_mols_with_classes.xlsx.gz) but is aslo available in the `ewceData` package: `hypothalamus_mrna()`. See the `ewceData` for details of how this file was preprocessed after first being downloaded from GEO, unzipped and read into R.
 
-```
-# Download the hypothalamus data and unzip
-if(!file.exists("GSE74672_expressed_mols_with_classes.xlsx")){
-    file <- paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/",
-                    "suppl/GSE74672_expressed_mols_with_classes.xlsx.gz")
-    download.file(file, destfile="GSE74672_expressed_mols_with_classes.xlsx.gz")
-    system("gunzip GSE74672_expressed_mols_with_classes.xlsx.gz")
-}
-
-# Read in the hypothalamus data
-hypo_dat = read_excel("GSE74672_expressed_mols_with_classes.xlsx")
-
-# Extract the expression data, gene symbols and annotation data
-exp = data.matrix(hypo_dat[12:dim(hypo_dat)[1],2:dim(hypo_dat)[2]])
-rownames(exp) = data.frame(hypo_dat[12:dim(hypo_dat)[1],1])[,1]
-level1class = data.frame(level1class=t(hypo_dat[1,2:dim(hypo_dat)[2]]),
-                          stringsAsFactors = FALSE)[,1]
-level2class = data.frame(leve2class=t(hypo_dat[2,2:dim(hypo_dat)[2]]),
-                          stringsAsFactors = FALSE)[,1]
-cell_id     = colnames(hypo_dat)[2:dim(hypo_dat)[2]]
-hypo_annot  = data.frame(cell_id=cell_id,level1class=level1class,
-                          level2class=level2class,stringsAsFactors = FALSE)
-
-# Drop the glia and unclassified cells (which don't have level 2  annotations)
-hypo_annot  = hypo_annot[!is.na(hypo_annot$level2class) & 
-                          !hypo_annot$level2class=="uc",]
-hypo_exp    = exp[,hypo_annot$cell_id]
-
-# Make the celltype names more aesthetically pleasing
-hypo_annot$level2class=gsub(",",";",hypo_annot$level2class)
-hypo_annot$level1class[grep("Oxt;|^Avp",hypo_annot$level2class)] = 
-  "Oxytocin / Vasopressin Expressing Neurons"
-hypo_annot$level1class[grep("^Th;|^Dopamine",hypo_annot$level2class)] = 
-  "Hypothalamic Dopaminergic Neurons"
-hypo_annot$level1class[grepl("^Vglut2|^Trh|^Qrfp|^Hcrt|^Pmch|^Adcyap1|
-  ^Npvf|^Ghrh|^Hmit|^Nms|^Vip;|^Per2|Tnr$|^Gad-low;Gnrh",
-  hypo_annot$level2class) & grepl("neurons",hypo_annot$level1class)] = 
-    "Hypothalamic Glutamatergic Neurons"
-hypo_annot$level1class[grepl("GABA|^Sst|^Crh|^Npy|^Pomc|^Galanin|^Otof|Pnoc$|
-  ^Calcr-high",hypo_annot$level2class) & 
-  grepl("^neurons$",hypo_annot$level1class)] = "Hypothalamic GABAergic Neurons"
-hypo_annot$level2class[hypo_annot$level2class!=""] = 
-sprintf("Hypothalamic %s Neuron",
-    hypo_annot$level2class[hypo_annot$level2class!=""])
-
-# Fix bad MGI symbols
-hypo_exp_CORRECTED = fix_bad_mgi_symbols(hypo_exp)
-```
-
-Now that the hypothalamus data is prepared, we merge it with the cortex dataset then calculate specificity:
+We can now merge the hypothalamus dataset with the cortex dataset and then calculate specificity:
 
 ```
-# Merge the datasets
-merged_KI = merge_two_expfiles(exp1=hypo_exp_CORRECTED, exp2=cortex_mrna$exp,
-                                     annot1=hypo_annot, 
-                                     annot2=cortex_mrna$annot,
-                                     name1="Hypothalamus (KI)", 
-                                     name2="Cortex/Hippo (KI)")
+#load hypothalamus dataset
+hypothalamus_mrna <- hypothalamus_mrna()
+
+# First fix bad MGI symbols
+hypothalamus_mrna$exp = fix_bad_mgi_symbols(hypothalamus_mrna$exp)
+
+# Merge the datasets - again this can be run for SCE or other ranged SE objects also, 
+# Syntax is explained when processing cortex dataset above
+merged_KI = merge_two_expfiles(exp1=hypothalamus_mrna$exp, exp2=cortex_mrna$exp,
+                               annot1=hypothalamus_mrna$annot, 
+                               annot2=cortex_mrna$annot,
+                               name1="Hypothalamus (KI)", 
+                               name2="Cortex/Hippo (KI)")
 
 # Drop genes which don't vary significantly between cell types
 exp_merged_DROPPED = drop_uninformative_genes(exp=merged_KI$exp, 
-  level2annot = merged_KI$annot$level2class)
+                                              level2annot = merged_KI$annot$level2class)
 
 # Calculate specificity data
 annotLevels = list(level1class=merged_KI$annot$level1class,
-  level2class=merged_KI$annot$level2class)
+                   level2class=merged_KI$annot$level2class)
+#Update file path to where you want the celltype data files to save on disk
 fNames_MergedKI = generate_celltype_data(exp=exp_merged_DROPPED,
-  annotLevels,"MergedKI")
+                                         annotLevels,"MergedKI",
+                                         savePath = tempdir())
+#filter_genes_without_1to1_homolog will save the files to the same directory
 fNames_MergedKI = filter_genes_without_1to1_homolog(fNames_MergedKI)
 load(fNames_MergedKI[2])
+#data now loaded in ctd object
 ```
 
 ## Understanding specificity matrices
@@ -264,6 +298,7 @@ Using the ggplot2 package to visualise the data, let us examine the expression o
 For this example we use a subset of the genes from the merged dataset generated above, which is accessed using `ctd()`. We recommend that you use the code above to regenerate this though and drop the first command from the below section.
 
 ```{r, fig.width = 7, fig.height = 4}
+#Load merged cortex and hypothalamus dataset generated by Karolinska institute
 ctd <- ctd()
 set.seed(1234)
 library(reshape2)
@@ -352,6 +387,17 @@ set.seed(12345678)
 full_results = bootstrap_enrichment_test(sct_data=ctd,hits=mouse.hits,
                                           bg=mouse.bg,
                                           reps=reps,annotLevel=level)
+```
+
+A note on both the background and target gene lists, other common gene list objects can be used as inputs such as `BiocSet::BiocSet` and `GESABase::GeneSet`. Below is an example of how to format each for the target gene list (`hits`):
+
+```
+# Save both approaches as hits which will be passed to bootstrap_enrichment_test
+#BiocSet::BiocSet, BiocSet_target contains the gene list target
+hits <- unlist(BiocSet::es_element(BiocSet_target))
+#GSEABase::GeneSet, GeneSet_target contains the gene list target
+hits <- GSEABase::geneIds(GeneSet_target)
+
 ```
 
 The main table of results is stored in `full_results$results`. We can see the most significant results using:
@@ -501,7 +547,7 @@ full_results =
 
 Where multiple transcriptomic studies have been performed with the same purpose, i.e. seeking differential expression in dlPFC of post-mortem schizophrenics, it is common to want to determine whether they exhibit any shared signal. EWCE can be used to merge the results of multiple studies.
 
-To demonstrate this we use a two further Alzheimer's transcriptome dataset coming from Brodmann areas 36 and 44: these area stored in `tt_alzh_BA36` and `tt_alzh_BA44`. The first step is to run EWCE on each of these individually and store the output into one list.
+To demonstrate this we use a two further Alzheimer's transcriptome datasets coming from Brodmann areas 36 and 44: these area stored in `tt_alzh_BA36` and `tt_alzh_BA44`. The first step is to run EWCE on each of these individually and store the output into one list.
 
 ```{r results="hide"}
 # Load the data

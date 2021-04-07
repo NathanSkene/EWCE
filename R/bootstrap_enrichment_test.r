@@ -1,38 +1,38 @@
 #' Bootstrap celltype enrichment test
 #'
-#' \code{bootstrap_enrichment_test} takes a genelist and a single cell type 
-#' transcriptome dataset and determines the probability of enrichment and fold 
+#' \code{bootstrap_enrichment_test} takes a genelist and a single cell type
+#' transcriptome dataset and determines the probability of enrichment and fold
 #' changes for each cell type.
 #'
 #' @param sct_data List generated using \code{\link{generate_celltype_data}}
-#' @param hits Array of MGI gene symbols containing the target gene list. 
+#' @param hits Array of MGI gene symbols containing the target gene list.
 #' Must be HGNC symbols if geneSizeControl=TRUE
-#' @param bg Array of MGI gene symbols containing the background gene list. 
+#' @param bg Array of MGI gene symbols containing the background gene list.
 #' Must be HGNC symbols if geneSizeControl=TRUE
-#' @param genelistSpecies Either 'mouse' or 'human' depending on whether MGI 
+#' @param genelistSpecies Either 'mouse' or 'human' depending on whether MGI
 #' or HGNC symbols are used for gene lists
-#' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI or 
+#' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI or
 #' HGNC symbols are used for the single cell dataset
-#' @param reps Number of random gene lists to generate (default=100 but should 
+#' @param reps Number of random gene lists to generate (default=100 but should
 #' be over 10000 for publication quality results)
-#' @param annotLevel an integer indicating which level of the annotation to 
+#' @param annotLevel an integer indicating which level of the annotation to
 #' analyse. Default = 1.
-#' @param geneSizeControl a logical indicating whether you want to control for 
-#' GC content and transcript length. Recommended if the gene list originates 
-#' from genetic studies. Default is FALSE. If set to TRUE then human gene lists 
+#' @param geneSizeControl a logical indicating whether you want to control for
+#' GC content and transcript length. Recommended if the gene list originates
+#' from genetic studies. Default is FALSE. If set to TRUE then human gene lists
 #' should be used rather than mouse.
-#' @param controlledCT (optional) If not NULL, and instead is the name of a 
-#' cell type, then the bootstrapping controls for expression within that 
+#' @param controlledCT (optional) If not NULL, and instead is the name of a
+#' cell type, then the bootstrapping controls for expression within that
 #' cell type
 #' @return A list containing three data frames:
 #' \itemize{
-#'   \item \code{results}: dataframe in which each row gives the statistics 
-#'   (p-value, fold change and number of standard deviations from the mean) 
+#'   \item \code{results}: dataframe in which each row gives the statistics
+#'   (p-value, fold change and number of standard deviations from the mean)
 #'   associated with the enrichment of the stated cell type in the gene list
-#'   \item \code{hit.cells}: vector containing the summed proportion of 
+#'   \item \code{hit.cells}: vector containing the summed proportion of
 #'   expression in each cell type for the target list
-#'   \item \code{bootstrap_data}: matrix in which each row represents the 
-#'   summed proportion of expression in each cell type for one of the 
+#'   \item \code{bootstrap_data}: matrix in which each row represents the
+#'   summed proportion of expression in each cell type for one of the
 #'   random lists
 #' }
 #' @examples
@@ -41,21 +41,22 @@
 #' ctd <- ctd()
 #'
 #' # Set the parameters for the analysis
-#' # Use 10 bootstrap lists for speed, for publishable analysis use >10000
-#' reps <- 10 
+#' # Use 3 bootstrap lists for speed, for publishable analysis use >10000
+#' reps <- 3
 #'
 #' # Load the gene list and get human orthologs
 #' example_genelist <- example_genelist()
 #' mouse_to_human_homologs <- mouse_to_human_homologs()
 #' m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-#' mouse.hits <- 
+#' mouse.hits <-
 #'     unique(m2h[m2h$HGNC.symbol %in% example_genelist, "MGI.symbol"])
-#' mouse.bg <- unique(m2h$MGI.symbol)
+#' #subset mouse.bg for speed but ensure it still contains the hits
+#' mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
 #'
 #' # Bootstrap significance test, no control for transcript length or GC content
 #' full_results <- bootstrap_enrichment_test(
 #'     sct_data = ctd, hits = mouse.hits,
-#'     bg = mouse.bg, reps = reps, annotLevel = 2, sctSpecies = "mouse", 
+#'     bg = mouse.bg, reps = reps, annotLevel = 2, sctSpecies = "mouse",
 #'     genelistSpecies = "mouse"
 #' )
 #'
@@ -79,7 +80,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
     if (unique(is.na(sct_data))) {
         stop("ERROR: must provide valid single cell dataset")
     }
-    err_msg <- paste0("ERROR: invalid celltype name passed in controlledCT.", 
+    err_msg <- paste0("ERROR: invalid celltype name passed in controlledCT.",
                         " This argument is optional. Leave empty if you do not",
                         " wish to control for a celltypes expression.")
     # Check if controlling for another celltype
@@ -115,24 +116,24 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
 
     if (!is.null(names(sct_data))) {
         # This is necessary in case further meta-data such as $name is used
-        numLevels <- sum(names(sct_data) == "") 
+        numLevels <- sum(names(sct_data) == "")
     } else {
         numLevels <- length(sct_data)
     }
     for (lv in seq_len(numLevels)) {
         gN <- rownames(sct_data[[lv]]$mean_exp)
-        sct_data[[lv]]$mean_exp <- 
+        sct_data[[lv]]$mean_exp <-
             sct_data[[lv]]$mean_exp[gN %in% combinedGenes, ]
-        sct_data[[lv]]$specificity <- 
+        sct_data[[lv]]$specificity <-
             sct_data[[lv]]$specificity[gN %in% combinedGenes, ]
     }
 
-    # GET WEIGHTING FOR EACH CELL TYPE FOR HIT LIST (hit.cells) AND A MATRIX TO 
+    # GET WEIGHTING FOR EACH CELL TYPE FOR HIT LIST (hit.cells) AND A MATRIX TO
     #STORE THE BOOTSTRAP WEIGHTINGS (bootstrap_data)
     cells <- unique(colnames(sct_data[[annotLevel]]$specificity))
 
     # GENERATE hit.cells and bootstrap_data IN ONE GO
-    message(hitGenes)
+    message(paste(hitGenes, collapse=', ' ))
     if (!geneSizeControl) {
         control_network <- NULL
     }
@@ -156,7 +157,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
         message(ct)
         count <- count + 1
         # For cell type 'ct' get the bootstrap and target list values
-        ct_boot_dist <- 
+        ct_boot_dist <-
             bootstrap_data[, colnames(sct_data[[annotLevel]]$specificity) == ct]
         hit_sum <- hit.cells[colnames(sct_data[[annotLevel]]$specificity) == ct]
         # Get propability and fold change of enrichment
