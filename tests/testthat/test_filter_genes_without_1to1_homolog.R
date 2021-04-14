@@ -23,6 +23,13 @@ test_that("Filter genes without 1 to 1 homolog test", {
         exp = cortex_mrna$exp,
         level2annot = cortex_mrna$annot$level2class
     )
+    
+    # check the number of dropped genes is the same as expected from past runs: 248 else fail
+    expect_equal(nrow(cortex_mrna$exp) - nrow(exp_CortexOnly_DROPPED), 248)
+    
+    #----------------------------------------------------------
+    #Check filter_genes_without_1to1_homolog
+    
     annotLevels <- list(level1class = cortex_mrna$annot$level1class, level2class = cortex_mrna$annot$level2class)
     fNames_CortexOnly <- generate_celltype_data(exp = exp_CortexOnly_DROPPED, 
                                                     annotLevels = annotLevels, 

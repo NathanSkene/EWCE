@@ -90,15 +90,16 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         )
 
     # Test 5: test supplying less than 4 hits for mouse
-    fail_return4 <-
-        tryCatch(bootstrap_enrichment_test(
-            sct_data = ctd, hits = mouse.hits[1:3],
-            bg = mouse.bg, reps = reps, annotLevel = level
-        ),
-        error = function(e) e,
-        warning = function(w) w
-        )
-
+    #fail_return4 <-
+    #    tryCatch(bootstrap_enrichment_test(
+    #        sct_data = ctd, hits = mouse.hits[1:3],
+    #        bg = mouse.bg, reps = reps, annotLevel = level
+    #    ),
+    #    error = function(e) e,
+    #    warning = function(w) w
+    #    )
+    #fail_return4 REMOVED TO SAVE ON RUN TIME OF CHECK
+    
     # Test 6: test supplying less than 4 hits for human
     fail_return5 <-
         tryCatch(bootstrap_enrichment_test(
@@ -122,21 +123,22 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         error = function(e) e,
         warning = function(w) w
         )
-    ctd_fake <- ctd
+    #ctd_fake <- ctd
     # just rename genes to hgnc names
-    rownames(ctd_fake[[1]]$mean_exp) <-
-        all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
+    #rownames(ctd_fake[[1]]$mean_exp) <-
+    #    all_hgnc[seq_len(length(rownames(ctd[[1]]$mean_exp)))]
     # should fail as geneSizeControl set to true
-    fail_return7 <-
-        tryCatch(bootstrap_enrichment_test(
-            sct_data = ctd_fake, hits = mouse.hits,
-            bg = mouse.bg, reps = reps, annotLevel = 1,
-            geneSizeControl = TRUE, genelistSpecies = "mouse",
-            sctSpecies = "human"
-        ),
-        error = function(e) e,
-        warning = function(w) w
-        )
+    #fail_return7 <-
+    #    tryCatch(bootstrap_enrichment_test(
+    #        sct_data = ctd_fake, hits = mouse.hits,
+    #        bg = mouse.bg, reps = reps, annotLevel = 1,
+    #        geneSizeControl = TRUE, genelistSpecies = "mouse",
+    #        sctSpecies = "human"
+    #    ),
+    #    error = function(e) e,
+    #    warning = function(w) w
+    #    )
+    #fail_return7 REMOVED TO SAVE ON RUN TIME OF CHECK
     # fail if any subtest fails
     expect_equal(all(
         # Test 1
@@ -150,11 +152,11 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         # Test 4
         is(fail_return3, "error"),
         # Test 5
-        is(fail_return4, "error"),
+       # is(fail_return4, "error"),
         # Test 6
         is(fail_return5, "error"),
         # test 7
-        is(fail_return6, "error"),
-        is(fail_return7, "error")
+        is(fail_return6, "error")#,
+        #is(fail_return7, "error")
     ), TRUE)
 })

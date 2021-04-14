@@ -159,10 +159,14 @@ ewce_plot <- function(total_res, mtc_method = "bonferroni", ctd = NULL) {
     if (make_dendro) {
         the_dendrogram <-
             ctd[[annotLevel]]$plotting$ggdendro_horizontal +
-                theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"))
+                theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"))+
+            scale_x_discrete(breaks = total_res$CellType)             
+        #scale_x_discrete to set the mapping of the dendro to the x axis scale
         combined_plot <-
-            cowplot::plot_grid(the_dendrogram, the_plot, align = "hv",
-                                ncol = 1, rel_heights = c(1, 1))
+            cowplot::plot_grid(the_dendrogram, the_plot, align = "v",
+                                ncol = 1, rel_heights = c(.3, 1))
+        # align arg to "v" and rel_heights c(0.3,1) make dend & barchart closer
+        #two prev comments adjustments by Robert Gordon-Smith
         output$withDendro <- combined_plot
     }
 

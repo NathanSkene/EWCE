@@ -6,9 +6,9 @@ test_that("Cell type specificity Aif1, Pvalb", {
    # eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
     #cortex_mrna <- eh[["EH5381"]]
     
-    if (!file.exists("MRK_List2.rpt")) {
-        download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
-    }
+   # if (!file.exists("MRK_List2.rpt")) {
+    #    download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt", destfile = "MRK_List2.rpt")
+    #}
     nKeep <- 1000
     must_keep <- c("Apoe", "Gfap", "Gapdh", "Pvalb", "Aif1")
     set.seed(123458)
