@@ -69,13 +69,7 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
                                         sctSpecies = "mouse", reps = 100,
                                         annotLevel = 1, geneSizeControl = FALSE,
                                         controlledCT = NULL) {
-    checkedLists <- check_ewce_genelist_inputs(
-        sct_data, hits, bg, genelistSpecies,
-        sctSpecies, geneSizeControl
-    )
-    hits <- checkedLists$hits
-    bg <- checkedLists$bg
-
+    
     # Check an SCT dataset was provided
     if (unique(is.na(sct_data))) {
         stop("ERROR: must provide valid single cell dataset")
@@ -89,6 +83,14 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
             stop(err_msg)
         }
     }
+    
+    checkedLists <- check_ewce_genelist_inputs(
+        sct_data, hits, bg, genelistSpecies,
+        sctSpecies, geneSizeControl
+    )
+    hits <- checkedLists$hits
+    bg <- checkedLists$bg
+    
     err_msg2 <- paste0("ERROR! AFTER CALCULATING BOOTSTRAPPING NETWORK",
                         " WITH LENGTH + GC CONTROLS, size of list_network",
                         " is not same length as hitGenes")

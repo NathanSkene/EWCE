@@ -47,32 +47,27 @@
 
 check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
                                         sctSpecies, geneSizeControl = FALSE) {
-    sct_genes <- rownames(sct_data[[1]]$mean_exp)
-    mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
-    all_mgi <- ewceData::all_mgi()
-    all_hgnc <- ewceData::all_hgnc() #quicker to ref by ID rather than number
-    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
-    #mouse_to_human_homologs <- eh[["EH5367"]]
-    #all_mgi <- eh[["EH5369"]]
-    #all_hgnc <- eh[["EH5371"]]
-
-    orthologsOnly <- FALSE
-
     # CHECK THE ARGUMENTS ARE PROPERLY STRUCTURED
-
+    orthologsOnly <- FALSE
+    sct_genes <- rownames(sct_data[[1]]$mean_exp)
+    
     ## Check that all 'hits' are in 'bg'
     if (sum(!hits %in% bg) > 0) {
         stop("ERROR: all hits must be in bg")
     }
-
+    
     err_msg <- paste0("ERROR: genelistSpecies and sctSpecies must be either",
-                        " mouse or human. If using data from any other species",
-                        " then please convert to mouse/human using only",
-                        " 1:1 orthologs.")
+                      " mouse or human. If using data from any other species",
+                      " then please convert to mouse/human using only",
+                      " 1:1 orthologs.")
     ## Check that gene lists and single cell dataset are either mouse or human
     if (sum(c(genelistSpecies, sctSpecies) %in% c("mouse", "human")) != 2) {
         stop(err_msg)
     }
+    
+    all_mgi <- ewceData::all_mgi()
+    all_hgnc <- ewceData::all_hgnc()
+
     err_msg2 <- paste0("ERROR: less than four of the hits genes are MGI",
                         " symbols. They must be provided as correctly",
                         " formatted MGI symbols (or alter genelistSpecies)")
@@ -116,7 +111,9 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
             stop(err_msg4)
         }
     }
-
+    
+    mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
+    
     ## If gene lists and single cell data are from different species...
     # then convert the gene lists to match
     if (geneSizeControl == FALSE) {
