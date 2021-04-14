@@ -412,7 +412,7 @@ The results can be visualised using another function, which shows for each cell 
 print(ewce_plot(full_results$results,mtc_method="BH")$plain)
 ```
 
-For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. There is no automated way to align the dendrogram (that I've figured out yet) with the graph ticks, so this needs to be done manually in Inkscape.---
+For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to Robert Gordon-Smith, Mres Molecular and Cellular Biosciences, Imperial College London for this solution):
 
 ```{r }
 print(ewce_plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
