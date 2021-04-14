@@ -18,3 +18,5 @@ inst/.DS_Store
 vignettes/.DS_Store
 docs
 docs/
+/doc/
+/Meta/
