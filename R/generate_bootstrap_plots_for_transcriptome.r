@@ -48,6 +48,7 @@
 #'
 #'
 #' @examples
+#' \donttest{
 #' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
@@ -73,6 +74,7 @@
 #'     full_results = tt_results, listFileName = "examples", reps = reps,
 #'     ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
 #' )
+#' }
 #' @export
 #' @import ggplot2
 #' @import ewceData

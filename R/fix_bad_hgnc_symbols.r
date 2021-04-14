@@ -10,6 +10,15 @@
 #' representing the same gene merged. If a SingleCellExperiment (SCE) or other
 #' Ranged Summarized Experiment (SE) type object was inputted this will be
 #' returned with the corrected expression matrix under counts.
+#' @examples 
+#' #create example expression matrix, could be part of a exp, annot list obj
+#' exp <- matrix(data = runif(70),ncol =10)
+#' #Add HGNC gene names but add with an error:
+#' #MARCH8 is a HGNC symbol which if opened in excel will convert to Mar-08
+#' rownames(exp) <- 
+#'     c("MT-TF","MT-RNR1","MT-TV","MT-RNR2","MT-TL1","MT-ND1","Mar-08")
+#' exp <- fix_bad_hgnc_symbols(exp)
+#' #fix_bad_hgnc_symbols warns the user of this possible issue 
 #' @export
 #' @import HGNChelper
 #' @import biomaRt

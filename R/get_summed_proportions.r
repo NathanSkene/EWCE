@@ -25,7 +25,6 @@
 #' }
 #' @examples
 #' # See bootstrap_enrichment_test.r
-#' @export
 get_summed_proportions <- function(hitGenes, sct_data, annotLevel, reps, 
                                     geneSizeControl, controlledCT = NULL, 
                                     control_network = NULL) {

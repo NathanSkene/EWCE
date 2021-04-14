@@ -23,6 +23,7 @@ enrichment of the stated cell type in the gene list
 targetting the same scientific problem
 }
 \examples{
+\donttest{
 library(ewceData)
 # Load the single cell data
 ctd <- ctd()
@@ -54,4 +55,5 @@ results <- add_res_to_merging_list(tt_results_44, results)
 # For publication reps should be higher
 merged_res <- merged_ewce(results, reps = 2)
 print(merged_res)
+}
 }

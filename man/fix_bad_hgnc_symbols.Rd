@@ -29,3 +29,13 @@ symbols, find those symbols which are not official HGNC symbols, then
 correct them if possible. Return the expression matrix with corrected
 symbols.
 }
+\examples{
+#create example expression matrix, could be part of a exp, annot list obj
+exp <- matrix(data = runif(70),ncol =10)
+#Add HGNC gene names but add with an error:
+#MARCH8 is a HGNC symbol which if opened in excel will convert to Mar-08
+rownames(exp) <- 
+    c("MT-TF","MT-RNR1","MT-TV","MT-RNR2","MT-TL1","MT-ND1","Mar-08")
+exp <- fix_bad_hgnc_symbols(exp)
+#fix_bad_hgnc_symbols warns the user of this possible issue 
+}

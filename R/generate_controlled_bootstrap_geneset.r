@@ -12,8 +12,7 @@
 #' @return Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
 #' column is a gene list
 #' @examples
-#' # See vignette
-#' @export
+#' # See controlled_geneset_enrichment.r
 #' @import stats
 generate_controlled_bootstrap_geneset <- function(hitGenes, sct_data, 
                                                     annotLevel, reps, 

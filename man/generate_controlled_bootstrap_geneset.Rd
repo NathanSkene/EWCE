@@ -33,5 +33,5 @@ column is a gene list
 controlled bootstraped
 }
 \examples{
-# See vignette
+# See controlled_geneset_enrichment.r
 }

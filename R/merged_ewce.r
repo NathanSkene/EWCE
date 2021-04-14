@@ -11,6 +11,7 @@
 #' change and number of standard deviations from the mean) associated with the
 #' enrichment of the stated cell type in the gene list
 #' @examples
+#' \donttest{
 #' library(ewceData)
 #' # Load the single cell data
 #' ctd <- ctd()
@@ -42,6 +43,7 @@
 #' # For publication reps should be higher
 #' merged_res <- merged_ewce(results, reps = 2)
 #' print(merged_res)
+#' }
 #' @export
 # @import ggplot2
 # @importFrom reshape2 melt

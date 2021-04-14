@@ -83,6 +83,7 @@ the expression of the genes in the list compares to those in randomly
 generated gene lists
 }
 \examples{
+\donttest{
 library(ewceData)
 # Load the single cell data
 ctd <- ctd()
@@ -108,4 +109,5 @@ full_results <- generate_bootstrap_plots_for_transcriptome(
     full_results = tt_results, listFileName = "examples", reps = reps,
     ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
 )
+}
 }
