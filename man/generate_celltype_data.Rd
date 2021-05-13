@@ -9,7 +9,7 @@ generate_celltype_data(
   annotLevels,
   groupName,
   no_cores = 1,
-  savePath = "~/",
+  savePath = tempdir(),
   normSpec = FALSE
 )
 }

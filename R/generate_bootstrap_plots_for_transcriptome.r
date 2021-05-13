@@ -30,10 +30,12 @@
 #' from down- regulated genes. Default="t"
 #' @param onlySignif Should plots only be generated for cells which have
 #' significant changes?
-#' @param savePath Directory where the BootstrapPlots folder should be saved
-#' @return Saves a set of pdf files containing graphs. These will be saved
-#' with the filename adjusted using the value of listFileName. The files are
-#' saved into the 'BootstrapPlot' folder. Files start with one of the following:
+#' @param savePath Directory where the BootstrapPlots folder should be saved, 
+#' default is a temp directory
+#' @return Saves a set of pdf files containing graphs and returns the file where 
+#' they are saved. These will be saved with the filename adjusted using the 
+#' value of listFileName. The files are saved into the 'BootstrapPlot' folder. 
+#' Files start with one of the following:
 #' \itemize{
 #'   \item \code{qqplot_noText}: sorts the gene list according to how enriched
 #'   it is in the relevant celltype. Plots the value in the target list against
@@ -94,7 +96,7 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
                                                         sctSpecies = "mouse",
                                                         sortBy = "t",
                                                         onlySignif = TRUE,
-                                                        savePath = "~/") {
+                                                        savePath = tempdir()) {
     tt <- check_args_for_bootstrap_plot_generation(sct_data, tt, thresh,
                                                     annotLevel, reps,
                                                     full_results, listFileName,
@@ -181,6 +183,7 @@ generate_bootstrap_plots_for_transcriptome <- function(sct_data, tt,
                                                 savePath)
         }
     }
+    return(savePath)#return path to the saved directory in case tempdir() used
 }
 
 check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh,

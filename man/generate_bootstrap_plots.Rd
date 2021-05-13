@@ -14,7 +14,7 @@ generate_bootstrap_plots(
   annotLevel = 1,
   full_results = NA,
   listFileName = "",
-  savePath = "~/"
+  savePath = tempdir()
 )
 }
 \arguments{
@@ -42,12 +42,14 @@ analyse. Default = 1.}
 \item{listFileName}{String used as the root for files saved using this
 function}
 
-\item{savePath}{Directory where the BootstrapPlots folder should be saved}
+\item{savePath}{Directory where the BootstrapPlots folder should be saved, 
+default is a temp directory}
 }
 \value{
-Saves a set of pdf files containing graphs. These will be saved
-with the filename adjusted using the value of listFileName. The files are
-saved into the 'BootstrapPlot' folder. Files start with one of the following:
+Saves a set of pdf files containing graphs and returns the file where 
+they are saved. These will be saved with the filename adjusted using the 
+value of listFileName. The files are saved into the 'BootstrapPlot' folder. 
+Files start with one of the following:
 \itemize{
   \item \code{qqplot_noText}: sorts the gene list according to how enriched
   it is in the relevant celltype. Plots the value in the target list against
@@ -90,7 +92,7 @@ full_results <- bootstrap_enrichment_test(
     genelistSpecies = "mouse"
 )
 
-generate_bootstrap_plots(
+plot_file_pth <- generate_bootstrap_plots(
     sct_data = ctd, hits = mouse.hits, bg = mouse.bg,
     reps = reps, full_results = full_results, listFileName = "Example",
     genelistSpecies = "mouse", sctSpecies = "mouse", annotLevel = 1,

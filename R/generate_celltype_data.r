@@ -39,7 +39,7 @@
 #' @import ggdendro
 
 generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1,
-                                    savePath = "~/", normSpec = FALSE) {
+                                    savePath = tempdir(), normSpec = FALSE) {
     err_msg <- paste0("NA values detected in expresson matrix. All NA values",
                         " should be removed before calling EWCE.")
     if (sum(is.na(exp)) > 0) {

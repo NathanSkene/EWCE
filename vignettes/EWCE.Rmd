@@ -418,10 +418,12 @@ For publications it can be useful to plot a dendrogram alongside the plot. This 
 print(ewce_plot(full_results$results,mtc_method="BH",ctd=ctd)$withDendro)
 ```
 
-If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name. The `savePath` argument is used here to save the files to a temporary directory, this can be updated to your preferred location.
+If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name. The `savePath` argument is used here to save the files to a temporary directory, this can be updated to your preferred location. The file path where it was saved is returned so the temporary directory
+can be located if used.
 
 ```
-generate_bootstrap_plots(sct_data=ctd,hits=mouse.hits,
+bt_plot_location <- 
+  generate_bootstrap_plots(sct_data=ctd,hits=mouse.hits,
                           bg=mouse.bg,reps=reps,annotLevel=1,
                           full_results=full_results,
                           listFileName="VignetteGraphs",
@@ -531,7 +533,7 @@ A common request is to explain which differentially expressed genes are associat
 ```{r }
 # Set seed for bootstrap reproducibility
 set.seed(12345678)
-full_results = 
+full_result_path = 
   generate_bootstrap_plots_for_transcriptome(sct_data=ctd,tt=tt_alzh,
                                               annotLevel=1,
                                               full_results=tt_results,
