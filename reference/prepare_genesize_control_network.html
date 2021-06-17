@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset • EWCE</title>
+<title>Prepare genesize control network — prepare_genesize_control_network • EWCE</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset" />
-<meta property="og:description" content="generate_controlled_bootstrap_geneset Used to generated celltype 
-controlled bootstraped" />
+<meta property="og:title" content="Prepare genesize control network — prepare_genesize_control_network" />
+<meta property="og:description" content="prepare_genesize_control_network takes a genelist and finds 
+semi-randomly selected gene lists which are matched for gene length and 
+GC content" />
 
 
 
@@ -115,57 +116,56 @@ controlled bootstraped" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>generate_controlled_bootstrap_geneset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/generate_controlled_bootstrap_geneset.r'><code>R/generate_controlled_bootstrap_geneset.r</code></a></small>
-    <div class="hidden name"><code>generate_controlled_bootstrap_geneset.Rd</code></div>
+    <h1>Prepare genesize control network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/prepare_genesize_control_network.r'><code>R/prepare_genesize_control_network.r</code></a></small>
+    <div class="hidden name"><code>prepare_genesize_control_network.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>generate_controlled_bootstrap_geneset</code> Used to generated celltype 
-controlled bootstraped</p>
+    <p><code>prepare_genesize_control_network</code> takes a genelist and finds 
+semi-randomly selected gene lists which are matched for gene length and 
+GC content</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generate_controlled_bootstrap_geneset</span><span class='op'>(</span>
-  <span class='va'>hitGenes</span>,
-  <span class='va'>sct_data</span>,
-  <span class='va'>annotLevel</span>,
-  <span class='va'>reps</span>,
-  controlledCT <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>prepare_genesize_control_network</span><span class='op'>(</span><span class='va'>hits</span>, <span class='va'>bg</span>, numBOOT <span class='op'>=</span> <span class='fl'>10000</span>, <span class='va'>sctSpecies</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>hitGenes</th>
-      <td><p>Array of gene names. The target gene set.</p></td>
+      <th>hits</th>
+      <td><p>Array of MGI gene symbols containing the target gene list. 
+Must be HGNC symbols.</p></td>
     </tr>
     <tr>
-      <th>sct_data</th>
-      <td><p>The cell type data list (with specificity and mean_exp)</p></td>
+      <th>bg</th>
+      <td><p>Array of MGI gene symbols containing the background gene list 
+(including hit genes). Must be HGNC symbols.</p></td>
     </tr>
     <tr>
-      <th>annotLevel</th>
-      <td><p>The level of annotation in sct_data to analyse</p></td>
+      <th>numBOOT</th>
+      <td><p>Number of gene lists to sample</p></td>
     </tr>
     <tr>
-      <th>reps</th>
-      <td><p>The number of gene lists to sample</p></td>
-    </tr>
-    <tr>
-      <th>controlledCT</th>
-      <td><p>Name of a celltype (from colnames of 
-sct_data[[x]]$specificity).</p></td>
+      <th>sctSpecies</th>
+      <td><p>Either 'mouse' or 'human' depending on whether MGI or 
+HGNC symbols are used for the single cell dataset</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
-column is a gene list</p>
+    <p>A list containing three data frames:</p><ul>
+<li><p><code>hitGenes</code>: Array of HGNC symbols containing the hit genes. 
+  May be slightly reduced if gene length / GC content could not be found 
+  for all genes.</p></li>
+<li><p><code>list_network</code>: The control gene lists as a data frame of HGNC 
+  symbols</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># See controlled_geneset_enrichment.r</span>
+    <pre class="examples"><div class='input'><span class='co'># Called by bootstrap_enrichment_test</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

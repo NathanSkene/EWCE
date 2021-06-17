@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset • EWCE</title>
+<title>drop_uninformative_genes — drop_uninformative_genes • EWCE</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset" />
-<meta property="og:description" content="generate_controlled_bootstrap_geneset Used to generated celltype 
-controlled bootstraped" />
+<meta property="og:title" content="drop_uninformative_genes — drop_uninformative_genes" />
+<meta property="og:description" content="drop_uninformative_genes drops genes from an SCT expression matrix 
+if they do not significantly vary between any celltypes.
+Makes this decision based on use of an ANOVA (implemented with Limma). If 
+the F-statistic for variation amongst type2 annotations
+is less than a strict p-threshold, then the gene is dropped." />
 
 
 
@@ -115,57 +118,45 @@ controlled bootstraped" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>generate_controlled_bootstrap_geneset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/generate_controlled_bootstrap_geneset.r'><code>R/generate_controlled_bootstrap_geneset.r</code></a></small>
-    <div class="hidden name"><code>generate_controlled_bootstrap_geneset.Rd</code></div>
+    <h1>drop_uninformative_genes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/drop_uninformative_genes.r'><code>R/drop_uninformative_genes.r</code></a></small>
+    <div class="hidden name"><code>drop_uninformative_genes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>generate_controlled_bootstrap_geneset</code> Used to generated celltype 
-controlled bootstraped</p>
+    <p><code>drop_uninformative_genes</code> drops genes from an SCT expression matrix 
+if they do not significantly vary between any celltypes.
+Makes this decision based on use of an ANOVA (implemented with Limma). If 
+the F-statistic for variation amongst type2 annotations
+is less than a strict p-threshold, then the gene is dropped.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generate_controlled_bootstrap_geneset</span><span class='op'>(</span>
-  <span class='va'>hitGenes</span>,
-  <span class='va'>sct_data</span>,
-  <span class='va'>annotLevel</span>,
-  <span class='va'>reps</span>,
-  controlledCT <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>drop_uninformative_genes</span><span class='op'>(</span><span class='va'>exp</span>, <span class='va'>level2annot</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>hitGenes</th>
-      <td><p>Array of gene names. The target gene set.</p></td>
+      <th>exp</th>
+      <td><p>Expression matrix with gene names as rownames.</p></td>
     </tr>
     <tr>
-      <th>sct_data</th>
-      <td><p>The cell type data list (with specificity and mean_exp)</p></td>
-    </tr>
-    <tr>
-      <th>annotLevel</th>
-      <td><p>The level of annotation in sct_data to analyse</p></td>
-    </tr>
-    <tr>
-      <th>reps</th>
-      <td><p>The number of gene lists to sample</p></td>
-    </tr>
-    <tr>
-      <th>controlledCT</th>
-      <td><p>Name of a celltype (from colnames of 
-sct_data[[x]]$specificity).</p></td>
+      <th>level2annot</th>
+      <td><p>Array of cell types, with each sequentially corresponding 
+a column in the expression matrix</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
-column is a gene list</p>
+    <p>exp Expression matrix with gene names as rownames.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># See controlled_geneset_enrichment.r</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/neurogenomics/ewceData'>ewceData</a></span><span class='op'>)</span>
+<span class='va'>cortex_mrna</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ewceData/man/cortex_mrna.html'>cortex_mrna</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='input'><span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>exp</span> <span class='op'>&lt;-</span> <span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>exp</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span>, <span class='op'>]</span> 
+<span class='va'>exp2</span> <span class='op'>&lt;-</span> <span class='fu'>drop_uninformative_genes</span><span class='op'>(</span>exp <span class='op'>=</span> <span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>exp</span>, 
+    level2annot <span class='op'>=</span> <span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>annot</span><span class='op'>$</span><span class='va'>level2class</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

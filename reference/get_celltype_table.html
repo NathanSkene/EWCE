@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset • EWCE</title>
+<title>get_celltype_table — get_celltype_table • EWCE</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="generate_controlled_bootstrap_geneset — generate_controlled_bootstrap_geneset" />
-<meta property="og:description" content="generate_controlled_bootstrap_geneset Used to generated celltype 
-controlled bootstraped" />
+<meta property="og:title" content="get_celltype_table — get_celltype_table" />
+<meta property="og:description" content="get_celltype_table Generates a table that can be used for 
+supplemenary tables of publications.
+The table lists how many cells are associated with each celltype, the level 
+of annotation, and the dataset from which it was generated." />
 
 
 
@@ -115,57 +117,40 @@ controlled bootstraped" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>generate_controlled_bootstrap_geneset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/generate_controlled_bootstrap_geneset.r'><code>R/generate_controlled_bootstrap_geneset.r</code></a></small>
-    <div class="hidden name"><code>generate_controlled_bootstrap_geneset.Rd</code></div>
+    <h1>get_celltype_table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/get_celltype_table.r'><code>R/get_celltype_table.r</code></a></small>
+    <div class="hidden name"><code>get_celltype_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>generate_controlled_bootstrap_geneset</code> Used to generated celltype 
-controlled bootstraped</p>
+    <p><code>get_celltype_table</code> Generates a table that can be used for 
+supplemenary tables of publications.
+The table lists how many cells are associated with each celltype, the level 
+of annotation, and the dataset from which it was generated.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generate_controlled_bootstrap_geneset</span><span class='op'>(</span>
-  <span class='va'>hitGenes</span>,
-  <span class='va'>sct_data</span>,
-  <span class='va'>annotLevel</span>,
-  <span class='va'>reps</span>,
-  controlledCT <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_celltype_table</span><span class='op'>(</span><span class='va'>annot</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>hitGenes</th>
-      <td><p>Array of gene names. The target gene set.</p></td>
-    </tr>
-    <tr>
-      <th>sct_data</th>
-      <td><p>The cell type data list (with specificity and mean_exp)</p></td>
-    </tr>
-    <tr>
-      <th>annotLevel</th>
-      <td><p>The level of annotation in sct_data to analyse</p></td>
-    </tr>
-    <tr>
-      <th>reps</th>
-      <td><p>The number of gene lists to sample</p></td>
-    </tr>
-    <tr>
-      <th>controlledCT</th>
-      <td><p>Name of a celltype (from colnames of 
-sct_data[[x]]$specificity).</p></td>
+      <th>annot</th>
+      <td><p>An annotation dataframe, which columns named 'level1class', 
+'level2class' and 'dataset_name'</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
-column is a gene list</p>
+    <p>A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># See controlled_geneset_enrichment.r</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/neurogenomics/ewceData'>ewceData</a></span><span class='op'>)</span>
+<span class='co'># See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot</span>
+<span class='va'>cortex_mrna</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ewceData/man/cortex_mrna.html'>cortex_mrna</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='input'><span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>annot</span><span class='op'>$</span><span class='va'>dataset_name</span> <span class='op'>&lt;-</span> <span class='st'>"cortex_mrna"</span>
+<span class='va'>celltype_table</span> <span class='op'>&lt;-</span> <span class='fu'>get_celltype_table</span><span class='op'>(</span><span class='va'>cortex_mrna</span><span class='op'>$</span><span class='va'>annot</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,14 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bootstrap celltype enrichment test for transcriptome data — ewce_expression_data • EWCE (Expression Weighted Celltype Enrichment)</title>
+<title>Bootstrap celltype enrichment test for transcriptome data — ewce_expression_data • EWCE</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Bootstrap celltype enrichment test for transcriptome data — ewce_expression_data" />
-<meta property="og:description" content="ewce_expression_data takes a differential expression table and determines the probability of cell-type enrichment in the up &amp;amp; down regulated genes" />
+<meta property="og:description" content="ewce_expression_data takes a differential expression table and
+determines the probability of cell-type enrichment in the up &amp;amp; down
+regulated genes" />
 
 
 
@@ -54,16 +56,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-175929032-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-175929032-1');
-</script>
 
 
   </head>
@@ -81,8 +73,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">EWCE (Expression Weighted Celltype Enrichment)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <a class="navbar-link" href="../index.html">EWCE</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -90,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,9 +92,17 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/NathanSkene/EWCE/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -117,248 +117,114 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bootstrap celltype enrichment test for transcriptome data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/NathanSkene/EWCE/blob/master/R/ewce_expression_data.r'><code>R/ewce_expression_data.r</code></a></small>
     <div class="hidden name"><code>ewce_expression_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>ewce_expression_data</code> takes a differential expression table and determines the probability of cell-type enrichment in the up &amp; down regulated genes</p>
+    <p><code>ewce_expression_data</code> takes a differential expression table and
+determines the probability of cell-type enrichment in the up &amp; down
+regulated genes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ewce_expression_data</span>(
-  <span class='kw'>sct_data</span>,
-  annotLevel = <span class='fl'>1</span>,
-  <span class='kw'>tt</span>,
-  sortBy = <span class='st'>"t"</span>,
-  thresh = <span class='fl'>250</span>,
-  reps = <span class='fl'>100</span>,
-  ttSpecies = <span class='st'>"mouse"</span>,
-  sctSpecies = <span class='st'>"mouse"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ewce_expression_data</span><span class='op'>(</span>
+  <span class='va'>sct_data</span>,
+  annotLevel <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>tt</span>,
+  sortBy <span class='op'>=</span> <span class='st'>"t"</span>,
+  thresh <span class='op'>=</span> <span class='fl'>250</span>,
+  reps <span class='op'>=</span> <span class='fl'>100</span>,
+  ttSpecies <span class='op'>=</span> <span class='st'>"mouse"</span>,
+  sctSpecies <span class='op'>=</span> <span class='st'>"mouse"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sct_data</th>
-      <td><p>List generated using <code><a href='generate.celltype.data.html'>generate.celltype.data</a></code></p></td>
+      <td><p>List generated using <code><a href='generate_celltype_data.html'>generate_celltype_data</a></code></p></td>
     </tr>
     <tr>
       <th>annotLevel</th>
-      <td><p>an integer indicating which level of the annotation to analyse. Default = 1.</p></td>
+      <td><p>an integer indicating which level of the annotation to
+analyse. Default = 1.</p></td>
     </tr>
     <tr>
       <th>tt</th>
-      <td><p>Differential expression table. Can be output of limma::topTable function. Minimum requirement is that one column stores a metric of increased/decreased expression (i.e. log fold change, t-statistic for differential expression etc) and another contains either HGNC or MGI symbols.</p></td>
+      <td><p>Differential expression table. Can be output of limma::topTable
+function. Minimum requirement is that one column stores a metric of
+increased/decreased expression (i.e. log fold change, t-statistic for
+differential expression etc) and another contains either HGNC or MGI symbols.</p></td>
     </tr>
     <tr>
       <th>sortBy</th>
-      <td><p>Column name of metric in tt which should be used to sort up- from down- regulated genes. Default="t"</p></td>
+      <td><p>Column name of metric in tt which should be used to sort up-
+from down- regulated genes. Default="t"</p></td>
     </tr>
     <tr>
       <th>thresh</th>
-      <td><p>The number of up- and down- regulated genes to be included in each analysis. Dafault=250</p></td>
+      <td><p>The number of up- and down- regulated genes to be included in
+each analysis. Default=250</p></td>
     </tr>
     <tr>
       <th>reps</th>
-      <td><p>Number of random gene lists to generate (default=100 but should be over 10000 for publication quality results)</p></td>
+      <td><p>Number of random gene lists to generate (default=100 but should
+be over 10000 for publication quality results)</p></td>
     </tr>
     <tr>
       <th>ttSpecies</th>
-      <td><p>Either 'mouse' or 'human' depending on which species the differential expression table was generated from</p></td>
+      <td><p>Either 'mouse' or 'human' depending on which species the
+differential expression table was generated from</p></td>
     </tr>
     <tr>
       <th>sctSpecies</th>
-      <td><p>Either 'mouse' or 'human' depending on which species the single cell data was generated from</p></td>
+      <td><p>Either 'mouse' or 'human' depending on which species the
+single cell data was generated from</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list containing five data frames:</p><ul>
-<li><p><code>results</code>: dataframe in which each row gives the statistics (p-value, fold change and number of standard deviations from the mean) associated with the enrichment of the stated cell type in the gene list. An additional column *Direction* stores whether it the result is from the up or downregulated set.</p></li>
-<li><p><code>hit.cells.up</code>: vector containing the summed proportion of expression in each cell type for the target list</p></li>
-<li><p><code>hit.cells.down</code>: vector containing the summed proportion of expression in each cell type for the target list#'</p></li>
-<li><p><code>bootstrap_data.up</code>: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists</p></li>
-<li><p><code>bootstrap_data.down</code>: matrix in which each row represents the summed proportion of expression in each cell type for one of the random lists</p></li>
+<li><p><code>results</code>: dataframe in which each row gives the statistics
+  (p-value, fold change and number of standard deviations from the mean)
+  associated with the enrichment of the stated cell type in the gene list.
+  An additional column *Direction* stores whether it the result is from the
+  up or downregulated set.</p></li>
+<li><p><code>hit.cells.up</code>: vector containing the summed proportion of
+  expression in each cell type for the target list</p></li>
+<li><p><code>hit.cells.down</code>: vector containing the summed proportion of
+  expression in each cell type for the target list#'</p></li>
+<li><p><code>bootstrap_data.up</code>: matrix in which each row represents the
+  summed proportion of expression in each cell type for one of the random
+  lists</p></li>
+<li><p><code>bootstrap_data.down</code>: matrix in which each row represents the
+  summed proportion of expression in each cell type for one of the random
+  lists</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Load the single cell data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"ctd"</span>)
-
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/neurogenomics/ewceData'>ewceData</a></span><span class='op'>)</span>
+<span class='co'># Load the single cell data</span>
+<span class='va'>ctd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ewceData/man/ctd.html'>ctd</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='input'>
 <span class='co'># Set the parameters for the analysis</span>
-<span class='kw'>reps</span><span class='op'>=</span><span class='fl'>100</span> <span class='co'># &lt;- Use 100 bootstrap lists so it runs quickly, for publishable analysis use &gt;10000</span>
-<span class='kw'>annotLevel</span><span class='op'>=</span><span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
+<span class='co'># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span>
+<span class='va'>reps</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>
+<span class='co'># Use 5 up/down regulated genes (thresh) for speed, default is 250</span>
+<span class='va'>thresh</span> <span class='op'>=</span> <span class='fl'>5</span>
+<span class='va'>annotLevel</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'># &lt;- Use cell level annotations (i.e. Interneurons)</span>
 
 <span class='co'># Load the top table</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>tt_alzh</span>)
-
-<span class='kw'>tt_results</span> <span class='op'>=</span> <span class='fu'>ewce_expression_data</span>(sct_data=<span class='kw'>ctd</span>,tt=<span class='kw'>tt_alzh</span>,annotLevel=<span class='fl'>1</span>,
-    ttSpecies=<span class='st'>"human"</span>,sctSpecies=<span class='st'>"mouse"</span>)
-</div><div class='output co'>#&gt;   [1] "Myom1"         "Rbm17"         "Max"           "Mbd3"         
-#&gt;   [5] "Wdr33"         "Acss1"         "Pcyt1b"        "Bcam"         
-#&gt;   [9] "Prpf38b"       "Ppp2r5c"       "Ica1"          "Cobl"         
-#&gt;  [13] "Marveld1"      "Gemin4"        "Zfp668"        "Casc3"        
-#&gt;  [17] "Aff3"          "Tcf3"          "Taf1c"         "Gna12"        
-#&gt;  [21] "Lamp2"         "Inpp5d"        "Phf14"         "Stk11"        
-#&gt;  [25] "Plxnd1"        "Aebp1"         "Pgf"           "5430427O19Rik"
-#&gt;  [29] "Gad1"          "App"           "Casp9"         "Mid1ip1"      
-#&gt;  [33] "Cep70"         "Dnajc1"        "Cbx5"          "Llph"         
-#&gt;  [37] "Rbm6"          "Tbc1d2b"       "Csk"           "Col6a1"       
-#&gt;  [41] "1110034G24Rik" "Vars2"         "Lama2"         "Aup1"         
-#&gt;  [45] "Ctbp2"         "Atg3"          "Aifm3"         "Gga1"         
-#&gt;  [49] "Zcchc24"       "Prtg"          "Ralgps1"       "Ncan"         
-#&gt;  [53] "Otud4"         "Phf21a"        "Adra2c"        "Iqcc"         
-#&gt;  [57] "Ptbp1"         "Col27a1"       "Zfp526"        "Nrp2"         
-#&gt;  [61] "Flnb"          "Dcn"           "Zfp36l1"       "Antxr1"       
-#&gt;  [65] "Plod3"         "Ddit4l"        "Hnrnph3"       "Apba3"        
-#&gt;  [69] "Taf5"          "Mmd2"          "Kif1c"         "Zswim1"       
-#&gt;  [73] "Myh14"         "Wwox"          "Tmem47"        "Zfp36l2"      
-#&gt;  [77] "Palld"         "Mfge8"         "Nfic"          "Ilf3"         
-#&gt;  [81] "Armc3"         "Myh11"         "Ppp4r1"        "Plekha8"      
-#&gt;  [85] "Gas2l1"        "Tal1"          "Atp8b2"        "Slc40a1"      
-#&gt;  [89] "Enah"          "1110059E24Rik" "Nsd1"          "Rprm"         
-#&gt;  [93] "Golim4"        "Paox"          "Numa1"         "Rabep1"       
-#&gt;  [97] "Tcf12"         "Fastk"         "Cnot4"         "Cxcr4"        
-#&gt; [101] "Rrad"          "Dmc1"          "Rassf9"        "Abca9"        
-#&gt; [105] "Hbp1"          "Klk7"          "Nedd4"         "Adck1"        
-#&gt; [109] "Smarcc1"       "Ezr"           "Gpr161"        "Rapgef3"      
-#&gt; [113] "Snrnp48"       "Abi3bp"        "Nav1"          "Ssr1"         
-#&gt; [117] "Pknox1"        "Qk"            "Osbp2"         "Col5a3"       
-#&gt; [121] "Fgfr1"         "Repin1"        "Dlgap4"        "Atp5sl"       
-#&gt; [125] "Rimkla"        "Pdcd2"         "Alcam"         "P2rx7"        
-#&gt; [129] "Smyd4"         "Mtss1l"        "Sfxn5"         "Unc5b"        
-#&gt; [133] "Ddc"           "Pcdh1"         "Igf2"          "Sec11a"       
-#&gt; [137] "Osbpl2"        "3110079O15Rik" "Sall3"         "Git1"         
-#&gt; [141] "Llgl2"         "Zfp385a"       "Kank2"         "Rps21"        
-#&gt; [145] "Smg5"          "Gnao1"         "Csnk1d"        "Ubxn1"        
-#&gt; [149] "Sos1"          "Ascl1"         "Map2k3"        "Nf2"          
-#&gt; [153] "Fbxw4"         "Ocln"          "Zc3h14"        "S100a4"       
-#&gt; [157] "Rftn2"         "Zfp444"        "Rab28"         "Notch2"       
-#&gt; [161] "Efcab2"        "Maf"           "Hes5"          "Chdh"         
-#&gt; [165] "Mdm2"          "Arhgap22"      "Rnf11"         "Crtap"        
-#&gt; [169] "Frzb"          "Gja1"          "Lmna"          "Rheb"         
-#&gt; [173] "Tmem184b"      "Shroom1"       "Ahnak"         "Itsn1"        
-#&gt; [177] "Jmjd6"         "Kcnj10"        "Bgn"           "Atg12"        
-#&gt; [181] "Ngfr"          "Slc25a29"      "Pcmtd1"        "Adam33"       
-#&gt; [185] "Rnd2"          "5031439G07Rik" "Mif4gd"        "Atp6v0e"      
-#&gt; [189] "Hist3h2a"      "Tmcc2"         "Mrgprf"        "Nrip2"        
-#&gt; [193] "Lef1"          "Sox12"         "Med25"         "Jund"         
-#&gt; [197] "Acp6"          "Ak1"           "Cd79b"         "Wwc1"         
-#&gt; [201] "Itga7"         "Map3k11"       "Cspg4"         "Vat1"         
-#&gt; [205] "Zfp692"        "Selplg"        "Dbi"           "Pou3f2"       
-#&gt; [209] "Doc2b"         "Itgb5"         "Polr3g"        "Pacs1"        
-#&gt; [1] "astrocytes_ependymal"
-#&gt; [1] 0
-#&gt; [1] "Fold enrichment: 1.23472112735846"
-#&gt; [1] "Standard deviations from mean: 3.70467623557712"
-#&gt; [1] ""
-#&gt; [1] "endothelial-mural"
-#&gt; [1] 0
-#&gt; [1] "Fold enrichment: 1.25586447507816"
-#&gt; [1] "Standard deviations from mean: 4.00410843641787"
-#&gt; [1] ""
-#&gt; [1] "interneurons"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt; [1] "microglia"
-#&gt; [1] 0.02
-#&gt; [1] "Fold enrichment: 1.19795554625304"
-#&gt; [1] "Standard deviations from mean: 2.49320466000033"
-#&gt; [1] ""
-#&gt; [1] "oligodendrocytes"
-#&gt; [1] 0.78
-#&gt; [1] ""
-#&gt; [1] "pyramidal CA1"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt; [1] "pyramidal SS"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt;   [1] "Prmt5"         "Atg7"          "Ivd"           "Ica1"         
-#&gt;   [5] "Farsb"         "Aifm1"         "Pole3"         "Psmd11"       
-#&gt;   [9] "Dpm2"          "Vrk3"          "Dnajc5"        "Gphn"         
-#&gt;  [13] "Tubb5"         "Ets2"          "Pygb"          "Fgf12"        
-#&gt;  [17] "Me2"           "Tfrc"          "Adcy3"         "Ramp3"        
-#&gt;  [21] "Cops7a"        "Snrpb"         "Retsat"        "Reep1"        
-#&gt;  [25] "Nap1l5"        "Rufy3"         "Psmg1"         "Dclk1"        
-#&gt;  [29] "Carf"          "Vsnl1"         "Sec23a"        "Liph"         
-#&gt;  [33] "Pias2"         "Kif9"          "Hpcal1"        "Med14"        
-#&gt;  [37] "Lmo4"          "Ank"           "Col12a1"       "Lrrc7"        
-#&gt;  [41] "Adam23"        "Lzic"          "Fgf14"         "Tollip"       
-#&gt;  [45] "Gnal"          "Lpin2"         "Rsrc1"         "Necap1"       
-#&gt;  [49] "Atp6v1b2"      "Kdm5c"         "Coq6"          "Rhbdd2"       
-#&gt;  [53] "Mef2c"         "Gabrd"         "Ajap1"         "Pcbp2"        
-#&gt;  [57] "Brwd1"         "Atp6v1g1"      "Mysm1"         "H2afy"        
-#&gt;  [61] "Parp2"         "Fam175b"       "Mad2l1bp"      "Aak1"         
-#&gt;  [65] "Uqcrc2"        "Rragb"         "Cd200"         "Phtf1"        
-#&gt;  [69] "Psd3"          "Rer1"          "Grin2a"        "Atp6ap2"      
-#&gt;  [73] "Slc27a2"       "Ddx19a"        "Cirbp"         "Camk1g"       
-#&gt;  [77] "Srp72"         "Zfp697"        "Cdc5l"         "Prkag2"       
-#&gt;  [81] "Pdk2"          "Gng3"          "Ddx10"         "Farsa"        
-#&gt;  [85] "Nrxn3"         "Hnrnpd"        "Pgs1"          "Fgfr1op"      
-#&gt;  [89] "Nrn1"          "Commd4"        "Msi2"          "Mapk10"       
-#&gt;  [93] "Npc1"          "Cap1"          "Pdss1"         "Eif4b"        
-#&gt;  [97] "Pgk1"          "Stx18"         "Slc20a1"       "Gprasp1"      
-#&gt; [101] "Atp5b"         "Ppp2ca"        "Zcchc17"       "Tubgcp4"      
-#&gt; [105] "Dlat"          "Ypel1"         "Rab2a"         "Gns"          
-#&gt; [109] "Snip1"         "Thumpd3"       "Pcyox1l"       "Pgm2l1"       
-#&gt; [113] "Gdap1"         "Nat10"         "Arih2"         "Prkab1"       
-#&gt; [117] "Rgs4"          "Asap1"         "Amph"          "Prep"         
-#&gt; [121] "Kcnq3"         "Sema3a"        "G6pc3"         "Wdr1"         
-#&gt; [125] "Nek3"          "Ndufa10"       "Vamp1"         "Prkcd"        
-#&gt; [129] "Fosb"          "Mtpap"         "Lgals8"        "Rnf41"        
-#&gt; [133] "Igf1"          "Krba1"         "Pfkm"          "Slc35a3"      
-#&gt; [137] "Stmn2"         "Scg3"          "Psma3"         "Snx17"        
-#&gt; [141] "Ephx2"         "Atp8a2"        "Rfc2"          "Crls1"        
-#&gt; [145] "Daglb"         "Gabra4"        "Dennd3"        "Jak3"         
-#&gt; [149] "Ogfod1"        "Pex1"          "Tmem59"        "Rbm3"         
-#&gt; [153] "Sgsh"          "Bcl2l13"       "Sdc3"          "Stat4"        
-#&gt; [157] "Mlx"           "Kctd5"         "Fads3"         "Trappc2l"     
-#&gt; [161] "Tbc1d9"        "Ptk2b"         "Thnsl2"        "Txn2"         
-#&gt; [165] "Mcph1"         "Snx10"         "Hs3st2"        "Camk2g"       
-#&gt; [169] "Npat"          "Kdelr2"        "Xpnpep1"       "Axin2"        
-#&gt; [173] "Mak16"         "Cacnb2"        "Prpf4"         "Zfp398"       
-#&gt; [177] "Wars"          "Cep57"         "Eif5"          "Ndfip1"       
-#&gt; [181] "Ndrg4"         "Nol6"          "Letmd1"        "Prss23"       
-#&gt; [185] "Gaa"           "Bicd2"         "Dhrs7b"        "M6pr"         
-#&gt; [189] "Usp11"         "Cdc37l1"       "Map2k5"        "Ywhaz"        
-#&gt; [193] "Fen1"          "Atp6ap1"       "Nedd4l"        "Mcam"         
-#&gt; [197] "Vps53"         "Slc17a7"       "Cobll1"        "Actr1a"       
-#&gt; [201] "Tiam2"         "Mrps18b"       "Slc38a7"       "Gabrg2"       
-#&gt; [205] "Pex3"          "Pdcd4"         "4930430F08Rik" "Lrrtm2"       
-#&gt; [209] "Cadps2"        "Mybbp1a"       "Ttc19"         "Lrrfip1"      
-#&gt; [213] "Susd4"         "Mat2b"         "Cyb561"        "Snap47"       
-#&gt; [217] "Sssca1"        "Tomm20"       
-#&gt; [1] "astrocytes_ependymal"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt; [1] "endothelial-mural"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt; [1] "interneurons"
-#&gt; [1] 0
-#&gt; [1] "Fold enrichment: 1.23048391288061"
-#&gt; [1] "Standard deviations from mean: 4.0669438085213"
-#&gt; [1] ""
-#&gt; [1] "microglia"
-#&gt; [1] 1
-#&gt; [1] ""
-#&gt; [1] "oligodendrocytes"
-#&gt; [1] 0.99
-#&gt; [1] ""
-#&gt; [1] "pyramidal CA1"
-#&gt; [1] 0
-#&gt; [1] "Fold enrichment: 1.21581196595115"
-#&gt; [1] "Standard deviations from mean: 4.82508404210989"
-#&gt; [1] ""
-#&gt; [1] "pyramidal SS"
-#&gt; [1] 0
-#&gt; [1] "Fold enrichment: 1.29366199557388"
-#&gt; [1] "Standard deviations from mean: 5.99250392952273"
-#&gt; [1] ""</div></pre>
+<span class='va'>tt_alzh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ewceData/man/tt_alzh.html'>tt_alzh</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='input'>
+<span class='va'>tt_results</span> <span class='op'>&lt;-</span> <span class='fu'>ewce_expression_data</span><span class='op'>(</span>
+    sct_data <span class='op'>=</span> <span class='va'>ctd</span>, tt <span class='op'>=</span> <span class='va'>tt_alzh</span>, annotLevel <span class='op'>=</span> <span class='fl'>1</span>, thresh <span class='op'>=</span> <span class='va'>thresh</span>,
+    reps <span class='op'>=</span> <span class='va'>reps</span>, ttSpecies <span class='op'>=</span> <span class='st'>"human"</span>, sctSpecies <span class='op'>=</span> <span class='st'>"mouse"</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>Tbc1d2b, Cxcr4, Nrip2, Sox12, Selplg</span></div><div class='output co'>#&gt; <span class='message'>astrocytes_ependymal</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>endothelial-mural</span></div><div class='output co'>#&gt; <span class='message'>0</span></div><div class='output co'>#&gt; <span class='message'>Fold enrichment: 2.15939656808996</span></div><div class='output co'>#&gt; <span class='message'>Standard deviations from mean: 2.12704248258333</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>interneurons</span></div><div class='output co'>#&gt; <span class='message'>0.333333333333333</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>microglia</span></div><div class='output co'>#&gt; <span class='message'>0</span></div><div class='output co'>#&gt; <span class='message'>Fold enrichment: 2.38180905035279</span></div><div class='output co'>#&gt; <span class='message'>Standard deviations from mean: 2.91053189668301</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>oligodendrocytes</span></div><div class='output co'>#&gt; <span class='message'>0.666666666666667</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>pyramidal CA1</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>pyramidal SS</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>see ?ewceData and browseVignettes('ewceData') for documentation</span></div><div class='output co'>#&gt; <span class='message'>loading from cache</span></div><div class='output co'>#&gt; <span class='message'>Cirbp, Camk1g, Nat10, Sema3a, Sssca1</span></div><div class='output co'>#&gt; <span class='message'>astrocytes_ependymal</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>endothelial-mural</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>interneurons</span></div><div class='output co'>#&gt; <span class='message'>0.333333333333333</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>microglia</span></div><div class='output co'>#&gt; <span class='message'>1</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>oligodendrocytes</span></div><div class='output co'>#&gt; <span class='message'>0.333333333333333</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>pyramidal CA1</span></div><div class='output co'>#&gt; <span class='message'>0</span></div><div class='output co'>#&gt; <span class='message'>Fold enrichment: 1.35828266686707</span></div><div class='output co'>#&gt; <span class='message'>Standard deviations from mean: 1.30233163542232</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>pyramidal SS</span></div><div class='output co'>#&gt; <span class='message'>0</span></div><div class='output co'>#&gt; <span class='message'>Fold enrichment: 2.15397179076472</span></div><div class='output co'>#&gt; <span class='message'>Standard deviations from mean: 3.58197688157336</span></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -370,11 +236,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nathan Skene.</p>
+  <p>Developed by Alan Murphy, Nathan Skene.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
