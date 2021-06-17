@@ -44,7 +44,9 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
     set.seed(12345678)
     results <- bootstrap_enrichment_test(
         sct_data = ctd, hits = human.hits,
-        bg = human.bg, reps = reps, annotLevel = 1,
+        bg = unique(c(human.hits, m2h$HGNC.symbol)), 
+        reps = 100, #don't use small subset for bg or reps or won't get result 
+        annotLevel = 1,
         geneSizeControl = TRUE, genelistSpecies = "human",
         sctSpecies = "mouse"
     )

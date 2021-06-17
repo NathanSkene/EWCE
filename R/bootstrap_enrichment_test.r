@@ -100,7 +100,8 @@ bootstrap_enrichment_test <- function(sct_data = NA, hits = NA, bg = NA,
             hits = hits,
             bg = bg,
             numBOOT = reps,
-            sctSpecies = sctSpecies
+            sctSpecies = sctSpecies,
+            sct_data = sct_data
         )
         control_network <- control_related[["list_network"]]
         hitGenes <- control_related[["hitGenes"]]

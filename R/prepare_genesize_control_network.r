@@ -11,6 +11,7 @@
 #' @param numBOOT Number of gene lists to sample
 #' @param sctSpecies  Either 'mouse' or 'human' depending on whether MGI or 
 #' HGNC symbols are used for the single cell dataset
+#' @param sct_data List generated using \code{\link{generate_celltype_data}}
 #' @return A list containing three data frames:
 #' \itemize{
 #'   \item \code{hitGenes}: Array of HGNC symbols containing the hit genes. 
@@ -28,7 +29,7 @@
 #' @import ExperimentHub 
 #' @importFrom AnnotationHub query 
 prepare_genesize_control_network <- function(hits, bg, numBOOT = 10000, 
-                                                sctSpecies) {
+                                                sctSpecies, sct_data) {
     ### PREPARE TO QUERY BIOMART
     combined_human_genes <- unique(c(hits, bg))
 
@@ -85,6 +86,8 @@ prepare_genesize_control_network <- function(hits, bg, numBOOT = 10000,
         #mouse_to_human_homologs <- eh[["EH5367"]]
         mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
         m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
+        #FILTER BASED ON SCT SO ALL GENES ARE PRESENT!!
+        m2h <- m2h[m2h$MGI.symbol %in%rownames(sct_data[[1]]$mean_exp),]
         data_byGene2 <- 
             data_byGene[data_byGene$HGNC.symbol %in% m2h$HGNC.symbol, ]
 

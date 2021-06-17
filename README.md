@@ -1,7 +1,7 @@
 Expression Weighted Celltype Enrichment with *EWCE*
 ================
 Alan Murphy and Nathan Skene
-2021-05-13
+2021-06-17
 
 <!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
 <!-- badges: start -->
@@ -12,14 +12,15 @@ Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travi
 
 # Note
 
-Do not use the package in this repository, instead use
+If you have previously used the EWCE package from
 [neurogenomics/EWCE](https://github.com/neurogenomics/EWCE). This
-package is ready for submission to Bioconductor and thus, will not work
-with R &lt; 4.1. The package [vignette
-website](https://nathanskene.github.io/EWCE/articles/EWCE.html) also
-relates to neurogenomics/EWCE. This is a temporary solution until EWCE
-goes live on Bioconductor (likely to happen in April/May 2021). This
-README file will be updated when EWCE is available from Bioconductor.
+package, which is available on Bioconductor (3.13, R &gt;= 4.1) offers
+functional improvements. One thing to note is that all functions which
+previously used dot ‘.’ notations to separate words have been updated to
+underscores ’\_’ (e.g, `bootstrap.enrichment.test()` is now
+`bootstrap_enrichment_test()`). The package [vignette
+website](https://nathanskene.github.io/EWCE/articles/EWCE.html) gives
+further details.
 
 # Introduction
 
@@ -70,25 +71,23 @@ function.
 
 # Installing EWCE
 
-The *EWCE* package is in the process of being added to Bioconductor but,
-in the meantime, is available from github. To be able to install the
-package one needs first to install the devel version of R (version 4.1)
-which can be found at <https://cran.r-project.org/> and then run the
-following lines of code:
+The *EWCE* package is available on Bioconductor (3.13). To be able to
+install the package one needs first to install &gt;= R (version 4.1)
+which can be found at <https://cran.r-project.org/>.
+
+    if (!require("BiocManager"))
+        install.packages("BiocManager")
+
+    BiocManager::install("EWCE")
+
+The devel version of *EWCE* which contains the newest features can be
+installed from github by run the following lines of code:
 
     if (!require("devtools")) {
       install.packages("devtools")
     }
     devtools::install_github("neurogenomics/ewceData")
     devtools::install_github("nathanskene/ewce")
-
-To install *EWCE* on Bioconductor run:
-
-    if (!require("BiocManager"))
-        install.packages("BiocManager")
-
-    BiocManager::install(version = "devel")
-    BiocManager::install("EWCE")
 
 You can then load the package and data package:
 
