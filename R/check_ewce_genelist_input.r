@@ -50,12 +50,12 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     # CHECK THE ARGUMENTS ARE PROPERLY STRUCTURED
     orthologsOnly <- FALSE
     sct_genes <- rownames(sct_data[[1]]$mean_exp)
-    
+
     ## Check that all 'hits' are in 'bg'
     if (sum(!hits %in% bg) > 0) {
         stop("ERROR: all hits must be in bg")
     }
-    
+
     err_msg <- paste0("ERROR: genelistSpecies and sctSpecies must be either",
                       " mouse or human. If using data from any other species",
                       " then please convert to mouse/human using only",
@@ -64,15 +64,20 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     if (sum(c(genelistSpecies, sctSpecies) %in% c("mouse", "human")) != 2) {
         stop(err_msg)
     }
-    
+
     all_mgi <- ewceData::all_mgi()
     all_hgnc <- ewceData::all_hgnc()
 
     err_msg2 <- paste0("ERROR: less than four of the hits genes are MGI",
                         " symbols. They must be provided as correctly",
                         " formatted MGI symbols (or alter genelistSpecies)")
+    err_msg2_hgnc <- paste0("ERROR: less than four of the hits genes are HGNC",
+                             " symbols. They must be provided as correctly",
+                             " formatted HGNC symbols (or alter genelistSpecies)")
     err_msg3 <- paste0("ERROR: more bg genes are HGNC genes than MGI genes.",
                         " Did you provide the correct species?")
+    err_msg3_hgnc <- paste0("ERROR: more bg genes are MGI genes than HGNC genes.",
+                       " Did you provide the correct species?")
     ## Check that the gene lists are really from the correct species
     if (genelistSpecies == "mouse") {
         if (sum(hits %in% all_mgi) < 4) {
@@ -89,18 +94,21 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     }
     if (genelistSpecies == "human") {
         if (sum(hits %in% all_hgnc) < 4) {
-            stop(err_msg2)
+            stop(err_msg2_hgnc)
         }
         if (sum(bg %in% all_hgnc) < 4) {
-            stop(err_msg2)
+            stop(err_msg2_hgnc)
         }
         if (sum(bg %in% all_hgnc) < sum(bg %in% all_mgi)) {
-            stop(err_msg3)
+            stop(err_msg3_hgnc)
         }
     }
     err_msg4 <- paste0("ERROR: fewer single cell dataset genes are recognised",
                         " MGI symbols than HGNC symbols. Did you provide the",
                         " correct species? And set sctSpecies correctly?")
+    err_msg4_hgnc <- paste0("ERROR: fewer single cell dataset genes are recognised",
+                       " HGNC symbols than MGI symbols. Did you provide the",
+                       " correct species? And set sctSpecies correctly?")
     if (sctSpecies == "mouse") {
         if (sum(sct_genes %in% all_mgi) < sum(sct_genes %in% all_hgnc)) {
             stop(err_msg4)
@@ -108,12 +116,12 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
     }
     if (sctSpecies == "human") {
         if (sum(sct_genes %in% all_hgnc) < sum(sct_genes %in% all_mgi)) {
-            stop(err_msg4)
+            stop(err_msg4_hgnc)
         }
     }
-    
+
     mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
-    
+
     ## If gene lists and single cell data are from different species...
     # then convert the gene lists to match
     if (geneSizeControl == FALSE) {
