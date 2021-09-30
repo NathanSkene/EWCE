@@ -78,6 +78,7 @@ check_ewce_genelist_inputs <- function(sct_data, hits, bg, genelistSpecies,
                         " Did you provide the correct species?")
     err_msg3_hgnc <- paste0("ERROR: more bg genes are MGI genes than HGNC genes.",
                        " Did you provide the correct species?")
+
     ## Check that the gene lists are really from the correct species
     if (genelistSpecies == "mouse") {
         if (sum(hits %in% all_mgi) < 4) {
