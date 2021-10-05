@@ -63,6 +63,6 @@ biocViews: GeneExpression, Transcription, DifferentialExpression,
         mRNAMicroarray, OneChannel, RNASeq,
         BiomedicalInformatics, Proteomics, Visualization,
         FunctionalGenomics, SingleCell
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
 Config/testthat/edition: 3
