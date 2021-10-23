@@ -13,13 +13,13 @@ Oct-23-2021
 <!-- badger::badge_codecov() -->
 
 [![R build
-status](https://github.com/bschilder/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/bschilder/EWCE/actions)
+status](https://github.com/nathanskene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/nathanskene/EWCE/actions)
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/EWCE.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/EWCE)
 [![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](http://www.bioconductor.org/packages/devel/data/experiment/html/ewce.html#archives)
 [![](https://img.shields.io/badge/doi-10.18129/B9.bioc.EWCE%20-green.svg)](https://doi.org/10.18129/B9.bioc.EWCE)
-[![](https://img.shields.io/github/last-commit/bschilder/EWCE.svg)](https://github.com/bschilder/EWCE/commits/master)
-[![](https://codecov.io/gh/bschilder/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/bschilder/EWCE)
+[![](https://img.shields.io/github/last-commit/nathanskene/EWCE.svg)](https://github.com/nathanskene/EWCE/commits/master)
+[![](https://codecov.io/gh/nathanskene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanskene/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![](https://img.shields.io/badge/download-2145/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
