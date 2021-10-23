@@ -7,27 +7,46 @@
 check_ewce_genelist_inputs(
   sct_data,
   hits,
-  bg,
-  genelistSpecies,
-  sctSpecies,
-  geneSizeControl = FALSE
+  bg = NULL,
+  genelistSpecies = NULL,
+  sctSpecies = NULL,
+  output_species = "human",
+  geneSizeControl = FALSE,
+  standardise = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{hits}{Array of MGI/HGNC gene symbols containing the target gene list.}
+\item{hits}{List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if \code{geneSizeControl=TRUE}.}
 
-\item{bg}{Array of MGI/HGNC gene symbols containing the background gene list.}
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.
+if \code{geneSizeControl=TRUE}.}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI
-or HGNC symbols are used for gene lists}
+\item{genelistSpecies}{Species that \code{hits} genes came from
+(no longer limited to just "mouse" and "human").}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI
-or HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Species that \code{sct_data} came from
+(no longer limited to just "mouse" and "human").}
 
-\item{geneSizeControl}{Will genelists sampled control for GC content and
-transcript length? Boolean.}
+\item{output_species}{Species to convert \code{sct_data} and \code{hits} to
+(Default: "human").}
+
+\item{geneSizeControl}{Whether you want to control for
+GC content and transcript length. Recommended if the gene list originates
+from genetic studies (\emph{Default: FALSE}).
+ If set to \code{TRUE}, then \code{hits} must be from humans.
+should be used rather than mouse.}
+
+\item{standardise}{If \code{input_species==output_species},
+should the genes be standardised using \link[orthogene]{map_genes}?}
+
+\item{verbose}{Print messages.}
 }
 \value{
 A list containing
@@ -46,18 +65,14 @@ Checks all hits genes are in bg. Checks the species match and if not
 reduces to 1:1 orthologs.
 }
 \examples{
-library(ewceData)
+ctd <- ewceData::ctd()
+example_genelist <- ewceData::example_genelist()
+
 # Called from "bootstrap_enrichment_test()" and "generate_bootstrap_plots()"
-ctd <- ctd()
-example_genelist <- example_genelist()
-mouse_to_human_homologs <- mouse_to_human_homologs()
-m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <-
-     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-#subset mouse.bg for speed but ensure it still contains the hits
-mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
-checkedLists <- check_ewce_genelist_inputs(
-    sct_data = ctd, hits = mouse.hits,
-    bg = mouse.bg, genelistSpecies = "mouse", sctSpecies = "mouse"
+checkedLists <- EWCE::check_ewce_genelist_inputs(
+    sct_data = ctd,
+    hits = example_genelist,
+    sctSpecies = "mouse",
+    genelistSpecies = "human"
 )
 }

@@ -7,7 +7,7 @@
 convert_new_ewce_to_old(ctd, lvl)
 }
 \arguments{
-\item{ctd}{A celltype data structure containing $mean_exp and $specificity}
+\item{ctd}{A cell type data structure containing $mean_exp and $specificity}
 
 \item{lvl}{The annotation level to extract}
 }
@@ -15,6 +15,6 @@ convert_new_ewce_to_old(ctd, lvl)
 celltype_data The old style data structure
 }
 \description{
-\code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file 
+\code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file
 from a new one
 }

@@ -2,23 +2,18 @@
 % Please edit documentation in R/prep_dendro.r
 \name{prep_dendro}
 \alias{prep_dendro}
-\title{prep_dendro}
+\title{Prepare dendrogram}
 \usage{
 prep_dendro(ctdIN)
 }
 \arguments{
-\item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is 
-intended to be used via apply)}
+\item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is
+intended to be used via apply).}
 }
 \value{
-A ctd with dendrogram plotting info added
+A CellTypeDataset with dendrogram plotting info added.
 }
 \description{
-\code{prep_dendro} adds a dendrogram to a cts
+\code{prep_dendro} adds a dendrogram to a CellTypeDataset (CTD).
 }
-\examples{
-library(ewceData)
-ctd <- ctd()
-ctd <- lapply(ctd, EWCE::bin_specificity_into_quantiles, numberOfBins = 40)
-ctd <- lapply(ctd, EWCE::prep_dendro)
-}
+\keyword{internal}

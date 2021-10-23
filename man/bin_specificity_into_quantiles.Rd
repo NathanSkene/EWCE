@@ -4,16 +4,25 @@
 \alias{bin_specificity_into_quantiles}
 \title{bin_specificity_into_quantiles}
 \usage{
-bin_specificity_into_quantiles(ctdIN, numberOfBins)
+bin_specificity_into_quantiles(
+  ctdIN,
+  numberOfBins,
+  as_sparse = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is 
+\item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is
 intended to be used via apply)}
 
 \item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+
+\item{as_sparse}{Convert to sparseMatrix.}
+
+\item{verbose}{Print messages.}
 }
 \value{
-A ctd with $specificity_quantiles
+A ctd with $specificity_quantiles.
 }
 \description{
 \code{bin_specificity_into_quantiles} is an internal function used to convert

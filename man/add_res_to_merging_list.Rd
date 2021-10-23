@@ -8,8 +8,9 @@ add_res_to_merging_list(full_res, existing_results = NULL)
 }
 \arguments{
 \item{full_res}{results list generated using
-\code{\link{bootstrap_enrichment_test}} or \code{\link{ewce_expression_data}}
-functions. Multiple results tables can be merged into one
+\link[EWCE]{bootstrap_enrichment_test}
+or \link[EWCE]{ewce_expression_data} functions.
+ Multiple results tables can be merged into one
 results table, as long as the 'list' column is set to distinguish them.}
 
 \item{existing_results}{Output of previous rounds from adding results to
@@ -29,22 +30,22 @@ ctd <- ctd()
 
 # Load the data
 tt_alzh <- tt_alzh()
-#tt_alzh_BA36 <- tt_alzh_BA36()
+# tt_alzh_BA36 <- tt_alzh_BA36()
 # Use 3 bootstrap lists for speed, for publishable analysis use >10000
 reps <- 3
 # Use 5 up/down regulated genes (thresh) for speed, default is 250
-thresh = 5
+thresh <- 5
 # Run EWCE analysis
-#tt_results <- ewce_expression_data(
+# tt_results <- ewce_expression_data(
 #    sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh = thresh,
 #    reps = reps, ttSpecies = "human", sctSpecies = "mouse"
-#)
-#tt_results_36 <- ewce_expression_data(
+# )
+# tt_results_36 <- ewce_expression_data(
 #    sct_data = ctd, tt = tt_alzh_BA36, annotLevel = 1, thresh = thresh,
 #    reps = reps, ttSpecies = "human", sctSpecies = "mouse"
-#)
+# )
 
 # Fill a list with the results
 results <- add_res_to_merging_list(tt_alzh)
-#results <- add_res_to_merging_list(tt_alzh_BA36, results)
+# results <- add_res_to_merging_list(tt_alzh_BA36, results)
 }

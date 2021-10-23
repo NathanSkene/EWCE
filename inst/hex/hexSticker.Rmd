@@ -1,0 +1,57 @@
+---
+title: "hexSticker"
+author: "<h4>Author: <i>Brian M. Schilder</i></h4>" 
+date: "<h4>Most recent update: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
+output: rmarkdown::html_vignette
+editor_options: 
+  chunk_output_type: inline
+vignette: >
+  %\VignetteIndexEntry{hexSticker}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 7,
+                      fig.height = 5,
+                      root.dir=here::here())
+knitr::opts_knit$set(root.dir=here::here()) 
+```
+
+```{r setup, include=TRUE, message=FALSE} 
+library(hexSticker)
+
+library(dplyr)
+library(ggplot2)
+```
+
+You can make awesome hex stickers for your R packages using [hexSticker](https://github.com/GuangchuangYu/hexSticker). 
+
+# EWCE
+
+```{r, eval=F}   
+img1 <- here::here("inst/hex/cell.png")
+
+s_size = .5
+hex <- hexSticker::sticker(subplot = img1, 
+                    package="E W C E", p_color="#01a8d3", p_size=30,
+                    s_x = 1, s_y = .8,  s_width = s_size, s_height = s_size*.8, 
+                    h_fill = "black", h_color = "#003e74",  
+                    spotlight = TRUE, l_width = 8, l_height = 8,
+                    white_around_sticker = FALSE,
+                    filename = here::here("inst/hex/EWCE.png"))
+print(hex)
+```
+
+
+# Session Info 
+
+<details> 
+
+```{r Session Info}
+utils::sessionInfo()
+```
+
+</details>  
+

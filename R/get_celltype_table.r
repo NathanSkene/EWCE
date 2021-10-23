@@ -1,11 +1,11 @@
-#' get_celltype_table
+#'  get_celltype_table
 #'
-#' \code{get_celltype_table} Generates a table that can be used for 
+#' \code{ get_celltype_table} Generates a table that can be used for
 #' supplemenary tables of publications.
-#' The table lists how many cells are associated with each celltype, the level 
+#' The table lists how many cells are associated with each cell type, the level
 #' of annotation, and the dataset from which it was generated.
 #'
-#' @param annot An annotation dataframe, which columns named 'level1class', 
+#' @param annot An annotation dataframe, which columns named 'level1class',
 #' 'level2class' and 'dataset_name'
 #' @return A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
 #' @examples
@@ -16,10 +16,12 @@
 #' celltype_table <- get_celltype_table(cortex_mrna$annot)
 #' @export
 get_celltype_table <- function(annot) {
-    err_msg <-paste0("Error: annotation dataframe must have columns for",
-                        " 'level1class', 'level2class' and 'dataset_name")
-    if (is.null(annot$level1class) | is.null(annot$level1class) | 
-            is.null(annot$dataset_name)) {
+    err_msg <- paste0(
+        "Error: annotation dataframe must have columns for",
+        " 'level1class', 'level2class' and 'dataset_name"
+    )
+    if (is.null(annot$level1class) | is.null(annot$level1class) |
+        is.null(annot$dataset_name)) {
         stop(err_msg)
     }
     annot$cell_id <- as.character(annot$cell_id)
@@ -39,48 +41,58 @@ get_celltype_table <- function(annot) {
     colnames(l2_datasets)[1] <- "name"
     l2_datasets[, 1] <- compress_name(l2_datasets[, 1])
 
-    # Find all L2 celltypes which contribute to each L1 celltype
+    # Find all L2 cell types which contribute to each L1 cell type
     l1_contribs <- rep("", length(l1_datasets$name))
     names(l1_contribs) <- l1_datasets$name
     for (l1 in l1_datasets$name) {
-        l1_contribs[l1] <- 
+        l1_contribs[l1] <-
             paste(unique(annot[
-                compress_name(annot$level1class) == l1, ]$level2class), 
-                    collapse = ", ")
+                compress_name(annot$level1class) == l1,
+            ]$level2class),
+            collapse = ", "
+            )
     }
-    l1_contribs <- data.frame(name = names(l1_contribs), 
-                                contributing_l2_celltypes = l1_contribs, 
-                                stringsAsFactors = FALSE)
-    l1_datasets$contributing_l2_celltypes <- 
+    l1_contribs <- data.frame(
+        name = names(l1_contribs),
+        contributing_l2_celltypes = l1_contribs,
+        stringsAsFactors = FALSE
+    )
+    l1_datasets$contributing_l2_celltypes <-
         l1_contribs$contributing_l2_celltypes
     l2_datasets$contributing_l2_celltypes <- "NA"
 
-    # Calculate frequency of level 1 celltypes
+    # Calculate frequency of level 1 cell types
     freqs <- rep(0, dim(l1_datasets)[1])
     for (r in seq_len(dim(l1_datasets)[1])) {
-        freqs[r] <- 
+        freqs[r] <-
             dim(annot[
-                compress_name(annot$level1class) == l1_datasets[r, ]$name & 
-                    annot$dataset_name == l1_datasets[r, ]$dataset_name, ])[1]
+                compress_name(annot$level1class) == l1_datasets[r, ]$name &
+                    annot$dataset_name == l1_datasets[r, ]$dataset_name,
+            ])[1]
     }
     l1_datasets$number_of_cells <- freqs
 
-    # Calculate frequency of level 2 celltypes
+    # Calculate frequency of level 2 cell types
     freqs <- rep(0, dim(l2_datasets)[1])
     for (r in seq_len(dim(l2_datasets)[1])) {
-        freqs[r] <- 
+        freqs[r] <-
             dim(annot[
-                compress_name(annot$level2class) == l2_datasets[r, ]$name & 
-                    annot$dataset_name == l2_datasets[r, ]$dataset_name, ])[1]
+                compress_name(annot$level2class) == l2_datasets[r, ]$name &
+                    annot$dataset_name == l2_datasets[r, ]$dataset_name,
+            ])[1]
     }
     l2_datasets$number_of_cells <- freqs
 
     l1_datasets$annotation_level <- 1
     l2_datasets$annotation_level <- 2
-    l1_ct <- l1_datasets[, c("name", "annotation_level", "dataset_name", 
-                                "number_of_cells", "contributing_l2_celltypes")]
-    l2_ct <- l2_datasets[, c("name", "annotation_level", "dataset_name", 
-                                "number_of_cells", "contributing_l2_celltypes")]
+    l1_ct <- l1_datasets[, c(
+        "name", "annotation_level", "dataset_name",
+        "number_of_cells", "contributing_l2_celltypes"
+    )]
+    l2_ct <- l2_datasets[, c(
+        "name", "annotation_level", "dataset_name",
+        "number_of_cells", "contributing_l2_celltypes"
+    )]
     celltype_table <- rbind(l1_ct, l2_ct)
 
     return(celltype_table)

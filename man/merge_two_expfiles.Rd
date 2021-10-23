@@ -2,37 +2,66 @@
 % Please edit documentation in R/merge_two_expfiles.r
 \name{merge_two_expfiles}
 \alias{merge_two_expfiles}
-\title{merge_two_expfiles}
+\title{Merge two exp files}
 \usage{
-merge_two_expfiles(exp1, exp2, annot1, annot2, name1 = "", name2 = "")
+merge_two_expfiles(
+  exp1,
+  exp2,
+  annot1,
+  annot2,
+  name1 = "",
+  name2 = "",
+  as_sparse = TRUE,
+  as_DelayedArray = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{exp1}{Numerical expression matrix for dataset1 with row for each gene 
-and column for each cell. Row names are MGI/HGNC gene symbols. Column names 
+\item{exp1}{Numerical expression matrix for dataset1 with row for each gene
+and column for each cell. Row names are gene symbols. Column names
 are cell IDs which can be cross referenced against the annot data frame.}
 
-\item{exp2}{Numerical expression matrix for dataset2 with row for each gene 
-and column for each cell. Row names are MGI/HGNC gene symbols. Column names 
+\item{exp2}{Numerical expression matrix for dataset2 with row for each gene
+and column for each cell. Row names are gene symbols. Column names
 are cell IDs which can be cross referenced against the annot data frame.}
 
-\item{annot1}{Annotation data frame for dataset1 which contains three 
+\item{annot1}{Annotation data frame for dataset1 which contains three
 columns at least: cell_id, level1class and level2class}
 
-\item{annot2}{Annotation data frame for dataset2 which contains three 
+\item{annot2}{Annotation data frame for dataset2 which contains three
 columns at least: cell_id, level1class and level2class}
 
-\item{name1}{Name used to refer to dataset 1. Leave blank if it's already a 
+\item{name1}{Name used to refer to dataset 1. Leave blank if it's already a
 merged dataset.}
 
-\item{name2}{Name used to refer to dataset 2. Leave blank if it's already a 
+\item{name2}{Name used to refer to dataset 2. Leave blank if it's already a
 merged dataset.}
+
+\item{as_sparse}{Convert the merged \code{exp} to a sparse matrix.}
+
+\item{as_DelayedArray}{Convert the merged \code{exp} to
+a \code{DelayedArray}.}
+
+\item{verbose}{Print messages.}
 }
 \value{
-List containing merged exp and annot
+List containing merged exp and annot.
 }
 \description{
-\code{merge_two_expfiles} Used to combine two single cell type datasets
+\code{merge_two_expfiles} Used to combine two single cell type datasets.
 }
 \examples{
-# See the EWCE vignette for use case explanation
+cortex_mrna <- ewceData::cortex_mrna()
+exp1 <- cortex_mrna$exp[, 1:50]
+exp2 <- cortex_mrna$exp[, 51:100]
+annot1 <- cortex_mrna$annot[1:50, ]
+annot2 <- cortex_mrna$annot[51:100, ]
+merged_res <- EWCE::merge_two_expfiles(
+    exp1 = exp1,
+    exp2 = exp2,
+    annot1 = annot1,
+    annot2 = annot2,
+    name1 = "dataset1",
+    name2 = "dataset2"
+)
 }

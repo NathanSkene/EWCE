@@ -1,17 +1,20 @@
-# Test for fix_bad_mgi_symbols
 test_that("method to remove/fix an expected set of genes", {
-    # Use Vignette Dataset to check function, alter input gene names
-    cortex_mrna <- cortex_mrna()
-    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
-    #cortex_mrna <- eh[["EH5381"]]
+    # Test for fix_bad_mgi_symbols
 
-    #if (!file.exists("MRK_List2.rpt")) {
-    #if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))){
-    #    download.file("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
-    #                    destfile = sprintf("%s/MRK_List2.rpt", tempdir()))
-    #}
+    requireNamespace("data.table")
+    # Use Vignette Dataset to check function, alter input gene names
+    cortex_mrna <- ewceData::cortex_mrna()
+
+    # IMPORTANT!: Do not delete. Check that outputs "EWCE_return" will fail otherwise.
+    if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))) {
+        download.file(
+            "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
+            destfile = sprintf("%s/MRK_List2.rpt", tempdir())
+        )
+    }
     # take a subset for testing
-    test_exp_set <- cortex_mrna$exp[1:10, 1:50] # causes error when no mismatch
+    # causes error when no mismatch
+    test_exp_set <- cortex_mrna$exp[seq(1, 10), seq(1, 50)]
     # Add in fake gene data for which the gene could have issues with excel:
     # MARCH1 gene would go to Mar-01
     rownames(test_exp_set)[7] <- "Mar-01"
@@ -19,8 +22,8 @@ test_that("method to remove/fix an expected set of genes", {
     # catch error when no exp inputted
     error_return <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = NULL#,
-            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = NULL # ,
+            # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -31,18 +34,18 @@ test_that("method to remove/fix an expected set of genes", {
     rownames(test_exp_set_char) <- rownames(test_exp_set)
     error_return2 <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = test_exp_set_char#,
-            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = test_exp_set_char # ,
+            # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
         )
 
-    # pass data table rather than data frame or matrix
-    error_return3 <-
+    ## pass data table rather than data frame or matrix
+    ## Now detects data.table format and converts to data.frame automatically
+    warning_return0 <-
         tryCatch(EWCE::fix_bad_mgi_symbols(
-            exp = data.table::data.table(as.data.frame(test_exp_set))#,
-            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            exp = data.table::data.table(as.data.frame(test_exp_set), keep.rownames = 0)
         ),
         error = function(e) e,
         warning = function(w) w
@@ -50,8 +53,9 @@ test_that("method to remove/fix an expected set of genes", {
 
     # function should warn the user about this -if warning returned function worked
     warning_return <-
-        tryCatch(EWCE::fix_bad_mgi_symbols(test_exp_set#,
-            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+        tryCatch(EWCE::fix_bad_mgi_symbols(
+            test_exp_set # ,
+            # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
         ),
         error = function(e) e,
         warning = function(w) w
@@ -68,32 +72,35 @@ test_that("method to remove/fix an expected set of genes", {
     warning_return3 <-
         tryCatch(
             EWCE::fix_bad_hgnc_symbols(
-                data.table::data.table(as.data.frame(test_exp_set))),
+                as.data.frame(test_exp_set)
+            ),
             error = function(e) e,
             warning = function(w) w
         )
 
     options(warn = -1)
-    hgnc_return <- EWCE::fix_bad_hgnc_symbols(test_exp_set)
+    hgnc_return <- EWCE::fix_bad_hgnc_symbols(exp = test_exp_set)
     options(warn = 0)
 
     # Now test if a synonym of a gene in the list is added
     # function should combine them and give sum reads for each sample
     # alt symbol for Tspan12 is Tm4sf12
     rownames(test_exp_set)[7] <- "Tm4sf12"
-    EWCE_return <- EWCE::fix_bad_mgi_symbols(test_exp_set,
+    EWCE_return <- EWCE::fix_bad_mgi_symbols(
+        exp = test_exp_set,
         mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir()),
         printAllBadSymbols = TRUE
     )
     # Now the returned value should be the average of the two
-    sum_exp <-
-        colSums(test_exp_set[rownames(test_exp_set) %in%
-                                 c("Tspan12", "Tm4sf12"), ])
+    sum_exp <- colSums(test_exp_set[
+        rownames(test_exp_set) %in% c("Tspan12", "Tm4sf12"),
+    ])
 
     # check nothing changes when there are no issues
-    test_exp_set <- test_exp_set[1:5, ]
-    EWCE_output_same_input <- EWCE::fix_bad_mgi_symbols(test_exp_set#,
-        #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+    test_exp_set_15 <- test_exp_set[1:5, ]
+    EWCE_output_same_input <- EWCE::fix_bad_mgi_symbols(
+        test_exp_set_15 # ,
+        # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
     )
 
 
@@ -102,57 +109,49 @@ test_that("method to remove/fix an expected set of genes", {
     warning_return4 <-
         tryCatch(
             EWCE_output_large <-
-                EWCE::fix_bad_mgi_symbols(cortex_mrna$exp[1:10000, 1:1000]#,
-            #mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
-        ),
-        error = function(e) e,
-        warning = function(w) w
+                EWCE::fix_bad_mgi_symbols(
+                    cortex_mrna$exp[1:10000, 1:1000] # ,
+                    # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+                ),
+            error = function(e) e,
+            warning = function(w) w
         )
-
-    # remove folder once tested
-    #unlink("MRK_List2.rpt", recursive = TRUE)
-
     # fail if any of the 3 tests fail
-    expect_equal(
-        # Test 0.1
-        all(
-            is(error_return, "error"),
-            # Test 0.2
-            is(error_return2, "warning"),
-            # Test 0.3
-            is(error_return3, "error"),
-            # Test 1
-            is(warning_return, "warning"),
-            # Test 1.2
-            is(warning_return2, "warning"),
-            # Test 1.3
-            is(warning_return3, "error"),
-            # Test 1.4
-            is(hgnc_return)[1] == "matrix",
-            # Test 2
-            all(sum_exp == EWCE_return[rownames(EWCE_return) == "Tspan12", ]),
-            # Test 3
-            all.equal(EWCE_output_same_input, test_exp_set),
-            # Test 4
-            is(warning_return4, "warning")
-        ),
-        TRUE
+    testthat::expect_true(is(error_return, "error"))
+    testthat::expect_true(is(error_return2, "warning"))
+    testthat::expect_true(is(warning_return0, "warning"))
+    testthat::expect_true(is(warning_return, "warning"))
+    testthat::expect_true(is(warning_return2, "warning"))
+    testthat::expect_true(is(warning_return3, "warning"))
+    testthat::expect_true(EWCE:::is_sparse_matrix(hgnc_return))
+    testthat::expect_true(
+        all(sum_exp == EWCE_return[rownames(EWCE_return) == "Tspan12", ])
     )
-    
-    
+    testthat::expect_true(all.equal(EWCE_output_same_input, test_exp_set_15))
+    testthat::expect_true(is(warning_return4, "warning"))
+
     #----------------------------------------------------------
-    #Check SingleCellExperiment gives same results
-    cortex_mrna$exp <- cortex_mrna$exp[1:6000,]#reduce number of genes for speed
-    
-    #Make SCE object from SCT
+    # Check SingleCellExperiment gives same results
+    # reduce number of genes for speed
+    cortex_mrna$exp <- cortex_mrna$exp[seq(1, 6000), ]
+
+    # Make SCE object from SCT
     cortex_mrna_SCE <-
         SingleCellExperiment::SingleCellExperiment(
-            assays=list(counts=cortex_mrna$exp),
-            colData=cortex_mrna$annot)
-    
-    #Ensure output is the same for the two data types
-    cortex_mrna$exp = suppressWarnings(fix_bad_mgi_symbols(cortex_mrna$exp))
-    cortex_mrna_SCE = suppressWarnings(fix_bad_mgi_symbols(cortex_mrna_SCE))
-    #fail if not the exact same
-    expect_equal(all.equal(assays(cortex_mrna_SCE)$counts,cortex_mrna$exp),TRUE)
+            assays = list(counts = cortex_mrna$exp),
+            colData = cortex_mrna$annot
+        )
+
+    # Ensure output is the same for the two data types
+    cortex_mrna$exp <- suppressWarnings(
+        fix_bad_mgi_symbols(exp = cortex_mrna$exp)
+    )
+    cortex_mrna_SCE <- suppressWarnings(
+        fix_bad_mgi_symbols(exp = cortex_mrna_SCE)
+    )
+    # fail if not the exact same
+    testthat::expect_true(all.equal(
+        SummarizedExperiment::assays(cortex_mrna_SCE)$counts,
+        cortex_mrna$exp
+    ))
 })

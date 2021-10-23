@@ -7,9 +7,11 @@
 generate_controlled_bootstrap_geneset(
   hitGenes,
   sct_data,
+  combinedGenes,
   annotLevel,
   reps,
-  controlledCT = NULL
+  controlledCT = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -21,17 +23,20 @@ generate_controlled_bootstrap_geneset(
 
 \item{reps}{The number of gene lists to sample}
 
-\item{controlledCT}{Name of a celltype (from colnames of 
-sct_data[[x]]$specificity).}
+\item{controlledCT}{Name of a cell type (from colnames of
+\code{sct_data[[x]]$specificity}).}
+
+\item{verbose}{Print messages.}
 }
 \value{
-Matrix of genes (nrows=length(hitGenes),ncols=reps), where each 
-column is a gene list
+Matrix of genes
+ (such that \code{nrows=length(hitGenes)} and \code{ncols=reps}), where each
+column is a gene list.
 }
 \description{
-\code{generate_controlled_bootstrap_geneset} Used to generated celltype 
-controlled bootstraped
+Used to generated cell type-controlled bootstrapped gene sets.
 }
-\examples{
-# See controlled_geneset_enrichment.r
+\details{
+See \link[EWCE]{controlled_geneset_enrichment} for examples.
 }
+\keyword{internal}

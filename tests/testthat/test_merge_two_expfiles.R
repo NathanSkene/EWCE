@@ -2,12 +2,9 @@
 test_that("merging two expression files", {
     # use vignette data
 
-    cortex_mrna <- cortex_mrna()
-    #eh <- query(ExperimentHub::ExperimentHub(), "ewceData")
-    #cortex_mrna <- eh[["EH5381"]]
-    
-    # NOTE: Can't use hypothalamus data for test as issue with travis and read_xl::read_excel()
-
+    cortex_mrna <- ewceData::cortex_mrna()
+    # NOTE: Can't use hypothalamus data for test as issue
+    # with travis and read_xl::read_excel()
 
     # Download the hypothalamus data and unzip
     # if(!file.exists("GSE74672_expressed_mols_with_classes.xlsx")){
@@ -31,7 +28,7 @@ test_that("merging two expression files", {
     # hypo_annot  = hypo_annot[!is.na(hypo_annot$level2class) & !hypo_annot$level2class=="uc",]
     # hypo_exp    = exp[,hypo_annot$cell_id]
 
-    # Make the celltype names more aesthetically pleasing
+    # Make the cell type names more aesthetically pleasing
     # hypo_annot$level2class=gsub(",",";",hypo_annot$level2class)
     #  hypo_annot$level1class[grep("Oxt;|^Avp",hypo_annot$level2class)] = "Oxytocin / Vasopressin Expressing Neurons"
     #  hypo_annot$level1class[grep("^Th;|^Dopamine",hypo_annot$level2class)] = "Hypothalamic Dopaminergic Neurons"
@@ -47,7 +44,8 @@ test_that("merging two expression files", {
         exp2 = cortex_mrna$exp,
         annot1 = cortex_mrna$annot, # hypo_annot,
         annot2 = cortex_mrna$annot,
-        name1 = "Hypothalamus (KI)", name2 = "Cortex/Hippo (KI)"
+        name1 = "Hypothalamus (KI)",
+        name2 = "Cortex/Hippo (KI)"
     )
 
     # check merge didn't drop any samples

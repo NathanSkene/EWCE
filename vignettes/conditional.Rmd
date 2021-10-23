@@ -1,0 +1,234 @@
+---
+title: "Conditional enrichment examples"
+author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
+date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
+bibliography: ../inst/cit/EWCE.bib
+csl: ../inst/cit/nature.csl
+output:
+  BiocStyle::html_document:
+    self_contained: false
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    code_folding: show
+    df_print: paged
+vignette: >
+  %\VignetteIndexEntry{Conditional enrichment examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}     
+---
+
+
+```{r style, echo=FALSE, results='asis', message=FALSE}
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy         = FALSE, 
+                      message      = FALSE)
+```
+
+# Setup  
+
+```{r setup, include=TRUE}
+library(EWCE)
+set.seed(1234)
+```
+
+
+# Conditional cell type enrichment analysis
+
+## Prepare data 
+
+```{r}
+ctd <- ewceData::ctd()
+hits <- ewceData::example_genelist()
+
+## NOTE: rep=100 for demo purposes only. 
+## Use >=10,000 for publication-quality results.
+reps <- 100 
+annotLevel <- 1
+```
+
+
+## Controlling for expression in another cell type
+
+In a followup paper we found that an enrichment detected for Schizophrenia in Somatosensory Pyramidal neurons could be explained by accounting for expression in Hippocampal CA1 pyramidal neurons. These results are described here:
+
+[Skene, et al. Genetic identification of brain cell types underlying schizophrenia.Nature Genetics, 2018.](https://www.nature.com/articles/s41588-018-0129-5)
+
+Those results were generated using an alternative enrichment method designed for use with GWAS Summary Statistics rather than gene sets. The same sort of approach can be extended to EWCE as well, and we have implemented it within this package. When testing for enrichment the other gene sets that are sampled are selected to have equivalent specificity in the controlled cell type.
+
+We demonstrate it's use below to test whether the enrichment in astrocytes is still present after controlling for the enrichment within microglia:
+
+```{r }
+unconditional_results <- EWCE::bootstrap_enrichment_test(
+  sct_data = ctd,
+  hits = hits,
+  sctSpecies = "mouse",
+  genelistSpecies = "human",
+  reps = reps,
+  annotLevel = annotLevel)
+
+conditional_results_micro <- EWCE:: bootstrap_enrichment_test(
+  sct_data = ctd,
+  hits = hits,
+  sctSpecies = "mouse",
+  genelistSpecies = "human",
+  reps = reps,
+  annotLevel = annotLevel,
+  controlledCT = "microglia")
+
+conditional_results_astro <- EWCE::bootstrap_enrichment_test(
+  sct_data = ctd,
+  hits = hits,
+  sctSpecies = "mouse",
+  genelistSpecies = "human",
+  reps = reps,
+  annotLevel = annotLevel,
+  controlledCT = "astrocytes_ependymal")
+
+merged_results <- rbind(
+  data.frame(unconditional_results$results,
+             list="Unconditional Enrichment"),
+  data.frame(conditional_results_micro$results,
+             list="Conditional Enrichment (Microglia controlled)"),
+  data.frame(conditional_results_astro$results,
+             list="Conditional Enrichment (Astrocyte controlled)")
+)
+plot_list <- EWCE::ewce_plot(total_res = merged_results,
+                             mtc_method = "BH")
+print(plot_list$plain)
+```
+
+When controlling for astrocytes the enrichment in astrocytes is
+totally abolished as expected, and vica versa. The enrichment in microglia
+remains strongly significant however after controlling for astrocytes., 
+suggesting that this enrichment is independent of that in astrocytes. 
+
+## Gene set enrichment analysis controlling for cell type expression
+
+Traditionally the standard analysis run on all gene sets was the GO 
+enrichment analysis. Once you have established that a given gene list
+is enriched for a given cell type, it becomes questionable whether a GO
+enrichment is driven purely by the underlying cell type enrichment. 
+For instance, it is well established that genes associated with schizophrenia 
+are enriched for the human post-synaptic density genes, however,
+it has also been shown that schizophrenia is enriched for specificity
+in CA1 pyramidal neurons (which highly express hPSD genes). 
+These two enrichments can be disassociated using the following analysis:
+
+```
+# set seed for bootstrap reproducibility 
+
+mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
+m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
+
+schiz_genes <- ewceData::schiz_genes()
+id_genes <- ewceData::id_genes()
+mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol %in% schiz_genes,"MGI.symbol"])
+mouse.hits.id = unique(m2h[m2h$HGNC.symbol %in% id_genes,"MGI.symbol"])
+mouse.bg  = unique(m2h$MGI.symbol)
+
+hpsd_genes <- ewceData::hpsd_genes()
+mouse.hpsd = unique(m2h[m2h$HGNC.symbol %in% hpsd_genes,"MGI.symbol"])
+
+rbfox_genes <- ewceData::rbfox_genes()
+
+res_hpsd_schiz = controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                                functional_genes = mouse.hpsd, 
+                                                bg_genes = mouse.bg, 
+                                                sct_data = ctd, 
+                                                annotLevel = 1, 
+                                                reps=reps, 
+                                                controlledCT="pyramidal CA1")
+res_rbfox_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = rbfox_genes, 
+                                  bg_genes = mouse.bg, 
+                                  sct_data = ctd, 
+                                  annotLevel = 1, 
+                                  reps=reps, 
+                                  controlledCT="pyramidal CA1")
+print(res_hpsd_schiz)
+print(res_rbfox_schiz)
+
+res_hpsd_id = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, 
+                                  sct_data = ctd, 
+                                  annotLevel = 1, 
+                                  reps=reps, 
+                                  controlledCT = "pyramidal SS")
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                              functional_genes = rbfox_genes, 
+                                              bg_genes = mouse.bg, 
+                                              sct_data = ctd, 
+                                              annotLevel = 1, 
+                                              reps=reps, 
+                                              controlledCT="pyramidal SS")
+print(res_hpsd_id)
+print(res_rbfox_id)
+```
+
+The analysis also tests for enrichment of Rbfox binding genes in 
+the schizophrenia susceptibility genes, as well as both hPSD and
+Rbfox genes in Intellectual Disability genes. All of the enrichments 
+are confirmed as still being present after controlling for the associated 
+cell type, apart from the enrichment of PSD genes in Schizophrenia 
+which falls from borderline to non-significant.
+
+## Controlling for multiple cell types
+
+```  
+controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
+
+res_hpsd_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, 
+                                  sct_data = ctd, 
+                                  annotLevel = 1, 
+                                  reps=reps, 
+                                  controlledCT=controlledCTs)
+res_rbfox_schiz = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.schiz, 
+                                  functional_genes = rbfox_genes, 
+                                  bg_genes = mouse.bg, sct_data = ctd, 
+                                  annotLevel = 1, reps=reps, 
+                                  controlledCT=controlledCTs)
+print(res_hpsd_schiz)
+print(res_rbfox_schiz)
+
+res_hpsd_id = 
+  controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                  functional_genes = mouse.hpsd, 
+                                  bg_genes = mouse.bg, 
+                                  sct_data = ctd, 
+                                  annotLevel = 1, 
+                                  reps=reps, 
+                                  controlledCT=controlledCTs)
+res_rbfox_id = controlled_geneset_enrichment(disease_genes=mouse.hits.id, 
+                                              functional_genes = rbfox_genes, 
+                                              bg_genes = mouse.bg, 
+                                              sct_data = ctd, 
+                                              annotLevel = 1, 
+                                              reps=reps, 
+                                              controlledCT=controlledCTs)
+print(res_hpsd_id)
+print(res_rbfox_id)
+
+```
+
+
+# Session Info
+
+<details>
+
+```{r Session Info}
+utils::sessionInfo()
+```
+
+</details>
+
+
+# References
+

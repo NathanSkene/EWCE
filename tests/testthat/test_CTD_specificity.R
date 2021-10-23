@@ -1,5 +1,6 @@
-# Test for specificity return from generate_celltype_data
-test_that("Correct specificity values of CDT calculated", {
+test_that("Correct specificity values of CTD calculated", {
+
+    # Test for specificity return from generate_celltype_data
     # create some fake exp data
     set.seed(101)
     rand_data <- runif(1000)
@@ -12,20 +13,25 @@ test_that("Correct specificity values of CDT calculated", {
     # now create 4 groups for the ten samples to get the means of
     grouping <- vector(mode = "list", length = 4)
     # just creating four levels so the test can be run four times
-    names(grouping) <- paste0("level", 1:4, "class")
+    names(grouping) <- paste0("level", seq(1, 4), "class")
     grouping <- lapply(grouping, function(x) {
-          as.character(sample(paste0("celltype_", 1:4), 10, replace = TRUE))
-      })
+        as.character(sample(paste0("celltype_", seq(1, 4)), 10, replace = TRUE))
+    })
 
     # Now apply EWCE function
     fNames <- EWCE::generate_celltype_data(
         exp = exp_set,
         annotLevels = grouping,
         groupName = "testthat",
-        savePath = tempdir()
+        # Setting these equal means it won't try to convert orthologs,
+        # which returns 0 genes bc they're all fake
+        input_species = "mouse",
+        output_species = "mouse",
+        savePath = tempdir(),
+        no_cores = 1 ### IMPORTANT! Testthat causes conflicts with parallelization
     )
     # load res - named ctd
-    load(fNames)
+    ctd <- load_rdata(fNames)
     EWCE_res_spec <- lapply(ctd, function(x) x$specificity)
 
     # check against known answer for gene 16
@@ -48,8 +54,13 @@ test_that("Correct specificity values of CDT calculated", {
             c("celltype_1", "celltype_2", "celltype_3", "celltype_4")
         )
     )
-    EWCE_res_gene_16 <- lapply(EWCE_res_spec, function(x) round(x[rownames(x) == "gene_16", ], 7))
+    EWCE_res_gene_16 <- lapply(
+        EWCE_res_spec,
+        function(x) {
+            round(x[rownames(x) == "gene_16", ], 7)
+        }
+    )
 
     # fail if specificity values aren't the same for gene 16 across the 3 tests
-    expect_equal(all.equal(EWCE_res_gene_16, known_ans), TRUE)
+    testthat::expect_true(all.equal(EWCE_res_gene_16, known_ans))
 })

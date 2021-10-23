@@ -1,9 +1,9 @@
 #' convert_new_ewce_to_old
 #'
-#' \code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file 
+#' \code{convert_new_ewce_to_old} Used to get an old style EWCE ctd file
 #' from a new one
 #'
-#' @param ctd A celltype data structure containing $mean_exp and $specificity
+#' @param ctd A cell type data structure containing $mean_exp and $specificity
 #' @param lvl The annotation level to extract
 #' @return celltype_data The old style data structure
 convert_new_ewce_to_old <- function(ctd, lvl) {

@@ -1,0 +1,395 @@
+---
+title: "Creating CellTypeDatasets"
+author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
+date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
+bibliography: ../inst/cit/EWCE.bib
+csl: ../inst/cit/nature.csl
+output:
+  BiocStyle::html_document:
+vignette: >
+  %\VignetteIndexEntry{Creating CellTypeDatasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}     
+---
+
+
+```{r style, echo=FALSE, results='asis', message=FALSE}
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy         = FALSE, 
+                      message      = FALSE) 
+```
+
+# Introduction
+
+`EWCE` was originally designed to work with the single-cell cortical 
+transcriptome data from the [Linnarsson Lab](http://linnarssonlab.org/) [@zeisel2015cell] (available [here](http://linnarssonlab.org/cortex/)).
+
+Using this package it is possible to read in any single-cell transcriptome data, provided that you have a cell by gene expression matrix 
+(with each cell as a separate column) and a separate annotation dataframe,
+with a row for each cell.
+
+The `EWCE` process involves testing for whether the genes in a
+target list have higher levels of expression in a given cell type than 
+can reasonably be expected by chance. 
+The probability distribution for this is estimated by randomly generating 
+gene lists of equal length from a set of background genes.
+
+`EWCE` can be applied to any gene list. In the original paper we reported its 
+application to genetic and transcriptomic datasets [@skene_2016]..
+
+Note that throughout this vignette we use the terms 'cell type' 
+and 'cell subtype' to refer to two levels of annotation of what a cell type is.
+This is described in further detail in our paper[@skene_2016], 
+but relates to the two levels of annotation provided in the Linnarsson dataset [@zeisel2015cell]. 
+In this dataset a cell is described as having a cell type (i.e. 'Interneuron') 
+and subcell type (i.e. 'Int11' a.k.a Interneuron type 11).
+  
+# Setup  
+
+```{r setup, include=TRUE}
+library(EWCE)
+library(ggplot2)
+set.seed(1234)
+```
+
+# Creating a CellTypeDataset
+
+Here we provide an example of converting a scRNA-seq dataset ([Zeisel 2015](https://www.science.org/doi/10.1126/science.aaa1934)) into a CellTypeDataset (CTD) so it can used with *EWCE*.
+
+## Loading datasets
+
+The first step for all analyses is to load the single-cell 
+transcriptome (SCT) data. 
+For the purposes of this example we will use the dataset described in:
+> [Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq](https://www.science.org/doi/10.1126/science.aaa1934), Science, 2015
+
+This is stored and can be loaded as follows from `ewceData` package.
+
+*EWCE* can generate CTD from two different data input types:
+1. A gene x cell expression matrix
+(can be dense matrix, sparse matrix, data.frame, or DelayedArray).  
+2. A `SingleCellExperiment` (SCE) or `SummarizedExperiment` object.
+
+To check the data, we can quickly plot the distribution of expression of a given gene across all the cell types.
+
+```{r }
+# example datasets held in ewceData package
+cortex_mrna <- ewceData::cortex_mrna()
+
+gene <- "Necab1"
+cellExpDist <- data.frame(Expression=cortex_mrna$exp[gene,],
+                          Celltype=cortex_mrna$annot[
+                            colnames(cortex_mrna$exp),]$level1class)
+
+ggplot(cellExpDist) + 
+  geom_boxplot(aes(x=Celltype, y=Expression), outlier.alpha = .5) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_bw()
+```
+
+To note for the analysis of the `cortex_mrna` dataset, 
+I will proved the alternative for an SCE object under each segment of code
+if there is any difference. 
+
+## Converting single-cell formats
+
+If you would like to try running the functions 
+on an SCE object instead, we can convert `cortex_mrna` with the package [`scKirby`](https://github.com/bschilder/scKirby). 
+`scKirby` automatically infers the input file type and converts it 
+to SCE format by default. 
+
+```
+if (!"SingleCellExperiment" %in% rownames(installed.packages())){BiocManager::install("SingleCellExperiment")}
+library(SingleCellExperiment) 
+if (!"scKirby" %in% rownames(installed.packages())){remotes::install_github("bschilder/scKirby")}
+library(scKirby)
+
+# Make SCE object
+cortex_mrna <- ewceData::cortex_mrna()
+cortex_mrna_sce <- scKirby::ingest_data(cortex_mrna, save_output = FALSE)
+
+# Now to plot the SCE dataset:
+gene="Necab1"
+cellExpDist_sce = data.frame(e=assays(cortex_mrna_sce)[[1]][gene,],
+                             l1=colData(cortex_mrna_sce)[
+                               colnames(assays(cortex_mrna_sce)[[1]]),
+                             ]$level1class)
+                             
+ggplot(cellExpDist_sce) + geom_boxplot(aes(x=l1,y=e)) + xlab("Cell type") + 
+  ylab("Unique Molecule Count") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
+
+### Correcting gene symbols 
+
+It is very common for publicly available transcriptome datasets to use 
+incorrect gene symbols 
+(often some gene names will have been mangled by opening in Excel). 
+
+A function is provided to correct these where out of date aliases were used 
+and give a warning if appears possible that excel has mangled some of
+the gene names. This function can be used with a downloaded reference 
+file like the 
+[MRK_List2 file]("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt") 
+from MGI which lists known synonyms for MGI gene symbols. 
+If no file path is passed, there is a loaded reference dataset of the 
+MRK_List2 which will be used: `mgi_synonym_data()`. 
+We recommend running this function on all input datasets.
+
+```
+cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp)
+```
+
+For the SCE version, pass the whole SCE object
+```
+#Note that data in SCE object must be in 'counts' assay
+#The fix_bad_hgnc_symbols function can similarly take an SCE object as an input
+cortex_mrna_sce = fix_bad_mgi_symbols(cortex_mrna_sce)
+```
+
+## Drop genes
+
+The vignette takes a while to go through if you use all genes. So let's restrict to 1000 random genes.
+
+```{r }
+nKeep <- 1000
+must_keep <- c("Apoe","Gfap","Gapdh") 
+keep_genes <- c(must_keep,sample(rownames(cortex_mrna$exp),997))
+cortex_mrna$exp <- cortex_mrna$exp[keep_genes,]
+dim(cortex_mrna$exp)
+```
+
+```
+#SCE
+nKeep = 1000
+must_keep = c("Apoe","Gfap","Gapdh") 
+keep_genes = c(must_keep,sample(names(rowRanges(cortex_mrna_sce)),997))
+cortex_mrna_sce = cortex_mrna_sce[keep_genes,]
+```
+
+## Normalization
+
+A different number of reads is found across each cell. We suggest using [`scTransform`](https://cran.r-project.org/web/packages/sctransform/index.html) to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
+
+```{r}
+cortex_mrna$exp_scT_normed <- EWCE::sct_normalize(cortex_mrna$exp) 
+```
+
+```R
+# SCE
+SummarizedExperiment::assays(cortex_mrna_sce)$normcounts <- EWCE::sct_normalize(SummarizedExperiment::assays(cortex_mrna_sce)$counts)
+```
+
+Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this `scTransform` step.
+
+## Calculate specificity matrices
+
+The next steps are as follows:  
+
+1. `drop_uninformative_genes()`: Drop genes which do not show significant evidence of varying between level 2 cell types (based on ANOVA). Optionally, you can also drop all genes which do not have 1:1 mouse:human orthologues (**Note**: this used to a separate step but has since been integrated directly into `drop_uninformative_genes()` via the arguments `drop_nonhuman_genes=` and `input_species=`). 
+2. Calculate cell type averages and specificity for each gene.   
+
+The last step is only necessary if you plan to compare to human data, i.e. gene sets resulting from human genetics.
+
+Rather than returning the data directly, the functions save the calculated data to a file and the file name is returned.
+
+```{r }
+# Generate cell type data for just the cortex/hippocampus data  
+exp_CortexOnly_DROPPED  <- EWCE::drop_uninformative_genes(
+  exp = cortex_mrna$exp_scT_normed, 
+  input_species = "mouse",
+  output_species = "human",
+  level2annot = cortex_mrna$annot$level2class) 
+```
+
+
+## Generate CellTypeDataset
+
+```{r}
+annotLevels <- list(level1class=cortex_mrna$annot$level1class,
+                    level2class=cortex_mrna$annot$level2class)
+
+fNames_CortexOnly <- EWCE::generate_celltype_data(
+  exp = exp_CortexOnly_DROPPED,
+  annotLevels = annotLevels,
+  groupName = "kiCortexOnly", 
+  savePath = tempdir()) 
+
+ctd_CortexOnly <- EWCE::load_rdata(fNames_CortexOnly)
+```
+
+
+
+```
+#SCE
+# Generate cell type data for just the cortex/hippocampus data
+exp_CortexOnly_DROPPED <- drop_uninformative_genes(exp=cortex_mrna_sce,
+                                                   drop_nonhuman_genes = T,
+                                                   input_species = "mouse",
+                                                   level2annot=cortex_mrna_sce$level2class)
+
+annotLevels = list(level1class=cortex_mrna_sce$level1class,
+                   level2class=cortex_mrna_sce$level2class)
+
+fNames_CortexOnly <- generate_celltype_data(exp=exp_CortexOnly_DROPPED,
+                                           annotLevels=annotLevels,
+                                           groupName="kiCortexOnly",
+                                           savePath=tempdir()) 
+```
+
+To note on the SCE approach, these are the only differences 
+for handling the analysis of an SCE object. 
+All downstream analysis on `cortex_mrna` would be the same. 
+The same approach can be used for other datasets in the vignette if
+converted such as `hypothalamus_mrna` or your own SCE object.
+
+
+
+# Merging two single-cell datasets
+
+Often it is useful to merge two single-cell datasets. 
+For instance, there are separate files for the cortex and 
+hypothalamus datasets generated by the Karolinska institute. 
+A subset of the resulting merged dataset is loaded using `ctd()` 
+but it is worth understanding the approach (outlined below) if
+you want to repeat this for other single-cell datasets.
+
+The dataset is available from the [GEO](ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE74nnn/GSE74672/suppl/GSE74672_expressed_mols_with_classes.xlsx.gz) 
+but is also available in the `ewceData` package: `hypothalamus_mrna()`. 
+See the `ewceData` for details of how this file was preprocessed after 
+first being downloaded from GEO, unzipped and read into R.
+
+We can now merge the hypothalamus dataset with the cortex dataset 
+and then calculate specificity:
+
+## Load hypothalamus dataset 
+
+```{r}
+hypothalamus_mrna <- ewceData::hypothalamus_mrna()
+```
+
+## Fix bad MGI symbols
+
+```{r} 
+hypothalamus_mrna$exp <- EWCE::fix_bad_mgi_symbols(exp = hypothalamus_mrna$exp)
+cortex_mrna$exp <- EWCE::fix_bad_mgi_symbols(exp = cortex_mrna$exp)
+```
+
+## Merge CTD 
+
+Merge the CTDs - again this can be run
+with SCE or other ranged SE objects as input.
+
+```{r}
+merged_KI <- EWCE::merge_two_expfiles(exp1 = hypothalamus_mrna$exp, 
+                                      exp2 = cortex_mrna$exp,
+                                      annot1 = hypothalamus_mrna$annot, 
+                                      annot2 = cortex_mrna$annot,
+                                      name1 = "Hypothalamus (KI)", 
+                                      name2 = "Cortex/Hippo (KI)")
+```
+
+## Drop uninformative genes
+
+Drop genes which don't vary significantly between cell types.
+
+```{r}
+exp_merged_DROPPED <- EWCE::drop_uninformative_genes(
+  exp = merged_KI$exp, 
+  drop_nonhuman_genes = TRUE, 
+  input_species = "mouse",
+  level2annot = merged_KI$annot$level2class)
+```
+
+## Generate CellTypeDataset
+
+```{r} 
+annotLevels = list(level1class=merged_KI$annot$level1class,
+                   level2class=merged_KI$annot$level2class)
+
+# Update file path to where you want the cell type data files to save on disk
+fNames_MergedKI <- EWCE::generate_celltype_data(exp = exp_merged_DROPPED,
+                                                annotLevels = annotLevels,
+                                                groupName = "MergedKI",
+                                                savePath = tempdir()) 
+ctd_MergedKI <- load_rdata(fNames_MergedKI) 
+```
+
+
+## Understanding specificity matrices
+
+While not required for further analyses it helps to understand
+what the outputs of this function are. 
+
+Note firstly, that it is a list such that `ctd[[1]]` contains data 
+relating to level 1 annotations and `ctd[[2]]` relates to level 2 annotations.
+
+Using the `ggplot2` package to visualise the data, 
+let us examine the expression of a few genes. 
+If you have not already done so you will need to first install
+the ggplot2 package with `install.packages("ggplot2")`. 
+
+For this example we use a subset of the genes from the merged dataset 
+generated above, which is accessed using `ewceData::ctd()`. 
+We recommend that you use the code above to regenerate this though and 
+drop the first command from the below section.
+
+```{r, fig.width = 7, fig.height = 4} 
+## Load merged cortex and hypothalamus dataset generated by Karolinska institute
+ctd <- ewceData::ctd() # i.e. ctd_MergedKI
+
+plt <- EWCE::plot_ctd(ctd = ctd,
+                      level = 1,
+                      genes = c("Apoe","Gfap","Gapdh"),
+                      metric = "mean_exp")
+```
+
+This graph shows the average expression of three genes: *Apoe, Gfap* 
+and *Gapdh*. While there are substantial differences in which cell types 
+express these genes, the dominant effect seen here is the overall expression 
+level of the data. For the purposes of this analysis though, 
+we are not interested in overall expression level and only wish to know about
+the proportion of a genes expression which is found in a particular cell type. 
+We can study this instead using the following code which examines the 
+data frame `ctd[[1]]$specificity`:
+
+```{r, fig.width = 7, fig.height = 4}
+plt <- EWCE::plot_ctd(ctd = ctd,
+                      level = 1,
+                      genes = c("Apoe","Gfap","Gapdh"),
+                      metric = "specificity")
+```
+
+We can now see in this graph that *Gfap* is the most specific to a cell 
+type (Type 1 Astrocytes) of any of those three genes, with over 60% of 
+its expression found in that cell type. 
+
+It can also be seen that the majority of expression of Gapdh is in 
+neurons but because their are a greater number of neuronal subtypes,
+the total expression proportion appears lower. 
+We can examine expression across level 2 cell type level annotations 
+by looking at `ctd[[2]]$specificity`:
+
+
+```{r, fig.width = 7, fig.height = 4}
+plt <- EWCE::plot_ctd(ctd = ctd,
+                      level = 2,
+                      genes = c("Apoe","Gfap","Gapdh"),
+                      metric = "specificity")
+```
+
+
+# Session Info
+
+<details>
+
+```{r Session Info}
+utils::sessionInfo()
+```
+
+</details>
+
+
+
+# References
+

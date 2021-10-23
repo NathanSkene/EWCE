@@ -2,22 +2,28 @@
 % Please edit documentation in R/bin_columns_into_quantiles.r
 \name{bin_columns_into_quantiles}
 \alias{bin_columns_into_quantiles}
-\title{bin_columns_into_quantiles}
+\title{\code{bin_columns_into_quantiles}}
 \usage{
-bin_columns_into_quantiles(matrixIn, numberOfBins = 40)
+bin_columns_into_quantiles(
+  matrixIn,
+  numberOfBins = 40,
+  defaultBin = as.integer(numberOfBins/2)
+)
 }
 \arguments{
 \item{matrixIn}{The matrix of specificity values}
 
 \item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+
+\item{defaultBin}{Which bin to assign when there's only one non-zero quantile.}
 }
 \value{
-A matrix with same shape as matrixIn but with columns storing 
+A matrix with same shape as matrixIn but with columns storing
 quantiles instead of specificity
 }
 \description{
-\code{bin_columns_into_quantiles} is an internal function used to convert a 
-matrix of specificity (with columns of cell types) intom a matrix of 
+\code{bin_columns_into_quantiles} is an internal function used to convert a
+matrix of specificity (with columns of cell types) intom a matrix of
 specificity quantiles
 }
 \examples{

@@ -21,54 +21,56 @@ generate_bootstrap_plots_for_transcriptome(
 )
 }
 \arguments{
-\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{tt}{Differential expression table. Can be output of limma::topTable
-function. Minimum requirement is that one column stores a metric of
+\item{tt}{Differential expression table.
+Can be output of \link[limma]{topTable} function.
+ Minimum requirement is that one column stores a metric of
 increased/decreased expression (i.e. log fold change, t-statistic for
-differential expression etc) and another contains either HGNC or MGI symbols.}
+differential expression etc) and another contains gene symbols.}
 
 \item{thresh}{The number of up- and down- regulated genes to be included in
-each analysis. Dafault=250}
+each analysis (Default: 250)}
 
 \item{annotLevel}{an integer indicating which level of the annotation to
-analyse. Default = 1.}
+analyse (Default: 1).}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should
-be over 10000 for publication quality results)}
+\item{reps}{Number of random gene lists to generate (\emph{Default: 100},
+but should be >=10,000 for publication-quality results).}
 
 \item{full_results}{The full output of
-\code{\link{bootstrap_enrichment_test}} for the same genelist}
+\link[EWCE]{ewce_expression_data} for the same gene list.}
 
 \item{listFileName}{String used as the root for files saved using
-this function}
+this function.}
 
 \item{showGNameThresh}{Integer. If a gene has over X percent of it's
-expression proportion in a celltype, then list the gene name}
+expression proportion in a cell type, then list the gene name}
 
 \item{ttSpecies}{Either 'mouse' or 'human' depending on which species the
 differential expression table was generated from}
 
 \item{sctSpecies}{Either 'mouse' or 'human' depending on which species the
-single cell data was generated from}
+single cell data was generated from.}
 
 \item{sortBy}{Column name of metric in tt which should be used to sort up-
-from down- regulated genes. Default="t"}
+from down- regulated genes (Default: "t").}
 
 \item{onlySignif}{Should plots only be generated for cells which have
 significant changes?}
 
-\item{savePath}{Directory where the BootstrapPlots folder should be saved, 
-default is a temp directory}
+\item{savePath}{Directory where the \emph{BootstrapPlots} folder
+should be saved, default is a temp directory.}
 }
 \value{
-Saves a set of pdf files containing graphs and returns the file where 
-they are saved. These will be saved with the filename adjusted using the 
-value of listFileName. The files are saved into the 'BootstrapPlot' folder. 
+Saves a set of PDF files containing graphs and returns the file where
+they are saved. These will be saved with the filename adjusted using the
+value of \code{listFileName.} The files are saved into the
+\emph{BootstrapPlot} folder.
 Files start with one of the following:
 \itemize{
   \item \code{qqplot_noText}: sorts the gene list according to how enriched
-  it is in the relevant celltype. Plots the value in the target list against
+  it is in the relevant cell type. Plots the value in the target list against
   the mean value in the bootstrapped lists.
   \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the
   highest expressed genes.
@@ -85,31 +87,43 @@ the expression of the genes in the list compares to those in randomly
 generated gene lists
 }
 \examples{
-\donttest{
-library(ewceData)
-# Load the single cell data
-ctd <- ctd()
+\dontrun{
+## Load the single cell data
+ctd <- ewceData::ctd()
 
-# Set the parameters for the analysis
-# Use 3 bootstrap lists for speed, for publishable analysis use >10000
+## Set the parameters for the analysis
+## Use 3 bootstrap lists for speed, for publishable analysis use >10,000
 reps <- 3
 annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
-# Use 5 up/down regulated genes (thresh) for speed, default is 250
-thresh = 5
+## Use 5 up/down regulated genes (thresh) for speed, default is 250
+thresh <- 5
 
-# Load the top table
-tt_alzh <- tt_alzh()
+## Load the top table
+tt_alzh <- ewceData::tt_alzh()
 
-tt_results <- ewce_expression_data(
-    sct_data = ctd, tt = tt_alzh, annotLevel = 1,thresh = thresh,
-    reps = reps, ttSpecies = "human", sctSpecies = "mouse"
+tt_results <- EWCE::ewce_expression_data(
+    sct_data = ctd,
+    tt = tt_alzh,
+    annotLevel = 1,
+    thresh = thresh,
+    reps = reps,
+    ttSpecies = "human",
+    sctSpecies = "mouse"
 )
 
-# Bootstrap significance test, no control for transcript length or GC content
-full_results <- generate_bootstrap_plots_for_transcriptome(
-    sct_data = ctd, tt = tt_alzh, thresh = thresh, annotLevel = 1,
-    full_results = tt_results, listFileName = "examples", reps = reps,
-    ttSpecies = "human", sctSpecies = "mouse", savePath=tempdir()
+## Bootstrap significance test,
+## no control for transcript length or GC content
+full_results <- EWCE::generate_bootstrap_plots_for_transcriptome(
+    sct_data = ctd,
+    tt = tt_alzh,
+    thresh = thresh,
+    annotLevel = 1,
+    full_results = tt_results,
+    listFileName = "examples",
+    reps = reps,
+    ttSpecies = "human",
+    sctSpecies = "mouse",
+    savePath = tempdir()
 )
 }
 }
