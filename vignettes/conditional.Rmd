@@ -6,12 +6,6 @@ bibliography: ../inst/cit/EWCE.bib
 csl: ../inst/cit/nature.csl
 output:
   BiocStyle::html_document:
-    self_contained: false
-    toc: true
-    toc_float: true
-    toc_depth: 3
-    code_folding: show
-    df_print: paged
 vignette: >
   %\VignetteIndexEntry{Conditional enrichment examples}
   %\VignetteEngine{knitr::rmarkdown}

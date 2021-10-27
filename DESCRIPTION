@@ -66,7 +66,9 @@ Suggests:
     grDevices, 
     grid, 
     gridExtra,
-    data.table
+    data.table,
+    badger,
+    desc
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,

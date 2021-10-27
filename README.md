@@ -4,45 +4,45 @@
 Alan Murphy, Brian Schilder, and Nathan Skene
 </h4>
 <h4>
-Oct-23-2021
+Oct-27-2021
 </h4>
 
 <!-- badges: start -->
-<!-- badger::badge_last_commit()  -->
-<!-- badger::badge_license() -->
-<!-- badger::badge_codecov() -->
 
+[![](https://img.shields.io/badge/devel%20version-2.0.0-black.svg)](https://github.com/NathanSkene/EWCE)
 [![R build
-status](https://github.com/nathanskene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/nathanskene/EWCE/actions)
+status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
+[![R build
+status](https://github.com/NathanSkene/EWCE/workflows/DockerHub/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/EWCE.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/EWCE)
-[![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](http://www.bioconductor.org/packages/devel/data/experiment/html/ewce.html#archives)
+[![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](https://bioconductor.org/packages/devel/bioc/html/EWCE.html#archives)
 [![](https://img.shields.io/badge/doi-10.18129/B9.bioc.EWCE%20-green.svg)](https://doi.org/10.18129/B9.bioc.EWCE)
-[![](https://img.shields.io/github/last-commit/nathanskene/EWCE.svg)](https://github.com/nathanskene/EWCE/commits/master)
-[![](https://codecov.io/gh/nathanskene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanskene/EWCE)
+[![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
+[![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-[![](https://img.shields.io/badge/download-2145/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-2155/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 <!-- badges: end -->
 
 <img height="200" src="https://github.com/bschilder/EWCE/raw/DelayedArray/inst/hex/EWCE.png">
 
 # Introduction
 
-The `EWCE` R package is designed to facilitate expression weighted cell
+The *EWCE* R package is designed to facilitate expression weighted cell
 type enrichment analysis as described in our *Frontiers in Neuroscience*
-paper.<sup>1</sup> `EWCE` can be applied to any gene list.
+paper.<sup>1</sup> *EWCE* can be applied to any gene list.
 
-Using `EWCE` essentially involves two steps:
+Using *EWCE* essentially involves two steps:
 
 1.  Prepare a single-cell reference; i.e. CellTypeDataset (CTD).
     Alternatively, you can use one of the pre-generated CTDs we provide
-    via the package `ewceData` (which comes with `EWCE`).  
+    via the package `ewceData` (which comes with *EWCE*).  
 2.  Run cell type enrichment on a user-provided gene list.
 
 # Installation
 
-`EWCE>=###` requires [`R>=4.1`](https://www.r-project.org/) and
+*EWCE* requires [`R>=4.1`](https://www.r-project.org/) and
 `Bioconductor>=1.4`. To install *EWCE* on Bioconductor run:
 
 ``` r
@@ -95,8 +95,8 @@ the docker image.
 
 # Troubleshooting
 
-If you have any problems, please do submit an [issue here on
-GitHub](https://github.com/NathanSkene/EWCE/issues) with a reproducible
+If you have any problems, please do submit an [Issue here on
+GitHub](https://github.com/nathanskene/EWCE/issues) with a reproducible
 example.
 
 # Citation
@@ -142,10 +142,22 @@ utils::sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] compiler_4.1.1  magrittr_2.0.1  fastmap_1.1.0   tools_4.1.1    
-    ##  [5] htmltools_0.5.2 yaml_2.2.1      stringi_1.7.5   rmarkdown_2.11 
-    ##  [9] knitr_1.36      stringr_1.4.0   xfun_0.27       digest_0.6.28  
-    ## [13] rlang_0.4.12    evaluate_0.14
+    ##  [1] BiocManager_1.30.16 compiler_4.1.1      pillar_1.6.4       
+    ##  [4] RColorBrewer_1.1-2  yulab.utils_0.0.4   tools_4.1.1        
+    ##  [7] digest_0.6.28       jsonlite_1.7.2      evaluate_0.14      
+    ## [10] lifecycle_1.0.1     tibble_3.1.5        gtable_0.3.0       
+    ## [13] pkgconfig_2.0.3     rlang_0.4.12        DBI_1.1.1          
+    ## [16] rvcheck_0.2.1       yaml_2.2.1          xfun_0.27          
+    ## [19] fastmap_1.1.0       stringr_1.4.0       dplyr_1.0.7        
+    ## [22] knitr_1.36          desc_1.4.0          generics_0.1.1     
+    ## [25] vctrs_0.3.8         dlstats_0.1.4       rprojroot_2.0.2    
+    ## [28] grid_4.1.1          tidyselect_1.1.1    glue_1.4.2         
+    ## [31] R6_2.5.1            fansi_0.5.0         rmarkdown_2.11     
+    ## [34] ggplot2_3.3.5       purrr_0.3.4         badger_0.1.0       
+    ## [37] magrittr_2.0.1      scales_1.1.1        ellipsis_0.3.2     
+    ## [40] htmltools_0.5.2     assertthat_0.2.1    colorspace_2.0-2   
+    ## [43] utf8_1.2.2          stringi_1.7.5       munsell_0.5.0      
+    ## [46] crayon_1.4.1
 
 </details>
 

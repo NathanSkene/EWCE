@@ -4,7 +4,8 @@ author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
 date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
 bibliography: inst/cit/EWCE.bib
 csl: inst/cit/nature.csl
-output: rmarkdown::github_document
+output: 
+    rmarkdown::github_document:
 vignette: >
   %\VignetteIndexEntry{README}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,49 +13,55 @@ vignette: >
 ---
 
 ```{r, echo=FALSE}
-knitr::opts_chunk$set(tidy         = FALSE, 
-                      message      = FALSE) 
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE) 
 ```
 
+```{r setup, include = FALSE}
+#### Package name ####
+pkg <- desc::desc_get("Package")
+#### Username of GitHub account ####
+repo <- rev(strsplit(desc::desc_get_urls()[[1]],"/")[[1]])[2]
+```
+
+
 <!-- badges: start -->
-<!-- badger::badge_last_commit()  -->
-<!-- badger::badge_license() -->
-<!-- badger::badge_codecov() -->
-[![R build status](https://github.com/nathanskene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/nathanskene/EWCE/actions) 
-[![BioC status](http://www.bioconductor.org/shields/build/release/bioc/EWCE.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/EWCE)
-[![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](http://www.bioconductor.org/packages/devel/data/experiment/html/ewce.html#archives)
-[![](https://img.shields.io/badge/doi-10.18129/B9.bioc.EWCE%20-green.svg)](https://doi.org/10.18129/B9.bioc.EWCE )
-[![](https://img.shields.io/github/last-commit/nathanskene/EWCE.svg)](https://github.com/nathanskene/EWCE/commits/master)
-[![](https://codecov.io/gh/nathanskene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanskene/EWCE)
+`r badger::badge_devel(color="black")`
+[![R build status](https://github.com/`r repo`/`r pkg`/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/`r repo`/`r pkg`/actions) 
+[![R build status](https://github.com/`r repo`/`r pkg`/workflows/DockerHub/badge.svg)](https://github.com/`r repo`/`r pkg`/actions) 
+[![BioC status](http://www.bioconductor.org/shields/build/release/bioc/`r pkg`.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/`r pkg`)
+[![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](https://bioconductor.org/packages/devel/bioc/html/`r pkg`.html#archives)
+[![](https://img.shields.io/badge/doi-10.18129/B9.bioc.`r pkg`%20-green.svg)](https://doi.org/10.18129/B9.bioc.`r pkg` )
+[![](https://img.shields.io/github/last-commit/`r repo`/`r pkg`.svg)](https://github.com/`r repo`/`r pkg`/commits/master)
+[![](https://codecov.io/gh/`r repo`/`r pkg`/branch/master/graph/badge.svg)](https://codecov.io/gh/`r repo`/`r pkg`)
 [![License: GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-[![](https://img.shields.io/badge/download-2145/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+`r badger::badge_bioc_download(color="blue", by="total")`
 <!-- badges: end -->
 
 <img height="200" src="https://github.com/bschilder/EWCE/raw/DelayedArray/inst/hex/EWCE.png">
 
 # Introduction
 
-The `EWCE` R package is designed to facilitate expression weighted cell type
+The *EWCE* R package is designed to facilitate expression weighted cell type
 enrichment analysis as described in our *Frontiers in Neuroscience* 
-paper [@skene_2016]. `EWCE` can be applied to any gene list. 
+paper [@skene_2016]. *EWCE* can be applied to any gene list. 
  
-Using `EWCE` essentially involves two steps:
+Using *EWCE* essentially involves two steps:
 
 1. Prepare a single-cell reference; i.e. CellTypeDataset (CTD). Alternatively, 
 you can use one of the pre-generated CTDs we provide via the package `ewceData`
-(which comes with `EWCE`).  
+(which comes with *EWCE*).  
 2. Run cell type enrichment on a user-provided gene list.
 
 # Installation
 
-`EWCE>=###` requires [`R>=4.1`](https://www.r-project.org/) 
+*EWCE* requires [`R>=4.1`](https://www.r-project.org/) 
 and `Bioconductor>=1.4`. 
 To install *EWCE* on Bioconductor run:
 
 ```{r, eval=FALSE}
 if (!require("BiocManager")){install.packages("BiocManager")}
 
-BiocManager::install(version = "devel")
 BiocManager::install("EWCE") 
 ```
 
@@ -104,7 +111,7 @@ docker exec -ti ewce R
 
 # Troubleshooting
 
-If you have any problems, please do submit an [issue here on GitHub](https://github.com/NathanSkene/EWCE/issues) with a reproducible example.
+If you have any problems, please do submit an [Issue here on GitHub](https://github.com/nathanskene/EWCE/issues) with a reproducible example.
 
 
 # Citation
