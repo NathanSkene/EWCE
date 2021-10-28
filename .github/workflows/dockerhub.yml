@@ -33,7 +33,7 @@ jobs:
           
           version=$(grep Version DESCRIPTION | grep -o "[0-9.]\+")
           echo "packageVersion=${version}" >> $GITHUB_ENV
-          echo version
+          echo $version
         shell: bash {0}   
       
       - name: Set up Docker Buildx
