@@ -26,8 +26,9 @@ jobs:
         
       - name: Get R package info
         run: |
+          #### DockerHub repos must be lowercase (,,) ####
           name=$(grep '^Package:' DESCRIPTION | cut -d\   -f2)
-          echo "packageName=${name}" >> $GITHUB_ENV
+          echo "packageName=${name,,}" >> $GITHUB_ENV
           echo $name
           
           version=$(grep Version DESCRIPTION | grep -o "[0-9.]\+")
