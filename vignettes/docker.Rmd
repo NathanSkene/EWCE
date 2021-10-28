@@ -7,7 +7,7 @@ csl: ../inst/cit/nature.csl
 output:
   BiocStyle::html_document:
 vignette: >
-  %\VignetteIndexEntry{Conditional enrichment examples}
+  %\VignetteIndexEntry{Docker}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}     
 --- 
