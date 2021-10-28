@@ -67,6 +67,7 @@ Suggests:
     grid, 
     gridExtra,
     data.table,
+    magick,
     badger,
     desc
 biocViews: GeneExpression, Transcription, DifferentialExpression,
