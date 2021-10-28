@@ -48,7 +48,7 @@ A ggplot containing the plot
 ## Bootstrap significance test,
 ##  no control for transcript length or GC content
 ## Use pre-computed results to speed up example
-full_results <- EWCE::example_bootstrap_results() 
+full_results <- EWCE::example_bootstrap_results()
 
 ## Generate the plot
 print(EWCE::ewce_plot(

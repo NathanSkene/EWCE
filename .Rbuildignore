@@ -2,7 +2,8 @@
 BootstrapPlots/*
 README_files/*
 vignettes/EWCE_cache/*
-Dockerfile 
+Dockerfile
+.dockerignore
 
 ^.*\.Rproj$
 ^\.Rproj\.user$

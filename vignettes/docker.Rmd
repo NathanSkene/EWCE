@@ -2,8 +2,6 @@
 title: "Docker"
 author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
 date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
-bibliography: ../inst/cit/EWCE.bib
-csl: ../inst/cit/nature.csl
 output:
   BiocStyle::html_document:
 vignette: >
@@ -18,15 +16,6 @@ pkg <- desc::desc_get("Package")
 #### Username of DockerHub account ####
 docker_user <- "bschilder"
 ```
-
-
-
-```{r style, echo=FALSE, results='asis', message=FALSE}
-BiocStyle::markdown()
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE)
-```
-
 
 # Docker
 

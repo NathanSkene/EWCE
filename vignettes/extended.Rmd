@@ -2,8 +2,6 @@
 title: "Extended examples"
 author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
 date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
-bibliography: ../inst/cit/EWCE.bib
-csl: ../inst/cit/nature.csl
 output:
   BiocStyle::html_document:
 vignette: >
@@ -11,13 +9,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}     
 ---
-
-
-```{r style, echo=FALSE, results='asis', message=FALSE}
-BiocStyle::markdown()
-knitr::opts_chunk$set(tidy         = FALSE, 
-                      message      = FALSE)
-```
 
 # Setup  
 

@@ -12,20 +12,12 @@ vignette: >
   %\usepackage[utf8]{inputenc}     
 ---
 
-
-```{r style, echo=FALSE, results='asis', message=FALSE}
-BiocStyle::markdown()
-knitr::opts_chunk$set(tidy         = FALSE, 
-                      message      = FALSE)
-```
-
 # Setup  
 
 ```{r setup, include=TRUE}
 library(EWCE) 
 set.seed(1234)
 ```
-
 
 # Application to transcriptomic data
 

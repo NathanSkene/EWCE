@@ -12,13 +12,6 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-
-```{r style, echo=FALSE, results='asis', message=FALSE}
-BiocStyle::markdown()
-knitr::opts_chunk$set(tidy         = FALSE, 
-                      message      = FALSE)  
-```
-
 # Introduction
 
 The `EWCE` R package is designed to facilitate expression weighted cell type
