@@ -44,30 +44,31 @@ RUN apt-get update && \
 	qpdf \
 	&& apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-RUN mkdir /build_zone
-ADD . /build_zone
-WORKDIR /build_zone
+RUN mkdir /buildzone
+ADD . /buildzone
+WORKDIR /buildzone
 # Install dependencies with AnVil (faster)
 RUN Rscript -e 'options(download.file.method= "libcurl"); \
                 if(!"BiocManager" %in% rownames(utils::installed.packages)) {install.packages("BiocManager")}; \
                 if(!"AnVIL" %in% rownames(utils::installed.packages)) {BiocManager::install("AnVIL", ask = FALSE)}; \
+                options(repos = c(AnVIL::repositories(),\
+                                  AnVIL = file.path("https://bioconductordocker.blob.core.windows.net/packages","3.14","bioc"),\
+                                  CRAN = "https://cran.rstudio.com/"),\
+                                  download.file.method = "libcurl", Ncpus = 2); \
                 AnVIL::install(c("remotes","devtools")); \
                 try({remotes::install_github("bergant/rapiclient")}); \
                 deps <- remotes::dev_package_deps(dependencies = TRUE)$package; \
                 AnVIL::install(pkgs = deps,  ask = FALSE); \
-                deps_left <- deps[!deps %in% rownames(installed.packages())]; \
-                options(repos = c(AnVIL::repositories(),\
-                                  CRAN = "https://cran.rstudio.com/"),\
-                                  download.file.method = "libcurl", Ncpus = 2); \
+                deps_left <- deps[!deps %in% rownames(installed.packages())]; \ 
                 if(length(deps_left)>0) devtools::install_dev_deps(dependencies = TRUE, upgrade = "never");'
 # Run R CMD check - will fail with any errors or warnings
 Run Rscript -e 'devtools::check()'
 # Run Bioconductor's BiocCheck (optional)
 # Fixed here: https://github.com/Bioconductor/BiocCheck/pull/145 
-#Run Rscript -e 'if(!"BiocCheck" %in% rownames(utils::installed.packages)) {AnVIL::install("BiocCheck")}; \
+#Run Rscript -e 'remotes::install_github("Bioconductor/BiocCheck", force = TRUE); \
 #                BiocCheck::BiocCheck(`quit-with-status` = TRUE,\
 #                                     `no-check-R-ver` = TRUE,\
 #                                     `no-check-bioc-help` = TRUE);'
 # Install R package from source
 RUN R -e 'remotes::install_local(upgrade="never")'
-RUN rm -rf /build_zone
+RUN rm -rf /buildzone
