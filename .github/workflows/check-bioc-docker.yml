@@ -153,6 +153,13 @@ jobs:
 
           ## Required for tcltk
           brew install xquartz --cask
+          
+          ## Required for some ggplot2 functions
+          # brew tap homebrew/cask
+          # brew tap homebrew/cask-fonts
+          # brew install svn
+          # brew install --cask font-roboto
+          brew install libxfont
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
@@ -163,7 +170,7 @@ jobs:
       - name: Install BiocManager
         run: |
           message(paste('****', Sys.time(), 'installing BiocManager ****'))
-          remotes::install_cran("BiocManager")
+          remotes::install_cran("BiocManager", upgrade = "never")
         shell: Rscript {0}
 
       # Linux Bioconductor docker comes with bioconductor installed
@@ -172,9 +179,9 @@ jobs:
         run: |
           #### BiocManager::install doesn't understand "latest" #####
           if("${{ matrix.config.bioc }}" %in% c("latest","release")){
-            BiocManager::install(ask = FALSE, force = TRUE)
+            BiocManager::install(update = TRUE, ask = FALSE)
           } else {
-            BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE, force = TRUE)
+            BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
           }
         shell: Rscript {0}
 
@@ -200,8 +207,9 @@ jobs:
               ) else BiocManager::repositories()
 
           ## For running the checks
+          ### hrbrthemes necessary to avoid ggplot2 errors on MacOS: https://stackoverflow.com/a/66423481/13214824
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
-          install.packages(c("rcmdcheck", "BiocCheck"), repos = gha_repos)
+          install.packages(c("rcmdcheck", "BiocCheck", repos = gha_repos)
 
           ## Pass #1 at installing dependencies
           ## This pass uses AnVIL-powered fast binaries
