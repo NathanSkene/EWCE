@@ -57,4 +57,9 @@ test_that("merge_sce works", {
                              ctd_old_lvl2[[1]]))
     testthat::expect_length(ctd_new2,2)
     testthat::expect_true(EWCE:::is_celltypedataset(ctd_new2)) 
+    
+    #### Test 5: plot_ctd ####
+    gp <- EWCE::plot_ctd(ctd = ctd,
+                         genes = sample(rownames(ctd[[1]]$mean_exp),4))
+    testthat::expect_true(methods::is(gp,"gg"))
 })

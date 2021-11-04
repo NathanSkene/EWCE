@@ -20,8 +20,14 @@ run `BiocCheck`, and rebuild/deploy pkgdown site.
     + `drop_uninformative_genes`  
     + `generate_celltype-data`  
     + `bootstrap_enrichment_test`   
-* Added tests:
+* Added tests (multiple functions tests per file to reduce number
+of times `ewceData` files have to be downloaded):
     + `test-DelayedArray` 
+    + `test-merge_sce`
+    + `test-get_celltype_table`
+    + `test-list_species` 
+    + `test-run_DGE` 
+    + `test-check_percent_hits` 
 
 # EWCE 1.0.0
 

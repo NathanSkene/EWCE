@@ -27,7 +27,13 @@ assign_cores <- function(worker_cores = .90,
         reserved_cores, "reserved).",
         v = verbose
     )
-    DelayedArray::setAutoBPPARAM(BiocParallel::MulticoreParam(workers))
+    #### Handle Windows ####
+    if(.Platform$OS.type == "windows"){ 
+        params <- BiocParallel::SnowParam(workers)
+    } else {
+        params <- BiocParallel::MulticoreParam(workers)
+    }
+    DelayedArray::setAutoBPPARAM(params)
     #### Not allowed to use internal functions ####
     # DelayedArray:::set_verbose_block_processing(verbose)
     return(list(
