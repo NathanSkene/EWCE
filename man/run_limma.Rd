@@ -4,7 +4,7 @@
 \alias{run_limma}
 \title{Run DGE: \pkg{limma}}
 \usage{
-run_limma(exp, level2annot, verbose = TRUE, ...)
+run_limma(exp, level2annot, mtc_method = "BH", verbose = TRUE, ...)
 }
 \arguments{
 \item{exp}{Expression matrix with gene names as rownames.}
@@ -12,12 +12,15 @@ run_limma(exp, level2annot, verbose = TRUE, ...)
 \item{level2annot}{Array of cell types, with each sequentially corresponding
 a column in the expression matrix}
 
+\item{mtc_method}{Multiple-testing correction method used by DGE step.
+See \link[stats]{p.adjust} for more details.}
+
 \item{verbose}{Print messages.}
 
 \item{...}{Additional arguments to be passed to the selected DGE method.}
 }
 \value{
-\code{limma} results
+\code{limma} results.
 }
 \description{
 Run Differential Gene Expression with \pkg{limma}.

@@ -4,13 +4,25 @@
 \alias{ctd_to_sce}
 \title{CellTypeDataset to SingleCellExperiment}
 \usage{
-ctd_to_sce(object, as_sparse = TRUE, as_DelayedArray = TRUE, verbose = TRUE)
+ctd_to_sce(object, as_sparse = TRUE, as_DelayedArray = FALSE, verbose = TRUE)
+}
+\arguments{
+\item{object}{CellTypeDataset object.}
+
+\item{as_sparse}{Store SingleCellExperiment matrices as sparse.}
+
+\item{as_DelayedArray}{Store SingleCellExperiment matrices as DelayedArray.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 SingleCellExperiment
 }
 \description{
 Copied from \href{https://github.com/bschilder/scKirby}{scKirby},
- which is not yet on CRAN or Bioconductor
+ which is not yet on CRAN or Bioconductor.
 }
-\keyword{internal}
+\examples{
+ctd <- ewceData::ctd()
+sce <- EWCE::ctd_to_sce(ctd)
+}

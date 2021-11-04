@@ -39,12 +39,15 @@ test_that("Correct mean expression values of CTD calculated", {
     )
     # load res - named ctd
     ctd <- EWCE::load_rdata(fNames)
-    EWCE_res_meanexp <- lapply(ctd, function(x) x$mean_exp)
+    EWCE_res_meanexp <- lapply(ctd, function(x) {
+        methods::as(x$mean_exp,"sparseMatrix")
+    })
 
     # check alternative method
-    alt_res <- vector(mode = "list", length = 3)
-    i <- 1
-    for (group_i in grouping) {
+    alt_res <- vector(mode = "list",
+                      length = length(ctd))
+    for (i in seq_len(length(grouping))) {
+        group_i <- grouping[[i]]
         unique_cell_types <- unique(group_i)
         unique_cell_type_means <- matrix(
             ncol = 0,
@@ -60,9 +63,8 @@ test_that("Correct mean expression values of CTD calculated", {
         }
         colnames(unique_cell_type_means) <- sort(unique_cell_types)
         alt_res[[i]] <- methods::as(unique_cell_type_means, "sparseMatrix")
-        i <- i + 1
-    }
-
-    # fail if mean expression values aren't the same across the 3 tests
-    testthat::expect_true(all.equal(EWCE_res_meanexp, alt_res))
+        # fail if mean expression values aren't the same across the 3 tests
+        testthat::expect_true(all.equal(EWCE_res_meanexp[[i]],
+                                        alt_res[[i]]))
+    } 
 })

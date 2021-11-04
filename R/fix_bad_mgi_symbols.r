@@ -34,10 +34,10 @@
 #' @importFrom methods as is
 #' @importFrom utils read.csv
 fix_bad_mgi_symbols <- function(exp,
-                                mrk_file_path = NULL,
-                                printAllBadSymbols = FALSE,
-                                as_sparse = TRUE,
-                                verbose = TRUE) {
+    mrk_file_path = NULL,
+    printAllBadSymbols = FALSE,
+    as_sparse = TRUE,
+    verbose = TRUE) {
     # Check arguments
     err_msg <- paste0(
         "'exp' is null. It should be a numerical",

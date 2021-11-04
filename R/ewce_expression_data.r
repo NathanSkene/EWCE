@@ -61,13 +61,13 @@
 #' )
 #' @export
 ewce_expression_data <- function(sct_data,
-                                 annotLevel = 1,
-                                 tt,
-                                 sortBy = "t",
-                                 thresh = 250,
-                                 reps = 100,
-                                 ttSpecies = "mouse",
-                                 sctSpecies = "mouse") {
+    annotLevel = 1,
+    tt,
+    sortBy = "t",
+    thresh = 250,
+    reps = 100,
+    ttSpecies = "mouse",
+    sctSpecies = "mouse") {
     err_msg <- paste0(
         "ERROR: tt does not contain a column with value",
         " passed in sortBy argument"

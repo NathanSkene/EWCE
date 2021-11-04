@@ -19,19 +19,19 @@
 #' @importFrom dplyr %>% mutate group_by slice_max
 #' @importFrom methods as
 extract_matrix <- function(ctd,
-                           dataset,
-                           level = 1,
-                           input_species = NULL,
-                           output_species = "human",
-                           metric = "specificity",
-                           non121_strategy = "drop_both_species",
-                           numberOfBins = 40,
-                           remove_unlabeled_clusters = FALSE,
-                           force_new_quantiles = FALSE,
-                           as_sparse = TRUE,
-                           as_DelayedArray = FALSE,
-                           rename_columns = FALSE,
-                           verbose = TRUE) {
+    dataset,
+    level = 1,
+    input_species = NULL,
+    output_species = "human",
+    metric = "specificity",
+    non121_strategy = "drop_both_species",
+    numberOfBins = 40,
+    remove_unlabeled_clusters = FALSE,
+    force_new_quantiles = FALSE,
+    as_sparse = TRUE,
+    as_DelayedArray = FALSE,
+    rename_columns = FALSE,
+    verbose = TRUE) {
     ### Avoid confusing Biocheck
     Gene <- max_exp <- NULL
 

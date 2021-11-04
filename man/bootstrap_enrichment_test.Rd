@@ -12,6 +12,7 @@ bootstrap_enrichment_test(
   sctSpecies = NULL,
   output_species = "human",
   reps = 100,
+  no_cores = 1,
   annotLevel = 1,
   geneSizeControl = FALSE,
   controlledCT = NULL,
@@ -29,20 +30,25 @@ if \code{geneSizeControl=TRUE}.}
 
 \item{bg}{List of gene symbols containing the background gene list
 (including hit genes). If \code{bg=NULL},
- an appropriate gene background will be created automatically.
-if \code{geneSizeControl=TRUE}.}
+ an appropriate gene background will be created automatically.}
 
 \item{genelistSpecies}{Species that \code{hits} genes came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{sctSpecies}{Species that \code{sct_data} came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{output_species}{Species to convert \code{sct_data} and \code{hits} to
-(Default: "human").}
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{reps}{Number of random gene lists to generate (\emph{Default: 100},
 but should be >=10,000 for publication-quality results).}
+
+\item{no_cores}{Number of cores to parallelise
+bootstrapping \code{reps} over.}
 
 \item{annotLevel}{An integer indicating which level of \code{sct_data} to
 analyse (\emph{Default: 1}).}
@@ -50,8 +56,7 @@ analyse (\emph{Default: 1}).}
 \item{geneSizeControl}{Whether you want to control for
 GC content and transcript length. Recommended if the gene list originates
 from genetic studies (\emph{Default: FALSE}).
- If set to \code{TRUE}, then \code{hits} must be from humans.
-should be used rather than mouse.}
+If set to \code{TRUE}, then \code{hits} must be from humans.}
 
 \item{controlledCT}{[Optional] If not NULL, and instead is the name of a
 cell type, then the bootstrapping controls for expression within that

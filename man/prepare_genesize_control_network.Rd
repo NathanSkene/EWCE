@@ -7,7 +7,8 @@
 prepare_genesize_control_network(
   hits,
   bg = NULL,
-  numBOOT = 10000,
+  reps = 10000,
+  no_cores = 1,
   sctSpecies = NULL,
   genelistSpecies = NULL,
   verbose = TRUE
@@ -20,16 +21,20 @@ if \code{geneSizeControl=TRUE}.}
 
 \item{bg}{List of gene symbols containing the background gene list
 (including hit genes). If \code{bg=NULL},
- an appropriate gene background will be created automatically.
-if \code{geneSizeControl=TRUE}.}
+ an appropriate gene background will be created automatically.}
 
-\item{numBOOT}{Number of gene lists to sample.}
+\item{reps}{Number of gene lists to sample.}
+
+\item{no_cores}{Number of cores to parallelise
+bootstrapping \code{reps} over.}
 
 \item{sctSpecies}{Species that \code{sct_data} came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{genelistSpecies}{Species that \code{hits} genes came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{verbose}{Print messages.}
 }

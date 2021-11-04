@@ -1,11 +1,16 @@
+#' Plot log bootstrap distributions
+#'
+#' Plot results of \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
+#'
+#' @keywords internal
 plot_log_bootstrap_distributions <- function(dat,
-                                             exp_mats,
-                                             cc,
-                                             hit_exp,
-                                             tag,
-                                             listFileName,
-                                             graph_theme,
-                                             savePath) {
+    exp_mats,
+    cc,
+    hit_exp,
+    tag,
+    listFileName,
+    graph_theme,
+    savePath) {
     requireNamespace("grDevices")
     # - First get the ordered gene names
     rownames(dat) <- dat$Gnames

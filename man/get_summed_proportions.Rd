@@ -9,6 +9,7 @@ get_summed_proportions(
   sct_data,
   annotLevel,
   reps,
+  no_cores = 1,
   geneSizeControl,
   controlledCT = NULL,
   control_network = NULL,
@@ -16,22 +17,30 @@ get_summed_proportions(
 )
 }
 \arguments{
-\item{hitGenes}{Array of gene names. The target gene set.}
+\item{hitGenes}{list of gene names. The target gene set.}
 
-\item{sct_data}{The cell type data list (with specificity and mean_exp)}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{annotLevel}{The level of annotation in sct_data to analyse}
+\item{annotLevel}{An integer indicating which level of \code{sct_data} to
+analyse (\emph{Default: 1}).}
 
-\item{reps}{The number of gene lists to sample}
+\item{reps}{Number of random gene lists to generate (\emph{Default: 100},
+but should be >=10,000 for publication-quality results).}
 
-\item{geneSizeControl}{Boolean. Should the sampled gene lists control for
-GC content and transcript length?}
+\item{no_cores}{Number of cores to parallelise
+bootstrapping \code{reps} over.}
 
-\item{controlledCT}{Name of a cell type (from colnames of
-sct_data[[x]]$specificity).}
+\item{geneSizeControl}{Whether you want to control for
+GC content and transcript length. Recommended if the gene list originates
+from genetic studies (\emph{Default: FALSE}).
+If set to \code{TRUE}, then \code{hits} must be from humans.}
 
-\item{control_network}{If geneSizeControl=TRUE, then must provide the
-control network}
+\item{controlledCT}{[Optional] If not NULL, and instead is the name of a
+cell type, then the bootstrapping controls for expression within that
+cell type.}
+
+\item{control_network}{If \code{geneSizeControl=TRUE},
+then must provide the control network.}
 
 \item{verbose}{Print messages.}
 }
@@ -54,3 +63,4 @@ obtain the mean specificity in each sampled list (and the target list).
 \details{
 See \link[EWCE]{bootstrap_enrichment_test} for examples.
 }
+\keyword{internal}

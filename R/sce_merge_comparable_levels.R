@@ -12,7 +12,7 @@
 #     if(ncol(sce)<30) warning(paste(x,": only contains",ncol(sce),"samples. This may cause problems with LIGER.\n\n"))
 #     return(sce)
 #   }) %>% `names<-`(unique(SCE_merged$level_1$batch))
-#   sce_lvl <- sce_cbind(sce_list = SCE_list,
+#   sce_lvl <- merge_sce(sce_list = SCE_list,
 #                        method = method,
 #                        batch_names = names(SCE_list),
 #                        exprs = c("mean_exp","specificity","specificity_quantiles"))

@@ -91,21 +91,22 @@
 #' }
 #' @export
 #' @import ggplot2
-#' @importFrom reshape2 melt
-#' @importFrom scales comma
-generate_bootstrap_plots_for_transcriptome <- function(sct_data,
-                                                       tt,
-                                                       thresh = 250,
-                                                       annotLevel = 1,
-                                                       reps,
-                                                       full_results = NA,
-                                                       listFileName = "",
-                                                       showGNameThresh = 25,
-                                                       ttSpecies = "mouse",
-                                                       sctSpecies = "mouse",
-                                                       sortBy = "t",
-                                                       onlySignif = TRUE,
-                                                       savePath = tempdir()) {
+#' @importFrom reshape2 melt 
+generate_bootstrap_plots_for_transcriptome <- function(
+    sct_data,
+    tt,
+    thresh = 250,
+    annotLevel = 1,
+    reps,
+    full_results = NA,
+    listFileName = "",
+    showGNameThresh = 25,
+    ttSpecies = "mouse",
+    sctSpecies = "mouse",
+    sortBy = "t",
+    onlySignif = TRUE,
+    savePath = tempdir()) {
+    
     requireNamespace("grDevices")
     tt <- check_args_for_bootstrap_plot_generation(
         sct_data = sct_data,

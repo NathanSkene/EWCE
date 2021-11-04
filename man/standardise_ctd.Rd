@@ -25,9 +25,11 @@ standardise_ctd(
 
 \item{dataset}{CellTypeData. name.}
 
-\item{input_species}{Which species the gene names in \code{exp} come from.}
+\item{input_species}{Which species the gene names in \code{exp} come from.
+See \link[EWCE]{list_species} for all available species.}
 
-\item{output_species}{Which species' genes names to convert \code{exp} to.}
+\item{output_species}{Which species' genes names to convert \code{exp} to.
+See \link[EWCE]{list_species} for all available species.}
 
 \item{non121_strategy}{How to handle genes that don't have
 1:1 mappings between \code{input_species}:\code{output_species}.

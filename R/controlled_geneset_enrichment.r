@@ -59,18 +59,18 @@
 #' @export
 #' @importFrom stats sd
 controlled_geneset_enrichment <- function(disease_genes,
-                                          functional_genes,
-                                          bg = NULL,
-                                          sct_data,
-                                          sctSpecies = NULL,
-                                          output_species = "human",
-                                          disease_genes_species = NULL,
-                                          functional_genes_species = NULL,
-                                          annotLevel,
-                                          reps = 10000,
-                                          controlledCT,
-                                          use_intersect = FALSE,
-                                          verbose = TRUE) {
+    functional_genes,
+    bg = NULL,
+    sct_data,
+    sctSpecies = NULL,
+    output_species = "human",
+    disease_genes_species = NULL,
+    functional_genes_species = NULL,
+    annotLevel,
+    reps = 100,
+    controlledCT,
+    use_intersect = FALSE,
+    verbose = TRUE) {
     #### Check species1 ###
     species <- check_species(
         genelistSpecies = disease_genes_species,

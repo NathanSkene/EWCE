@@ -32,18 +32,18 @@
 #' )
 #' @export
 standardise_ctd <- function(ctd,
-                            dataset,
-                            input_species = NULL,
-                            output_species = "human",
-                            non121_strategy = "drop_both_species",
-                            force_new_quantiles = TRUE,
-                            remove_unlabeled_clusters = FALSE,
-                            numberOfBins = 40,
-                            keep_annot = TRUE,
-                            keep_plots = TRUE,
-                            as_sparse = TRUE,
-                            as_DelayedArray = FALSE,
-                            verbose = TRUE) {
+    dataset,
+    input_species = NULL,
+    output_species = "human",
+    non121_strategy = "drop_both_species",
+    force_new_quantiles = TRUE,
+    remove_unlabeled_clusters = FALSE,
+    numberOfBins = 40,
+    keep_annot = TRUE,
+    keep_plots = TRUE,
+    as_sparse = TRUE,
+    as_DelayedArray = FALSE,
+    verbose = TRUE) {
     messager("Standardising CellTypeDataset", v = verbose)
     new_ctd <- lapply(seq(1, length(ctd)), function(lvl) {
         messager("Level:", lvl, v = verbose)

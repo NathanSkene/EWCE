@@ -1,8 +1,13 @@
+#' sce_lists_apply
+#'
+#' Support function for \code{EWCE::merge_sce_list}.
+#'
+#' @keywords internal
 sce_lists_apply <- function(SCE_lists,
-                            return_genes = FALSE,
-                            level = 2,
-                            as_matrix = FALSE,
-                            as_DelayedArray = FALSE) {
+    return_genes = FALSE,
+    level = 2,
+    as_matrix = FALSE,
+    as_DelayedArray = FALSE) {
     lapply(names(SCE_lists), function(x, lvl = level, genes = return_genes) {
         print(x)
         sce_list <- SCE_lists[[x]]

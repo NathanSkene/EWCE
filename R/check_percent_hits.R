@@ -25,10 +25,10 @@
 #'     target_celltype = "microglia"
 #' )
 check_percent_hits <- function(boot_res,
-                               target_celltype,
-                               mtc_method = "bonferroni",
-                               q_threshold = .05,
-                               verbose = TRUE) {
+    target_celltype,
+    mtc_method = "bonferroni",
+    q_threshold = .05,
+    verbose = TRUE) {
     sig_results <- get_sig_results(
         full_results = boot_res,
         mtc_method = mtc_method,

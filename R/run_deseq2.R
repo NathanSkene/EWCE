@@ -10,11 +10,11 @@
 #' @keywords internal
 #' @importFrom stats formula
 run_deseq2 <- function(exp,
-                       level2annot,
-                       test = "LRT",
-                       no_cores = 1,
-                       verbose = TRUE,
-                       ...) {
+                        level2annot,
+                        test = "LRT",
+                        no_cores = 1,
+                        verbose = TRUE,
+                        ...) {
     requireNamespace("DESeq2")
     messager("DGE:: DESeq2...", v = verbose)
     core_allocation <- assign_cores(worker_cores = no_cores)
@@ -32,8 +32,8 @@ run_deseq2 <- function(exp,
         test = test,
         reduced = ~1,
         # DESeq2 v1.31.10 (not yet released on BioC)
-        # now has glmGamPoi directly integrated directly!
-        ## https://github.com/mikelove/DESeq2/issues/29
+        # now has glmGamPoi integrated directly!
+        ## https://gi th ub.com/mikelove/DESeq2/issues/29
         ## default="parametric"
         # fitType="glmGamPoi",
         # sfType = "iterate",

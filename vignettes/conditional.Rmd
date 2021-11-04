@@ -41,7 +41,12 @@ In a followup paper we found that an enrichment detected for Schizophrenia in So
 
 Those results were generated using an alternative enrichment method designed for use with GWAS Summary Statistics rather than gene sets. The same sort of approach can be extended to EWCE as well, and we have implemented it within this package. When testing for enrichment the other gene sets that are sampled are selected to have equivalent specificity in the controlled cell type.
 
-We demonstrate it's use below to test whether the enrichment in astrocytes is still present after controlling for the enrichment within microglia:
+We demonstrate it's use below to test whether the enrichment in astrocytes is still present after controlling for the enrichment within microglia.
+
+### Parallelisation
+
+You can now speed up the bootstrapping process by parallelising across
+multiple cores with the parameter `no_cores` (`=1` by default).
 
 ```{r }
 unconditional_results <- EWCE::bootstrap_enrichment_test(

@@ -1,8 +1,8 @@
 check_bootstrap_args <- function(sct_data,
-                                 hits,
-                                 annotLevel,
-                                 reps,
-                                 controlledCT = NULL) {
+    hits,
+    annotLevel,
+    reps,
+    controlledCT = NULL) {
     #### Check an SCT dataset was provided ####
     if (unique(is.null(sct_data)) ||
         (!is_celltypedataset(ctd = sct_data))) {

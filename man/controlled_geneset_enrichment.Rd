@@ -14,7 +14,7 @@ controlled_geneset_enrichment(
   disease_genes_species = NULL,
   functional_genes_species = NULL,
   annotLevel,
-  reps = 10000,
+  reps = 100,
   controlledCT,
   use_intersect = FALSE,
   verbose = TRUE
@@ -31,16 +31,17 @@ Must be from same species as the single cell transcriptome dataset.}
 
 \item{bg}{List of gene symbols containing the background gene list
 (including hit genes). If \code{bg=NULL},
- an appropriate gene background will be created automatically.
-if \code{geneSizeControl=TRUE}.}
+ an appropriate gene background will be created automatically.}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
 \item{sctSpecies}{Species that \code{sct_data} came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{output_species}{Species to convert \code{sct_data} and \code{hits} to
-(Default: "human").}
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{disease_genes_species}{Species of the
 \code{disease_genes} gene set.}

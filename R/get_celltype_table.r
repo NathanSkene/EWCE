@@ -1,4 +1,4 @@
-#'  get_celltype_table
+#' get_celltype_table
 #'
 #' \code{ get_celltype_table} Generates a table that can be used for
 #' supplemenary tables of publications.
@@ -7,13 +7,14 @@
 #'
 #' @param annot An annotation dataframe, which columns named 'level1class',
 #' 'level2class' and 'dataset_name'
-#' @return A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
+#' 
+#' @returns A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
+#' 
 #' @examples
-#' library(ewceData)
 #' # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
-#' cortex_mrna <- cortex_mrna()
+#' cortex_mrna <- ewceData::cortex_mrna()
 #' cortex_mrna$annot$dataset_name <- "cortex_mrna"
-#' celltype_table <- get_celltype_table(cortex_mrna$annot)
+#' celltype_table <- EWCE::get_celltype_table(cortex_mrna$annot)
 #' @export
 get_celltype_table <- function(annot) {
     err_msg <- paste0(

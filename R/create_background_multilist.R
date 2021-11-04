@@ -14,14 +14,14 @@
 #' @keywords internal
 #' @importFrom orthogene convert_orthologs create_background
 create_background_multilist <- function(gene_list1,
-                                        gene_list2,
-                                        gene_list1_species,
-                                        gene_list2_species,
-                                        output_species = "human",
-                                        bg = NULL,
-                                        use_intersect = FALSE,
-                                        method = "homologene",
-                                        verbose = TRUE) {
+    gene_list2,
+    gene_list1_species,
+    gene_list2_species,
+    output_species = "human",
+    bg = NULL,
+    use_intersect = FALSE,
+    method = "homologene",
+    verbose = TRUE) {
     #### If all species are the same, just use all_genes ####
     if (all(c(gene_list1_species, gene_list2_species) == output_species)) {
         gene_map <- orthogene::all_genes(

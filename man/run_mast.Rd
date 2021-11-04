@@ -3,8 +3,11 @@
 \name{run_mast}
 \alias{run_mast}
 \title{Run DGE:  \pkg{MAST}}
+\source{
+\href{https://www.bioconductor.org/packages/release/bioc/vignettes/MAST/inst/doc/MAITAnalysis.html}{MAST tutorial}
+}
 \usage{
-run_mast(exp, level2annot, no_cores = 1, ...)
+run_mast(exp, level2annot, test = "LRT", mtc_method = "BH", no_cores = 1, ...)
 }
 \arguments{
 \item{exp}{Expression matrix with gene names as rownames.}
@@ -12,8 +15,10 @@ run_mast(exp, level2annot, no_cores = 1, ...)
 \item{level2annot}{Array of cell types, with each sequentially corresponding
 a column in the expression matrix}
 
-\item{no_cores}{Number of cores to parallelise across.
-Set to \code{NULL} to automatically optimise.}
+\item{mtc_method}{Multiple-testing correction method used by DGE step.
+See \link[stats]{p.adjust} for more details.}
+
+\item{no_cores}{Number of cores to parallelise DGE across.}
 
 \item{...}{Additional arguments to be passed to the selected DGE method.}
 }

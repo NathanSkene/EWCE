@@ -4,7 +4,15 @@
 \alias{calc_quantiles}
 \title{Calculate quantiles}
 \usage{
-calc_quantiles(v, n_quantiles = 10, report_filters = TRUE)
+calc_quantiles(vec, n_quantiles = 10, verbose = TRUE)
+}
+\arguments{
+\item{vec}{Numeric vector.}
+
+\item{n_quantiles}{Number of quantile bins to use.
+Defaults to deciles (\code{n_quantiles=10}).}
+
+\item{verbose}{Print messages.}
 }
 \value{
 Quantiles.

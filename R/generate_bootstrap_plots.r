@@ -73,17 +73,17 @@
 #' @importFrom reshape2 melt
 #' @importFrom orthogene create_background
 generate_bootstrap_plots <- function(sct_data = NULL,
-                                     hits = NULL,
-                                     bg = NULL,
-                                     genelistSpecies = NULL,
-                                     sctSpecies = NULL,
-                                     output_species = "human",
-                                     reps = 100,
-                                     annotLevel = 1,
-                                     full_results = NA,
-                                     listFileName = "",
-                                     savePath = tempdir(),
-                                     verbose = TRUE) {
+    hits = NULL,
+    bg = NULL,
+    genelistSpecies = NULL,
+    sctSpecies = NULL,
+    output_species = "human",
+    reps = 100,
+    annotLevel = 1,
+    full_results = NA,
+    listFileName = "",
+    savePath = tempdir(),
+    verbose = TRUE) {
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,

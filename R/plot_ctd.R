@@ -24,10 +24,10 @@
 #' @importFrom  stringr str_to_sentence
 #' @importFrom  reshape2 melt
 plot_ctd <- function(ctd,
-                     genes,
-                     level = 1,
-                     metric = "specificity",
-                     show_plot = TRUE) {
+    genes,
+    level = 1,
+    metric = "specificity",
+    show_plot = TRUE) {
     #### Standardise metric name ####
     if (tolower(metric) %in% c(
         "expr", "exp", "expression",

@@ -76,8 +76,9 @@ cellExpDist <- data.frame(Expression=cortex_mrna$exp[gene,],
 
 ggplot(cellExpDist) + 
   geom_boxplot(aes(x=Celltype, y=Expression), outlier.alpha = .5) + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme_bw()
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
 ```
 
 To note for the analysis of the `cortex_mrna` dataset, 
@@ -164,7 +165,7 @@ cortex_mrna_sce = cortex_mrna_sce[keep_genes,]
 
 A different number of reads is found across each cell. We suggest using [`scTransform`](https://cran.r-project.org/web/packages/sctransform/index.html) to normalise for differences due to cell size, then linearly scale. Note that this might be slow.
 
-```{r}
+```{r, style="max-height: 100px;", warning=FALSE}
 cortex_mrna$exp_scT_normed <- EWCE::sct_normalize(cortex_mrna$exp) 
 ```
 
@@ -177,18 +178,24 @@ Note that this is optional (and was not used in the original EWCE publication) s
 
 ## Calculate specificity matrices
 
-The next steps are as follows:  
+Next,`drop_uninformative_genes` drops uninformative genes in order to
+reduce compute time and noise in subsequent steps.
+It achieves this through several steps, each of which are optional:
+1. **Drop non-1:1 orthologs**: Removes genes that don't have 1:1 orthologs 
+with the output_species ("human" by default).
+2. **Drop non-varying genes**: Removes genes that don't vary across cells 
+based on variance deciles.
+3. **Drop non-differentially expressed genes (DEGs)**: Removes genes that are
+not significantly differentially expressed across cell-types. Multiple DEG methods are currently available (see `?drop_uninformative_genes` for up-to-date info). 
+ 
+### Parallelisation
 
-1. `drop_uninformative_genes()`: Drop genes which do not show significant evidence of varying between level 2 cell types (based on ANOVA). Optionally, you can also drop all genes which do not have 1:1 mouse:human orthologues (**Note**: this used to a separate step but has since been integrated directly into `drop_uninformative_genes()` via the arguments `drop_nonhuman_genes=` and `input_species=`). 
-2. Calculate cell type averages and specificity for each gene.   
-
-The last step is only necessary if you plan to compare to human data, i.e. gene sets resulting from human genetics.
-
-Rather than returning the data directly, the functions save the calculated data to a file and the file name is returned.
+You can now speed up the DGE process by parallelising across
+multiple cores with the parameter `no_cores` (`=1` by default).
 
 ```{r }
 # Generate cell type data for just the cortex/hippocampus data  
-exp_CortexOnly_DROPPED  <- EWCE::drop_uninformative_genes(
+exp_CortexOnly_DROPPED  <- EWCE:: drop_uninformative_genes(
   exp = cortex_mrna$exp_scT_normed, 
   input_species = "mouse",
   output_species = "human",
@@ -198,6 +205,17 @@ exp_CortexOnly_DROPPED  <- EWCE::drop_uninformative_genes(
 
 ## Generate CellTypeDataset
 
+Now we generate the CellTypeDataset with the 
+
+By default the function returns the path where the resulting file was saved.
+If you want to return the CTD itself as well, set `return_ctd=TRUE` and it will 
+be returned in a list (along with the save path).
+
+### Parallelisation
+
+You can now speed up `generate_celltype_data` by parallelising across
+multiple cores with the parameter `no_cores` (`=1` by default).
+
 ```{r}
 annotLevels <- list(level1class=cortex_mrna$annot$level1class,
                     level2class=cortex_mrna$annot$level2class)
@@ -205,8 +223,7 @@ annotLevels <- list(level1class=cortex_mrna$annot$level1class,
 fNames_CortexOnly <- EWCE::generate_celltype_data(
   exp = exp_CortexOnly_DROPPED,
   annotLevels = annotLevels,
-  groupName = "kiCortexOnly", 
-  savePath = tempdir()) 
+  groupName = "kiCortexOnly") 
 
 ctd_CortexOnly <- EWCE::load_rdata(fNames_CortexOnly)
 ```

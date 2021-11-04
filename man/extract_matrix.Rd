@@ -28,9 +28,11 @@ extract_matrix(
 
 \item{level}{CTD level to extract from.}
 
-\item{input_species}{Which species the gene names in \code{exp} come from.}
+\item{input_species}{Which species the gene names in \code{exp} come from.
+See \link[EWCE]{list_species} for all available species.}
 
-\item{output_species}{Which species' genes names to convert \code{exp} to.}
+\item{output_species}{Which species' genes names to convert \code{exp} to.
+See \link[EWCE]{list_species} for all available species.}
 
 \item{metric}{Name of the matrix to extract.}
 

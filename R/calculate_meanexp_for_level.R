@@ -12,8 +12,6 @@ calculate_meanexp_for_level <- function(ctd_oneLevel,
         "There are an equal number of cell types in expMatrix",
         " and ctd_oneLevel but the names do not match"
     )
-    #### Guards against issues with DelayedArray
-    expMatrix <- as.matrix(expMatrix)
     if (dim(expMatrix)[2] == length(unique(ctd_oneLevel$annot))) {
         message(dim(expMatrix)[2])
         message(length(ctd_oneLevel$annot))
@@ -27,8 +25,6 @@ calculate_meanexp_for_level <- function(ctd_oneLevel,
         )
     } else {
         # Sum reads in each cell type
-        # mean_exp = apply(expMatrix,1,aggregate.over.celltypes,
-        #                   ctd_oneLevel$annot)
         mm <- stats::model.matrix(~ 0 + ctd_oneLevel$annot)
         colnames(mm) <- names(table(ctd_oneLevel$annot))
         mat.summary.mm1 <- expMatrix %*% mm

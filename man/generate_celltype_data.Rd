@@ -58,10 +58,12 @@ across all cell types.}
 1:1 \code{output_species} orthologs and then convert \code{exp} gene names
 to those of \code{output_species}.}
 
-\item{input_species}{The species that the \code{exp} dataset comes from.}
+\item{input_species}{The species that the \code{exp} dataset comes from.
+See \link[EWCE]{list_species} for all available species.}
 
 \item{output_species}{Species to convert \code{exp} to
-(Default: "human").}
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
 \item{non121_strategy}{How to handle genes that don't have
 1:1 mappings between \code{input_species}:\code{output_species}.

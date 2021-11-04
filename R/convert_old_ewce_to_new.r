@@ -11,7 +11,7 @@
 #' @param celltype_data The cell type data to be converted
 #' @return ctd The new style data structure
 convert_old_ewce_to_new <- function(level1 = NA, level2 = NA,
-                                    celltype_data = NA) {
+    celltype_data = NA) {
     ctd <- list()
     if (!is.na(level1)) {
         load(level1)

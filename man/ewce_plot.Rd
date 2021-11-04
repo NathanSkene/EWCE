@@ -14,18 +14,19 @@ ewce_plot(
 )
 }
 \arguments{
-\item{total_res}{results dataframe generated using
+\item{total_res}{Results data.frame generated using
 \link[EWCE]{bootstrap_enrichment_test} or
 \link[EWCE]{ewce_expression_data} functions.
 Multiple results tables can be
 merged into one results table, as long as the 'list' column is set to
-distinguish them.}
+distinguish them.
+Multiple testing correction is then applied across all merged results.}
 
-\item{mtc_method}{method to be used for multiple testing correction.
-Argument is passed to \link[stats]{p.adjust}. Valid options are "holm",
-"hochberg", "hommel", "bonferroni", "BH", "BY",}
+\item{mtc_method}{Method to be used for multiple testing correction.
+Argument is passed to \link[stats]{p.adjust} (DEFAULT: "bonferroni).}
 
-\item{ctd}{Should be provided so that the dendrogram can be taken from it
+\item{ctd}{CellTypeDataset object.
+Should be provided so that the dendrogram can be taken from it
 and added to plots}
 
 \item{align}{(optional) Specifies whether graphs in the grid should be horizontally ("h") or

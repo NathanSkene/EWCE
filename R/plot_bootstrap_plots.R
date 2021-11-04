@@ -1,11 +1,11 @@
 plot_bootstrap_plots <- function(dat,
-                                 tag,
-                                 listFileName,
-                                 cc,
-                                 showGNameThresh,
-                                 graph_theme,
-                                 maxX,
-                                 savePath) {
+    tag,
+    listFileName,
+    cc,
+    showGNameThresh,
+    graph_theme,
+    maxX,
+    savePath) {
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +
         xlab("Mean Bootstrap Expression") +

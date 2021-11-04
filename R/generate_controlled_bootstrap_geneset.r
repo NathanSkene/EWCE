@@ -4,27 +4,22 @@
 #'
 #' See \link[EWCE]{controlled_geneset_enrichment} for examples.
 #'
-#' @param hitGenes Array of gene names. The target gene set.
-#' @param sct_data The cell type data list (with specificity and mean_exp)
-#' @param annotLevel The level of annotation in sct_data to analyse
-#' @param reps The number of gene lists to sample
-#' @param controlledCT Name of a cell type (from colnames of
-#' \code{sct_data[[x]]$specificity}).
-#' @param verbose Print messages.
+#' @inheritParams bootstrap_enrichment_test
+#' @inheritParams get_summed_proportions
 #'
-#' @return Matrix of genes
+#' @returns Matrix of genes
 #'  (such that \code{nrows=length(hitGenes)} and \code{ncols=reps}), where each
 #' column is a gene list.
 #'
 #' @keywords internal
 #' @importFrom stats quantile
 generate_controlled_bootstrap_geneset <- function(hitGenes,
-                                                  sct_data,
-                                                  combinedGenes,
-                                                  annotLevel,
-                                                  reps,
-                                                  controlledCT = FALSE,
-                                                  verbose = TRUE) {
+    sct_data,
+    combinedGenes,
+    annotLevel,
+    reps,
+    controlledCT = FALSE,
+    verbose = TRUE) {
     messager("Generating controlled bootstrap gene sets.", v = verbose)
     err_msg <- paste0(
         "ERROR: controlledCT cannot be NULL in",
@@ -53,7 +48,7 @@ generate_controlled_bootstrap_geneset <- function(hitGenes,
         "ERROR: length(hitGenes)==0. Perhaps your gene list is",
         " from the wrong species? It should be converted to",
         " orthologs of the same species as the single cell",
-        " dataset"
+        " dataset."
     )
     if (length(hitGenes) == 0) {
         stop(err_msg4)

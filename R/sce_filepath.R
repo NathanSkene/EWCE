@@ -9,7 +9,7 @@
 #' @importFrom SummarizedExperiment assay
 #' @importFrom methods slotNames
 sce_filepath <- function(sce,
-                         sce_save_dir = NULL) {
+    sce_save_dir = NULL) {
     file_info <- DelayedArray::seed(SummarizedExperiment::assay(sce))
     if ("filepath" %in% methods::slotNames(file_info)) {
         return(file_info@filepath)

@@ -13,11 +13,11 @@
 #' cortex_mrna <- ewceData::cortex_mrna()
 #' exp_sct_normed <- EWCE::sct_normalize(exp = cortex_mrna$exp[1:300, ])
 #' @export
-#' @importFrom sctransform vst correct_counts
 #' @importFrom Matrix t colSums
 sct_normalize <- function(exp,
                           as_sparse = TRUE,
                           verbose = TRUE) {
+    requireNamespace("sctransform")
     exp <- to_sparse_matrix(
         exp = exp,
         as_sparse = as_sparse,

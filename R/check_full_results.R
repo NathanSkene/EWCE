@@ -1,5 +1,5 @@
 check_full_results <- function(full_results,
-                               sct_data) {
+    sct_data) {
     if (!is.null(full_results)) {
         err_msg <- paste0(
             "ERROR: full_results is not valid output from the",

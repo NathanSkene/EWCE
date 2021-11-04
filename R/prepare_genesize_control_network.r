@@ -4,7 +4,7 @@
 #' semi-randomly selected gene lists which are matched for gene length and
 #' GC content.
 #'
-#' @param numBOOT Number of gene lists to sample.
+#' @param reps Number of gene lists to sample.
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams orthogene::create_background
 #'
@@ -22,11 +22,12 @@
 #' @importFrom  stats aggregate quantile
 #' @importFrom orthogene create_background
 prepare_genesize_control_network <- function(hits,
-                                             bg = NULL,
-                                             numBOOT = 10000,
-                                             sctSpecies = NULL,
-                                             genelistSpecies = NULL,
-                                             verbose = TRUE) {
+    bg = NULL,
+    reps = 10000,
+    no_cores = 1,
+    sctSpecies = NULL,
+    genelistSpecies = NULL,
+    verbose = TRUE) {
     target <- Gene.Symbol <- NULL
 
     ## Currently, can only convert to human genes
@@ -45,6 +46,7 @@ prepare_genesize_control_network <- function(hits,
         species1 = sctSpecies,
         species2 = genelistSpecies,
         output_species = output_species,
+        method = "gprofiler",
         bg = bg,
         verbose = verbose
     )
@@ -102,15 +104,16 @@ prepare_genesize_control_network <- function(hits,
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM ewceData ####
     ensembl_transcript_lengths_GCcontent <-
         ewceData::ensembl_transcript_lengths_GCcontent()
+
     all_lengths <-
         ensembl_transcript_lengths_GCcontent[
             ensembl_transcript_lengths_GCcontent$ensembl_gene_id %in%
                 hum_ens$ensembl_gene_id,
         ]
     all_lengths <- all_lengths[!is.na(all_lengths$transcript_length), ]
-    all_lens <- merge(
-        x = all_lengths,
-        y = hum_ens,
+    all_lens <- data.table::merge.data.table(
+        x = data.table::data.table(all_lengths),
+        y = data.table::data.table(hum_ens),
         by = "ensembl_gene_id"
     )
     #### TAKE THE MEAN TRANSCRIPT LENGTH & GC-CONTENT FOR EACH GENE ####
@@ -154,7 +157,8 @@ prepare_genesize_control_network <- function(hits,
     list_network <- create_list_network(
         data_byGene2 = data_byGene2,
         hitGenes_NEW = hitGenes_NEW,
-        numBOOT = numBOOT
+        reps = reps,
+        no_cores = no_cores
     )
     messager("Controlled bootstrapping network generated.", v = verbose)
     return(list(

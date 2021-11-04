@@ -38,6 +38,11 @@ set.seed(1234)
 
 Load a CTD previously generated from mouse cortex and hypothalamus single-cell RNA-seq data (from the Karolinska Institute). 
 
+### CTD levels 
+
+Each level of a CTD corresponds to increasingly refined cell-type/-subtype annotations. For example, in the CTD  `ewceData::ctd()` level 1 includes the cell-type "interneurons", while level 2 breaks these this group into 16 different
+interneuron subtypes ("Int...").
+
 ```{r}
 ctd <- ewceData::ctd()
 ```
@@ -84,6 +89,11 @@ ensure reproducibility in the bootstrap sampling function.
 ### Hyperparameters
 
 *Note*: We use 100 repetitions here for the purposes of a quick example, but in practice you would want to use `reps=10000` for publishable results.
+
+#### Parallelisation
+
+You can now speed up the bootstrapping process by parallelising across
+multiple cores with the parameter `no_cores` (`=1` by default).
 
 ```{r}
 reps <- 100

@@ -11,22 +11,25 @@
 #' @param bg List of gene symbols containing the background gene list
 #' (including hit genes). If \code{bg=NULL},
 #'  an appropriate gene background will be created automatically.
-#' if \code{geneSizeControl=TRUE}.
 #' @param genelistSpecies Species that \code{hits} genes came from
 #' (no longer limited to just "mouse" and "human").
+#' See \link[EWCE]{list_species} for all available species.
 #' @param sctSpecies  Species that \code{sct_data} came from
 #' (no longer limited to just "mouse" and "human").
+#' See \link[EWCE]{list_species} for all available species.
 #' @param output_species Species to convert \code{sct_data} and \code{hits} to
 #' (Default: "human").
+#' See \link[EWCE]{list_species} for all available species.
 #' @param reps Number of random gene lists to generate (\emph{Default: 100},
 #'  but should be >=10,000 for publication-quality results).
+#' @param no_cores Number of cores to parallelise
+#' bootstrapping \code{reps} over.
 #' @param annotLevel An integer indicating which level of \code{sct_data} to
 #' analyse (\emph{Default: 1}).
 #' @param geneSizeControl Whether you want to control for
 #' GC content and transcript length. Recommended if the gene list originates
 #' from genetic studies (\emph{Default: FALSE}).
-#'  If set to \code{TRUE}, then \code{hits} must be from humans.
-#' should be used rather than mouse.
+#' If set to \code{TRUE}, then \code{hits} must be from humans.
 #' @param controlledCT [Optional] If not NULL, and instead is the name of a
 #' cell type, then the bootstrapping controls for expression within that
 #' cell type.
@@ -71,18 +74,23 @@
 #' @importFrom stats p.adjust sd
 #' @importFrom orthogene create_background
 bootstrap_enrichment_test <- function(sct_data = NULL,
-                                      hits = NULL,
-                                      bg = NULL,
-                                      genelistSpecies = NULL,
-                                      sctSpecies = NULL,
-                                      output_species = "human",
-                                      reps = 100,
-                                      annotLevel = 1,
-                                      geneSizeControl = FALSE,
-                                      controlledCT = NULL,
-                                      mtc_method = "BH",
-                                      sort_results = TRUE,
-                                      verbose = TRUE) {
+    hits = NULL,
+    bg = NULL,
+    genelistSpecies = NULL,
+    sctSpecies = NULL,
+    output_species = "human",
+    reps = 100,
+    no_cores = 1,
+    annotLevel = 1,
+    geneSizeControl = FALSE,
+    controlledCT = NULL,
+    mtc_method = "BH",
+    sort_results = TRUE,
+    verbose = TRUE) {
+    core_allocation <- assign_cores(
+        worker_cores = no_cores,
+        verbose = verbose
+    )
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,
@@ -138,7 +146,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         control_related <- prepare_genesize_control_network(
             hits = hits,
             bg = bg,
-            numBOOT = reps,
+            reps = reps,
             sctSpecies = sctSpecies
         )
         control_network <- control_related[["list_network"]]
@@ -186,9 +194,11 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         sct_data = sct_data,
         annotLevel = annotLevel,
         reps = reps,
+        no_cores = no_cores,
         geneSizeControl = geneSizeControl,
         controlledCT = controlledCT,
-        control_network = control_network
+        control_network = control_network,
+        verbose = verbose
     )
     hit.cells <- sumProp$hit.cells
     bootstrap_data <- sumProp$bootstrap_data

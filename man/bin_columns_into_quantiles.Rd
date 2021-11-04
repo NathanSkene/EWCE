@@ -15,7 +15,10 @@ bin_columns_into_quantiles(
 
 \item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
 
-\item{defaultBin}{Which bin to assign when there's only one non-zero quantile.}
+\item{defaultBin}{Which bin to assign when there's only one
+non-zero quantile. In situations where there's only one non-zero quantile,
+\code{cut()} throws an error. Avoid these situations by
+using a default quantile.}
 }
 \value{
 A matrix with same shape as matrixIn but with columns storing
@@ -27,8 +30,7 @@ matrix of specificity (with columns of cell types) intom a matrix of
 specificity quantiles
 }
 \examples{
-library(ewceData)
-ctd <- ctd()
+ctd <- ewceData::ctd()
 ctd[[1]]$specificity_quantiles <- apply(ctd[[1]]$specificity, 2,
     FUN = bin_columns_into_quantiles,
     numberOfBins = 40

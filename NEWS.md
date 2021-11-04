@@ -15,8 +15,13 @@ and convert them to a common species (human by default) via `orthogene`.
 speed up examples (documented in *data.R*). 
 Accessed via `EWCE::example_bootstrap_results()`.
 * Replaced GHA workflow with check-bioc to automatically: run R-CMD checks, 
-run BiocCheck, and rebuild/deploy pkgdown site.
-
+run `BiocCheck`, and rebuild/deploy pkgdown site. 
+* Parallelised functions: 
+    + `drop_uninformative_genes`  
+    + `generate_celltype-data`  
+    + `bootstrap_enrichment_test`   
+* Added tests:
+    + `test-DelayedArray` 
 
 # EWCE 1.0.0
 

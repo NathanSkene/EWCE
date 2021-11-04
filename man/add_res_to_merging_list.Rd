@@ -7,7 +7,7 @@
 add_res_to_merging_list(full_res, existing_results = NULL)
 }
 \arguments{
-\item{full_res}{results list generated using
+\item{full_res}{Results list generated using
 \link[EWCE]{bootstrap_enrichment_test}
 or \link[EWCE]{ewce_expression_data} functions.
  Multiple results tables can be merged into one
@@ -17,20 +17,19 @@ results table, as long as the 'list' column is set to distinguish them.}
 list. Leave empty if this is the first item in the list.}
 }
 \value{
-merged results list
+Merged results list.
 }
 \description{
-\code{add_res_to_merging_list} Adds EWCE results to a list
-for merging analysis
+\code{add_res_to_merging_list} adds EWCE results to a list
+for merging analysis.
 }
 \examples{
 # Load the single cell data
-library(ewceData)
-ctd <- ctd()
+ctd <- ewceData::ctd()
 
 # Load the data
-tt_alzh <- tt_alzh()
-# tt_alzh_BA36 <- tt_alzh_BA36()
+tt_alzh <- ewceData::tt_alzh()
+# tt_alzh_BA36 <- ewceData::tt_alzh_BA36()
 # Use 3 bootstrap lists for speed, for publishable analysis use >10000
 reps <- 3
 # Use 5 up/down regulated genes (thresh) for speed, default is 250

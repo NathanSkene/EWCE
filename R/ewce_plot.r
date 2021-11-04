@@ -2,17 +2,17 @@
 #'
 #' \code{ewce_plot} generates plots of EWCE enrichment results
 #'
-#' @param total_res results dataframe generated using
+#' @param total_res Results data.frame generated using
 #' \link[EWCE]{bootstrap_enrichment_test} or
 #' \link[EWCE]{ewce_expression_data} functions.
 #' Multiple results tables can be
 #' merged into one results table, as long as the 'list' column is set to
 #' distinguish them.
-#' @param mtc_method method to be used for multiple testing correction.
-#' Argument is passed to \link[stats]{p.adjust}. Valid options are "holm",
-#' "hochberg", "hommel", "bonferroni", "BH", "BY",
-#   "fdr" or "none". Default method is bonferroni.
-#' @param ctd Should be provided so that the dendrogram can be taken from it
+#' Multiple testing correction is then applied across all merged results.
+#' @param mtc_method Method to be used for multiple testing correction.
+#' Argument is passed to \link[stats]{p.adjust} (DEFAULT: "bonferroni).
+#' @param ctd CellTypeDataset object.
+#' Should be provided so that the dendrogram can be taken from it
 #' and added to plots
 #' @inheritParams cowplot::plot_grid
 #'
@@ -33,11 +33,11 @@
 #' @import ggplot2
 #' @importFrom stats p.adjust
 ewce_plot <- function(total_res,
-                      mtc_method = "bonferroni",
-                      ctd = NULL,
-                      align = "v",
-                      rel_heights = c(.3, 1),
-                      axis = "lr") {
+    mtc_method = "bonferroni",
+    ctd = NULL,
+    align = "v",
+    rel_heights = c(.3, 1),
+    axis = "lr") {
     requireNamespace("cowplot")
     requireNamespace("gridExtra")
     requireNamespace("grid")

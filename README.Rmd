@@ -69,20 +69,20 @@ BiocManager::install("EWCE")
 
 # Vignettes
 
-## [EWCE: Getting started](https://nathanskene.github.io/EWCE/articles/EWCE.html)
+## [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE.html)
 
 A minimal example to get started with running *EWCE*.
 
-## [EWCE: Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
+## [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
 
 Example *EWCE* enrichment tests with in-depth explanations of each step. 
 
-## [EWCE: Creating CellTypeDatasets](https://nathanskene.github.io/EWCE/articles/create_CTD.html)
+## [Creating CellTypeDatasets](https://nathanskene.github.io/EWCE/articles/create_CTD.html)
 
 Instructions on how to create new make new CellTypeDataset references
 to use with *EWCE*.
 
-## [EWCE: Conditional examples](https://nathanskene.github.io/EWCE/articles/conditional.html)
+## [Conditional examples](https://nathanskene.github.io/EWCE/articles/conditional.html)
 
 Examples and explanations of conditional cell type enrichment tests 
 (e.g. controlling for a dominant cell type signal) .
@@ -91,28 +91,16 @@ Examples and explanations of conditional cell type enrichment tests
 
 Additional applications of *EWCE* to transcriptomic studies.
 
+## [Docker](https://nathanskene.github.io/EWCE/articles/docker.html)
 
-# Docker container
+Dedicated *EWCE* Docker container usage.
 
 [Docker](https://www.docker.com/) containers with 
-the latest version of `EWCE` are regularly pushed to [Dockerhub](https://hub.docker.com/).
-If you already have Docker installed,
-you can load up a working copy using the following commands.  
-
-Note, that you will need to replace the initial directory path 
-with a location on your computer that you wish to be able to
-access from within the docker image.
-
-```
-docker pull nathanskene/ewce
-docker run --name=ewce -e PASSWORD=ewcedocker -p 8790:8790 -d -v /User/$USER:/var/ewce nathanskene/ewce:latest
-docker exec -ti ewce R
-```
+the latest version of `EWCE` are regularly pushed to [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
 # Troubleshooting
 
 If you have any problems, please do submit an [Issue here on GitHub](https://github.com/nathanskene/EWCE/issues) with a reproducible example.
-
 
 # Citation
 
@@ -123,7 +111,7 @@ Types in Major Brain Disorders Using Single Cell Transcriptomes
 and Expression Weighted Cell Type Enrichment. Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
 
 If you use the cortex/hippocampus single-cell data associated 
-`EWCE`/`ewceData` this package then please cite the following:
+*EWCE*/*ewceData* this package then please cite the following:
 
 > [Zeisel, et al. Cell types in the mouse cortex and
 hippocampus revealed by single-cell RNA-seq. Science, 2015.

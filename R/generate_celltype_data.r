@@ -22,8 +22,10 @@
 #' 1:1 \code{output_species} orthologs and then convert \code{exp} gene names
 #' to those of \code{output_species}.
 #' @param input_species The species that the \code{exp} dataset comes from.
+#' See \link[EWCE]{list_species} for all available species.
 #' @param output_species Species to convert \code{exp} to
 #' (Default: "human").
+#' See \link[EWCE]{list_species} for all available species.
 #' @param force_new_file If a file of the same name as the one
 #' being created already exists, overwrite it.
 #' @param specificity_quantiles Compute specificity quantiles.
@@ -62,25 +64,25 @@
 #' @importFrom methods as is
 #' @importFrom orthogene convert_orthologs
 generate_celltype_data <- function(exp,
-                                   annotLevels,
-                                   groupName,
-                                   no_cores = 1,
-                                   savePath = tempdir(),
-                                   file_prefix = "ctd",
-                                   as_sparse = TRUE,
-                                   as_DelayedArray = FALSE,
-                                   normSpec = FALSE,
-                                   convert_orths = FALSE,
-                                   input_species = "mouse",
-                                   output_species = "human",
-                                   non121_strategy = "drop_both_species",
-                                   force_new_file = TRUE,
-                                   specificity_quantiles = TRUE,
-                                   numberOfBins = 40,
-                                   dendrograms = TRUE,
-                                   return_ctd = FALSE,
-                                   verbose = TRUE,
-                                   ...) {
+                                    annotLevels,
+                                    groupName,
+                                    no_cores = 1,
+                                    savePath = tempdir(),
+                                    file_prefix = "ctd",
+                                    as_sparse = TRUE,
+                                    as_DelayedArray = FALSE,
+                                    normSpec = FALSE,
+                                    convert_orths = FALSE,
+                                    input_species = "mouse",
+                                    output_species = "human",
+                                    non121_strategy = "drop_both_species",
+                                    force_new_file = TRUE,
+                                    specificity_quantiles = TRUE,
+                                    numberOfBins = 40,
+                                    dendrograms = TRUE,
+                                    return_ctd = FALSE,
+                                    verbose = TRUE,
+                                    ...) {
     #### Check if input is an SCE or SE object ####
     res_sce <- check_sce(exp)
     exp <- res_sce$exp

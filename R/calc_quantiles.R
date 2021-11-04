@@ -1,19 +1,24 @@
 #' Calculate quantiles
+#' 
+#' @param vec Numeric vector.
+#' @param n_quantiles Number of quantile bins to use.
+#' Defaults to deciles (\code{n_quantiles=10}).
+#' @param verbose Print messages.
 #'
 #' @return Quantiles.
 #'
 #' @keywords internal
-#' @importFrom stats setNames
-calc_quantiles <- function(v,
-                           n_quantiles = 10,
-                           report_filters = TRUE) {
+#' @importFrom stats setNames ecdf
+calc_quantiles <- function(vec,
+                            n_quantiles = 10,
+                            verbose = TRUE) {
     calc_percentile <- stats::ecdf(seq(1, n_quantiles))
-    quantiles <- calc_percentile(v)
+    quantiles <- calc_percentile(vec)
     # Report the number of items left after filtering at each quantile
-    if (report_filters) {
+    if (verbose) {
         messager("N remaining at each quantile filter:")
         genes_left <- lapply(unique(quantiles), function(x) {
-            stats::setNames(length(v[quantiles >= x]), paste0(">=", x))
+            stats::setNames(length(vec[quantiles >= x]), paste0(">=", x*10))
         }) %>%
             unlist() %>%
             sort() %>%

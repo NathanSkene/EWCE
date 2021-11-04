@@ -1,6 +1,6 @@
 check_species <- function(genelistSpecies = NULL,
-                          sctSpecies = NULL,
-                          verbose = TRUE) {
+    sctSpecies = NULL,
+    verbose = TRUE) {
     if (is.null(genelistSpecies)) {
         messager(
             "Warning: genelistSpecies not provided.",

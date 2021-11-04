@@ -1,6 +1,15 @@
+#' \code{create_list_network}
+#'
+#' Support function for \code{prepare_genesize_control_network}.
+#'
+#' @keywords internal
+#' @importFrom  parallel mclapply
+#' @importFrom data.table data.table
+#' @importFrom dplyr %>%
 create_list_network <- function(data_byGene2,
-                                hitGenes_NEW,
-                                numBOOT = 10000) {
+    hitGenes_NEW,
+    reps = 10000,
+    no_cores = 1) {
     # Get all sctSpecies genes in each quadrant
     quad_genes <- list()
     for (uq in unique(data_byGene2$uniq_quad)) {
@@ -8,23 +17,20 @@ create_list_network <- function(data_byGene2,
             unique(data_byGene2[data_byGene2$uniq_quad == uq, "HGNC.symbol"])
     }
 
-    list_network <- matrix("",
-        nrow = numBOOT,
-        ncol = length(hitGenes_NEW)
-    )
-    count <- 0
-    for (gene in hitGenes_NEW) {
-        count <- count + 1
+    list_network <- parallel::mclapply(hitGenes_NEW, function(gene) {
         this_gene_quad <- data_byGene2[
             data_byGene2$HGNC.symbol == gene,
             "uniq_quad"
         ][1]
         candidates <- as.vector(unlist(quad_genes[this_gene_quad]))
-        list_network[, count] <- sample(
+        data.table::data.table(sample(
             x = candidates,
-            size = numBOOT,
+            size = reps,
             replace = TRUE
-        )
-    }
+        ))
+    }, mc.cores = no_cores) %>%
+        do.call(what = "cbind") %>%
+        as.matrix() %>%
+        `colnames<-`(NULL)
     return(list_network)
 }

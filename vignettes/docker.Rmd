@@ -12,9 +12,9 @@ vignette: >
 
 ```{r setup, include=FALSE}
 #### Package name ####
-pkg <- desc::desc_get("Package")
+pkg <- tolower("EWCE")
 #### Username of DockerHub account ####
-docker_user <- "bschilder"
+docker_user <- "neurogenomicslab"
 ```
 
 # Docker

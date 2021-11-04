@@ -1,11 +1,25 @@
+#' Merge of list of SingleCellExperiment objects
+#'
+#' Merge of list of CellTypeDatasets stored as
+#' \link[SingleCellExperiment]{SingleCellExperiment} objects
+#' into one \link[SingleCellExperiment]{SingleCellExperiment} object.
+#'
+#' @param SCE_lists A list of \link[SingleCellExperiment]{SingleCellExperiment}
+#'  objects.
+#' @param parent_folder Can supply the path to a folder
+#' instead of \code{SCE_lists}. Any \link[SingleCellExperiment]{SingleCellExperiment}
+#'  objects matching \code{pattern} will be imported.
+#' @param merge_levels CellTypeDataset levels to merge
+#'
+#' @keywords internal
 merge_sce_list <- function(SCE_lists = NULL,
-                           parent_folder = NULL,
-                           pattern = ".rds",
-                           merge_levels = seq(1, 5),
-                           gene_union = TRUE,
-                           as_sparse = TRUE,
-                           as_DelayedArray = TRUE,
-                           verbose = TRUE) {
+                            parent_folder = NULL,
+                            pattern = ".rds$",
+                            merge_levels = seq(1, 5),
+                            gene_union = TRUE,
+                            as_sparse = TRUE,
+                            as_DelayedArray = TRUE,
+                            verbose = TRUE) {
     #### If SCE_lists hasn't been created yet, create it ###
     if (is.null(SCE_lists) && (!is.null(parent_folder))) {
         sce_files <- list.files(
@@ -41,11 +55,10 @@ merge_sce_list <- function(SCE_lists = NULL,
             level = lvl,
             as_matrix = TRUE
         )
-        sce_cbind(
+        merge_sce(
             sce_list = sce.lvl,
             method = if (gene_union) "union" else "intersect",
-            batch_names = names(sce.lvl),
-            exprs = c("mean_exp", "specificity", "specificity_quantiles")
+            batch_names = names(sce.lvl)
         )
     }) %>% `names<-`(paste("level", merge_levels, sep = "_"))
     #### Convert back to sparseDM ####

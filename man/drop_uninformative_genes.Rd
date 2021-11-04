@@ -7,7 +7,9 @@
 drop_uninformative_genes(
   exp,
   level2annot,
-  DGE_method = "limma",
+  dge_method = "limma",
+  dge_test = "LRT",
+  mtc_method = "BH",
   min_variance_decile = NULL,
   adj_pval_thresh = 1e-05,
   convert_orths = FALSE,
@@ -28,8 +30,26 @@ drop_uninformative_genes(
 \item{level2annot}{Array of cell types, with each sequentially corresponding
 a column in the expression matrix}
 
-\item{DGE_method}{Which method to use for the Differential Gene Expression
-(DGE) step.}
+\item{dge_method}{Which method to use for the Differential Gene Expression
+(DGE) step.\cr
+Options:
+\itemize{
+\item{"limma": }{Uses
+\href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
+limma}.}
+\item{"deseq2": }{Uses
+ \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
+DESeq2}.}
+\item{"mast": }{Uses
+\href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
+MAST}.}
+}}
+
+\item{dge_test}{\code{test} argument passed to DGE function.
+Only used when \code{dge_method="deqseq2"}.}
+
+\item{mtc_method}{Multiple-testing correction method used by DGE step.
+See \link[stats]{p.adjust} for more details.}
 
 \item{min_variance_decile}{If \code{min_variance_decile!=NULL},
  calculates the variance of the mean gene expression
@@ -45,9 +65,11 @@ that a gene must demonstrate across \code{level2annot} (i.e. cell types).}
 1:1 \code{output_species} orthologs and then convert \code{exp} gene names
 to those of \code{output_species}.}
 
-\item{input_species}{Which species the gene names in \code{exp} come from.}
+\item{input_species}{Which species the gene names in \code{exp} come from.
+See \link[EWCE]{list_species} for all available species.}
 
-\item{output_species}{Which species' genes names to convert \code{exp} to.}
+\item{output_species}{Which species' genes names to convert \code{exp} to.
+See \link[EWCE]{list_species} for all available species.}
 
 \item{non121_strategy}{How to handle genes that don't have
 1:1 mappings between \code{input_species}:\code{output_species}.
@@ -97,20 +119,18 @@ Set to \code{NULL} to automatically optimise.}
 exp Expression matrix with gene names as row names.
 }
 \description{
-\code{drop_uninformative_genes} first removes genes
-that do not have 1:1 orthologs with humans.
+\code{drop_uninformative_genes} drops uninformative genes in order to reduce
+compute time and noise in subsequent steps. It achieves this through several
+steps, each of which are optional:
+\itemize{
+\item{Drop non-1:1 orthologs:\cr}{Removes genes that don't have 1:1 orthologs
+with the \code{output_species} ("human" by default).}
+\item{Drop non-varying genes:\cr}{Removes genes that don't vary across cells
+based on variance deciles.}
+\item{Drop non-differentially expressed genes (DEGs):\cr}{
+Removes genes that are not significantly differentially
+expressed across cell-types (multiple DEG methods available).}
 }
-\details{
-\code{drop_uninformative_genes} then drops genes from an
-SCT expression matrix
-if they do not significantly vary between any cell types.
-Makes this decision based on use of an ANOVA (implemented with \code{limma}).
-If the F-statistic for variation amongst type2 annotations
-is less than a strict p-threshold, then the gene is dropped.
-
-A very fast alternative to DGE methods is filtering by
-\code{min_variance_decile},
-which selects only genes with the top variance deciles.
 }
 \examples{
 cortex_mrna <- ewceData::cortex_mrna()

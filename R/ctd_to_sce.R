@@ -1,16 +1,24 @@
 #' CellTypeDataset to SingleCellExperiment
 #'
 #' Copied from \href{https://github.com/bschilder/scKirby}{scKirby},
-#'  which is not yet on CRAN or Bioconductor
+#'  which is not yet on CRAN or Bioconductor.
+#'
+#' @param object CellTypeDataset object.
+#' @param as_sparse Store SingleCellExperiment matrices as sparse.
+#' @param as_DelayedArray Store SingleCellExperiment matrices as DelayedArray.
+#' @param verbose Print messages.
 #'
 #' @return SingleCellExperiment
 #'
-#' @keywords internal
+#' @examples
+#' ctd <- ewceData::ctd()
+#' sce <- EWCE::ctd_to_sce(ctd)
+#' @export 
 #' @importFrom dplyr %>%
 ctd_to_sce <- function(object,
-                       as_sparse = TRUE,
-                       as_DelayedArray = TRUE,
-                       verbose = TRUE) {
+                        as_sparse = TRUE,
+                        as_DelayedArray = FALSE,
+                        verbose = TRUE) {
     messager("+ CTD ==> SingleCellExperiment", v = verbose)
     ctd <- object
     #### Name CTD levels ####
@@ -33,12 +41,12 @@ ctd_to_sce <- function(object,
                 mtx <- to_sparse_matrix(
                     exp = mtx,
                     as_sparse = as_sparse,
-                    verbose = verbose
+                    verbose = FALSE
                 )
                 mtx <- to_delayed_array(
                     exp = mtx,
                     as_DelayedArray = as_DelayedArray,
-                    verbose = verbose
+                    verbose = FALSE
                 )
                 matrix_list[[mtx_name]] <- mtx
             }

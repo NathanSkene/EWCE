@@ -18,9 +18,9 @@
 #' @export
 #' @importFrom methods as
 bin_specificity_into_quantiles <- function(ctdIN,
-                                           numberOfBins,
-                                           as_sparse = TRUE,
-                                           verbose = TRUE) {
+    numberOfBins,
+    as_sparse = TRUE,
+    verbose = TRUE) {
     specQ <- apply(ctdIN$specificity, 2,
         FUN = bin_columns_into_quantiles,
         numberOfBins = numberOfBins

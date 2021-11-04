@@ -1,9 +1,9 @@
 bootstrap_plot <- function(exp_mats,
-                           hit.exp,
-                           cc,
-                           savePath,
-                           listFileName,
-                           show_plot = TRUE) {
+    hit.exp,
+    cc,
+    savePath,
+    listFileName,
+    show_plot = TRUE) {
     requireNamespace("grDevices")
     ### Setup theme ####
     graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +

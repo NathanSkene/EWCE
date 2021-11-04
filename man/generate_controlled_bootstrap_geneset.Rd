@@ -15,16 +15,19 @@ generate_controlled_bootstrap_geneset(
 )
 }
 \arguments{
-\item{hitGenes}{Array of gene names. The target gene set.}
+\item{hitGenes}{list of gene names. The target gene set.}
 
-\item{sct_data}{The cell type data list (with specificity and mean_exp)}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{annotLevel}{The level of annotation in sct_data to analyse}
+\item{annotLevel}{An integer indicating which level of \code{sct_data} to
+analyse (\emph{Default: 1}).}
 
-\item{reps}{The number of gene lists to sample}
+\item{reps}{Number of random gene lists to generate (\emph{Default: 100},
+but should be >=10,000 for publication-quality results).}
 
-\item{controlledCT}{Name of a cell type (from colnames of
-\code{sct_data[[x]]$specificity}).}
+\item{controlledCT}{[Optional] If not NULL, and instead is the name of a
+cell type, then the bootstrapping controls for expression within that
+cell type.}
 
 \item{verbose}{Print messages.}
 }

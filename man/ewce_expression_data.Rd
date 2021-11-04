@@ -40,7 +40,8 @@ but should be >=10,000 for publication-quality results).}
 was generated from.}
 
 \item{sctSpecies}{Species that \code{sct_data} came from
-(no longer limited to just "mouse" and "human").}
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 }
 \value{
 A list containing five data frames:

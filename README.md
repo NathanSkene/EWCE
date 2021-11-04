@@ -4,12 +4,12 @@
 Alan Murphy, Brian Schilder, and Nathan Skene
 </h4>
 <h4>
-Oct-27-2021
+Nov-04-2021
 </h4>
 
 <!-- badges: start -->
 
-[![](https://img.shields.io/badge/devel%20version-2.0.0-black.svg)](https://github.com/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/devel%20version-2.0.1-black.svg)](https://github.com/NathanSkene/EWCE)
 [![R build
 status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![R build
@@ -22,7 +22,7 @@ status](http://www.bioconductor.org/shields/build/release/bioc/EWCE.svg)](https:
 [![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-[![](https://img.shields.io/badge/download-2155/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-2169/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 <!-- badges: end -->
 
 <img height="200" src="https://github.com/bschilder/EWCE/raw/DelayedArray/inst/hex/EWCE.png">
@@ -48,7 +48,6 @@ Using *EWCE* essentially involves two steps:
 ``` r
 if (!require("BiocManager")){install.packages("BiocManager")}
 
-BiocManager::install(version = "devel")
 BiocManager::install("EWCE") 
 ```
 
@@ -56,20 +55,20 @@ BiocManager::install("EWCE")
 
 # Vignettes
 
-## [EWCE: Getting started](https://nathanskene.github.io/EWCE/articles/EWCE.html)
+## [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE.html)
 
 A minimal example to get started with running *EWCE*.
 
-## [EWCE: Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
+## [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
 
 Example *EWCE* enrichment tests with in-depth explanations of each step.
 
-## [EWCE: Creating CellTypeDatasets](https://nathanskene.github.io/EWCE/articles/create_CTD.html)
+## [Creating CellTypeDatasets](https://nathanskene.github.io/EWCE/articles/create_CTD.html)
 
 Instructions on how to create new make new CellTypeDataset references to
 use with *EWCE*.
 
-## [EWCE: Conditional examples](https://nathanskene.github.io/EWCE/articles/conditional.html)
+## [Conditional examples](https://nathanskene.github.io/EWCE/articles/conditional.html)
 
 Examples and explanations of conditional cell type enrichment tests
 (e.g. controlling for a dominant cell type signal) .
@@ -78,20 +77,13 @@ Examples and explanations of conditional cell type enrichment tests
 
 Additional applications of *EWCE* to transcriptomic studies.
 
-# Docker container
+## [Docker](https://nathanskene.github.io/EWCE/articles/docker.html)
+
+Dedicated *EWCE* Docker container usage.
 
 [Docker](https://www.docker.com/) containers with the latest version of
-`EWCE` are regularly pushed to [Dockerhub](https://hub.docker.com/). If
-you already have Docker installed, you can load up a working copy using
-the following commands.
-
-Note, that you will need to replace the initial directory path with a
-location on your computer that you wish to be able to access from within
-the docker image.
-
-    docker pull nathanskene/ewce
-    docker run --name=ewce -e PASSWORD=ewcedocker -p 8790:8790 -d -v /User/$USER:/var/ewce nathanskene/ewce:latest
-    docker exec -ti ewce R
+`EWCE` are regularly pushed to
+[Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
 # Troubleshooting
 
@@ -109,7 +101,7 @@ If you use EWCE, please cite:
 > 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
 
 If you use the cortex/hippocampus single-cell data associated
-`EWCE`/`ewceData` this package then please cite the following:
+*EWCE*/*ewceData* this package then please cite the following:
 
 > [Zeisel, et al. Cell types in the mouse cortex and hippocampus
 > revealed by single-cell RNA-seq. Science,

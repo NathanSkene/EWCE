@@ -1,6 +1,10 @@
-get_exp_data_for_bootstrapped_genes <- function(results, signif_res, sct_data,
-                                                mouse.hits, combinedGenes,
-                                                annotLevel, nReps = NA) {
+get_exp_data_for_bootstrapped_genes <- function(results,
+    signif_res,
+    sct_data,
+    mouse.hits,
+    combinedGenes,
+    annotLevel,
+    nReps = NA) {
     exp_mats <- list()
     for (cc in signif_res) {
         exp_mats[[cc]] <- matrix(0, nrow = nReps, ncol = length(mouse.hits))

@@ -1,5 +1,14 @@
+#' Drop genes with zero counts
+#'
+#' Remove rows (genes) in which counts sum to zero.
+#'
+#' @param exp Gene expression matrix.
+#' @param verbose Print messages.
+#'
+#' @keywords internal
+#' @importFrom Matrix rowSums
 drop_nonexpressed_genes <- function(exp,
-                                    verbose = TRUE) {
+    verbose = TRUE) {
     messager("Checking for non-expressed genes.", v = verbose)
     orig.dims <- dim(exp)
     row.sums <- Matrix::rowSums(exp) # MUST be from Matrix

@@ -1,10 +1,10 @@
 check_args_for_bootstrap_plot_generation <- function(sct_data, tt, thresh,
-                                                     annotLevel, reps,
-                                                     full_results,
-                                                     listFileName,
-                                                     showGNameThresh,
-                                                     ttSpecies, sctSpecies,
-                                                     sortBy) {
+    annotLevel, reps,
+    full_results,
+    listFileName,
+    showGNameThresh,
+    ttSpecies, sctSpecies,
+    sortBy) {
     # Check the arguments
     correct_length <- length(full_results) == 5
     required_names <- c(
