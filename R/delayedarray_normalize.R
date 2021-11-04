@@ -9,6 +9,8 @@
 #' @param min_max Whether to min/max-normalise \code{exp}.
 #' @param no_cores Number of cores to parallelise across.
 #'
+#' @return Normalised matrix.
+#'
 #' @keywords internal
 delayedarray_normalize <- function(exp,
                                    log_norm = TRUE,

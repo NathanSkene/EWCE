@@ -6,6 +6,9 @@
 \usage{
 create_list_network(data_byGene2, hitGenes_NEW, reps = 10000, no_cores = 1)
 }
+\value{
+List network
+}
 \description{
 Support function for \code{prepare_genesize_control_network}.
 }

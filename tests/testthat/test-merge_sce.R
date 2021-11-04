@@ -25,5 +25,36 @@ test_that("merge_sce works", {
     )
     testthat::expect_length(SCE_merged, length(CTD_list[[1]]))
     testthat::expect_false(EWCE:::is_celltypedataset(SCE_merged$level_1))
-    testthat::expect_true(methods::is(SCE_merged$level_1,"SingleCellExperiment"))
+    testthat::expect_true(
+        methods::is(SCE_merged$level_1,"SingleCellExperiment"))
+    
+    
+    #### Test 4: convert between old/new CTD formats ####
+    ## New to old
+    # Level 1
+    ctd_old_lvl1 <- EWCE:::convert_new_ewce_to_old(ctd = ctd,
+                                                   lvl = 1)
+    testthat::expect_true(
+        all(c("cell_dists","all_scts") %in% names(ctd_old_lvl1[[1]])))
+    lvl1_path <- tempfile(fileext = ".rda")
+    save(ctd_old_lvl1, file = lvl1_path)
+    # Level 2
+    ctd_old_lvl2 <- EWCE:::convert_new_ewce_to_old(ctd = ctd,
+                                                   lvl = 2)
+    testthat::expect_true(
+        all(c("cell_dists","all_scts") %in% names(ctd_old_lvl2[[1]])))
+    lvl2_path <- tempfile(fileext = ".rda")
+    save(ctd_old_lvl2, file = lvl2_path)
+    ## Old to new
+    # Method 1
+    ctd_new1 <- EWCE:::convert_old_ewce_to_new(level1 = lvl1_path, 
+                                               level2 = lvl2_path)
+    testthat::expect_length(ctd_new1,2)
+    testthat::expect_true(EWCE:::is_celltypedataset(ctd_new1))
+    # Method 2
+    ctd_new2 <- EWCE:::convert_old_ewce_to_new(
+        celltype_data = list(ctd_old_lvl1[[1]],
+                             ctd_old_lvl2[[1]]))
+    testthat::expect_length(ctd_new2,2)
+    testthat::expect_true(EWCE:::is_celltypedataset(ctd_new2)) 
 })

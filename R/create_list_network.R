@@ -2,14 +2,18 @@
 #'
 #' Support function for \code{prepare_genesize_control_network}.
 #'
+#' @return List network
+#'
 #' @keywords internal
 #' @importFrom  parallel mclapply
 #' @importFrom data.table data.table
 #' @importFrom dplyr %>%
-create_list_network <- function(data_byGene2,
+create_list_network <- function(
+    data_byGene2,
     hitGenes_NEW,
     reps = 10000,
     no_cores = 1) {
+    
     # Get all sctSpecies genes in each quadrant
     quad_genes <- list()
     for (uq in unique(data_byGene2$uniq_quad)) {

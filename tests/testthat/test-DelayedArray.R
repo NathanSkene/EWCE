@@ -2,9 +2,10 @@ test_that("DelayedArray works", {
 
     #### Setup data ####
     cortex_mrna <- ewceData::cortex_mrna()
-    # ctd <- ewceData::ctd()
-    ctd <- list(level1 = list(), level2 = list())
     expMatrix <- DelayedArray::DelayedArray(cortex_mrna$exp)
+    # ctd <- ewceData::ctd()
+    ctd <- list(level1 = list(),
+                level2 = list())
     ctd[[1]][["annot"]] <- cortex_mrna$annot$level1class
     #### Set DelayedArray parameters ####
     EWCE:::assign_cores(worker_cores = 1)
@@ -26,4 +27,10 @@ test_that("DelayedArray works", {
     testthat::expect_true(
         all(c("annot", "mean_exp", "specificity") %in% names(ctd_oneLevel_mod))
     )
+    
+    #### Test delayedarray_normalize ####
+    exp_norm <- EWCE:::delayedarray_normalize(exp = expMatrix,
+                                              log_norm = TRUE, 
+                                              min_max = TRUE)
+    testthat::expect_equal(dim(exp_norm), dim(expMatrix)) 
 })

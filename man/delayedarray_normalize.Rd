@@ -22,6 +22,9 @@ with \link[base]{log1p}.}
 
 \item{no_cores}{Number of cores to parallelise across.}
 }
+\value{
+Normalised matrix.
+}
 \description{
 The following is a matrix normalization procedure that takes advantage of
 functions designed to be more efficient for DelayedArray objects.
