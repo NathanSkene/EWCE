@@ -1,7 +1,7 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 2.0.1
+Version: 1.3.1
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",

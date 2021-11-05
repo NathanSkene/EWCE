@@ -3,14 +3,15 @@ BootstrapPlots
 *.csv
 *.txt
 *.log
+docs
+/doc/
 doc
+/doc/
 Meta
+/Meta/
 vignettes/.build.timestamp
 vignettes/EWCE_cache/*
-vignettes/EWCE_files/*
-EWCE.Rproj
-/doc/
-/Meta/
+vignettes/EWCE_files/* 
 
 *.Rproj
 .Rproj.user
@@ -30,4 +31,3 @@ vignettes/*.html$
 ./**/**/**/**/.DS_Store
 ./**/**/**/**/**/.DS_Store
 ./**/**/**/**/**/**/.DS_Store
-

@@ -1,7 +1,8 @@
-# EWCE 2.0.0
+# EWCE 1.3.1
 
 New features  
 
+* Major changes: Pull Request from *bschilder_dev* branch. 
 * All functions can now use lists and CellTypeDatasets (CTD) from any species 
 and convert them to a common species (human by default) via `orthogene`.  
 * Automated CTD standardisation via `standardise_ctd`.  
@@ -28,6 +29,14 @@ of times `ewceData` files have to be downloaded):
     + `test-list_species` 
     + `test-run_DGE` 
     + `test-check_percent_hits` 
+* Added function `is_32bit()` to all tests to ensure they don't 
+get run twice on Windows OS.  
+* Added GitHub Actions workflows:
+    + `check-bioc-docker.yml`: Runs CRAN/Bioc checks, rebuilds and pushes `pkgdown` website, runs and uploads test coverage report, 
+    + `dockerhub.yml`: Builds Bioconductor Docker container with `EWCE` installed, runs CRAN checks and (if checks are successful) pushes container to [*neurogenomicslab* DockerHub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).  
+* Removed `docs` folder, as the documentation website comes from the
+*gh-pages* branch now, and is automatically built by GHA workflow 
+after each push to *main* branch. 
 
 # EWCE 1.0.0
 
