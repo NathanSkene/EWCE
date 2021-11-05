@@ -19,9 +19,6 @@ DOCKERFILE
 ^\.Rproj\.user$
 ^README.Rmd
 ^\.github$
-^doc$
-./*/^doc$/
-/doc/
 ^Meta$
 ^codecov\.yml$
 ^_pkgdown\.yml$
