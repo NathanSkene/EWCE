@@ -1,9 +1,9 @@
-*.rda
+.*\.rda
 BootstrapPlots
-*.csv
-*.txt
-*.log
-.travis.yml
+.*\.csv
+.*\.txt
+.*\.log
+\.travis\.yml
 BootstrapPlots/*
 README_files/*
 vignettes/.build.timestamp
@@ -11,7 +11,7 @@ vignettes/EWCE_cache/*
 vignettes/EWCE_files/* 
 Dockerfile
 DOCKERFILE
-.dockerignore
+\.dockerignore
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -20,7 +20,7 @@ DOCKERFILE
 ^README.Rmd
 ^\.github$
 ^doc$
-./**/^doc$/
+./*/^doc$/
 /doc/
 ^Meta$
 ^codecov\.yml$
