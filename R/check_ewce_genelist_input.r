@@ -31,14 +31,14 @@
 #' @export
 #' @importFrom orthogene create_background map_genes map_orthologs
 check_ewce_genelist_inputs <- function(sct_data,
-    hits,
-    bg = NULL,
-    genelistSpecies = NULL,
-    sctSpecies = NULL,
-    output_species = "human",
-    geneSizeControl = FALSE,
-    standardise = FALSE,
-    verbose = TRUE) {
+                                       hits,
+                                       bg = NULL,
+                                       genelistSpecies = NULL,
+                                       sctSpecies = NULL,
+                                       output_species = "human",
+                                       geneSizeControl = FALSE,
+                                       standardise = FALSE,
+                                       verbose = TRUE) {
     messager("Checking gene list inputs.", v = verbose)
     #### Check species ####
     species <- check_species(

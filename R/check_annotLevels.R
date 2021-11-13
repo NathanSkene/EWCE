@@ -1,7 +1,7 @@
 # First, check the number of annotations equals the number of columns
 # in the expression data
 check_annotLevels <- function(annotLevels,
-    exp) {
+                              exp) {
     err_msg2 <- paste0(
         "Error: length of all annotation levels must equal",
         " the number of columns in exp matrix"

@@ -6,9 +6,9 @@
 #' @param ctd A cell type data structure containing
 #'  "mean_exp" and "specificity".
 #' @param lvl The annotation level to extract.
-#' 
+#'
 #' @return CellTypeData in the old data structure style.
-#' 
+#'
 #' @keywords internal
 convert_new_ewce_to_old <- function(ctd,
                                     lvl) {

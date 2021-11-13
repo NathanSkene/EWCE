@@ -30,11 +30,11 @@
 #' @export
 #' @importFrom orthogene convert_orthologs
 filter_nonorthologs <- function(filenames,
-    input_species = NULL,
-    convert_nonhuman_genes = TRUE,
-    annot_levels = NULL,
-    suffix = "_orthologs",
-    verbose = TRUE) {
+                                input_species = NULL,
+                                convert_nonhuman_genes = TRUE,
+                                annot_levels = NULL,
+                                suffix = "_orthologs",
+                                verbose = TRUE) {
     if (is.null(input_species)) {
         messager("No input_species provided. Setting to 'mouse'", v = verbose)
         input_species <- "mouse"

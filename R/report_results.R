@@ -8,8 +8,8 @@
 #' @keywords internal
 #' @importFrom utils capture.output
 report_results <- function(results,
-    sig_thresh = 0.05,
-    verbose = TRUE) {
+                           sig_thresh = 0.05,
+                           verbose = TRUE) {
     p <- q <- NULL
 
     #### Identify significant results ####

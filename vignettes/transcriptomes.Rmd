@@ -83,7 +83,7 @@ full_result_path <- EWCE::generate_bootstrap_plots_for_transcriptome(
   reps = reps,
   ttSpecies = "human",
   sctSpecies = "mouse",
-  onlySignif = FALSE,
+  sig_only = FALSE,
   savePath = tempdir())
 ```
 

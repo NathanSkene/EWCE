@@ -17,7 +17,8 @@ extract_matrix(
   force_new_quantiles = FALSE,
   as_sparse = TRUE,
   as_DelayedArray = FALSE,
-  rename_columns = FALSE,
+  rename_columns = TRUE,
+  make_columns_unique = FALSE,
   verbose = TRUE
 )
 }
@@ -78,9 +79,14 @@ Set \code{=TRUE} to override this and generate new quantiles.}
 
 \item{as_DelayedArray}{Convert to \code{DelayedArray}.}
 
-\item{rename_columns}{Add species and dataset to column names.}
+\item{rename_columns}{Remove \code{replace_chars} from column names.}
 
-\item{verbose}{Print messages.}
+\item{make_columns_unique}{Rename each columns with the prefix
+\code{dataset.species.celltype}.}
+
+\item{verbose}{Print messages.
+Set \code{verbose=2} if you want to print all messages
+ from internal functions as well.}
 }
 \value{
 (specificity) matrix.

@@ -4,7 +4,7 @@
 #'
 #' @param X Object.
 #' @param verbose Print messages.
-#' 
+#'
 #' @keywords internal
 #' @importFrom methods is
 to_dataframe <- function(X,

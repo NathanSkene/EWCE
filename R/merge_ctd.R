@@ -45,20 +45,20 @@
 #' @export
 #' @importFrom dplyr %>%
 merge_ctd <- function(CTD_list,
-                        save_dir = tempdir(),
-                        standardise_CTD = FALSE,
-                        as_SCE = FALSE,
-                        gene_union = TRUE,
-                        merge_levels = seq(1, 5),
-                        save_split_SCE = FALSE,
-                        save_split_CTD = FALSE,
-                        save_merged_SCE = TRUE,
-                        force_new_quantiles = FALSE,
-                        numberOfBins = 40,
-                        as_sparse = TRUE,
-                        as_DelayedArray = FALSE,
-                        verbose = TRUE,
-                        ...) {
+                      save_dir = tempdir(),
+                      standardise_CTD = FALSE,
+                      as_SCE = FALSE,
+                      gene_union = TRUE,
+                      merge_levels = seq(1, 5),
+                      save_split_SCE = FALSE,
+                      save_split_CTD = FALSE,
+                      save_merged_SCE = TRUE,
+                      force_new_quantiles = FALSE,
+                      numberOfBins = 40,
+                      as_sparse = TRUE,
+                      as_DelayedArray = FALSE,
+                      verbose = TRUE,
+                      ...) {
     #### Ensure it's actually a list ####
     if (all(is.null(names(CTD_list)))) {
         names(CTD_list) <-

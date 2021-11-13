@@ -3,7 +3,7 @@
 #' Run Differential Gene Expression with \pkg{limma}.
 #'
 #' @return \code{limma} results.
-#' 
+#'
 #' @inheritParams drop_uninformative_genes
 #'
 #' @keywords internal
@@ -21,7 +21,9 @@ run_limma <- function(exp,
     fit <- limma::lmFit(exp, mod_matrix, ...)
     eb <- limma::eBayes(fit)
     #### Compute correct p-value ####
-    eb$q <- stats::p.adjust(p = eb$F.p.value,
-                            method = mtc_method)
+    eb$q <- stats::p.adjust(
+        p = eb$F.p.value,
+        method = mtc_method
+    )
     return(eb)
 }

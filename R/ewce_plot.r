@@ -33,11 +33,11 @@
 #' @import ggplot2
 #' @importFrom stats p.adjust
 ewce_plot <- function(total_res,
-    mtc_method = "bonferroni",
-    ctd = NULL,
-    align = "v",
-    rel_heights = c(.3, 1),
-    axis = "lr") {
+                      mtc_method = "bonferroni",
+                      ctd = NULL,
+                      align = "v",
+                      rel_heights = c(.3, 1),
+                      axis = "lr") {
     requireNamespace("cowplot")
     requireNamespace("gridExtra")
     requireNamespace("grid")

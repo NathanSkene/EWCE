@@ -2,8 +2,8 @@ test_that("Correct mean expression values of CTD calculated", {
 
     # Test for mean calculation from calculate_meanexp_for_level
     # in generate_celltype_data
-    
-    if(!is_32bit()){
+
+    if (!is_32bit()) {
         # create some fake exp data
         set.seed(101)
         rand_data <- runif(1000)
@@ -26,7 +26,7 @@ test_that("Correct mean expression values of CTD calculated", {
                 replace = TRUE
             ))
         })
-    
+
         # Now apply EWCE function
         fNames <- EWCE::generate_celltype_data(
             exp = exp_set,
@@ -41,12 +41,14 @@ test_that("Correct mean expression values of CTD calculated", {
         # load res - named ctd
         ctd <- EWCE::load_rdata(fNames)
         EWCE_res_meanexp <- lapply(ctd, function(x) {
-            methods::as(x$mean_exp,"sparseMatrix")
+            methods::as(x$mean_exp, "sparseMatrix")
         })
-    
+
         # check alternative method
-        alt_res <- vector(mode = "list",
-                          length = length(ctd))
+        alt_res <- vector(
+            mode = "list",
+            length = length(ctd)
+        )
         for (i in seq_len(length(grouping))) {
             group_i <- grouping[[i]]
             unique_cell_types <- unique(group_i)
@@ -65,8 +67,10 @@ test_that("Correct mean expression values of CTD calculated", {
             colnames(unique_cell_type_means) <- sort(unique_cell_types)
             alt_res[[i]] <- methods::as(unique_cell_type_means, "sparseMatrix")
             # fail if mean expression values aren't the same across the 3 tests
-            testthat::expect_true(all.equal(EWCE_res_meanexp[[i]],
-                                            alt_res[[i]]))
-        } 
+            testthat::expect_true(all.equal(
+                EWCE_res_meanexp[[i]],
+                alt_res[[i]]
+            ))
+        }
     }
 })

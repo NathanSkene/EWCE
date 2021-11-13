@@ -6,7 +6,7 @@
 #' @param verbose Print messages.
 #'
 #' @return List of species EWCE can input/output genes as.
-#' 
+#'
 #' @export
 #' @importFrom orthogene map_species
 #' @examples

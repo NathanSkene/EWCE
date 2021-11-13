@@ -4,7 +4,7 @@
 #'  check what percentage of significantly enriched
 #'  cell types match an expected cell type.
 #'
-#' @param boot_res \code{bootstrap_enrichment_test} results.
+#' @param full_results \code{bootstrap_enrichment_test} results.
 #' @param target_celltype Substring to search to matching
 #'  cell types (case-insensitive).
 #' @param mtc_method Multiple-testing correction method.
@@ -21,16 +21,22 @@
 #' full_results <- EWCE::example_bootstrap_results()
 #'
 #' report <- EWCE::check_percent_hits(
-#'     boot_res = full_results,
+#'     full_results = full_results,
 #'     target_celltype = "microglia"
 #' )
-check_percent_hits <- function(boot_res,
-    target_celltype,
-    mtc_method = "bonferroni",
-    q_threshold = .05,
-    verbose = TRUE) {
+check_percent_hits <- function(full_results,
+                               target_celltype,
+                               mtc_method = "bonferroni",
+                               q_threshold = .05,
+                               verbose = TRUE) {
+    #### Align celltype names to standardise_ctd standards ####
+    full_results <- fix_celltype_names_full_results(
+        full_results = full_results
+    )
+    target_celltype <- fix_celltype_names(celltypes = target_celltype)
+    #### Extract sig results ####
     sig_results <- get_sig_results(
-        full_results = boot_res,
+        full_results = full_results,
         mtc_method = mtc_method,
         q_threshold = q_threshold,
         verbose = verbose

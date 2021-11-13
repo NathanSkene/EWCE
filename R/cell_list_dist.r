@@ -1,7 +1,7 @@
 # specificity is generated in the main_CellTypeAnalysis_Preperation.r file
 cell_list_dist <- function(hitGenes,
-    sct_data,
-    annotLevel) {
+                           sct_data,
+                           annotLevel) {
     ValidGenes <-
         rownames(sct_data[[annotLevel]]$specificity)[
             rownames(sct_data[[annotLevel]]$specificity) %in% hitGenes

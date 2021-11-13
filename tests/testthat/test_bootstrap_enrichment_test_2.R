@@ -1,15 +1,15 @@
 test_that("bootstrap enrichment function error handling and geneSizeControl runs as expected", {
     # Test for bootstrap_enrichment_test error handling and geneSizeControl,
     # using sample data in vignette ensure
-    
-    if(!is_32bit()){
+
+    if (!is_32bit()) {
         set.seed(12345678)
         # load vignette data
         ctd <- ewceData::ctd()
         human.hits <- example_genelist <- ewceData::example_genelist()
         mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
         all_hgnc <- ewceData::all_hgnc()
-    
+
         mouse.hits <- orthogene::convert_orthologs(
             gene_df = human.hits,
             input_species = "human",
@@ -23,12 +23,12 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         # set input variables
         reps <- 60 # <- Use 60 bootstrap lists so it runs quickly, for publishable analysis use >10000
         level <- 1 # <- Use level 1 annotations (i.e. Interneurons)
-    
+
         # Test 1: first we want the stop error messages if bad CT controlled passed
         # controlledCT If not NULL, and instead is the name of a cell type,
         # then the bootstrapping controls for expression within that cell type
         controlledCTfail <- "a fake cell type name"
-    
+
         # should return an error if the function caught the fake cell type
         fail_return <-
             tryCatch(bootstrap_enrichment_test(
@@ -44,7 +44,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             error = function(e) e,
             warning = function(w) w
             )
-    
+
         # Test 2: second we want to test running bootstrap with geneSizeControl = T
         # geneSizeControl a logical indicating whether you want to control for GC content and
         # transcript length. If set to TRUE then human gene lists should be used rather than mouse.
@@ -64,7 +64,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         ewce_sig_cell_types <-
             as.character(results$results[results$results$p <= 0.05 &
                 results$results$p == min(results$results$p), "CellType"])
-    
+
         # Test 3: Next we want to test error handling of check_ewce_genelist_inputs
         # called from bootstrap_enrichment_test
         # test adding a fake mouse hit
@@ -82,7 +82,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             error = function(e) e,
             warning = function(w) w
             )
-    
+
         # test adding a fake mouse bg
         mouse.bg.fake <- mouse.bg[!(mouse.bg %in% all_hgnc)]
         fail_return2_5 <-
@@ -98,7 +98,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             error = function(e) e,
             warning = function(w) w
             )
-    
+
         # Test 4: test adding a sct species other than mouse or human
         rat.hits <- orthogene::convert_orthologs(
             gene_df = human.hits,
@@ -117,7 +117,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             output_species = "human"
         )
         top_res_rat <- rat_res$results$CellType[1]
-    
+
         # Test 4: test adding a sct species other than mouse or human
         ctd_monkey <- standardise_ctd(
             ctd = ctd,
@@ -135,8 +135,8 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             output_species = "human"
         )
         top_res_monkey <- monkey_res$results$CellType[1]
-    
-    
+
+
         # Test 4.5: test adding a fake species that doesn't exist in orthogene
         fail_return3 <-
             tryCatch(bootstrap_enrichment_test(
@@ -151,7 +151,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             error = function(e) e,
             warning = function(w) w
             )
-    
+
         # Test 5: test supplying less than 4 hits for mouse
         # fail_return4 <-
         #    tryCatch(bootstrap_enrichment_test(
@@ -162,7 +162,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         #    warning = function(w) w
         #    )
         # fail_return4 REMOVED TO SAVE ON RUN TIME OF CHECK
-    
+
         # Test 6: test supplying less than 4 hits for human
         fail_return5 <-
             tryCatch(bootstrap_enrichment_test(
@@ -177,7 +177,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             error = function(e) e,
             warning = function(w) w
             )
-    
+
         # test 7: running human species with mouse gene list
         # should fail because of gene names
         fail_return6 <-
@@ -211,7 +211,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         #    )
         # fail_return7 REMOVED TO SAVE ON RUN TIME OF CHECK
         # fail if any subtest fails
-    
+
         #### Run tests ####
         testthat::expect_true(methods::is(fail_return, "error"))
         testthat::expect_true("microglia" %in% ewce_sig_cell_types)

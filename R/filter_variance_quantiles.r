@@ -11,7 +11,7 @@
 #' @param verbose Print messages.
 filter_variance_quantiles <- function(exp,
                                       log10_norm = TRUE,
-                                      n_quantiles = 10, 
+                                      n_quantiles = 10,
                                       min_variance_quantile = as.integer(
                                           n_quantiles / 2
                                       ),
@@ -19,14 +19,16 @@ filter_variance_quantiles <- function(exp,
     exp_orig <- exp
     messager("Filtering by variance quantiles.", v = verbose)
     #### Log normalise to avoid skewed quantiles ####
-    if(log10_norm){
+    if (log10_norm) {
         exp <- log10(exp + 1e-12)
     }
     #### Convert to DelayedArray to take advantage of rowVars func #####
     exp <- to_delayed_array(exp, verbose = verbose)
     #### Calculate gene variance across cell types means ####
-    gene_variance <- stats::setNames(DelayedMatrixStats::rowVars(exp),
-                                     rownames(exp))
+    gene_variance <- stats::setNames(
+        DelayedMatrixStats::rowVars(exp),
+        rownames(exp)
+    )
     #### Convert to quantiles ####
     quant <- calc_quantiles(
         vec = gene_variance,
@@ -43,7 +45,7 @@ filter_variance_quantiles <- function(exp,
     messager(paste(
         formatC(nrow(exp) - length(gene_variance), big.mark = ","),
         "/",
-        formatC(nrow(exp),big.mark = ","),
+        formatC(nrow(exp), big.mark = ","),
         "genes dropped @ DGE min_variance_quantile >=", min_variance_quantile
     ), v = verbose)
     #### Return filtered original data ####

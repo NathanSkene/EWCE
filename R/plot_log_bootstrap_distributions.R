@@ -4,20 +4,21 @@
 #'
 #' @keywords internal
 plot_log_bootstrap_distributions <- function(dat,
-    exp_mats,
-    cc,
-    hit_exp,
-    tag,
-    listFileName,
-    graph_theme,
-    savePath) {
+                                             exp_mats,
+                                             cc,
+                                             hit_exp,
+                                             tag,
+                                             listFileName,
+                                             graph_theme,
+                                             savePath) {
+    messager(cc,": Saving log bootstrap plot with distributions.")
     requireNamespace("grDevices")
     # - First get the ordered gene names
     rownames(dat) <- dat$Gnames
     datOrdered <- data.frame(GSym = rownames(dat), Pos = seq_len(dim(dat)[1]))
 
     # - Arrange the data frame for plotting
-    melt_boot <- reshape2::melt(exp_mats[[cc]])
+    melt_boot <- reshape2::melt(as.matrix(exp_mats[[cc]]))
     colnames(melt_boot) <- c("Rep", "Pos", "Exp")
     melt_boot$Exp <- melt_boot$Exp * 100
     melt_boot <- merge(melt_boot, datOrdered, by = "Pos")

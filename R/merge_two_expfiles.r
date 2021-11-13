@@ -39,14 +39,14 @@
 #' )
 #' @export
 merge_two_expfiles <- function(exp1,
-    exp2,
-    annot1,
-    annot2,
-    name1 = "",
-    name2 = "",
-    as_sparse = TRUE,
-    as_DelayedArray = FALSE,
-    verbose = TRUE) {
+                               exp2,
+                               annot1,
+                               annot2,
+                               name1 = "",
+                               name2 = "",
+                               as_sparse = TRUE,
+                               as_DelayedArray = FALSE,
+                               verbose = TRUE) {
     all_genes <- intersect(unique(rownames(exp1)), unique(rownames(exp2)))
     removed_genes1 <- rownames(exp1)[!rownames(exp1) %in% rownames(exp2)]
     removed_genes2 <- rownames(exp2)[!rownames(exp2) %in% rownames(exp1)]

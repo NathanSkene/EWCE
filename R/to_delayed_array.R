@@ -5,7 +5,7 @@
 #' @param exp Object.
 #' @param as_DelayedArray Whether to convert \code{exp} to DelayedArray.
 #' @param verbose Print messages.
-#' 
+#'
 #' @keywords internal
 #' @importFrom DelayedArray DelayedArray
 to_delayed_array <- function(exp,

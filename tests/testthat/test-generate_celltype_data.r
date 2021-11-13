@@ -1,6 +1,5 @@
 test_that("generate_celltype_data works", {
-
-    if(!is_32bit()){
+    if (!is_32bit()) {
         # Load the single cell data
         cortex_mrna <- ewceData::cortex_mrna()
         # Use only a subset to keep the example quick

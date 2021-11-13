@@ -1,8 +1,9 @@
 check_bootstrap_args <- function(sct_data,
-    hits,
-    annotLevel,
-    reps,
-    controlledCT = NULL) {
+                                 hits,
+                                 annotLevel,
+                                 reps,
+                                 controlledCT = NULL,
+                                 fix_celltypes = TRUE) {
     #### Check an SCT dataset was provided ####
     if (unique(is.null(sct_data)) ||
         (!is_celltypedataset(ctd = sct_data))) {
@@ -24,7 +25,11 @@ check_bootstrap_args <- function(sct_data,
     }
     #### Check if controlling for another celltype ###
     if (!is.null(controlledCT)) {
-        if (!controlledCT %in% colnames(sct_data[[1]]$specificity)) {
+        ct_names <- colnames(sct_data[[1]]$specificity)
+        if(fix_celltypes){
+            ct_names <- fix_celltype_names(ct_names)
+        } 
+        if (!controlledCT %in% ct_names) {
             err_msg <- paste0(
                 "invalid celltype name passed in controlledCT.",
                 " This argument is optional. Leave empty if you do not",

@@ -10,11 +10,11 @@
 #' @keywords internal
 #' @importFrom stats formula
 run_deseq2 <- function(exp,
-                        level2annot,
-                        test = "LRT",
-                        no_cores = 1,
-                        verbose = TRUE,
-                        ...) {
+                       level2annot,
+                       test = "LRT",
+                       no_cores = 1,
+                       verbose = TRUE,
+                       ...) {
     requireNamespace("DESeq2")
     messager("DGE:: DESeq2...", v = verbose)
     core_allocation <- assign_cores(worker_cores = no_cores)

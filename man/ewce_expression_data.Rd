@@ -11,8 +11,11 @@ ewce_expression_data(
   sortBy = "t",
   thresh = 250,
   reps = 100,
-  ttSpecies = "mouse",
-  sctSpecies = "mouse"
+  ttSpecies = NULL,
+  sctSpecies = NULL,
+  output_species = NULL,
+  bg = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -42,6 +45,16 @@ was generated from.}
 \item{sctSpecies}{Species that \code{sct_data} came from
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
+
+\item{output_species}{Species to convert \code{sct_data} and \code{hits} to
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
+
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 A list containing five data frames:
@@ -52,15 +65,15 @@ A list containing five data frames:
   An additional column *Direction* stores whether it the result is from the
   up or downregulated set.
   \item \code{hit.cells.up}: vector containing the summed proportion of
-  expression in each cell type for the target list
+  expression in each cell type for the target list.
   \item \code{hit.cells.down}: vector containing the summed proportion of
-  expression in each cell type for the target list#'
+  expression in each cell type for the target list.
   \item \code{bootstrap_data.up}: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the random
-  lists
+  lists.
   \item \code{bootstrap_data.down}: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the random
-  lists
+  lists.
 }
 }
 \description{

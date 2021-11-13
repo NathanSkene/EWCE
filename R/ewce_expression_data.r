@@ -4,7 +4,6 @@
 #' results table and determines the probability of cell type enrichment
 #' in the up- and down- regulated genes.
 #'
-#'
 #' @param tt Differential expression table.
 #' Can be output of \link[limma]{topTable} function.
 #' Minimum requirement is that one column stores a metric of
@@ -26,15 +25,15 @@
 #'   An additional column *Direction* stores whether it the result is from the
 #'   up or downregulated set.
 #'   \item \code{hit.cells.up}: vector containing the summed proportion of
-#'   expression in each cell type for the target list
+#'   expression in each cell type for the target list.
 #'   \item \code{hit.cells.down}: vector containing the summed proportion of
-#'   expression in each cell type for the target list#'
+#'   expression in each cell type for the target list.
 #'   \item \code{bootstrap_data.up}: matrix in which each row represents the
 #'   summed proportion of expression in each cell type for one of the random
-#'   lists
+#'   lists.
 #'   \item \code{bootstrap_data.down}: matrix in which each row represents the
 #'   summed proportion of expression in each cell type for one of the random
-#'   lists
+#'   lists.
 #' }
 #' @examples
 #' # Load the single cell data
@@ -61,69 +60,86 @@
 #' )
 #' @export
 ewce_expression_data <- function(sct_data,
-    annotLevel = 1,
-    tt,
-    sortBy = "t",
-    thresh = 250,
-    reps = 100,
-    ttSpecies = "mouse",
-    sctSpecies = "mouse") {
-    err_msg <- paste0(
-        "ERROR: tt does not contain a column with value",
-        " passed in sortBy argument"
+                                 annotLevel = 1,
+                                 tt,
+                                 sortBy = "t",
+                                 thresh = 250,
+                                 reps = 100,
+                                 ttSpecies = NULL,
+                                 sctSpecies = NULL,
+                                 output_species = NULL,
+                                 bg = NULL,
+                                 verbose = TRUE) {
+    #### Check args ####
+    check_ewce_expression_data_args(sortBy = sortBy,
+                                    tt = tt, 
+                                    thresh = thresh) 
+    #### Check species1 ###
+    species <- check_species(
+        genelistSpecies = output_species,
+        sctSpecies = sctSpecies,
+        verbose = verbose
     )
-    # Check the arguments
-    if (!sortBy %in% colnames(tt)) {
-        stop(err_msg)
-    }
-    err_msg2 <- paste0(
-        "ERROR: length of table is less than",
-        " twice the size of threshold"
+    output_species <- species$genelistSpecies
+    sctSpecies <- species$sctSpecies 
+    #### Check species2 ###
+    species <- check_species(
+        genelistSpecies = output_species,
+        sctSpecies = ttSpecies,
+        verbose = verbose
     )
-    if (dim(tt)[1] < (thresh * 2)) {
-        stop(err_msg2)
-    }
-
-    err_msg3 <- paste0(
-        "ERROR: if ttSpecies==human then there must be an ",
-        "HGNC.symbol column"
+    output_species <- species$genelistSpecies
+    ttSpecies <- species$sctSpecies 
+    
+    #### Generate background ####  
+    bg_out <- create_background_multilist(
+        gene_list1 = as.character(unname(rownames(sct_data[[1]]$specificity))),
+        ## Assumes 1st col contains gene names
+        gene_list2 = as.character(tt[,1]),
+        gene_list1_species = sctSpecies,
+        gene_list2_species = ttSpecies,
+        output_species = output_species,
+        bg = bg,
+        use_intersect = TRUE,
+        verbose = verbose
     )
-    err_msg4 <- paste0(
-        "ERROR: if ttSpecies==human then there must be an ",
-        "MGI.symbol column"
+    bg <- bg_out$bg 
+    #### Standardise CTD ####
+    messager("Standardising sct_data.", v = verbose)
+    sct_data <- standardise_ctd(
+        ctd = sct_data,
+        input_species = sctSpecies,
+        output_species = output_species,
+        force_standardise = sctSpecies!=output_species,
+        dataset = "sct_data",
+        verbose = FALSE
     )
-    # Check that the top table has correct columns
-    if (ttSpecies == "human" & !"HGNC.symbol" %in% colnames(tt)) {
-        stop(err_msg3)
-    }
-    if (ttSpecies == "mouse" & !"MGI.symbol" %in% colnames(tt)) {
-        stop(err_msg4)
-    }
-
-    if (ttSpecies == "human") {
-        tt$MGI.symbol <- tt$HGNC.symbol
-    }
-    tt$MGI.symbol <- as.character(tt$MGI.symbol)
-    tt2 <- tt
-
-    # Sort from down-->up regulated
-    tt3 <- tt2[order(tt2[, sortBy]), ] # Sort by t-statistic
-
-    # Select the up/down-regulated gene sets
-    mouse.upreg.hits <- unique(tt3[
+    sctSpecies <- output_species 
+    #### Convert tt orthologs ####
+    tt_list <- prepare_tt(tt = tt, 
+                          ttSpecies = ttSpecies, 
+                          output_species = output_species, 
+                          verbose = verbose)
+    tt2 <- tt_list$tt; 
+    tt_genecol <- tt_list$tt_genecol; 
+    ttSpecies <- tt_list$ttSpecies;  
+    
+    #### Sort from down-->up regulated ###3
+    # Sort by t-statistic
+    tt3 <- tt2[order(tt2[, sortBy]), ] 
+    #### Select the up/down-regulated gene sets ####
+    upreg.hits <- unique(tt3[
         dim(tt3)[1]:(dim(tt3)[1] - thresh),
-        "MGI.symbol"
+        tt_genecol
     ])
-    mouse.downreg.hits <- unique(tt3[seq_len(thresh), "MGI.symbol"])
-
-    # Select the background gene set
-    mouse.bg <- unique(tt3$MGI.symbol)
-
-    # Do EWCE analysis
+    downreg.hits <- unique(tt3[seq_len(thresh), tt_genecol]) 
+    
+    #### Run bootstrap_enrichment_test ####
     full_res_up <- bootstrap_enrichment_test(
         sct_data = sct_data,
-        hits = mouse.upreg.hits,
-        bg = mouse.bg, reps = reps,
+        hits = upreg.hits,
+        bg = bg,
+        reps = reps,
         annotLevel = annotLevel,
         geneSizeControl = FALSE,
         genelistSpecies = ttSpecies,
@@ -132,8 +148,9 @@ ewce_expression_data <- function(sct_data,
     full_res_down <-
         bootstrap_enrichment_test(
             sct_data = sct_data,
-            hits = mouse.downreg.hits,
-            bg = mouse.bg, reps = reps,
+            hits = downreg.hits,
+            bg = bg, 
+            reps = reps,
             annotLevel = annotLevel,
             geneSizeControl = FALSE,
             genelistSpecies = ttSpecies,
@@ -150,7 +167,8 @@ ewce_expression_data <- function(sct_data,
     bootstrap_data.down <- full_res_down$bootstrap_data
 
     return(list(
-        joint_results = joint_results, hit.cells.up = hit.cells.up,
+        joint_results = joint_results, 
+        hit.cells.up = hit.cells.up,
         hit.cells.down = hit.cells.down,
         bootstrap_data.up = bootstrap_data.up,
         bootstrap_data.down = bootstrap_data.down

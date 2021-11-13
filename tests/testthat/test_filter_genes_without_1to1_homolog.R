@@ -3,7 +3,7 @@ test_that("Filter genes without 1 to 1 homolog test", {
     # Test for filter_genes_without_1to1_homolog, using sample data in vignette
     # inspect drop_uninformative_genes
     # Use Vignette Dataset to check function output
-    if(!is_32bit()){
+    if (!is_32bit()) {
         cortex_mrna <- ewceData::cortex_mrna()
         if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))) {
             download.file(
@@ -16,7 +16,7 @@ test_that("Filter genes without 1 to 1 homolog test", {
         set.seed(123458)
         keep_genes <- c(must_keep, sample(rownames(cortex_mrna$exp), 997))
         cortex_mrna$exp <- cortex_mrna$exp[keep_genes, ]
-    
+
         # NOTE not normalising for this test, too time intensive
         exp_CortexOnly_DROPPED <- EWCE::drop_uninformative_genes(
             exp = cortex_mrna$exp,

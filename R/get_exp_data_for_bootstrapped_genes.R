@@ -1,26 +1,40 @@
 get_exp_data_for_bootstrapped_genes <- function(results,
-    signif_res,
-    sct_data,
-    mouse.hits,
-    combinedGenes,
-    annotLevel,
-    nReps = NA) {
+                                                signif_res,
+                                                sct_data,
+                                                hits,
+                                                combinedGenes,
+                                                annotLevel, 
+                                                nReps = 100,
+                                                as_sparse = TRUE,
+                                                verbose = TRUE) {
+    messager("Generating exp data for bootstrap genes.",v=verbose)
+    #### Extract specificity matrix ####
+    spec <- sct_data[[annotLevel]]$specificity
+    sct_genes <- rownames(spec)
+    #### intialize empty matrices ####
     exp_mats <- list()
-    for (cc in signif_res) {
-        exp_mats[[cc]] <- matrix(0, nrow = nReps, ncol = length(mouse.hits))
-        rownames(exp_mats[[cc]]) <- sprintf("Rep%s", seq_len(nReps))
+    for(cc in signif_res){
+        exp_mats[[cc]] <- matrix(0, nrow = nReps, ncol = length(hits))
+        rownames(exp_mats[[cc]]) <- sprintf("Rep%s", seq_len(nReps)) 
     }
-    for (s in seq_len(nReps)) {
-        bootstrap_set <- sample(combinedGenes, length(mouse.hits))
-        ValidGenes <- rownames(sct_data[[annotLevel]]$specificity)[
-            rownames(sct_data[[annotLevel]]$specificity) %in% bootstrap_set
-        ]
-
-        expD <- sct_data[[annotLevel]]$specificity[ValidGenes, ]
-
+    #### populate matrices ####
+   
+    for(s in seq_len(nReps)){
+        bootstrap_set <- sample(combinedGenes, length(hits))
+        ValidGenes <- sct_genes[sct_genes %in% bootstrap_set] 
+        expD <- spec[ValidGenes, ] 
         for (cc in signif_res) {
             exp_mats[[cc]][s, ] <- sort(expD[, cc])
-        }
+        } 
     }
+    #### Convert to sparse matrices ####
+    if(as_sparse){
+        messager("Converting data for bootstrap tests to sparse matrices.",
+                 v=verbose)
+        for(cc in signif_res){
+            exp_mats[[cc]] <- to_sparse_matrix(exp = exp_mats[[cc]], 
+                                               verbose = FALSE)
+        }
+    } 
     return(exp_mats)
 }

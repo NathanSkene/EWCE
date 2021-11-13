@@ -7,17 +7,24 @@
 generate_bootstrap_plots_for_transcriptome(
   sct_data,
   tt,
+  bg = NULL,
   thresh = 250,
   annotLevel = 1,
-  reps,
+  reps = 100,
   full_results = NA,
   listFileName = "",
   showGNameThresh = 25,
-  ttSpecies = "mouse",
-  sctSpecies = "mouse",
+  ttSpecies = NULL,
+  sctSpecies = NULL,
+  output_species = NULL,
   sortBy = "t",
-  onlySignif = TRUE,
-  savePath = tempdir()
+  sig_only = TRUE,
+  sig_col = "q",
+  sig_thresh = 0.05,
+  celltype_col = "CellType",
+  plot_types = c("bootstrap", "bootstrap_distributions", "log_bootstrap_distributions"),
+  savePath = tempdir(),
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,15 +32,19 @@ generate_bootstrap_plots_for_transcriptome(
 
 \item{tt}{Differential expression table.
 Can be output of \link[limma]{topTable} function.
- Minimum requirement is that one column stores a metric of
+Minimum requirement is that one column stores a metric of
 increased/decreased expression (i.e. log fold change, t-statistic for
 differential expression etc) and another contains gene symbols.}
 
-\item{thresh}{The number of up- and down- regulated genes to be included in
-each analysis (Default: 250)}
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.}
 
-\item{annotLevel}{an integer indicating which level of the annotation to
-analyse (Default: 1).}
+\item{thresh}{The number of up- and down- regulated genes to be included in
+each analysis (Default: 250).}
+
+\item{annotLevel}{An integer indicating which level of \code{sct_data} to
+analyse (\emph{Default: 1}).}
 
 \item{reps}{Number of random gene lists to generate (\emph{Default: 100},
 but should be >=10,000 for publication-quality results).}
@@ -45,22 +56,38 @@ but should be >=10,000 for publication-quality results).}
 this function.}
 
 \item{showGNameThresh}{Integer. If a gene has over X percent of it's
-expression proportion in a cell type, then list the gene name}
+expression proportion in a cell type, then list the gene name.}
 
-\item{ttSpecies}{Either 'mouse' or 'human' depending on which species the
-differential expression table was generated from}
+\item{ttSpecies}{The species the differential expression table
+was generated from.}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on which species the
-single cell data was generated from.}
+\item{sctSpecies}{Species that \code{sct_data} came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{sortBy}{Column name of metric in tt which should be used to sort up-
-from down- regulated genes (Default: "t").}
+\item{output_species}{Species to convert \code{sct_data} and \code{hits} to
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{onlySignif}{Should plots only be generated for cells which have
+\item{sortBy}{Column name of metric in \code{tt}
+which should be used to sort up- from down- regulated genes (Default: "t").}
+
+\item{sig_only}{Should plots only be generated for cells which have
 significant changes?}
+
+\item{sig_col}{Column name in \code{tt} that contains the
+significance values.}
+
+\item{sig_thresh}{Threshold by which to filter \code{tt} by \code{sig_col}.}
+
+\item{celltype_col}{Column within \code{tt} that contains celltype names.}
+
+\item{plot_types}{Plot types to generate.}
 
 \item{savePath}{Directory where the \emph{BootstrapPlots} folder
 should be saved, default is a temp directory.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 Saves a set of PDF files containing graphs and returns the file where
@@ -81,10 +108,9 @@ Files start with one of the following:
 }
 }
 \description{
-\code{generate_bootstrap_plots_for_transcriptome} takes a genelist and a
-single cell type transcriptome dataset and generates plots which show how
-the expression of the genes in the list compares to those in randomly
-generated gene lists
+Takes a gene list and a single cell type transcriptome dataset 
+and generates plots which show how the expression of the genes in
+ the list compares to those in randomly generated gene lists.
 }
 \examples{
 \dontrun{
@@ -101,19 +127,12 @@ thresh <- 5
 ## Load the top table
 tt_alzh <- ewceData::tt_alzh()
 
-tt_results <- EWCE::ewce_expression_data(
-    sct_data = ctd,
-    tt = tt_alzh,
-    annotLevel = 1,
-    thresh = thresh,
-    reps = reps,
-    ttSpecies = "human",
-    sctSpecies = "mouse"
-)
+## See ?example_transcriptome_results for full code to produce tt_results
+tt_results <- EWCE::example_transcriptome_results()
 
 ## Bootstrap significance test,
 ## no control for transcript length or GC content
-full_results <- EWCE::generate_bootstrap_plots_for_transcriptome(
+savePath <- EWCE::generate_bootstrap_plots_for_transcriptome(
     sct_data = ctd,
     tt = tt_alzh,
     thresh = thresh,
@@ -122,8 +141,9 @@ full_results <- EWCE::generate_bootstrap_plots_for_transcriptome(
     listFileName = "examples",
     reps = reps,
     ttSpecies = "human",
-    sctSpecies = "mouse",
-    savePath = tempdir()
+    sctSpecies = "mouse", 
+    # Only do one plot type for demo purposes
+    plot_types = "bootstrap" 
 )
 }
 }

@@ -9,7 +9,7 @@
 #' @importFrom methods is
 #' @importFrom SummarizedExperiment assays assayNames colData
 check_sce <- function(exp,
-    verbose = TRUE) {
+                      verbose = TRUE) {
     requireNamespace("SummarizedExperiment")
     if (methods::is(exp, "SummarizedExperiment")) {
         # update exp to hold the counts from the SCE

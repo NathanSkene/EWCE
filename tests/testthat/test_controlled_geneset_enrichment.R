@@ -1,11 +1,11 @@
 test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
     # Test for controlled_geneset_enrichment
-    
-    if(!is_32bit()){
+
+    if (!is_32bit()) {
         # Run test based on vignette data
         ctd <- ewceData::ctd()
         mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
-    
+
         m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
         schiz_genes <- ewceData::schiz_genes()
         mouse.hits.schiz <- unique(m2h[m2h$HGNC.symbol %in% schiz_genes, "MGI.symbol"])
@@ -16,7 +16,7 @@ test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
         reps <- 100
         # set seed for bootstrap reproducibility - matches vignette
         set.seed(12345678)
-    
+
         res_hpsd_schiz <- controlled_geneset_enrichment(
             disease_genes = mouse.hits.schiz,
             functional_genes = mouse.hpsd,
@@ -43,15 +43,16 @@ test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
         #     reps = reps,
         #     controlledCT = "pyramidal CA1"
         # )
-    
+
         #### Check args are as expected ####
         testthat::expect_true(res_hpsd_schiz$reps == reps)
-        testthat::expect_true(res_hpsd_schiz$controlledCT == "pyramidal CA1")
-    
+        testthat::expect_true(res_hpsd_schiz$controlledCT ==
+            fix_celltype_names("pyramidal CA1"))
+
         #### from vignette runs we know the following is true ####
         # if they change it should throw an error
         testthat::expect_true(res_hpsd_schiz$actualOverlap == 54)
-    
+
         # The probability that functional_genes are enriched in disease_genes
         # while controlling for the level of specificity
         # in controlledCT - p_controlled
@@ -62,11 +63,11 @@ test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
             res_hpsd_schiz$p_controlled,
             res_hpsd_schiz$p_uncontrolled
         )
-    
+
         #### Check that the results are not significant ####
         ## May vary depending on background used ####
         # testthat::expect_true(res_hpsd_schiz$p_controlled > 0.05)
-    
+
         # The z-score that functional_genes are enriched in disease_genes
         # while controlling for the level of specificity in controlledCT
         #- z_controlled
@@ -76,11 +77,11 @@ test_that("Correct controlled & uncontrolled geneset enrichment calculations", {
             res_hpsd_schiz$z_controlled,
             res_hpsd_schiz$z_uncontrolled
         )
-    
+
         #### z-score between 1 and 2 std above mean ####
         # testthat::expect_true(res_hpsd_schiz$z_uncontrolled > 1 &&
         #                           res_hpsd_schiz$z_uncontrolled < 2)
-    
+
         #### z-score between 1 and 2 std above mean ####
         testthat::expect_true(res_hpsd_schiz$z_controlled > 1 &&
             res_hpsd_schiz$z_controlled < 2)

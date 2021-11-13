@@ -5,7 +5,7 @@
 \title{Get percentage of target cell type hits}
 \usage{
 check_percent_hits(
-  boot_res,
+  full_results,
   target_celltype,
   mtc_method = "bonferroni",
   q_threshold = 0.05,
@@ -13,7 +13,7 @@ check_percent_hits(
 )
 }
 \arguments{
-\item{boot_res}{\code{bootstrap_enrichment_test} results.}
+\item{full_results}{\code{bootstrap_enrichment_test} results.}
 
 \item{target_celltype}{Substring to search to matching
 cell types (case-insensitive).}
@@ -39,7 +39,7 @@ After you run \link[EWCE]{bootstrap_enrichment_test},
 full_results <- EWCE::example_bootstrap_results()
 
 report <- EWCE::check_percent_hits(
-    boot_res = full_results,
+    full_results = full_results,
     target_celltype = "microglia"
 )
 }

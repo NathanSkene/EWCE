@@ -2,7 +2,7 @@ test_that("Correct specificity values of CTD calculated", {
 
     # Test for specificity return from generate_celltype_data
     # create some fake exp data
-    if(!is_32bit()){
+    if (!is_32bit()) {
         set.seed(101)
         rand_data <- runif(1000)
         exp_set <- matrix(ifelse(rand_data < 0.55, 0, rand_data),
@@ -18,7 +18,7 @@ test_that("Correct specificity values of CTD calculated", {
         grouping <- lapply(grouping, function(x) {
             as.character(sample(paste0("celltype_", seq(1, 4)), 10, replace = TRUE))
         })
-    
+
         # Now apply EWCE function
         fNames <- EWCE::generate_celltype_data(
             exp = exp_set,
@@ -34,7 +34,7 @@ test_that("Correct specificity values of CTD calculated", {
         # load res - named ctd
         ctd <- load_rdata(fNames)
         EWCE_res_spec <- lapply(ctd, function(x) x$specificity)
-    
+
         # check against known answer for gene 16
         test <- setNames(c(1, 2), c("A", "B"))
         known_ans <- list(
@@ -60,7 +60,7 @@ test_that("Correct specificity values of CTD calculated", {
             function(x) {
                 round(x[rownames(x) == "gene_16", ], 7)
             }
-        ) 
+        )
         # fail if specificity values aren't the same for gene 16 across the 3 tests
         testthat::expect_true(all.equal(EWCE_res_gene_16, known_ans))
     }

@@ -1,11 +1,11 @@
 check_controlled_args <- function(bg,
-    sct_data,
-    annotLevel,
-    disease_genes,
-    hitGenes,
-    functional_genes,
-    funcGenes,
-    combinedGenes) {
+                                  sct_data,
+                                  annotLevel,
+                                  disease_genes,
+                                  hitGenes,
+                                  functional_genes,
+                                  funcGenes,
+                                  combinedGenes) {
     err_msg <- paste0(
         "ERROR: no bg are present in the single cell",
         " dataset. Perhaps it is from the wrong species?"

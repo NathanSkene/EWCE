@@ -1,19 +1,20 @@
 plot_bootstrap_plots <- function(dat,
-    tag,
-    listFileName,
-    cc,
-    showGNameThresh,
-    graph_theme,
-    maxX,
-    savePath) {
+                                 tag,
+                                 listFileName,
+                                 cc,
+                                 showGNameThresh,
+                                 graph_theme,
+                                 maxX,
+                                 savePath) {
+    messager(cc,": Saving bootstrap plot.")
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +
         xlab("Mean Bootstrap Expression") +
         ylab("Expression in cell type (%)\n") +
         graph_theme +
         geom_abline(intercept = 0, slope = 1, colour = "red")
-
-    # Plot without text
+    
+    #### Plot without text #### 
     grDevices::pdf(sprintf(
         "%s/BootstrapPlots/qqplot_noText_%s___%s____%s.pdf",
         savePath, tag, listFileName, cc
@@ -55,7 +56,5 @@ plot_bootstrap_plots <- function(dat,
             hjust = 0,
             vjust = 0, size = 3
         ) + xlim(c(0, maxX)) + ggtitle(cc))
-    grDevices::dev.off()
-
-    return(basic_graph)
+    out <- grDevices::dev.off()
 }

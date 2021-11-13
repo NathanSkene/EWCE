@@ -8,11 +8,11 @@
 #' @importFrom methods as
 #' @importFrom SummarizedExperiment assayNames assay
 sce_merged_apply <- function(SCE_merged,
-    as_sparse = TRUE,
-    as_DelayedArray = FALSE) {
+                             as_sparse = TRUE,
+                             as_DelayedArray = FALSE) {
     lapply(names(SCE_merged), function(lvl,
-    .as_DelayedArray = as_DelayedArray,
-    .as_sparse = as_sparse) {
+                                       .as_DelayedArray = as_DelayedArray,
+                                       .as_sparse = as_sparse) {
         print(lvl)
         sce_lvl <- SCE_merged[[lvl]]
         if (.as_sparse) {

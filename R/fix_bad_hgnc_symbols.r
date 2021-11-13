@@ -33,9 +33,9 @@
 #' @importFrom SummarizedExperiment rowRanges assays
 #' @importFrom methods as
 fix_bad_hgnc_symbols <- function(exp,
-    dropNonHGNC = FALSE,
-    as_sparse = TRUE,
-    verbose = TRUE) {
+                                 dropNonHGNC = FALSE,
+                                 as_sparse = TRUE,
+                                 verbose = TRUE) {
     # Check arguments
     err_msg <- paste0(
         "'exp' is null. It should be a numerical",

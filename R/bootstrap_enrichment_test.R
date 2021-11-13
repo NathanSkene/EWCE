@@ -74,23 +74,25 @@
 #' @importFrom stats p.adjust sd
 #' @importFrom orthogene create_background
 bootstrap_enrichment_test <- function(sct_data = NULL,
-    hits = NULL,
-    bg = NULL,
-    genelistSpecies = NULL,
-    sctSpecies = NULL,
-    output_species = "human",
-    reps = 100,
-    no_cores = 1,
-    annotLevel = 1,
-    geneSizeControl = FALSE,
-    controlledCT = NULL,
-    mtc_method = "BH",
-    sort_results = TRUE,
-    verbose = TRUE) {
+                                      hits = NULL,
+                                      bg = NULL,
+                                      genelistSpecies = NULL,
+                                      sctSpecies = NULL,
+                                      output_species = "human",
+                                      reps = 100,
+                                      no_cores = 1,
+                                      annotLevel = 1,
+                                      geneSizeControl = FALSE,
+                                      controlledCT = NULL,
+                                      mtc_method = "BH",
+                                      sort_results = TRUE,
+                                      verbose = TRUE) {
     core_allocation <- assign_cores(
         worker_cores = no_cores,
         verbose = verbose
     )
+    #### Check controlledCT ####
+    controlledCT <- fix_celltype_names(celltypes = controlledCT)
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,

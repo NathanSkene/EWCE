@@ -1,3 +1,16 @@
+# EWCE 1.3.2
+
+New features
+
+* Added new exported function `fix_celltype_names` to help with standardising 
+celltype names in alignment with `standardise_ctd`. 
+* `generate_bootstrap_plots_for_transcriptome`: Now supports any species 
+(not just mouse or human). 
+    + Converts CTD and DGE table (`tt`) into `output_species` gene symbols. 
+    + Automatically generates appropriate gene background.  
+    + Faster due to now having the option to only generate certain plot types.  
+* Provide precomputed results from `ewce_expression_data` via new `example_transcriptome_results` function.  
+
 # EWCE 1.3.1
 
 New features  

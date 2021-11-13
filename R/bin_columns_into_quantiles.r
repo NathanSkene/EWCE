@@ -21,8 +21,8 @@
 #' @export
 #' @importFrom stats quantile
 bin_columns_into_quantiles <- function(matrixIn,
-    numberOfBins = 40,
-    defaultBin = as.integer(numberOfBins / 2)) {
+                                       numberOfBins = 40,
+                                       defaultBin = as.integer(numberOfBins / 2)) {
     quantileValues <- rep(0, length(matrixIn))
     breaks <- unique(stats::quantile(matrixIn[matrixIn > 0],
         probs = seq(0, 1, by = 1 / numberOfBins),

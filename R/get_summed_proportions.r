@@ -26,15 +26,16 @@
 #' @importFrom dplyr %>%
 #' @importFrom parallel mclapply
 get_summed_proportions <- function(hitGenes,
-    sct_data,
-    annotLevel,
-    reps,
-    no_cores = 1,
-    geneSizeControl,
-    controlledCT = NULL,
-    control_network = NULL,
-    verbose = TRUE) {
+                                   sct_data,
+                                   annotLevel,
+                                   reps,
+                                   no_cores = 1,
+                                   geneSizeControl,
+                                   controlledCT = NULL,
+                                   control_network = NULL,
+                                   verbose = TRUE) {
     messager("Computing summed proportions.", v = verbose)
+    controlledCT <- fix_celltype_names(celltypes = controlledCT)
     combinedGenes <- rownames(sct_data[[annotLevel]]$mean_exp)
     hitGenes <- hitGenes[hitGenes %in% combinedGenes]
     hit.cells <- cell_list_dist(

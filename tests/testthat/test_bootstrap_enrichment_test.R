@@ -1,21 +1,21 @@
 test_that("bootstrap enrichment runs as expected", {
-    
+
     # Test for bootstrap_enrichment_test, using sample data in vignette ensure
     # gives microglia as the only significant enrichment
-    if(!is_32bit()){
+    if (!is_32bit()) {
         set.seed(12345678)
         #### load vignette data ####
         ctd <- ewceData::ctd()
         example_genelist <- ewceData::example_genelist()
         tt_alzh <- ewceData::tt_alzh()
-    
+
         # set input variables
         # Use 10 bootstrap lists so it runs quickly,
         # for publishable analysis use >10000
         reps <- 10
         # Use level 1 annotations (i.e. Interneurons)
         level <- 1
-    
+
         full_results <-
             EWCE::bootstrap_enrichment_test(
                 sct_data = ctd,
@@ -39,11 +39,11 @@ test_that("bootstrap enrichment runs as expected", {
         )$plain
         # Fail if any but ggplot returned
         testthat::expect_true(is(ewce_plot_res, "gg"))
-    
+
         #----------------------------------------------------------
         # Check generate_bootstrap_plots and
         # generate_bootstrap_plots_for_transcriptome
-    
+
         # Use 5 up/down regulated genes (thresh) for speed, default is 250
         thresh <- 5
         options(warn = -1) # turn off warnings for plot warning
@@ -67,8 +67,8 @@ test_that("bootstrap enrichment runs as expected", {
         testthat::expect_true(
             length(list.files(sprintf("%s/BootstrapPlots", boot_plot_dir1))) > 0
         )
-    
-    
+
+
         #### tt_results ####
         tt_results <- EWCE::ewce_expression_data(
             sct_data = ctd,
@@ -88,10 +88,12 @@ test_that("bootstrap enrichment runs as expected", {
             listFileName = "examples",
             ttSpecies = "human",
             sctSpecies = "mouse",
-            onlySignif = FALSE,
-            savePath = tempdir(),
+            sig_only = FALSE, 
             # Important! must match to reps used in ewce_expression_data
-            reps = reps
+            reps = reps,
+            # Only do one plot type for demo purposes
+            # (other plot types take absurdly long)
+            plot_types = "bootstrap"
         )
         options(warn = 0)
         # check the BootstrapPlots folder exists and is non-empty

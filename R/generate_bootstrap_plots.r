@@ -73,17 +73,17 @@
 #' @importFrom reshape2 melt
 #' @importFrom orthogene create_background
 generate_bootstrap_plots <- function(sct_data = NULL,
-    hits = NULL,
-    bg = NULL,
-    genelistSpecies = NULL,
-    sctSpecies = NULL,
-    output_species = "human",
-    reps = 100,
-    annotLevel = 1,
-    full_results = NA,
-    listFileName = "",
-    savePath = tempdir(),
-    verbose = TRUE) {
+                                     hits = NULL,
+                                     bg = NULL,
+                                     genelistSpecies = NULL,
+                                     sctSpecies = NULL,
+                                     output_species = "human",
+                                     reps = 100,
+                                     annotLevel = 1,
+                                     full_results = NA,
+                                     listFileName = "",
+                                     savePath = tempdir(),
+                                     verbose = TRUE) {
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,
@@ -96,11 +96,8 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         sct_data = sct_data,
         hits = hits,
         annotLevel = annotLevel,
-        reps = reps
-    )
-    check_full_results(
-        full_results = full_results,
-        sct_data = sct_data
+        reps = reps,
+        fix_celltypes = TRUE
     )
     #### Create background if none provided ####
     bg <- orthogene::create_background(
@@ -110,6 +107,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         bg = bg,
         verbose = verbose
     )
+    #### Standardise CTD ####
     messager("Standardising sct_data.", v = verbose)
     sct_data <- standardise_ctd(
         ctd = sct_data,
@@ -119,6 +117,15 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         verbose = FALSE
     )
     sctSpecies <- output_species
+    #### Check full results AFTER ctd has been standardised ####
+    full_results <- fix_celltype_names_full_results(
+        full_results = full_results,
+        verbose = verbose
+    )
+    check_full_results(
+        full_results = full_results,
+        sct_data = sct_data
+    )
     #### Add annotLevel to file name tag ###
     listFileName <- sprintf("%s_level%s", listFileName, annotLevel)
     results <- full_results$results

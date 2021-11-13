@@ -59,7 +59,7 @@ scMerge} package.
 \examples{
 ctd <- ewceData::ctd()
 sce_list <- EWCE::ctd_to_sce(object = ctd)
-sce_combine <- merge_sce(sce_list = sce_list) 
+sce_combine <- merge_sce(sce_list = sce_list)
 }
 \author{
 Yingxin Lin (modified by Brian Schilder)

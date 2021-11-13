@@ -1,36 +1,26 @@
 #' Generate bootstrap plots
 #'
-#' \code{generate_bootstrap_plots_for_transcriptome} takes a genelist and a
-#' single cell type transcriptome dataset and generates plots which show how
-#' the expression of the genes in the list compares to those in randomly
-#' generated gene lists
+#' Takes a gene list and a single cell type transcriptome dataset 
+#' and generates plots which show how the expression of the genes in
+#'  the list compares to those in randomly generated gene lists.
 #'
 #' @param full_results The full output of
 #' \link[EWCE]{ewce_expression_data} for the same gene list.
 #' @param listFileName String used as the root for files saved using
-#' this function.
-#' @param tt Differential expression table.
-#' Can be output of \link[limma]{topTable} function.
-#'  Minimum requirement is that one column stores a metric of
-#' increased/decreased expression (i.e. log fold change, t-statistic for
-#' differential expression etc) and another contains gene symbols.
-#' @param thresh The number of up- and down- regulated genes to be included in
-#' each analysis (Default: 250)
-#' @param annotLevel an integer indicating which level of the annotation to
-#' analyse (Default: 1).
+#' this function. 
 #' @param showGNameThresh Integer. If a gene has over X percent of it's
-#' expression proportion in a cell type, then list the gene name
-#' @param ttSpecies Either 'mouse' or 'human' depending on which species the
-#' differential expression table was generated from
-#' @param sctSpecies Either 'mouse' or 'human' depending on which species the
-#' single cell data was generated from.
-#' @param sortBy Column name of metric in tt which should be used to sort up-
-#' from down- regulated genes (Default: "t").
-#' @param onlySignif Should plots only be generated for cells which have
+#' expression proportion in a cell type, then list the gene name.
+#' @param sig_only Should plots only be generated for cells which have
 #' significant changes?
+#' @param sig_col Column name in \code{tt} that contains the
+#'  significance values.
+#' @param sig_thresh Threshold by which to filter \code{tt} by \code{sig_col}.
+#' @param celltype_col Column within \code{tt} that contains celltype names.
+#' @param plot_types Plot types to generate.
 #' @param savePath Directory where the \emph{BootstrapPlots} folder
 #'  should be saved, default is a temp directory.
 #' @inheritParams bootstrap_enrichment_test
+#' @inheritParams ewce_expression_data
 #'
 #' @return Saves a set of PDF files containing graphs and returns the file where
 #' they are saved. These will be saved with the filename adjusted using the
@@ -64,19 +54,12 @@
 #' ## Load the top table
 #' tt_alzh <- ewceData::tt_alzh()
 #'
-#' tt_results <- EWCE::ewce_expression_data(
-#'     sct_data = ctd,
-#'     tt = tt_alzh,
-#'     annotLevel = 1,
-#'     thresh = thresh,
-#'     reps = reps,
-#'     ttSpecies = "human",
-#'     sctSpecies = "mouse"
-#' )
+#' ## See ?example_transcriptome_results for full code to produce tt_results
+#' tt_results <- EWCE::example_transcriptome_results()
 #'
 #' ## Bootstrap significance test,
 #' ## no control for transcript length or GC content
-#' full_results <- EWCE::generate_bootstrap_plots_for_transcriptome(
+#' savePath <- EWCE::generate_bootstrap_plots_for_transcriptome(
 #'     sct_data = ctd,
 #'     tt = tt_alzh,
 #'     thresh = thresh,
@@ -85,30 +68,87 @@
 #'     listFileName = "examples",
 #'     reps = reps,
 #'     ttSpecies = "human",
-#'     sctSpecies = "mouse",
-#'     savePath = tempdir()
+#'     sctSpecies = "mouse", 
+#'     # Only do one plot type for demo purposes
+#'     plot_types = "bootstrap" 
 #' )
 #' }
 #' @export
 #' @import ggplot2
-#' @importFrom reshape2 melt 
+#' @importFrom reshape2 melt
 generate_bootstrap_plots_for_transcriptome <- function(
     sct_data,
-    tt,
+    tt, 
+    bg = NULL,
     thresh = 250,
     annotLevel = 1,
-    reps,
+    reps = 100,
     full_results = NA,
     listFileName = "",
     showGNameThresh = 25,
-    ttSpecies = "mouse",
-    sctSpecies = "mouse",
+    ttSpecies = NULL,
+    sctSpecies = NULL,  
+    output_species = NULL,
     sortBy = "t",
-    onlySignif = TRUE,
-    savePath = tempdir()) {
+    sig_only = TRUE,
+    sig_col = "q",
+    sig_thresh = 0.05,
+    celltype_col = "CellType",
+    plot_types = c("bootstrap",
+                   "bootstrap_distributions",
+                   "log_bootstrap_distributions"),
+    savePath = tempdir(),
+    verbose = TRUE) {
     
-    requireNamespace("grDevices")
-    tt <- check_args_for_bootstrap_plot_generation(
+    requireNamespace("grDevices") 
+    #### Check inputs ####
+    plot_types <- tolower(plot_types)
+    #### Check species1 ###
+    species <- check_species(
+        genelistSpecies = output_species,
+        sctSpecies = sctSpecies,
+        verbose = verbose
+    )
+    output_species <- species$genelistSpecies
+    sctSpecies <- species$sctSpecies
+    #### Check species2 ###
+    species <- check_species(
+        genelistSpecies = output_species,
+        sctSpecies = ttSpecies,
+        verbose = verbose
+    )
+    output_species <- species$genelistSpecies
+    ttSpecies <- species$sctSpecies
+    #### Fix celltype names ####
+    full_results <- fix_celltype_names_full_results(full_results = full_results)
+    #### Generate background ####  
+    bg_out <- create_background_multilist(
+        gene_list1 = as.character(unname(rownames(sct_data[[1]]$specificity))),
+        ## Assumes 1st col contains gene names
+        gene_list2 = as.character(tt[,1]),
+        gene_list1_species = sctSpecies,
+        gene_list2_species = ttSpecies,
+        output_species = output_species,
+        bg = bg,
+        use_intersect = TRUE,
+        verbose = verbose
+    )
+    bg <- bg_out$bg
+    # sct_genes <- unname(bg_out$gene_list1)
+    # tt_genes <- unname(bg_out$gene_list2)
+    #### Standardise CTD ####
+    messager("Standardising sct_data.", v = verbose)
+    sct_data <- standardise_ctd(
+        ctd = sct_data,
+        input_species = sctSpecies,
+        output_species = output_species,
+        force_standardise = sctSpecies!=output_species,
+        dataset = "sct_data",
+        verbose = FALSE
+    )
+    sctSpecies <- output_species 
+    #### Check args ####
+    check_args_for_bootstrap_plot_generation(
         sct_data = sct_data,
         tt = tt,
         thresh = thresh,
@@ -116,78 +156,81 @@ generate_bootstrap_plots_for_transcriptome <- function(
         reps = reps,
         full_results = full_results,
         listFileName = listFileName,
-        showGNameThresh = showGNameThresh,
-        ttSpecies = ttSpecies,
-        sctSpecies = sctSpecies,
+        showGNameThresh = showGNameThresh, 
         sortBy = sortBy
     )
-
+    #### Convert tt orthologs ####
+    tt_list <- prepare_tt(tt = tt, 
+                          ttSpecies = ttSpecies, 
+                          output_species = output_species, 
+                          verbose = verbose)
+    tt <- tt_list$tt; 
+    tt_genecol <- tt_list$tt_genecol; 
+    ttSpecies <- tt_list$ttSpecies;  
+    
+    ### Create plots of up/down regulated genes in each celltype ####
     for (dirS in c("Up", "Down")) {
+        #### Sort tt by up/down regulated ####
         a <- full_results$joint_results
-        results <- a[as.character(a$Direction) == dirS, ]
-
-        # Drop genes lacking expression data
+        results <- a[as.character(a$Direction) == dirS, ]  
         if (dirS == "Up") {
             tt <- tt[order(tt[, sortBy], decreasing = TRUE), ]
         }
         if (dirS == "Down") {
             tt <- tt[order(tt[, sortBy], decreasing = FALSE), ]
         }
-        mouse.hits <- as.character(unique(tt$MGI.symbol[seq_len(thresh)]))
-        mouse.hits <-
-            mouse.hits[
-                mouse.hits %in% rownames(sct_data[[annotLevel]]$specificity)
-            ]
-        mouse.bg <- as.character(unique(tt$MGI.symbol))
-        mouse.bg <- mouse.bg[!mouse.bg %in% mouse.hits]
-        mouse.bg <- mouse.bg[
-            mouse.bg %in% rownames(sct_data[[annotLevel]]$specificity)
-        ]
-        combinedGenes <- unique(c(mouse.hits, mouse.bg))
-
-        # Get expression data of bootstrapped genes
-        if (onlySignif) {
-            signif_res <- as.character(results$CellType)[results$p < 0.05]
-        } else {
-            signif_res <- as.character(results$CellType)
+        #### Drop hits genes not in expression data #### 
+        ### IMPORTANT!: Keep in the this specific order 
+        {
+            #### sct genes ####
+            spec <- sct_data[[annotLevel]]$specificity
+            sct_genes <- unique(as.character(unname(rownames(spec))))
+            #### hits ####
+            hits <- unique( as.character(unname(tt[,tt_genecol])) )
+            hits <- hits[hits %in% sct_genes]
+            bg <- bg[!bg %in% hits] 
+            bg <- bg[bg %in% sct_genes]
+            #### Combined genes ####
+            combinedGenes <- unique(c(hits, bg))
+            combinedGenes <- unique(as.character(unname(combinedGenes)))
         }
+        #### Get expression data of bootstrapped genes ####
+        if (sig_only) {
+            signif_res <- as.character(results[[celltype_col]])[
+                results[[sig_col]] < sig_thresh]
+        } else {
+            signif_res <- as.character(results[[celltype_col]])
+        }
+        signif_res <- fix_celltype_names(celltypes = signif_res)
+        #### Create matices of bootstrapped genes ####
         exp_mats <- get_exp_data_for_bootstrapped_genes(
             results = results,
             signif_res = signif_res,
             sct_data = sct_data,
-            mouse.hits = mouse.hits,
+            hits  = hits,
             combinedGenes = combinedGenes,
             annotLevel = annotLevel,
             nReps = reps
-        )
-
-        # Get expression levels of the hit genes
-        hit.exp <- sct_data[[annotLevel]]$specificity[mouse.hits, ]
-
-        graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +
-            theme(
-                panel.grid.major = element_line(size = .5, color = "grey"),
-                axis.line = element_line(size = .7, color = "black"),
-                legend.position = c(0.75, 0.7), text = element_text(size = 14),
-                axis.title.x = element_text(vjust = -0.35),
-                axis.title.y = element_text(vjust = 0.6)
-            ) + theme(legend.title = element_blank())
+        ) 
+        #### Get expression levels of the hit genes ####
+        hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
+        graph_theme <- get_graph_theme()
 
         if (!file.exists(sprintf("%s/BootstrapPlots", savePath))) {
             dir.create(file.path(savePath, "BootstrapPlots"),
                 showWarnings = FALSE, recursive = TRUE
             )
         }
-
         tag <- sprintf("thresh%s__dir%s", thresh, dirS)
-
-        # Plot the QQ plots
+        
+        #### Create QQ plots ####
         for (cc in signif_res) {
             mean_boot_exp <- apply(exp_mats[[cc]], 2, mean)
             hit_exp <- sort(hit.exp[, cc])
             hit_exp_names <- rownames(hit.exp)[order(hit.exp[, cc])]
             dat <- data.frame(
-                boot = mean_boot_exp, hit = hit_exp,
+                boot = mean_boot_exp,
+                hit = hit_exp,
                 Gnames = hit_exp_names
             )
             dat$hit <- dat$hit * 100
@@ -195,43 +238,47 @@ generate_bootstrap_plots_for_transcriptome <- function(
             maxHit <- max(dat$hit, na.rm = TRUE)
             maxX <- max(dat$boot, na.rm = TRUE) +
                 0.1 * max(dat$boot, na.rm = TRUE)
-
-            # Plot several variants of the graph
-            basic_graph <- plot_bootstrap_plots(
-                dat = dat,
-                tag = tag,
-                listFileName = listFileName,
-                cc = cc,
-                showGNameThresh = showGNameThresh,
-                graph_theme = graph_theme,
-                maxX = maxX,
-                savePath = savePath
-            )
-
-            # Plot with bootstrap distribution
-            plot_with_bootstrap_distributions(
-                exp_mats = exp_mats,
-                cc = cc,
-                hit_exp = hit_exp,
-                tag = tag,
-                listFileName = listFileName,
-                graph_theme = graph_theme,
-                savePath = savePath
-            )
-
-            # Plot with LOG bootstrap distribution
-            plot_log_bootstrap_distributions(
-                dat = dat,
-                exp_mats = exp_mats,
-                cc = cc,
-                hit_exp = hit_exp,
-                tag = tag,
-                listFileName = listFileName,
-                graph_theme = graph_theme,
-                savePath = savePath
-            )
+            #### Plot several variants of the graph #### 
+            if("bootstrap" %in% plot_types){
+                plot_bootstrap_plots(
+                    dat = dat,
+                    tag = tag,
+                    listFileName = listFileName,
+                    cc = cc,
+                    showGNameThresh = showGNameThresh,
+                    graph_theme = graph_theme,
+                    maxX = maxX,
+                    savePath = savePath
+                )
+            }
+            
+            #### Plot with bootstrap distribution ####
+            if("bootstrap_distributions" %in% plot_types){
+                plot_with_bootstrap_distributions(
+                    exp_mats = exp_mats,
+                    cc = cc,
+                    hit_exp = hit_exp,
+                    tag = tag,
+                    listFileName = listFileName,
+                    graph_theme = graph_theme,
+                    savePath = savePath
+                )
+            }
+            #### Plot with LOG bootstrap distribution ####
+            if("log_bootstrap_distributions" %in% plot_types){
+                plot_log_bootstrap_distributions(
+                    dat = dat,
+                    exp_mats = exp_mats,
+                    cc = cc,
+                    hit_exp = hit_exp,
+                    tag = tag,
+                    listFileName = listFileName,
+                    graph_theme = graph_theme,
+                    savePath = savePath
+                )
+            }
         }
     }
-    # return path to the saved directory in case tempdir() used
+    #### return path to the saved directory in case tempdir() used ####
     return(savePath)
 }

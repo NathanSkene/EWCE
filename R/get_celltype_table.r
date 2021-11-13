@@ -7,9 +7,9 @@
 #'
 #' @param annot An annotation dataframe, which columns named 'level1class',
 #' 'level2class' and 'dataset_name'
-#' 
+#'
 #' @returns A dataframe with columns 'name', 'level', 'freq' and 'dataset_name'
-#' 
+#'
 #' @examples
 #' # See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot
 #' cortex_mrna <- ewceData::cortex_mrna()

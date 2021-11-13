@@ -34,7 +34,7 @@
 #' @param dge_test \code{test} argument passed to DGE function.
 #' Only used when \code{dge_method="deqseq2"}.
 #' @param mtc_method Multiple-testing correction method used by DGE step.
-#' See \link[stats]{p.adjust} for more details. 
+#' See \link[stats]{p.adjust} for more details.
 #' @param return_sce Whether to return the filtered results
 #' as an expression matrix or a \pkg{SingleCellExperiment}.
 #' @param min_variance_decile If \code{min_variance_decile!=NULL},
@@ -165,7 +165,7 @@ drop_uninformative_genes <- function(exp,
     }
     #### Run DGE ####
     start <- Sys.time()
-    
+
     #### limma ####
     if (any(tolower(dge_method) == "limma")) {
         limma_res <- run_limma(
@@ -175,11 +175,13 @@ drop_uninformative_genes <- function(exp,
             verbose = verbose,
             ...
         )
-        keep_genes <- rownames(exp)[limma_res$q < adj_pval_thresh] 
-        report_dge(exp = exp, 
-                   keep_genes = keep_genes,
-                   adj_pval_thresh = adj_pval_thresh, 
-                   verbose = verbose)
+        keep_genes <- rownames(exp)[limma_res$q < adj_pval_thresh]
+        report_dge(
+            exp = exp,
+            keep_genes = keep_genes,
+            adj_pval_thresh = adj_pval_thresh,
+            verbose = verbose
+        )
         # Filter original exp
         exp <- exp[keep_genes, ]
     }
@@ -195,33 +197,39 @@ drop_uninformative_genes <- function(exp,
             ...
         )
         keep_genes <- rownames(subset(deseq2_res, padj < adj_pval_thresh))
-        report_dge(exp = exp, 
-                   keep_genes = keep_genes,
-                   adj_pval_thresh = adj_pval_thresh, 
-                   verbose = verbose)
+        report_dge(
+            exp = exp,
+            keep_genes = keep_genes,
+            adj_pval_thresh = adj_pval_thresh,
+            verbose = verbose
+        )
         # Filter original exp
         exp <- exp[keep_genes, ]
     }
-    
+
     #### MAST ####
     if (tolower(dge_method) == "mast") {
-        mast_res <- run_mast(exp = exp,
-                             level2annot,
-                             test = dge_test,
-                             mtc_method = mtc_method,
-                             no_cores = no_cores, 
-                             ...)
-        keep_genes <-  unique(subset(mast_res, q < adj_pval_thresh)$primerid)
-        report_dge(exp = exp, 
-                   keep_genes = keep_genes,
-                   adj_pval_thresh = adj_pval_thresh, 
-                   verbose = verbose)
+        mast_res <- run_mast(
+            exp = exp,
+            level2annot,
+            test = dge_test,
+            mtc_method = mtc_method,
+            no_cores = no_cores,
+            ...
+        )
+        keep_genes <- unique(subset(mast_res, q < adj_pval_thresh)$primerid)
+        report_dge(
+            exp = exp,
+            keep_genes = keep_genes,
+            adj_pval_thresh = adj_pval_thresh,
+            verbose = verbose
+        )
         # Filter original exp
         exp <- exp[keep_genes, ]
-    } 
+    }
     end <- Sys.time()
     print(end - start) ## End DGE
-    
+
     #### Return results ####
     if (return_sce) {
         new_sce <- SingleCellExperiment::SingleCellExperiment(
@@ -238,8 +246,8 @@ drop_uninformative_genes <- function(exp,
 
 ### OG drop.uninformative.genes ####
 drop.uninformative.genes <- function(exp,
-    level2annot,
-    ...) {
+                                     level2annot,
+                                     ...) {
     .Deprecated("filter_nonorthologs")
     exp <- drop_uninformative_genes(
         exp = exp,

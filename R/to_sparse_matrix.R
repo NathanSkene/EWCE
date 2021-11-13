@@ -5,7 +5,7 @@
 #' @param exp Object.
 #' @param as_sparse Whether to convert \code{exp} to sparse matrix
 #' @param verbose Print messages.
-#' 
+#'
 #' @keywords internal
 #' @importFrom DelayedArray DelayedArray
 to_sparse_matrix <- function(exp,

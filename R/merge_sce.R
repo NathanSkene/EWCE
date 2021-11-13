@@ -35,12 +35,12 @@
 #' @importFrom DelayedArray rowMeans cbind rbind
 #' @importFrom SummarizedExperiment assay colData
 #' @importFrom SingleCellExperiment SingleCellExperiment
-#' 
+#'
 #' @export
 #' @examples
 #' ctd <- ewceData::ctd()
 #' sce_list <- EWCE::ctd_to_sce(object = ctd)
-#' sce_combine <- merge_sce(sce_list = sce_list) 
+#' sce_combine <- merge_sce(sce_list = sce_list)
 merge_sce <- function(sce_list,
                       method = "intersect",
                       cut_off_batch = 0.01,
@@ -50,28 +50,30 @@ merge_sce <- function(sce_list,
                       batch_names = NULL,
                       verbose = TRUE) {
     #### Check args ####
-    if(!method[1] %in% c("intersect","union")){
+    if (!method[1] %in% c("intersect", "union")) {
         stop("method must be one of: 'intersect', 'union'")
     }
     #### Get shared assays ####
     all_assays <- lapply(sce_list, function(sce) {
         names(SummarizedExperiment::assays(sce))
-    } )
-    shared_assays <- Reduce(intersect,all_assays)
-    use_assays <- use_assays 
-    if(is.null(use_assays) || (!use_assays %in% shared_assays)){
+    })
+    shared_assays <- Reduce(intersect, all_assays)
+    use_assays <- use_assays
+    if (is.null(use_assays) || (!use_assays %in% shared_assays)) {
         use_assays <- shared_assays
-    } 
+    }
     messager(
-        "The assay", paste0("'",use_assays[1],"'"),
+        "The assay", paste0("'", use_assays[1], "'"),
         "will be used to determine the",
         "proportion of zeroes for each batch.",
-        v=verbose
-    ) 
-    
+        v = verbose
+    )
+
     if (method == "union" &&
-        !is.matrix(SummarizedExperiment::assay(sce_list[[1]],
-                                               use_assays[1]))) {
+        !is.matrix(SummarizedExperiment::assay(
+            sce_list[[1]],
+            use_assays[1]
+        ))) {
         stop_msg <- paste(
             "The union method only supports",
             "matrix class in the sce object \n "
@@ -95,7 +97,7 @@ merge_sce <- function(sce_list,
     for (i in seq_len(n_batch)) {
         sce_list[[i]] <- sce_list[[i]][expressed_list[[i]], ]
     }
-    
+
     #### Take gene intersect ####
     if (method == "intersect") {
         keep <- Reduce(intersect, expressed_list)
@@ -148,10 +150,9 @@ merge_sce <- function(sce_list,
         sce_combine <- SingleCellExperiment::SingleCellExperiment(
             assay = assay_list,
             colData = colData_list
-        ) 
+        )
         zero_cbind <- DelayedArray::rowMeans(
-            SummarizedExperiment::assay(sce_combine, use_assays[1]
-                                        ) == 0
+            SummarizedExperiment::assay(sce_combine, use_assays[1]) == 0
         )
         sce_combine <- sce_combine[names(zero_cbind[zero_cbind <=
             (1 - cut_off_overall)]), ]

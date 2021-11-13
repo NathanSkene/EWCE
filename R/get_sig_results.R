@@ -10,9 +10,9 @@
 #' @keywords internal
 #' @importFrom stats p.adjust
 get_sig_results <- function(full_results,
-    mtc_method = "BH",
-    q_threshold = .05,
-    verbose = TRUE) {
+                            mtc_method = "BH",
+                            q_threshold = .05,
+                            verbose = TRUE) {
     res <- full_results$results
     if (!"q" %in% colnames(res)) {
         res$q <- stats::p.adjust(res$p, method = mtc_method)

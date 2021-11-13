@@ -10,8 +10,8 @@
 #' @keywords internal
 #' @importFrom Matrix colSums
 drop_nonexpressed_cells <- function(exp,
-    annotLevels,
-    verbose = TRUE) {
+                                    annotLevels,
+                                    verbose = TRUE) {
     messager("Checking for cells with no expressed genes.", v = verbose)
     orig.dims <- dim(exp)
     col.sums <- Matrix::colSums(exp) # MUST be from Matrix

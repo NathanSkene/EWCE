@@ -11,12 +11,15 @@ standardise_ctd(
   output_species = "human",
   non121_strategy = "drop_both_species",
   force_new_quantiles = TRUE,
+  force_standardise = FALSE,
   remove_unlabeled_clusters = FALSE,
   numberOfBins = 40,
   keep_annot = TRUE,
   keep_plots = TRUE,
   as_sparse = TRUE,
   as_DelayedArray = FALSE,
+  rename_columns = TRUE,
+  make_columns_unique = FALSE,
   verbose = TRUE
 )
 }
@@ -64,6 +67,9 @@ Return only the most "popular" interspecies ortholog mappings.
 skipped if they have already been computed.
 Set \code{=TRUE} to override this and generate new quantiles.}
 
+\item{force_standardise}{If \code{ctd} has already been standardised, whether
+to rerun standardisation anyway (Default: \code{FALSE}).}
+
 \item{remove_unlabeled_clusters}{Remove any samples that have
 numeric column names.}
 
@@ -77,7 +83,14 @@ numeric column names.}
 
 \item{as_DelayedArray}{Convert to \code{DelayedArray}.}
 
-\item{verbose}{Print messages.}
+\item{rename_columns}{Remove \code{replace_chars} from column names.}
+
+\item{make_columns_unique}{Rename each columns with the prefix
+\code{dataset.species.celltype}.}
+
+\item{verbose}{Print messages.
+Set \code{verbose=2} if you want to print all messages
+ from internal functions as well.}
 }
 \value{
 Standardised CellTypeDataset.

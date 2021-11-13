@@ -9,9 +9,9 @@
 #' @param level1 File path to old level1 of EWCE ctd.
 #' @param level2 File path to old level2 of EWCE ctd.
 #' @param celltype_data The ctd to be converted.
-#' 
+#'
 #' @return CellTypeData in the new data structure style.
-#' 
+#'
 #' @keywords internal
 convert_old_ewce_to_new <- function(level1 = NA,
                                     level2 = NA,
@@ -23,25 +23,25 @@ convert_old_ewce_to_new <- function(level1 = NA,
         ctd[[1]] <- list()
         ctd[[1]]$specificity <- celltype_data[[1]]$cell_dists
         ctd[[1]]$mean_exp <- celltype_data[[1]]$all_scts
-        if("annot" %in% names(celltype_data[[1]])){
+        if ("annot" %in% names(celltype_data[[1]])) {
             ctd[[1]]$annot <- celltype_data[[1]]$annot
         }
-        
-        if(!is.na(level2)){
+
+        if (!is.na(level2)) {
             celltype_data <- load_rdata(level2)
             ctd[[2]] <- list()
             ctd[[2]]$specificity <- celltype_data[[1]]$cell_dists
             ctd[[2]]$mean_exp <- celltype_data[[1]]$all_scts
-            if("annot" %in% names(celltype_data[[1]])){
+            if ("annot" %in% names(celltype_data[[1]])) {
                 ctd[[2]]$annot <- celltype_data[[1]]$annot
             }
-        } 
+        }
     } else {
         for (i in seq_len(length(celltype_data))) {
             ctd[[i]] <- list()
             ctd[[i]]$specificity <- celltype_data[[i]]$cell_dists
             ctd[[i]]$mean_exp <- celltype_data[[i]]$all_scts
-            if("annot" %in% names(celltype_data[[i]])){
+            if ("annot" %in% names(celltype_data[[i]])) {
                 ctd[[i]]$annot <- celltype_data[[i]]$annot
             }
         }

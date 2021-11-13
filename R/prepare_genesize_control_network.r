@@ -22,12 +22,12 @@
 #' @importFrom  stats aggregate quantile
 #' @importFrom orthogene create_background
 prepare_genesize_control_network <- function(hits,
-    bg = NULL,
-    reps = 10000,
-    no_cores = 1,
-    sctSpecies = NULL,
-    genelistSpecies = NULL,
-    verbose = TRUE) {
+                                             bg = NULL,
+                                             reps = 10000,
+                                             no_cores = 1,
+                                             sctSpecies = NULL,
+                                             genelistSpecies = NULL,
+                                             verbose = TRUE) {
     target <- Gene.Symbol <- NULL
 
     ## Currently, can only convert to human genes

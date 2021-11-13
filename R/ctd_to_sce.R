@@ -13,12 +13,12 @@
 #' @examples
 #' ctd <- ewceData::ctd()
 #' sce <- EWCE::ctd_to_sce(ctd)
-#' @export 
+#' @export
 #' @importFrom dplyr %>%
 ctd_to_sce <- function(object,
-                        as_sparse = TRUE,
-                        as_DelayedArray = FALSE,
-                        verbose = TRUE) {
+                       as_sparse = TRUE,
+                       as_DelayedArray = FALSE,
+                       verbose = TRUE) {
     messager("+ CTD ==> SingleCellExperiment", v = verbose)
     ctd <- object
     #### Name CTD levels ####

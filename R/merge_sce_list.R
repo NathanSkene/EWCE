@@ -13,13 +13,13 @@
 #'
 #' @keywords internal
 merge_sce_list <- function(SCE_lists = NULL,
-                            parent_folder = NULL,
-                            pattern = ".rds$",
-                            merge_levels = seq(1, 5),
-                            gene_union = TRUE,
-                            as_sparse = TRUE,
-                            as_DelayedArray = TRUE,
-                            verbose = TRUE) {
+                           parent_folder = NULL,
+                           pattern = ".rds$",
+                           merge_levels = seq(1, 5),
+                           gene_union = TRUE,
+                           as_sparse = TRUE,
+                           as_DelayedArray = TRUE,
+                           verbose = TRUE) {
     #### If SCE_lists hasn't been created yet, create it ###
     if (is.null(SCE_lists) && (!is.null(parent_folder))) {
         sce_files <- list.files(

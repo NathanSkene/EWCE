@@ -59,7 +59,7 @@
 #' @export
 #' @importFrom stats sd
 merged_ewce <- function(results,
-    reps = 100) {
+                        reps = 100) {
     err_msg <- paste0(
         "Results list is not valid. Use",
         " 'add_res_to_merging_list' to generate valid list."
