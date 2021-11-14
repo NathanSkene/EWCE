@@ -3,7 +3,7 @@
 #' Converts a \code{data.table} to a \code{data.frame} by setting the
 #'  first column as the rownames.
 #'  
-#' @return \link[data.table]{data.table }
+#' @return \link[base]{data.frame}
 #'
 #' @keywords internal
 dt_to_df <- function(exp) {
