@@ -11,6 +11,9 @@ messager(..., v = TRUE)
 
 \item{v}{Whether to print messages.}
 }
+\value{
+Null output.
+}
 \description{
 Print messages with option to silence.
 }

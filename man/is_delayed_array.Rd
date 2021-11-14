@@ -9,6 +9,9 @@ is_delayed_array(X)
 \arguments{
 \item{X}{Object.}
 }
+\value{
+boolean
+}
 \description{
 Assess whether an object is a DelayedArray or one of
  its derived object types.

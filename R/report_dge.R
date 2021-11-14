@@ -6,6 +6,8 @@
 #' @param keep_genes Genes kept after DGE.
 #' @inheritParams drop_uninformative_genes
 #'
+#' @return Null output.
+#'
 #' @keywords internal
 report_dge <- function(exp,
                        keep_genes,

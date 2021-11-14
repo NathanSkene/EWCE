@@ -5,6 +5,8 @@
 #' @param exp Object.
 #' @param as_sparse Whether to convert \code{exp} to sparse matrix
 #' @param verbose Print messages.
+#' 
+#' @return Sparse matrix.
 #'
 #' @keywords internal
 #' @importFrom DelayedArray DelayedArray

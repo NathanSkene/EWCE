@@ -1,3 +1,11 @@
+#' Bootstrap plot
+#'
+#' Plot results of \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
+#'
+#' @return Null result.
+#'
+#' @keywords internal
+#' 
 plot_bootstrap_plots <- function(dat,
                                  tag,
                                  listFileName,
@@ -6,6 +14,8 @@ plot_bootstrap_plots <- function(dat,
                                  graph_theme,
                                  maxX,
                                  savePath) {
+    requireNamespace("grDevices")
+    requireNamespace("ggplot2")
     messager(cc,": Saving bootstrap plot.")
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +

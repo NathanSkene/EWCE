@@ -9,6 +9,9 @@ is_sparse_matrix(X)
 \arguments{
 \item{X}{Object.}
 }
+\value{
+boolean
+}
 \description{
 Assess whether an object is a sparse matrix or one of
  its derived object types.

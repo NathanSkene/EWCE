@@ -20,10 +20,14 @@ merge_sce_list(
 objects.}
 
 \item{parent_folder}{Can supply the path to a folder
-instead of \code{SCE_lists}. Any \link[SingleCellExperiment]{SingleCellExperiment}
+instead of \code{SCE_lists}. 
+Any \link[SingleCellExperiment]{SingleCellExperiment}
  objects matching \code{pattern} will be imported.}
 
-\item{merge_levels}{CellTypeDataset levels to merge}
+\item{merge_levels}{CellTypeDataset levels to merge.}
+}
+\value{
+SingleCellExperiment
 }
 \description{
 Merge of list of CellTypeDatasets stored as

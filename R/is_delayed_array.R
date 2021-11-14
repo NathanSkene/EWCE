@@ -4,6 +4,9 @@
 #'  its derived object types.
 #'
 #' @param X Object.
+#' 
+#' @return boolean
+#' 
 #' @importFrom methods is
 is_delayed_array <- function(X) {
     methods::is(X, "DelayedMatrix") |

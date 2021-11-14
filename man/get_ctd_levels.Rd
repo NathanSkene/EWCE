@@ -12,7 +12,11 @@ get_ctd_levels(ctd, max_only = FALSE)
 \item{max_only}{Only return the level with the greatest depth
 (e.g. \code{"level3"} in \code{c("level1","level2","level3")}).}
 }
+\value{
+List of levels in \code{ctd}.
+}
 \description{
 Returns the level names of a CellTypeDataset. If none are available,
 will instead return a vector of numbers (one number per level).
 }
+\keyword{internal}

@@ -6,6 +6,9 @@
 \usage{
 dt_to_df(exp)
 }
+\value{
+\link[data.table]{data.table }
+}
 \description{
 Converts a \code{data.table} to a \code{data.frame} by setting the
  first column as the rownames.

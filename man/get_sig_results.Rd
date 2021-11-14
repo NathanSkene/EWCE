@@ -21,6 +21,9 @@ get_sig_results(
 
 \item{verbose}{Print messages.}
 }
+\value{
+Filtered enrichment results table.
+}
 \description{
 Extract significant results from output of
 \link[EWCE]{bootstrap_enrichment_test}.

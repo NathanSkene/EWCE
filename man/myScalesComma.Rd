@@ -6,6 +6,9 @@
 \usage{
 myScalesComma(x)
 }
+\value{
+Numeric vector
+}
 \description{
 Adjusts \pkg{ggplot2} label display. See \link[scales]{comma} for details.
 Support function for \link[EWCE]{plot_log_bootstrap_distributions}.

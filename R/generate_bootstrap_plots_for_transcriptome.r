@@ -40,7 +40,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' ## Load the single cell data
 #' ctd <- ewceData::ctd()
 #'
@@ -71,8 +70,7 @@
 #'     sctSpecies = "mouse", 
 #'     # Only do one plot type for demo purposes
 #'     plot_types = "bootstrap" 
-#' )
-#' }
+#' ) 
 #' @export
 #' @import ggplot2
 #' @importFrom reshape2 melt

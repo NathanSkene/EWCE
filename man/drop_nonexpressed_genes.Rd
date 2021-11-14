@@ -11,6 +11,9 @@ drop_nonexpressed_genes(exp, verbose = TRUE)
 
 \item{verbose}{Print messages.}
 }
+\value{
+List of filtered \code{exp}.
+}
 \description{
 Remove rows (genes) in which counts sum to zero.
 }

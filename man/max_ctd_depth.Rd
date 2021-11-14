@@ -9,6 +9,9 @@ max_ctd_depth(CTD_list)
 \arguments{
 \item{CTD_list}{A list of CellTypeDataset objects.}
 }
+\value{
+integer
+}
 \description{
 Get the maximum level depth from a list of CellTypeDataset objects.
 }

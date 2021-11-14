@@ -9,6 +9,9 @@ is_matrix(X)
 \arguments{
 \item{X}{Object.}
 }
+\value{
+boolean
+}
 \description{
 Assess whether an object is a Matrix or one of
  its derived object types.

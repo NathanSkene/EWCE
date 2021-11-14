@@ -2,6 +2,8 @@
 #'
 #' Support function for \code{EWCE::merge_sce_list}.
 #'
+#' @return List of \code{SingleCellExperiment}s.
+#'
 #' @keywords internal
 sce_lists_apply <- function(SCE_lists,
                             return_genes = FALSE,

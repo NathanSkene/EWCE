@@ -34,6 +34,7 @@ name: R-CMD-check-bioc
 ## Note that you can always run a GHA test without the cache by using the word
 ## "/nocache" in the commit message.
 env:
+  run_bioccheck: 'true'
   has_testthat: 'true'
   run_covr: 'true'
   run_pkgdown: 'true'
@@ -251,7 +252,8 @@ jobs:
       - name: Session info
         run: |
           options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
+          pkgs <- utils::installed.packages()[, "Package"]
+          if(!require("sessioninfo")) install.packages("sessioninfo")
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
@@ -281,6 +283,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Run BiocCheck
+        if: env.run_bioccheck == 'true'
         env:
           DISPLAY: 99.0
         run: |

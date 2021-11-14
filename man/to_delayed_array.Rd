@@ -9,11 +9,16 @@ to_delayed_array(exp, as_DelayedArray = TRUE, verbose = TRUE)
 \arguments{
 \item{exp}{Object.}
 
-\item{as_DelayedArray}{Whether to convert \code{exp} to DelayedArray.}
+\item{as_DelayedArray}{Whether to convert \code{exp} to 
+\link[DelayedArray]{DelayedArray}.}
 
 \item{verbose}{Print messages.}
 }
+\value{
+\link[DelayedArray]{DelayedArray}.
+}
 \description{
-Convert a variety of object types to DelayedArray format.
+Convert a variety of object types to
+ \link[DelayedArray]{DelayedArray} format.
 }
 \keyword{internal}

@@ -4,6 +4,8 @@
 #'
 #' @param exp Gene expression matrix.
 #' @param verbose Print messages.
+#' 
+#' @return List of filtered \code{exp}.
 #'
 #' @keywords internal
 #' @importFrom Matrix rowSums

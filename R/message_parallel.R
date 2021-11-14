@@ -3,6 +3,8 @@
 #' Print messages even from within parallelised functions.
 #'
 #' @param ... Message input.
+#' 
+#' @return Null output.
 #'
 #' @keywords internal
 message_parallel <- function(...) {

@@ -13,6 +13,9 @@ to_sparse_matrix(exp, as_sparse = TRUE, verbose = TRUE)
 
 \item{verbose}{Print messages.}
 }
+\value{
+Sparse matrix.
+}
 \description{
 Convert a variety of object types to sparse matrix format.
 }

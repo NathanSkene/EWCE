@@ -16,6 +16,9 @@ that a gene must demonstrate across \code{level2annot} (i.e. cell types).}
 
 \item{verbose}{Print messages.}
 }
+\value{
+Null output.
+}
 \description{
 Report differential gene expression (DGE) results
 }

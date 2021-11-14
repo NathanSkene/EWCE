@@ -9,6 +9,9 @@ message_parallel(...)
 \arguments{
 \item{...}{Message input.}
 }
+\value{
+Null output.
+}
 \description{
 Print messages even from within parallelised functions.
 }

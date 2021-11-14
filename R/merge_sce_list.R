@@ -7,9 +7,12 @@
 #' @param SCE_lists A list of \link[SingleCellExperiment]{SingleCellExperiment}
 #'  objects.
 #' @param parent_folder Can supply the path to a folder
-#' instead of \code{SCE_lists}. Any \link[SingleCellExperiment]{SingleCellExperiment}
+#' instead of \code{SCE_lists}. 
+#' Any \link[SingleCellExperiment]{SingleCellExperiment}
 #'  objects matching \code{pattern} will be imported.
-#' @param merge_levels CellTypeDataset levels to merge
+#' @param merge_levels CellTypeDataset levels to merge.
+#' 
+#' @returns SingleCellExperiment
 #'
 #' @keywords internal
 merge_sce_list <- function(SCE_lists = NULL,

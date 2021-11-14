@@ -9,6 +9,9 @@
 #' @param min_variance_quantile The minimum variance quantile
 #'  to keep values from.
 #' @param verbose Print messages.
+#' 
+#' @return Filtered \code{exp}.
+#' @keywords internal
 filter_variance_quantiles <- function(exp,
                                       log10_norm = TRUE,
                                       n_quantiles = 10,

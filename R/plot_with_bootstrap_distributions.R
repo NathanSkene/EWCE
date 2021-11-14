@@ -2,6 +2,8 @@
 #'
 #' Plot results of \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
 #'
+#' @return Null result.
+#'
 #' @keywords internal
 plot_with_bootstrap_distributions <- function(exp_mats,
                                               cc,
@@ -11,6 +13,8 @@ plot_with_bootstrap_distributions <- function(exp_mats,
                                               graph_theme,
                                               savePath) {
     requireNamespace("grDevices")
+    requireNamespace("ggplot2")
+    requireNamespace("reshape2")
     messager(cc,": Saving bootstrap plot with distributions.")
     melt_boot <- reshape2::melt(as.matrix(exp_mats[[cc]]))
     colnames(melt_boot) <- c("Rep", "Pos", "Exp")

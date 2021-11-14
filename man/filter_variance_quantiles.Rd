@@ -25,6 +25,10 @@ to keep values from.}
 
 \item{verbose}{Print messages.}
 }
+\value{
+Filtered \code{exp}.
+}
 \description{
 Remove rows in \code{exp} that do not vary substantially across rows.
 }
+\keyword{internal}

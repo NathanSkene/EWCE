@@ -2,6 +2,8 @@
 #'
 #' Converts a \code{data.table} to a \code{data.frame} by setting the
 #'  first column as the rownames.
+#'  
+#' @return \link[data.table]{data.table }
 #'
 #' @keywords internal
 dt_to_df <- function(exp) {

@@ -5,6 +5,8 @@
 #' @param X Object.
 #' @param verbose Print messages.
 #'
+#' @return \link[base]{data.frame}.
+#'
 #' @keywords internal
 #' @importFrom methods is
 to_dataframe <- function(X,

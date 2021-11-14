@@ -4,6 +4,8 @@
 #'
 #' @param ctd Object.
 #'
+#' @return boolean
+#' 
 #' @keywords internal
 is_celltypedataset <- function(ctd) {
     (!is.function(ctd)) &&

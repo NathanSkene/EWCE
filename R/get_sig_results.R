@@ -7,6 +7,8 @@
 #' @param q_threshold Maximum multiple-testing-corrected p-value to include.
 #' @inheritParams bootstrap_enrichment_test
 #'
+#' @return Filtered enrichment results table.
+#'
 #' @keywords internal
 #' @importFrom stats p.adjust
 get_sig_results <- function(full_results,

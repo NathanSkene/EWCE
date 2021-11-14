@@ -11,6 +11,9 @@ to_dataframe(X, verbose = TRUE)
 
 \item{verbose}{Print messages.}
 }
+\value{
+\link[base]{data.frame}.
+}
 \description{
 Convert a variety of object types to data.frame format.
 }

@@ -1,10 +1,14 @@
 #' Convert object to DelayedArray
 #'
-#' Convert a variety of object types to DelayedArray format.
+#' Convert a variety of object types to
+#'  \link[DelayedArray]{DelayedArray} format.
 #'
 #' @param exp Object.
-#' @param as_DelayedArray Whether to convert \code{exp} to DelayedArray.
+#' @param as_DelayedArray Whether to convert \code{exp} to 
+#' \link[DelayedArray]{DelayedArray}.
 #' @param verbose Print messages.
+#'
+#' @return \link[DelayedArray]{DelayedArray}.
 #'
 #' @keywords internal
 #' @importFrom DelayedArray DelayedArray

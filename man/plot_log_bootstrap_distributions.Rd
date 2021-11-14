@@ -15,6 +15,9 @@ plot_log_bootstrap_distributions(
   savePath
 )
 }
+\value{
+Null result.
+}
 \description{
 Plot results of \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
 }

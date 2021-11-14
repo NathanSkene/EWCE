@@ -11,7 +11,8 @@ celltype names in alignment with `standardise_ctd`.
     + Faster due to now having the option to only generate certain plot types.  
 * Provide precomputed results from `ewce_expression_data` via new `example_transcriptome_results` function.  
 * Reduced build runtime and oversized vignettes by not evaluating 
-certain code chunks.
+certain code chunks.  
+* `@return` documentation for internal functions.  
 
 # EWCE 1.3.1
 

@@ -12,6 +12,9 @@ sce_lists_apply(
   as_DelayedArray = FALSE
 )
 }
+\value{
+List of \code{SingleCellExperiment}s.
+}
 \description{
 Support function for \code{EWCE::merge_sce_list}.
 }

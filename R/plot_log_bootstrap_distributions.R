@@ -2,6 +2,8 @@
 #'
 #' Plot results of \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
 #'
+#' @return Null result.
+#'
 #' @keywords internal
 plot_log_bootstrap_distributions <- function(dat,
                                              exp_mats,
@@ -13,6 +15,8 @@ plot_log_bootstrap_distributions <- function(dat,
                                              savePath) {
     messager(cc,": Saving log bootstrap plot with distributions.")
     requireNamespace("grDevices")
+    requireNamespace("ggplot2")
+    requireNamespace("reshape2")
     # - First get the ordered gene names
     rownames(dat) <- dat$Gnames
     datOrdered <- data.frame(GSym = rownames(dat), Pos = seq_len(dim(dat)[1]))

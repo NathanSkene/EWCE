@@ -6,7 +6,9 @@
 #' @param annotLevels Cell-wise annotations to be subset
 #' if some cells are dropped.
 #' @param verbose Print messages.
-#'
+#' 
+#' @return List of filtered \code{exp} and \code{annotLevels}.
+#' 
 #' @keywords internal
 #' @importFrom Matrix colSums
 drop_nonexpressed_cells <- function(exp,

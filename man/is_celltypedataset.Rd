@@ -9,6 +9,9 @@ is_celltypedataset(ctd)
 \arguments{
 \item{ctd}{Object.}
 }
+\value{
+boolean
+}
 \description{
 Check whether an object is a CellTypeDataset.
 }

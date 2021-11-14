@@ -14,6 +14,9 @@ if some cells are dropped.}
 
 \item{verbose}{Print messages.}
 }
+\value{
+List of filtered \code{exp} and \code{annotLevels}.
+}
 \description{
 Remove columns (cells) in which (gene) counts sum to zero.
 }
