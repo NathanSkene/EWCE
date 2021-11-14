@@ -113,7 +113,6 @@ and generates plots which show how the expression of the genes in
  the list compares to those in randomly generated gene lists.
 }
 \examples{
-\dontrun{
 ## Load the single cell data
 ctd <- ewceData::ctd()
 
@@ -144,6 +143,5 @@ savePath <- EWCE::generate_bootstrap_plots_for_transcriptome(
     sctSpecies = "mouse", 
     # Only do one plot type for demo purposes
     plot_types = "bootstrap" 
-)
-}
+) 
 }
