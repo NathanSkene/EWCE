@@ -6,7 +6,6 @@
 #' @return Numeric vector
 #' 
 #' @keywords internal
-#' @importFrom scales comma
 myScalesComma <- function(x) {
     requireNamespace("scales")
     return(scales::comma(x = x, accuracy = 0.01))
