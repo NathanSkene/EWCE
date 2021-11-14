@@ -75,6 +75,11 @@ conditional_results_astro <- EWCE::bootstrap_enrichment_test(
   annotLevel = annotLevel,
   controlledCT = "astrocytes_ependymal")
 
+```
+
+### Merge and plot results
+
+```{r}
 merged_results <- rbind(
   data.frame(unconditional_results$results,
              list="Unconditional Enrichment"),
@@ -218,6 +223,7 @@ utils::sessionInfo()
 ```
 
 </details>
+<hr>
 
 
 # References

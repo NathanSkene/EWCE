@@ -211,11 +211,12 @@ print(plot_list$plain)
 
 This shows that the controlled method generates enrichments that are generally comparable to the standard method.
 
+
 ## Test different CTD levels
 
 Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.
 
-```{r, fig.width = 8, fig.height = 4, results="hide"} 
+```R
 # Bootstrap significance test controlling for transcript length and GC content
 cont_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
                                                 hits = hits, 
@@ -227,7 +228,7 @@ cont_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
 ```
 ### Plot results
 
-```{r}
+```R
 plot_list <- EWCE::ewce_plot(total_res = cont_results$results,
                              mtc_method = "BH")
 print(plot_list$plain)
@@ -244,7 +245,7 @@ they relate to.
 
 To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.
 
-```{r} 
+```R
 human.bg <- ewceData::mouse_to_human_homologs()$HGNC.symbol
 gene.list.2 <- sample(human.bg,size = 30)
 second_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
@@ -263,7 +264,7 @@ merged_results = rbind(full_res2, rando_res2)
 
 Here we apply multiple-testing correction (BH = Benjamini-Hochberg) to guard against positive results due to chance.
 
-```{r fig.width = 7, fig.height = 4}
+```R
 plot_list <- EWCE::ewce_plot(total_res = merged_results,
                              mtc_method = "BH")
 print(plot_list$plain)
@@ -281,7 +282,7 @@ utils::sessionInfo()
 ```
 
 </details>
-
+<hr>
 
 # References
 

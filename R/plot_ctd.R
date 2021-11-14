@@ -36,9 +36,11 @@ plot_ctd <- function(ctd,
         metric <- "mean_exp"
     }
     metric <- stringr::str_to_sentence(metric)
-    mat <- ctd[[level]][[tolower(metric)]]
+    ## convert to dense matrix so reshape2::melt can recognize it.
+    mat <- as.matrix(ctd[[level]][[tolower(metric)]])
     genes <- genes[genes %in% rownames(mat)]
-    plot_data <- reshape2::melt(mat[genes, ], id.vars = "genes")
+    plot_data <- reshape2::melt(mat[genes, ], 
+                                id.vars = "genes")
     colnames(plot_data) <- c("Gene", "Celltype", metric)
 
     gp <- ggplot(

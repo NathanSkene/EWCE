@@ -36,19 +36,27 @@ reps <- 100
 
 For the prior analyses the gene lists were not associated with any numeric 
 values or directionality. 
-The methodology for extending this form of analysis to transcriptomic studies simply involves thresholding the most upregulated and downregulated genes.
+The methodology for extending this form of analysis to transcriptomic 
+studies simply involves thresholding the most 
+upregulated and downregulated genes.
 
-To demonstrate this we have an example dataset `tt_alzh`. This data frame was generated using `limma` from a set of post-mortem tissue samples from 
+To demonstrate this we have an example dataset `tt_alzh`. 
+This data frame was generated using `limma` 
+from a set of post-mortem tissue samples from 
 Brodmann area 46 which were described in a paper by the Haroutunian lab[@haroutunian2009transcriptional]. 
 
-The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. 
-The package then has a function `ewce_expression_data` which thresholds and selects the gene sets, and calls the EWCE function. 
+The first step is to load the data, obtain the MGI ids, 
+sort the rows by t-statistic and then select the most up/down-regulated genes. 
+The package then has a function `ewce_expression_data` 
+which thresholds and selects the gene sets, and calls the EWCE function. 
 
-Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.
+Below we show the function call using the default settings, 
+but if desired different threshold values can be used, 
+or alternative columns used to sort the table.
 
 ```{r, results="hide"}
 # ewce_expression_data calls bootstrap_enrichment_test so  
-tt_results <- EWCE:: ewce_expression_data(sct_data = ctd,
+tt_results <- EWCE::ewce_expression_data(sct_data = ctd,
                                           tt = tt_alzh,
                                           annotLevel = 1,
                                           ttSpecies = "human",
@@ -64,7 +72,8 @@ plot_list <- EWCE::ewce_plot(tt_results$joint_results)
 print(plot_list$plain)
 ```
 
-As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.
+As was reported in our paper, neuronal genes are found to be 
+downregulated while glial genes are upregulated.
 
 
 
@@ -83,8 +92,7 @@ full_result_path <- EWCE::generate_bootstrap_plots_for_transcriptome(
   reps = reps,
   ttSpecies = "human",
   sctSpecies = "mouse",
-  sig_only = FALSE,
-  savePath = tempdir())
+  sig_only = FALSE)
 ```
 
 
@@ -97,14 +105,14 @@ To demonstrate this we use a two further Alzheimer's transcriptome datasets comi
 
 ## Load data
 
-```{r}
+```R
 tt_alzh_BA36 <- ewceData::tt_alzh_BA36()
 tt_alzh_BA44 <- ewceData::tt_alzh_BA44() 
 ```
 
 ## Run EWCE analysis
 
-```{r results="hide"} 
+```R
 tt_results_36 <- EWCE::ewce_expression_data(sct_data = ctd,
                                              tt = tt_alzh_BA36,
                                              annotLevel = 1,
@@ -130,12 +138,13 @@ print(merged_res)
 
 The results can then be plotted as normal using the `ewce_plot` function.
 
-```{r fig.width = 7, fig.height = 4}
+```R
 plot_list <- EWCE::ewce_plot(merged_res)
 print(plot_list$plain)
 ```
 
-The merged results from all three Alzheimer's brain regions are found to be remarkably similar, as was reported in our paper.  
+The merged results from all three Alzheimer's brain regions are found 
+to be remarkably similar, as was reported in our paper.  
 
 # Session Info
 
