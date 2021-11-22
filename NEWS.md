@@ -13,6 +13,7 @@ celltype names in alignment with `standardise_ctd`.
 * Reduced build runtime and oversized vignettes by not evaluating 
 certain code chunks.  
 * `@return` documentation for internal functions.  
+* Added more installation checks to GHA. 
 
 # EWCE 1.3.1
 
