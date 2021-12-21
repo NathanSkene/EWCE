@@ -53,7 +53,13 @@ BiocManager::install("EWCE")
 
 ### [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE)
 
-A minimal example to get started with running *EWCE*.
+Includes:
+
+-   A minimal example to get started with running *EWCE*.
+-   How to install and use the dedicated *EWCE* Docker container usage.
+    [Docker](https://www.docker.com/) containers with the latest version
+    of `EWCE` are regularly pushed to
+    [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
 ### [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
 
@@ -64,19 +70,6 @@ Additional tutorials of various *EWCE* features, including how to:
 -   Merge two single-cell datasets
 -   Run conditional cell-type enrichment tests
 -   Apply to transcriptomic data
-
-### [Extended examples: 2](https://nathanskene.github.io/EWCE/articles/extended2.html)
-
-More in-depth explanations and step-by-step instructions for running
-cell-type enrichment tests with *EWCE*.
-
-### [Docker](https://nathanskene.github.io/EWCE/articles/docker.html)
-
-Dedicated *EWCE* Docker container usage.
-
-[Docker](https://www.docker.com/) containers with the latest version of
-`EWCE` are regularly pushed to
-[Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
 ## Updates
 

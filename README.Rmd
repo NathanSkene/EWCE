@@ -59,6 +59,8 @@ BiocManager::install("EWCE")
 ### [Website](https://`r owner`.github.io/`r pkg`) 
 ### [Getting started](https://`r owner`.github.io/`r pkg`/articles/`r pkg`)   
 
+Includes:  
+
 - A minimal example to get started with running *EWCE*. 
 - How to install and use the dedicated *EWCE* Docker container usage. [Docker](https://www.docker.com/) containers with the latest version of `EWCE` 
 are regularly pushed to 
