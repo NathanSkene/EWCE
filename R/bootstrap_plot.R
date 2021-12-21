@@ -1,3 +1,16 @@
+#' Bootstrap plot
+#' 
+#' Plot bootstrap enrichment results.
+#' 
+#' @param exp_mats exp_mats (#fix).
+#' @param hit.exp hit.exp (#fix).
+#' @param cc Cell-types to plot.
+#' @param savePath Path to save plots to.
+#' @param listFileName listFileName
+#' @param show_plot Print the plot.
+#' @return Null output.
+#' 
+#' @export 
 bootstrap_plot <- function(exp_mats,
                            hit.exp,
                            cc,

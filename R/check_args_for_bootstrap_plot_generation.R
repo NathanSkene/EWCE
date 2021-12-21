@@ -1,3 +1,12 @@
+#' check_args_for_bootstrap_plot_generation
+#' 
+#' Check the input arguments of the 
+#' \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
+#' 
+#' @inheritParams generate_bootstrap_plots_for_transcriptome
+#' @return Null output.
+#' 
+#' @keywords internal
 check_args_for_bootstrap_plot_generation <- function(sct_data, 
                                                      tt, 
                                                      thresh,

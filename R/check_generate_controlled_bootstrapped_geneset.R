@@ -1,3 +1,12 @@
+#' generate_controlled_bootstrap_geneset
+#' 
+#' Check input arguments to \link[EWCE]{generate_controlled_bootstrap_geneset}.
+#' 
+#' @inheritParams generate_controlled_bootstrap_geneset
+#' @inheritParams bootstrap_enrichment_test 
+#' @return Null output.
+#' 
+#' @keywords internal
 check_generate_controlled_bootstrap_geneset <- function(controlledCT,
                                                         annotLevel,
                                                         sct_data,

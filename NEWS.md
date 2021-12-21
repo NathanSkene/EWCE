@@ -1,20 +1,3 @@
-# EWCE 1.3.2
-
-New features
-
-* Added new exported function `fix_celltype_names` to help with standardising 
-celltype names in alignment with `standardise_ctd`. 
-* `generate_bootstrap_plots_for_transcriptome`: Now supports any species 
-(not just mouse or human). 
-    + Converts CTD and DGE table (`tt`) into `output_species` gene symbols. 
-    + Automatically generates appropriate gene background.  
-    + Faster due to now having the option to only generate certain plot types.  
-* Provide precomputed results from `ewce_expression_data` via new `example_transcriptome_results` function.  
-* Reduced build runtime and oversized vignettes by not evaluating 
-certain code chunks.  
-* `@return` documentation for internal functions.  
-* Added more installation checks to GHA. 
-
 # EWCE 1.3.1
 
 New features  
@@ -54,6 +37,21 @@ get run twice on Windows OS.
 * Removed `docs` folder, as the documentation website comes from the
 *gh-pages* branch now, and is automatically built by GHA workflow 
 after each push to *main* branch. 
+* Added new exported function `fix_celltype_names` to help with standardising 
+celltype names in alignment with `standardise_ctd`. 
+* `generate_bootstrap_plots_for_transcriptome`: Now supports any species 
+(not just mouse or human). 
+    + Converts CTD and DGE table (`tt`) into `output_species` gene symbols. 
+    + Automatically generates appropriate gene background.  
+    + Faster due to now having the option to only generate certain plot types.  
+* Provide precomputed results from `ewce_expression_data` via new `example_transcriptome_results` function.  
+* Reduced build runtime and oversized vignettes by not evaluating 
+certain code chunks.  
+    - Prevent *extended* vignette from running entirely. 
+* `@return` documentation for internal functions.  
+* Added more installation checks to GHA. 
+* Fixed inconsistent naming of unit test files: `test_` ==> `test-`
+
 
 # EWCE 1.0.0
 

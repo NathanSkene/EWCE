@@ -1,46 +1,35 @@
 ---
 title: "`EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment"
-author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
-date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
+author: "<h4>Authors: Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
+date: "<h4>README updated: `r format( Sys.Date(), '%b-%d-%Y')`</h4>"
 bibliography: inst/cit/EWCE.bib
 csl: inst/cit/nature.csl
 output: 
-    rmarkdown::github_document:
-vignette: >
-  %\VignetteIndexEntry{README}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}    
+  github_document
 ---
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE) 
+<!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
+
+```{r setup, echo=FALSE, include=FALSE}
+pkg <- read.dcf("DESCRIPTION", fields = "Package")[1]
+title <- read.dcf("DESCRIPTION", fields = "Title")[1]
+description <- read.dcf("DESCRIPTION", fields = "Description")[1]
+URL <- read.dcf('DESCRIPTION', fields = 'URL')[1]
+owner <- tolower(strsplit(URL,"/")[[1]][4])
 ```
 
-```{r setup, include = FALSE}
-#### Package name ####
-pkg <- desc::desc_get("Package")
-#### Username of GitHub account ####
-repo <- rev(strsplit(desc::desc_get_urls()[[1]],"/")[[1]])[2]
-```
+`r badger::badge_github_version(color = 'black')` 
+`r badger::badge_bioc_release(color='green')`
+`r badger::badge_github_actions(action = 'R-CMD-check-bioc')`
+`r badger::badge_github_actions(action = 'DockerHub')`
+`r badger::badge_last_commit()`
+`r badger::badge_codecov()` 
+`r badger::badge_bioc_download(by = 'total', color='green')`
+`r badger::badge_license()` 
 
+<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true">
 
-<!-- badges: start -->
-`r badger::badge_devel(color="black")`
-[![R build status](https://github.com/`r repo`/`r pkg`/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/`r repo`/`r pkg`/actions) 
-[![R build status](https://github.com/`r repo`/`r pkg`/workflows/DockerHub/badge.svg)](https://github.com/`r repo`/`r pkg`/actions) 
-[![BioC status](http://www.bioconductor.org/shields/build/release/bioc/`r pkg`.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/`r pkg`)
-[![platforms](http://www.bioconductor.org/images/shields/availability/all.svg)](https://bioconductor.org/packages/devel/bioc/html/`r pkg`.html#archives)
-[![](https://img.shields.io/badge/doi-10.18129/B9.bioc.`r pkg`%20-green.svg)](https://doi.org/10.18129/B9.bioc.`r pkg` )
-[![](https://img.shields.io/github/last-commit/`r repo`/`r pkg`.svg)](https://github.com/`r repo`/`r pkg`/commits/master)
-[![](https://codecov.io/gh/`r repo`/`r pkg`/branch/master/graph/badge.svg)](https://codecov.io/gh/`r repo`/`r pkg`)
-[![License: GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-`r badger::badge_bioc_download(color="blue", by="total")`
-<!-- badges: end -->
-
-<img height="200" src="https://github.com/bschilder/EWCE/raw/DelayedArray/inst/hex/EWCE.png">
-
-# Introduction
+## Introduction
 
 The *EWCE* R package is designed to facilitate expression weighted cell type
 enrichment analysis as described in our *Frontiers in Neuroscience* 
@@ -53,10 +42,10 @@ you can use one of the pre-generated CTDs we provide via the package `ewceData`
 (which comes with *EWCE*).  
 2. Run cell type enrichment on a user-provided gene list.
 
-# Installation
+## Installation
 
 *EWCE* requires [`R>=4.1`](https://www.r-project.org/) 
-and `Bioconductor>=1.4`. 
+and `Bioconductor>=3.14`. 
 To install *EWCE* on Bioconductor run:
 
 ```{r, eval=FALSE}
@@ -65,55 +54,41 @@ if (!require("BiocManager")){install.packages("BiocManager")}
 BiocManager::install("EWCE") 
 ```
 
-# [Documentation site](https://nathanskene.github.io/EWCE)
+## Documentation 
 
-# Vignettes
+### [Website](https://`r owner`.github.io/`r pkg`) 
+### [Getting started](https://`r owner`.github.io/`r pkg`/articles/`r pkg`)   
 
-## [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE.html)
+- A minimal example to get started with running *EWCE*. 
+- How to install and use the dedicated *EWCE* Docker container usage. [Docker](https://www.docker.com/) containers with the latest version of `EWCE` 
+are regularly pushed to 
+[Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).  
 
-A minimal example to get started with running *EWCE*.
+### [Extended examples](https://`r owner`.github.io/`r pkg`/articles/extended.html)
 
-## [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
+Additional tutorials of various *EWCE* features, including how to:  
 
-Example *EWCE* enrichment tests with in-depth explanations of each step. 
-
-## [Creating CellTypeDatasets](https://nathanskene.github.io/EWCE/articles/create_CTD.html)
-
-Instructions on how to create new make new CellTypeDataset references
-to use with *EWCE*.
-
-## [Conditional examples](https://nathanskene.github.io/EWCE/articles/conditional.html)
-
-Examples and explanations of conditional cell type enrichment tests 
-(e.g. controlling for a dominant cell type signal) .
-
-## [EWCE: Transcriptome examples](https://nathanskene.github.io/EWCE/articles/transcriptomes.html)
-
-Additional applications of *EWCE* to transcriptomic studies.
-
-## [Docker](https://nathanskene.github.io/EWCE/articles/docker.html)
-
-Dedicated *EWCE* Docker container usage.
-
-[Docker](https://www.docker.com/) containers with 
-the latest version of `EWCE` are regularly pushed to [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
-
-# Updates
+- Run cell-type enrichment tests 
+- Create a CellTypeDataset
+- Merge two single-cell datasets 
+- Run conditional cell-type enrichment tests
+- Apply to transcriptomic data
+ 
+## Updates
 
 Major upgrades to *EWCE* were made in version 1.3.1.
 Please see the [NEWS page](https://nathanskene.github.io/EWCE/articles/news/index.html) for more details. 
 
-# Troubleshooting
+## Troubleshooting
 
 If you have any problems, please do submit an [Issue here on GitHub](https://github.com/nathanskene/EWCE/issues) with a reproducible example.
 
-# Citation
+## Citation
 
-If you use EWCE, please cite:
+If you use ``r pkg``, please cite: 
 
-> [Skene, et al. Identification of Vulnerable Cell 
-Types in Major Brain Disorders Using Single Cell Transcriptomes 
-and Expression Weighted Cell Type Enrichment. Front. Neurosci, 2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
+<!-- Modify this my editing the file: inst/CITATION  -->
+> `r citation(pkg)$textVersion`
 
 If you use the cortex/hippocampus single-cell data associated 
 *EWCE*/*ewceData* this package then please cite the following:
@@ -122,17 +97,18 @@ If you use the cortex/hippocampus single-cell data associated
 hippocampus revealed by single-cell RNA-seq. Science, 2015.
 ](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
 
+<hr> 
 
-# Session Info
+## Contact
+ 
+### [Neurogenomics Lab](https://www.neurogenomics.co.uk/)
 
-<details>
+UK Dementia Research Institute  
+Department of Brain Sciences  
+Faculty of Medicine  
+Imperial College London   
+[GitHub](https://github.com/neurogenomics)  
+[DockerHub](https://hub.docker.com/orgs/neurogenomicslab)  
 
-```{r Session Info}
-utils::sessionInfo()
-```
-
-</details>
-
-
-# References
+## References
 

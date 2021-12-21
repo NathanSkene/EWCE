@@ -1,7 +1,7 @@
 ---
 title: "Getting started"
-author: "<h4>Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
-date: "<h4>`r format( Sys.Date(), '%b-%d-%Y')`</h4>"
+author: "<h4>Authors: Alan Murphy, Brian Schilder, and Nathan Skene</h4>"
+date: "<h4>Updated: `r format( Sys.Date(), '%b-%d-%Y')`</h4>"
 bibliography: ../inst/cit/EWCE.bib
 csl: ../inst/cit/nature.csl
 output:
@@ -30,15 +30,22 @@ you can use one of the pre-generated CTDs we provide via the package `ewceData`
 ```{r setup, include=TRUE}
 library(EWCE) 
 set.seed(1234)
+
+#### Package name ####
+pkg <- tolower("EWCE")
+#### Username of DockerHub account ####
+docker_user <- "neurogenomicslab"
 ```
 
-# 1. Prepare input data
+# Run cell-type enrichment tests 
 
-## CellTypeDataset
+## 1. Prepare input data
+
+### CellTypeDataset
 
 Load a CTD previously generated from mouse cortex and hypothalamus single-cell RNA-seq data (from the Karolinska Institute). 
 
-### CTD levels 
+#### CTD levels 
 
 Each level of a CTD corresponds to increasingly refined cell-type/-subtype annotations. For example, in the CTD  `ewceData::ctd()` level 1 includes the cell-type "interneurons", while level 2 breaks these this group into 16 different
 interneuron subtypes ("Int...").
@@ -47,7 +54,7 @@ interneuron subtypes ("Int...").
 ctd <- ewceData::ctd()
 ```
 
-## Plot CTD mean_exp
+#### Plot CTD mean_exp
 
 Plot the expression of four markers genes across all cell types in the CTD.
 
@@ -65,7 +72,7 @@ plt_spec <- EWCE::plot_ctd(ctd = ctd,
 ```
 
 
-## Gene list
+### Gene list
 
 Gene lists input into *EWCE*  can comes from any source (e.g. GWAS, candidate genes, pathways). 
 
@@ -77,7 +84,7 @@ print(hits)
 ```
 
  
-# 2. Run cell type enrichment tests
+## 2. Run cell type enrichment tests
 
 We now run the cell type enrichment tests on the gene list. Since the CTD is from mouse data (and is annotated using mouse genes) we specify the argument `sctSpecies="mouse"`. `bootstrap_enrichment_test` will automaticlaly convert the mouse genes to human genes.
 
@@ -86,7 +93,7 @@ Since the gene list came from GWAS in humans, we set `genelistSpecies="human"`.
 *Note*: We set the seed at the top of this vignette to
 ensure reproducibility in the bootstrap sampling function.
 
-### Hyperparameters
+#### Hyperparameters
 
 *Note*: We use 100 repetitions here for the purposes of a quick example, but in practice you would want to use `reps=10000` for publishable results.
 
@@ -129,6 +136,71 @@ plot_list <- EWCE::ewce_plot(total_res = full_results$results,
                              ctd = ctd)
 print(plot_list$withDendro)
 ```
+     
+
+# Docker
+
+`r pkg` is now available via 
+[DockerHub](https://hub.docker.com/repository/docker/`r docker_user`/`r pkg`) 
+as a containerised environment with Rstudio and 
+all necessary dependencies pre-installed.
+
+## Installation 
+
+## Method 1: via Docker
+
+First, [install Docker](https://docs.docker.com/get-docker/) 
+if you have not already. 
+
+Create an image of the [Docker](https://www.docker.com/) container 
+in command line:  
+
+```
+docker pull `r docker_user`/`r pkg`
+```
+
+Once the image has been created, you can launch it with:  
+
+```
+docker run \
+  -d \
+  --rm \
+  -e ROOT=true \
+  -e PASSWORD=bioc \
+  -v ~/Desktop:/Desktop \
+  -v /Volumes:/Volumes \
+  -p 8788:8787 \
+  `r docker_user`/`r pkg`
+```  
+
+* The `-d` ensures the container will run in "detached" mode,
+which means it will persist even after you've closed your command line session.  
+* Optionally, you can also install the [Docker Desktop](https://www.docker.com/products/docker-desktop) 
+to easily manage your containers.  
+* You can set the password to whatever you like by changing the 
+`-e PASSWORD=...` flag.  
+* The username will be *"rstudio"* by default.
+
+## Method 2: via Singularity
+
+If you are using a system that does not allow Docker 
+(as is the case for many institutional computing clusters), 
+you can instead [install Docker images via Singularity](https://sylabs.io/guides/2.6/user-guide/singularity_and_docker.html).  
+
+```
+singularity pull docker://`r docker_user`/`r pkg`
+```
+
+
+## Usage 
+
+Finally, launch the containerised Rstudio by entering the 
+following URL in any web browser:
+[http://localhost:8788/](http://localhost:8788/)
+
+Login using the credentials set during the Installation steps.  
+
+     
      
 # Session Info
 

@@ -24,5 +24,6 @@ DOCKERFILE
 ^_pkgdown\.yml$
 ^docs$
 /docs/
+^doc$
 ^pkgdown$ 
 

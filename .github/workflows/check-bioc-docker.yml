@@ -95,17 +95,8 @@ jobs:
       ## pandoc is already included in the Bioconductor docker images
       - name: Setup pandoc from r-lib
         if: runner.os != 'Linux'
-        uses: r-lib/actions/setup-pandoc@master
+        uses: r-lib/actions/setup-pandoc@master 
         
-      # "devel" doesn't tell you which version R it actually is, 
-      # which is needed to properly reference cache folders.
-      # Without caching, workflows are extraordinarily slow (or fail entirely).
-      # - name: Get actual R version
-      #   run: |
-      #     r_version=$(Rscript -e 'cat(paste0(version$major,".",version$minor))')
-      #     echo "r_ver=${r_version}" >> $GITHUB_ENV
-      #     echo "R version:" $r_ver
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -198,7 +189,8 @@ jobs:
           ## Set the repos source depending on the OS
           ## Alternatively use https://storage.googleapis.com/bioconductor_docker/packages/
           ## though based on https://bit.ly/bioc2021-package-binaries
-          ## the Azure link will be the main one going forward.
+          ## the Azure link will be the main one going forward. 
+          
           bioc_ver <- BiocManager::version()
           gha_repos <- if(
               .Platform$OS.type == "unix" && Sys.info()["sysname"] != "Darwin"
@@ -209,13 +201,15 @@ jobs:
 
           ## For running the checks
           ### hrbrthemes necessary to avoid ggplot2 errors on MacOS: https://stackoverflow.com/a/66423481/13214824
+          
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
-          install.packages(c("rcmdcheck", "BiocCheck", repos = gha_repos)
+          install.packages(c("rcmdcheck", "BiocCheck", "rmarkdown"), repos = gha_repos)
 
-          ## Pass #1 at installing dependencies
+          ## 1st pass at installing dependencies
           ## This pass uses AnVIL-powered fast binaries
           ## details at https://github.com/nturaga/bioc2021-bioconductor-binaries
-          ## The speed gains only apply to the docker builds.
+          ## The speed gains only apply to the docker builds. 
+          
           message(paste('****', Sys.time(), 'pass number 1 at installing dependencies: local dependencies ****'))
           remotes::install_local(dependencies = TRUE, repos = gha_repos, build_vignettes = FALSE, upgrade = TRUE)
         continue-on-error: true
@@ -226,6 +220,7 @@ jobs:
           ## Pass #2 at installing dependencies
           ## This pass does not use AnVIL and will thus update any packages
           ## that have seen been updated in Bioconductor
+          
           message(paste('****', Sys.time(), 'pass number 2 at installing dependencies: any remaining dependencies ****'))
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE, force = TRUE)
         shell: Rscript {0}
@@ -252,7 +247,7 @@ jobs:
       - name: Session info
         run: |
           options(width = 100)
-          pkgs <- utils::installed.packages()[, "Package"]
+          pkgs <- installed.packages()[, "Package"]
           if(!require("sessioninfo")) install.packages("sessioninfo")
           tryCatch({
             sessioninfo::session_info(pkgs, include_base = TRUE)
@@ -265,7 +260,7 @@ jobs:
           DISPLAY: 99.0
         run: |
           options(crayon.enabled = TRUE)
-          if(!require("rcmdcheck")) install.packages("rcmdcheck")
+          if(!require("sessioninfo")) install.packages("rcmdcheck")
           rcmdcheck::rcmdcheck(
               args = c("--no-manual", "--timings"),
               build_args = c("--no-manual", "--keep-empty-dirs", "--no-resave-data"),
@@ -337,5 +332,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ runner.os }}-biocversion-${{ matrix.config.bioc }}-r-${{  matrix.config.r }}-results
-          path: check
+          path: check 
           

@@ -1,5 +1,5 @@
 # ----- R Package Dockerfile -----
-# 
+#
 # This Dockerfile is designed for developers of any R package stored on GitHub.
 #
 # It runs several steps:
@@ -7,14 +7,14 @@
 #   2. Runs CRAN checks on the R package.
 #   3. Installs the R package and all of its dependencies (including Depends, Imports, and Suggests).
 #
-# This Dockerfile should be used with the [dockerhub.yml](https://github.com/neurogenomics/orthogene/blob/main/.github/workflows/dockerhub.yml) workflow file, 
-# as you must first checkout the R package from GitHub, 
+# This Dockerfile should be used with the [dockerhub.yml](https://github.com/neurogenomics/orthogene/blob/main/.github/workflows/dockerhub.yml) workflow file,
+# as you must first checkout the R package from GitHub,
 # along with several other GitHub Actions.
 #
 # If the R package passes all checks, the dockerhub.yml workflow will subsequently
-# push the Docker container to DockerHub (using the username and token credentials 
+# push the Docker container to DockerHub (using the username and token credentials
 # stored as GitHub Secrets).
-# 
+#
 # You can then create an image of the Docker container in any command line:
 #   docker pull <DockerHub_repo_name>/<package_name>
 # Once the image has been created, you can launch it with:
@@ -22,8 +22,8 @@
 # Finally, launch the containerised Rstudio by entering the following URL in any web browser:
 #   http://localhost:8788/
 #
-# The username will be "rstudio" by default, 
-# and you can set the password to whatever you like, 
+# The username will be "rstudio" by default,
+# and you can set the password to whatever you like,
 #
 # This DockerFile was partly adapted from the [scFlow Dockerfile](https://github.com/combiz/scFlow/blob/master/Dockerfile).
 FROM bioconductor/bioconductor_docker:devel
@@ -56,15 +56,15 @@ RUN Rscript -e 'options(download.file.method= "libcurl"); \
                                   AnVIL = file.path("https://bioconductordocker.blob.core.windows.net/packages","3.14","bioc"),\
                                   CRAN = "https://cran.rstudio.com/"),\
                                   download.file.method = "libcurl", Ncpus = 2); \
-                AnVIL::install(c("remotes","devtools")); \ 
+                AnVIL::install(c("remotes","devtools")); \
                 deps <- remotes::dev_package_deps(dependencies = TRUE)$package; \
                 AnVIL::install(pkgs = deps,  ask = FALSE); \
-                deps_left <- deps[!deps %in% rownames(installed.packages())]; \ 
+                deps_left <- deps[!deps %in% rownames(installed.packages())]; \
                 if(length(deps_left)>0) devtools::install_dev_deps(dependencies = TRUE, upgrade = "never");'
 # Run R CMD check - will fail with any errors or warnings
 Run Rscript -e 'devtools::check()'
 # Run Bioconductor's BiocCheck (optional)
-# Fixed here: https://github.com/Bioconductor/BiocCheck/pull/145 
+# Fixed here: https://github.com/Bioconductor/BiocCheck/pull/145
 #Run Rscript -e 'remotes::install_github("Bioconductor/BiocCheck", force = TRUE); \
 #                BiocCheck::BiocCheck(`quit-with-status` = TRUE,\
 #                                     `no-check-R-ver` = TRUE,\

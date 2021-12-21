@@ -1,3 +1,17 @@
+#' check_controlled_args
+#' 
+#' Check the input arguments of the 
+#' \link[EWCE]{controlled_geneset_enrichment}.
+#' 
+#' @param hitGenes Hit genes.
+#' @param funcGenes \code{functional_genes} that are within
+#'  \code{combinedGenes}.
+#' @param combinedGenes \code{sct_data} genes that are in the background 
+#' \code{bg}.
+#' @inheritParams controlled_geneset_enrichment
+#' @return Null output.
+#' 
+#' @keywords internal
 check_controlled_args <- function(bg,
                                   sct_data,
                                   annotLevel,

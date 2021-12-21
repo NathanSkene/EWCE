@@ -1,4 +1,11 @@
+#' Get graph theme
+#' 
+#' Get graph theme for plots created by 
+#' \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
+#' @return \code{ggplot2} graph theme.
+#' @keywords internal
 get_graph_theme <- function(){
+    requireNamespace("ggplot2")
     graph_theme <- ggplot2::theme_bw(base_size = 12, 
                                      base_family = "Helvetica") +
         ggplot2::theme(

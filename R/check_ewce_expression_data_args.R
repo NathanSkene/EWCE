@@ -1,3 +1,12 @@
+#' check_ewce_expression_data_args
+#' 
+#' Check the input arguments of the 
+#' \link[EWCE]{ewce_expression_data}.
+#' 
+#' @inheritParams ewce_expression_data
+#' @return Null output.
+#' 
+#' @keywords internal
 check_ewce_expression_data_args <- function(sortBy,
                                             tt,
                                             thresh){

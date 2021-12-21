@@ -1,5 +1,13 @@
-# First, check the number of annotations equals the number of columns
-# in the expression data
+#'  check_annotLevels
+#'  
+#' First, check the number of annotations equals the number of columns
+#' in the expression data.
+#' 
+#' @param exp exp (#fix).
+#' @inheritParams bootstrap_enrichment_test
+#' @return Null output.
+#' 
+#' @keywords internal
 check_annotLevels <- function(annotLevels,
                               exp) {
     err_msg2 <- paste0(

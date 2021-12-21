@@ -68,8 +68,7 @@ Suggests:
     gridExtra,
     scales,
     magick,
-    badger,
-    desc
+    badger
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,

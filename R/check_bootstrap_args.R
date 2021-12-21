@@ -1,3 +1,12 @@
+#' check_bootstrap_args
+#' 
+#' Check the input arguments of the 
+#' \link[EWCE]{bootstrap_enrichment_test}.
+#' 
+#' @inheritParams bootstrap_enrichment_test
+#' @return Null output.
+#' 
+#' @keywords internal
 check_bootstrap_args <- function(sct_data,
                                  hits,
                                  annotLevel,

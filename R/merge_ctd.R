@@ -22,8 +22,10 @@
 #'  in the subdirectory \emph{standardized_CTD}.
 #' @param save_split_SCE Whether to save individual SCE files
 #'  in the subdirectory \emph{standardized_CTD_SCE}.
-#' @param save_merged_SCE Save the final merged SCE object, or simply to return it.
-#' @param force_new_quantiles If specificity quantiles matrix already exists, create new one.
+#' @param save_merged_SCE Save the final merged SCE object, or simply 
+#' to return it.
+#' @param force_new_quantiles If specificity quantiles matrix already exists,
+#'  create a new one.
 #' @param numberOfBins Number of bins to compute specificity quantiles with.
 #' @param as_sparse Convert matrices to sparse matrix.
 #' @param as_DelayedArray Convert matrices to \code{DelayedArray}.

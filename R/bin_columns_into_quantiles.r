@@ -22,7 +22,9 @@
 #' @importFrom stats quantile
 bin_columns_into_quantiles <- function(matrixIn,
                                        numberOfBins = 40,
-                                       defaultBin = as.integer(numberOfBins / 2)) {
+                                       defaultBin = as.integer(
+                                           numberOfBins / 2)
+                                       ) {
     quantileValues <- rep(0, length(matrixIn))
     breaks <- unique(stats::quantile(matrixIn[matrixIn > 0],
         probs = seq(0, 1, by = 1 / numberOfBins),
@@ -34,10 +36,12 @@ bin_columns_into_quantiles <- function(matrixIn,
             include.lowest = TRUE
         ))
     } else {
-        ## In situations where there's only one non-zero quantile, cut() throws an error.
+        ## In situations where there's only one non-zero quantile, 
+        ##  cut() throws an error.
         ## Avoid these situations by using a default quantile.
-        message(
-            "+ <2 non-zero quantile bins detected in column. Assigning these values to default quantile ",
+        messager(
+            "+ <2 non-zero quantile bins detected in column.",
+            "Assigning these values to default quantile ",
             "(", defaultBin, ")"
         )
         quantileValues[matrixIn > 0] <- defaultBin

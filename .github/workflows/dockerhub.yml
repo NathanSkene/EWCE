@@ -18,8 +18,12 @@ jobs:
       GITHUB_PAT: ${{ secrets.PAT_GITHUB }}
       RGL_USE_NULL: TRUE
       GITHUB_REPO: ${{ github.repository }}
-      DOCKER_USERNAME: "nathanskene"
-      DOCKER_ORG: "neurogenomicslab"
+      ## Can save variable as GitHub Secret, or manually enter DockerHub 
+      ## username here (e.g. "bschilder").
+      DOCKER_USERNAME: "bschilder"
+      ## Can save variable as GitHub Secret, or manually enter DockerHub 
+      ## organization name (or simply username) here (e.g. "neurogenomicslab").
+      DOCKER_ORG: "neurogenomicslab" 
     steps:
       - uses: actions/checkout@v2
       - name: Setup R
@@ -36,16 +40,16 @@ jobs:
           
           version=$(grep Version DESCRIPTION | grep -o "[0-9.]\+")
           echo "packageVersion=${version}" >> $GITHUB_ENV
-          echo version
+          echo $version
         shell: bash {0}   
       
-      # Run this before anything else to make s
+      # Make sure login works first
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       
@@ -58,8 +62,8 @@ jobs:
           load: true
           tags: |
             ${{ env.DOCKER_ORG }}/${{ env.packageName }}:${{ env.packageVersion }}
-            ${{ env.DOCKER_ORG }}/${{ env.packageName }}:latest
-          
+            ${{ env.DOCKER_ORG }}/${{ env.packageName }}:latest 
+
       - name: push service
         run: |
           docker push ${{ env.DOCKER_ORG }}/${{ env.packageName }}:${{ env.packageVersion }}

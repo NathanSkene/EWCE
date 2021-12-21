@@ -1,3 +1,14 @@
+#' Calculate specificity for one CTD level
+#' 
+#' Calculate specificity for one CellTypeDataset (CTD) level.
+#' 
+#' @param ctd_oneLevel One level from a CTD.
+#' @param matrix_name Name of the matrix to extract.
+#' @inheritParams to_sparse_matrix
+#' @return One CTD level.
+#' 
+#' @keywords internal
+#' @importFrom Matrix t 
 calculate_specificity_for_level <- function(ctd_oneLevel,
                                             matrix_name = "mean_exp",
                                             as_sparse = TRUE,

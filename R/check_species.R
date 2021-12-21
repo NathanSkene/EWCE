@@ -1,3 +1,11 @@
+#' Check species 
+#' 
+#' If species arguments are \code{NULL}, set default species.
+#' 
+#' @inheritParams bootstrap_enrichment_test
+#' @returns List of corrected species names.
+#' 
+#' @keywords internal
 check_species <- function(genelistSpecies = NULL,
                           sctSpecies = NULL,
                           verbose = TRUE) {

@@ -1,4 +1,5 @@
 test_that("DelayedArray works", {
+    
     if (!is_32bit()) {
         #### Setup data ####
         cortex_mrna <- ewceData::cortex_mrna()
@@ -14,7 +15,7 @@ test_that("DelayedArray works", {
         DelayedArray:::set_verbose_block_processing(verbose = TRUE)
 
         #### Test calculate_meanexp_for_level ####
-        ctd_oneLevel <- calculate_meanexp_for_level(
+        ctd_oneLevel <- EWCE:::calculate_meanexp_for_level(
             ctd_oneLevel = ctd[[1]],
             expMatrix = expMatrix
         )
@@ -22,7 +23,7 @@ test_that("DelayedArray works", {
         testthat::expect_true(all(c("annot", "mean_exp") %in% names(ctd_oneLevel)))
 
         #### Test calculate_specificity_for_level ####
-        ctd_oneLevel_mod <- calculate_specificity_for_level(
+        ctd_oneLevel_mod <- EWCE:::calculate_specificity_for_level(
             ctd_oneLevel = ctd_oneLevel
         )
         testthat::expect_length(ctd_oneLevel_mod, 3)
@@ -35,7 +36,11 @@ test_that("DelayedArray works", {
             exp = expMatrix,
             log_norm = TRUE,
             min_max = TRUE
-        )
+        ) 
         testthat::expect_equal(dim(exp_norm), dim(expMatrix))
+        
+        #### Test DelayedArray as input to sct_normalize ####
+        exp_norm_sct <- EWCE::sct_normalize(expMatrix)
+        testthat::expect_true(EWCE:::is_sparse_matrix(exp_norm_sct))
     }
 })
