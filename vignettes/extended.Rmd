@@ -267,7 +267,7 @@ cont_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
 
 #### Plot results
 
-```{r}
+```{r, error=TRUE}
 plot_list <- EWCE::ewce_plot(total_res = cont_results$results,
                              mtc_method = "BH")
 print(plot_list$plain)
