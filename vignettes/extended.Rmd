@@ -64,7 +64,8 @@ print(hits)
 
 #### Gene formats and species 
 
-All gene IDs are assumed by the package to be provided in gene symbol format (rather than Ensembl/Entrez). Symbols can be provided as any 
+All gene IDs are assumed by the package to be provided in gene symbol format 
+(rather than Ensembl/Entrez). Symbols can be provided as any 
 species-specific gene symbols supported by the package `orthogene`,
 though the `genelistSpecies` argument will need to be set
 appropriately. 
@@ -72,12 +73,45 @@ appropriately.
 Likewise, the single-cell dataset can be from any species, 
 but the `sctSpecies` argument must be set accordingly.  
 
-The example gene list here stores the human genes associated with human disease, and hence are HGNC symbols.
+The example gene list here stores the human genes associated with human disease,
+and hence are HGNC symbols.
 
 The next step is to determine the most suitable background set. 
 This can be user-supplied, but by default the background is all 1:1
 ortholog genes shared by `genelistSpecies` and `sctSpecies` 
 that are also present in `sct_data`.
+
+#### Notes on `orthogene` 
+
+`orthogene` substantially improves upon previous ortholog translations 
+that used the static `ewceData::mouse_to_human_homologs()` file as the former is 
+updated using the [Homologene](https://www.ncbi.nlm.nih.gov/homologene) database periodically.
+
+```{r}
+exp <- ctd[[1]]$mean_exp
+
+#### Old conversion method ####
+m2h <- ewceData::mouse_to_human_homologs()
+exp_old <- exp[rownames(exp) %in% m2h$MGI.symbol,]
+
+#### New conversion method (used by EWCE internally) ####
+exp_new <- orthogene::convert_orthologs(gene_df = exp,
+                                        input_species = "mouse", 
+                                        output_species = "human", 
+                                        method = "homologene")
+#### Report ####
+message("The new method retains ",
+        formatC(nrow(exp_new) - nrow(exp_old), big.mark = ","),
+        " more genes than the old method.")
+```
+
+`orthogene` is also used internally to standardise gene lists supplied to `EWCE` 
+functions, such as `EWCE::bootstrap_enrichment_test(hits = <gene_list>)`.
+
+Not only can it map these gene lists across species, but it can also map them
+within species. For example, if you provide a list of Ensembl IDs, 
+it will automatically convert them to standardised HGNC gene symbols so they're compatible with the similarly standardised CellTypeDataset.
+
 
 ### Setting analysis parameters
 

@@ -10,7 +10,7 @@ run_deseq2(exp, level2annot, test = "LRT", no_cores = 1, verbose = TRUE, ...)
 \item{exp}{Expression matrix with gene names as rownames.}
 
 \item{level2annot}{Array of cell types, with each sequentially corresponding
-a column in the expression matrix}
+a column in the expression matrix.}
 
 \item{test}{either "Wald" or "LRT", which will then use either 
 Wald significance tests (defined by \code{\link[DESeq2]{nbinomWaldTest}}),

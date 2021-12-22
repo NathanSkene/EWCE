@@ -50,7 +50,15 @@ certain code chunks.
     - Prevent *extended* vignette from running entirely. 
 * `@return` documentation for internal functions.  
 * Added more installation checks to GHA. 
-* Fixed inconsistent naming of unit test files: `test_` ==> `test-`
+* Fixed inconsistent naming of unit test files: `test_` ==> `test-` 
+* Removed DGE args in `drop_uninformative_genes` for now until we run
+benchmarking to see how each affects the `EWCE` results.  
+* Make `bootstrap_plots` function internal. 
+* Add report on how `orthogene` improve within- and across-species
+gene mappings in *extended* vignette. 
+* Record extra info in `standardise_ctd` output:
+    - "species": both `input_species` and `output_species` 
+    - "versions": of `EWCE`, `orthogene`, and `homologene`
 
 
 # EWCE 1.0.0

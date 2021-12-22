@@ -7,10 +7,7 @@
 drop_uninformative_genes(
   exp,
   level2annot,
-  dge_method = "limma",
-  dge_test = "LRT",
   mtc_method = "BH",
-  min_variance_decile = NULL,
   adj_pval_thresh = 1e-05,
   convert_orths = FALSE,
   input_species = NULL,
@@ -28,34 +25,10 @@ drop_uninformative_genes(
 \item{exp}{Expression matrix with gene names as rownames.}
 
 \item{level2annot}{Array of cell types, with each sequentially corresponding
-a column in the expression matrix}
-
-\item{dge_method}{Which method to use for the Differential Gene Expression
-(DGE) step.\cr
-Options:
-\itemize{
-\item{"limma": }{Uses
-\href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
-limma}.}
-\item{"deseq2": }{Uses
- \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
-DESeq2}.}
-\item{"mast": }{Uses
-\href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
-MAST}.}
-}}
-
-\item{dge_test}{\code{test} argument passed to DGE function.
-Only used when \code{dge_method="deqseq2"}.}
+a column in the expression matrix.}
 
 \item{mtc_method}{Multiple-testing correction method used by DGE step.
 See \link[stats]{p.adjust} for more details.}
-
-\item{min_variance_decile}{If \code{min_variance_decile!=NULL},
- calculates the variance of the mean gene expression
-  across `level2annot` (i.e. cell types),
-and then removes any genes that are below \code{min_variance_decile}
- (on a 0-1 scale).}
 
 \item{adj_pval_thresh}{Minimum differential expression significance
 that a gene must demonstrate across \code{level2annot} (i.e. cell types).}

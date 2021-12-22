@@ -10,7 +10,7 @@ run_limma(exp, level2annot, mtc_method = "BH", verbose = TRUE, ...)
 \item{exp}{Expression matrix with gene names as rownames.}
 
 \item{level2annot}{Array of cell types, with each sequentially corresponding
-a column in the expression matrix}
+a column in the expression matrix.}
 
 \item{mtc_method}{Multiple-testing correction method used by DGE step.
 See \link[stats]{p.adjust} for more details.}

@@ -30,12 +30,13 @@
 #'
 #' @examples
 #' ctd <- ewceData::ctd()
-#' ctd_std <- standardise_ctd(
+#' ctd_std <- EWCE::standardise_ctd(
 #'     ctd = ctd,
 #'     input_species = "mouse",
 #'     dataset = "Zeisel2016"
 #' )
 #' @export
+#' @importFrom utils packageVersion
 standardise_ctd <- function(ctd,
                             dataset,
                             input_species = NULL,
@@ -128,15 +129,27 @@ standardise_ctd <- function(ctd,
         } else {
             NULL
         }
-        return(list(
-            "mean_exp" = mean_exp,
-            "specificity" = spec,
-            "specificity_quantiles" = specQ,
-            "annot" = annot,
-            "plotting" = plotting,
-            "standardised" = TRUE,
-            "gene_species" = output_species
-        ))
+        return(
+            list(
+                "mean_exp" = mean_exp,
+                "specificity" = spec,
+                "specificity_quantiles" = specQ,
+                "annot" = annot,
+                "plotting" = plotting,
+                "standardised" = TRUE,
+                "species" = list(
+                    "input_species" = 
+                        if(is.null(input_species)) "mouse" else input_species,
+                    "output_species" = 
+                        if(is.null(output_species)) "human" else output_species
+                ),
+                "versions" = list(
+                    "EWCE" = utils::packageVersion("EWCE"),
+                    "orthogene" = utils::packageVersion("orthogene"),
+                    "homologene" = utils::packageVersion("homologene")
+                )
+            )
+        )
     })
     #### Name CTD levels ####
     if (is.null(names(ctd))) {

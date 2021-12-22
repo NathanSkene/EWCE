@@ -14,6 +14,9 @@ cell_list_dist(hitGenes, sct_data, annotLevel)
 \item{annotLevel}{An integer indicating which level of \code{sct_data} to
 analyse (\emph{Default: 1}).}
 }
+\value{
+Output (#fix).
+}
 \description{
 specificity is generated in the main_CellTypeAnalysis_Preperation.r file
 }

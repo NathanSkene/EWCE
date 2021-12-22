@@ -9,6 +9,9 @@ check_numeric(exp)
 \arguments{
 \item{exp}{Input matrix.}
 }
+\value{
+Numeric expression matrix.
+}
 \description{
 Ensure that a matrix is numeric. If not, it will be converted to numeric.
 }

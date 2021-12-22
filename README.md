@@ -4,7 +4,7 @@
 Authors: Alan Murphy, Brian Schilder, and Nathan Skene
 </h4>
 <h4>
-README updated: Dec-21-2021
+README updated: Dec-22-2021
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->

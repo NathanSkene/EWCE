@@ -48,9 +48,11 @@ in the subdirectory \emph{standardized_CTD_SCE}.}
 \item{save_split_CTD}{Whether to save individual CTD files
 in the subdirectory \emph{standardized_CTD}.}
 
-\item{save_merged_SCE}{Save the final merged SCE object, or simply to return it.}
+\item{save_merged_SCE}{Save the final merged SCE object, or simply 
+to return it.}
 
-\item{force_new_quantiles}{If specificity quantiles matrix already exists, create new one.}
+\item{force_new_quantiles}{If specificity quantiles matrix already exists,
+create a new one.}
 
 \item{numberOfBins}{Number of bins to compute specificity quantiles with.}
 

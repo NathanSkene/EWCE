@@ -16,32 +16,12 @@
 #'
 #' @param exp Expression matrix with gene names as rownames.
 #' @param level2annot Array of cell types, with each sequentially corresponding
-#' a column in the expression matrix
-#' @param dge_method Which method to use for the Differential Gene Expression
-#' (DGE) step.\cr
-#' Options:
-#' \itemize{
-#' \item{"limma": }{Uses
-#' \href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
-#' limma}.}
-#' \item{"deseq2": }{Uses
-#'  \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
-#' DESeq2}.}
-#' \item{"mast": }{Uses
-#' \href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
-#' MAST}.}
-#' }
-#' @param dge_test \code{test} argument passed to DGE function.
-#' Only used when \code{dge_method="deqseq2"}.
+#' a column in the expression matrix.
 #' @param mtc_method Multiple-testing correction method used by DGE step.
 #' See \link[stats]{p.adjust} for more details.
 #' @param return_sce Whether to return the filtered results
 #' as an expression matrix or a \pkg{SingleCellExperiment}.
-#' @param min_variance_decile If \code{min_variance_decile!=NULL},
-#'  calculates the variance of the mean gene expression
-#'   across `level2annot` (i.e. cell types),
-#' and then removes any genes that are below \code{min_variance_decile}
-#'  (on a 0-1 scale).
+
 #' @param adj_pval_thresh Minimum differential expression significance
 #' that a gene must demonstrate across \code{level2annot} (i.e. cell types).
 #' @param input_species Which species the gene names in \code{exp} come from.
@@ -79,10 +59,10 @@
 #' @importFrom orthogene convert_orthologs
 drop_uninformative_genes <- function(exp,
                                      level2annot,
-                                     dge_method = "limma",
-                                     dge_test = "LRT",
+                                     # dge_method = "limma",
+                                     # dge_test = "LRT",
                                      mtc_method = "BH",
-                                     min_variance_decile = NULL,
+                                     # min_variance_decile = NULL,
                                      adj_pval_thresh = 0.00001,
                                      convert_orths = FALSE,
                                      input_species = NULL,
@@ -94,9 +74,36 @@ drop_uninformative_genes <- function(exp,
                                      no_cores = 1,
                                      verbose = TRUE,
                                      ...) {
+    
+    ##### Extra arguments to be implemented after benchmarking is done ####
+    # @param dge_method Which method to use for the Differential Gene Expression
+    # (DGE) step.\cr
+    # Options:
+    # \itemize{
+    # \item{"limma": }{Uses
+    # \href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
+    # limma}.}
+    # \item{"deseq2": }{Uses
+    #  \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
+    # DESeq2}.}
+    # \item{"mast": }{Uses
+    # \href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
+    # MAST}.}
+    # }
+    # @param dge_test \code{test} argument passed to DGE function.
+    # Only used when \code{dge_method="deqseq2"}.
+    # @param min_variance_decile If \code{min_variance_decile!=NULL},
+    #  calculates the variance of the mean gene expression
+    #   across `level2annot` (i.e. cell types),
+    # and then removes any genes that are below \code{min_variance_decile}
+    #  (on a 0-1 scale).
+    dge_method = "limma"
+    dge_test = "LRT"
+    min_variance_decile = NULL
+    #### End extra arguments ####
+    
     ### Avoid confusing Biocheck
     padj <- NULL
-
     #### Check if input is an SCE or SE object ####
     res_sce <- check_sce(exp)
     exp <- res_sce$exp

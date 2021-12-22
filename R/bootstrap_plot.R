@@ -1,16 +1,17 @@
 #' Bootstrap plot
 #' 
-#' Plot bootstrap enrichment results.
+#' Plot bootstrap enrichment results. 
+#' Support function for \link[EWCE]{generate_bootstrap_plots}.
 #' 
-#' @param exp_mats exp_mats (#fix).
-#' @param hit.exp hit.exp (#fix).
+#' @param exp_mats Resampled specificty data for bootstrapping tests.
+#' @param hit.exp Specificity scores of the hit genes.
 #' @param cc Cell-types to plot.
 #' @param savePath Path to save plots to.
 #' @param listFileName listFileName
 #' @param show_plot Print the plot.
 #' @return Null output.
 #' 
-#' @export 
+#' @keywords internal 
 bootstrap_plot <- function(exp_mats,
                            hit.exp,
                            cc,
@@ -19,15 +20,7 @@ bootstrap_plot <- function(exp_mats,
                            show_plot = TRUE) {
     requireNamespace("grDevices")
     ### Setup theme ####
-    graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +
-        theme(
-            panel.grid.major = element_line(size = .5, color = "grey"),
-            axis.line = element_line(size = .7, color = "black"),
-            legend.position = c(0.75, 0.7), text = element_text(size = 14),
-            axis.title.x = element_text(vjust = -0.35),
-            axis.title.y = element_text(vjust = 0.6)
-        ) + theme(legend.title = element_blank())
-
+    graph_theme <- get_graph_theme()
     #### Create plotting data ####
     mean_boot_exp <- apply(exp_mats[[cc]], 2, mean)
     hit_exp <- sort(hit.exp[, cc])

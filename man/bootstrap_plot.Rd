@@ -7,9 +7,9 @@
 bootstrap_plot(exp_mats, hit.exp, cc, savePath, listFileName, show_plot = TRUE)
 }
 \arguments{
-\item{exp_mats}{exp_mats (#fix).}
+\item{exp_mats}{Resampled specificty data for bootstrapping tests.}
 
-\item{hit.exp}{hit.exp (#fix).}
+\item{hit.exp}{Specificity scores of the hit genes.}
 
 \item{cc}{Cell-types to plot.}
 
@@ -23,5 +23,7 @@ bootstrap_plot(exp_mats, hit.exp, cc, savePath, listFileName, show_plot = TRUE)
 Null output.
 }
 \description{
-Plot bootstrap enrichment results.
+Plot bootstrap enrichment results. 
+Support function for \link[EWCE]{generate_bootstrap_plots}.
 }
+\keyword{internal}

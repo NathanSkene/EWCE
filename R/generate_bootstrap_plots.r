@@ -141,7 +141,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     hits <- checkedLists$hits
     bg <- checkedLists$bg
     combinedGenes <- unique(c(hits, bg))
-    #### Get expression data of bootstrapped genes ####
+    #### Get specificity data of bootstrapped genes ####
     signif_res <- rownames(results)[results$p < 0.05]
     nReps <- reps
     exp_mats <- list()
@@ -153,7 +153,8 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         rownames(exp_mats[[cc]]) <- sprintf("Rep%s", seq_len(nReps))
     }
     for (s in seq_len(nReps)) {
-        bootstrap_set <- sample(combinedGenes, length(hits))
+        bootstrap_set <- sample(x = combinedGenes, 
+                                size = length(hits))
         ValidGenes <- rownames(sct_data[[annotLevel]]$specificity)[
             rownames(sct_data[[annotLevel]]$specificity) %in% bootstrap_set
         ]
@@ -162,9 +163,9 @@ generate_bootstrap_plots <- function(sct_data = NULL,
             exp_mats[[cc]][s, ] <- sort(expD[, cc])
         }
     }
-    #### Get expression levels of the hit genes ####
+    #### Get specificity scores of the hit genes ####
     hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
-    ### Create subdir ####
+    #### Create subdir ####
     if (!file.exists(sprintf("%s/BootstrapPlots", savePath))) {
         dir.create(file.path(savePath, "BootstrapPlots"))
     }

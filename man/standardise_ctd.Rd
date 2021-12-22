@@ -105,7 +105,7 @@ and convert all matrices to sparse matrices and/or \code{DelayedArray}.
 }
 \examples{
 ctd <- ewceData::ctd()
-ctd_std <- standardise_ctd(
+ctd_std <- EWCE::standardise_ctd(
     ctd = ctd,
     input_species = "mouse",
     dataset = "Zeisel2016"
