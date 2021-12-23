@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_celltype_data.r
 \name{generate_celltype_data}
 \alias{generate_celltype_data}
-\title{generate_celltype_data}
+\title{Generate CellTypeData (CTD) file}
 \usage{
 generate_celltype_data(
   exp,
@@ -10,46 +10,127 @@ generate_celltype_data(
   groupName,
   no_cores = 1,
   savePath = tempdir(),
-  normSpec = FALSE
+  file_prefix = "ctd",
+  as_sparse = TRUE,
+  as_DelayedArray = FALSE,
+  normSpec = FALSE,
+  convert_orths = FALSE,
+  input_species = "mouse",
+  output_species = "human",
+  non121_strategy = "drop_both_species",
+  force_new_file = TRUE,
+  specificity_quantiles = TRUE,
+  numberOfBins = 40,
+  dendrograms = TRUE,
+  return_ctd = FALSE,
+  verbose = TRUE,
+  ...
 )
 }
 \arguments{
 \item{exp}{Numerical matrix with row for each gene and column for each cell.
-Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be
+Row names are gene symbols. Column names are cell IDs which can be
 cross referenced against the annot data frame.}
 
 \item{annotLevels}{List with arrays of strings containing the cell type
-names associated with each column in exp}
+names associated with each column in \code{exp}.}
 
-\item{groupName}{A human readable name for refering to the dataset being
-loaded}
+\item{groupName}{A human readable name for referring to the dataset being}
 
 \item{no_cores}{Number of cores that should be used to speedup the
-computation. Use no_cores = 1 when using this package in windows system.}
+computation.
+\emph{NOTE}: Use \code{no_cores=1} when using this package in windows system.}
 
-\item{savePath}{Directory where the CTD file should be saved}
+\item{savePath}{Directory where the CTD file should be saved.}
+
+\item{file_prefix}{Prefix to add to saved CTD file name.}
+
+\item{as_sparse}{Convert \code{exp} to a sparse \code{Matrix}.}
+
+\item{as_DelayedArray}{Convert \code{exp} to \code{DelayedArray}.}
 
 \item{normSpec}{Boolean indicating whether specificity data should be
 transformed to a normal distribution by cell type, giving equivalent scores
 across all cell types.}
+
+\item{convert_orths}{If \code{input_species!=output_species} and
+\code{convert_orths=TRUE}, will drop genes without
+1:1 \code{output_species} orthologs and then convert \code{exp} gene names
+to those of \code{output_species}.}
+
+\item{input_species}{The species that the \code{exp} dataset comes from.
+See \link[EWCE]{list_species} for all available species.}
+
+\item{output_species}{Species to convert \code{exp} to
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
+
+\item{non121_strategy}{How to handle genes that don't have
+1:1 mappings between \code{input_species}:\code{output_species}.
+Options include:\cr
+\itemize{
+\item{\code{"drop_both_species" or "dbs" or 1} : \cr}{
+Drop genes that have duplicate
+mappings in either the \code{input_species} or \code{output_species} \cr
+(\emph{DEFAULT}).}
+\item{\code{"drop_input_species" or "dis" or 2} : \cr}{
+Only drop genes that have duplicate
+mappings in the \code{input_species}.}
+\item{\code{"drop_output_species" or "dos" or 3} : \cr}{
+Only drop genes that have duplicate
+mappings in the \code{output_species}.}
+\item{\code{"keep_both_species" or "kbs" or 4} : \cr}{
+Keep all genes regardless of whether
+they have duplicate mappings in either species.}
+\item{\code{"keep_popular" or "kp" or 5} : \cr}{
+Return only the most "popular" interspecies ortholog mappings.
+ This procedure tends to yield a greater number of returned genes
+ but at the cost of many of them not being true biological 1:1 orthologs.}
+ \item{\code{"sum","mean","median","min" or "max"} : \cr}{
+ When \code{gene_df} is a matrix and \code{gene_output="rownames"},
+  these options will aggregate many-to-one gene mappings
+  (\code{input_species}-to-\code{output_species})
+  after dropping any duplicate genes in the \code{output_species}.
+ }
+}}
+
+\item{force_new_file}{If a file of the same name as the one
+being created already exists, overwrite it.}
+
+\item{specificity_quantiles}{Compute specificity quantiles.
+Recommended to set to \code{TRUE}.}
+
+\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+
+\item{dendrograms}{Add dendrogram plots}
+
+\item{return_ctd}{Return the CTD object in a list along with the file name,
+instead of just the file name.}
+
+\item{verbose}{Print messages.}
+
+\item{...}{Additional arguments passed to
+\link[orthogene]{convert_orthologs}.}
 }
 \value{
-Filenames for the saved celltype_data files
+File names for the saved CellTypeData (CTD) files.
 }
 \description{
-\code{generate_celltype_data} Takes expression & cell type annotations and
-creates celltype_data files which contain the mean and specificity matrices
+\code{generate_celltype_data} takes gene expression data and
+cell type annotations and creates CellTypeData (CTD) files which
+contain matrices of mean expression and specificity per cell type.
 }
 \examples{
-library(ewceData)
 # Load the single cell data
-cortex_mrna <- cortex_mrna()
-expData <- cortex_mrna$exp
-expData <- expData[1:100, ] # Use only a subset to keep the example quick
+cortex_mrna <- ewceData::cortex_mrna()
+# Use only a subset to keep the example quick
+expData <- cortex_mrna$exp[1:100, ]
 l1 <- cortex_mrna$annot$level1class
 l2 <- cortex_mrna$annot$level2class
 annotLevels <- list(l1 = l1, l2 = l2)
-fNames_ALLCELLS <-
-    generate_celltype_data(exp = expData, annotLevels, "allKImouse",
-        savePath=tempdir())
+fNames_ALLCELLS <- EWCE::generate_celltype_data(
+    exp = expData,
+    annotLevels = annotLevels,
+    groupName = "allKImouse"
+)
 }

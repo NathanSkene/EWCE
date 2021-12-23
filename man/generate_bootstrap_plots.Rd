@@ -5,54 +5,68 @@
 \title{Generate bootstrap plots}
 \usage{
 generate_bootstrap_plots(
-  sct_data,
-  hits,
-  bg,
-  genelistSpecies = "mouse",
-  sctSpecies = "mouse",
-  reps,
+  sct_data = NULL,
+  hits = NULL,
+  bg = NULL,
+  genelistSpecies = NULL,
+  sctSpecies = NULL,
+  output_species = "human",
+  reps = 100,
   annotLevel = 1,
   full_results = NA,
   listFileName = "",
-  savePath = tempdir()
+  savePath = tempdir(),
+  verbose = TRUE
 )
 }
 \arguments{
-\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{hits}{Array of MGI/HGNC gene symbols containing the target gene list.}
+\item{hits}{List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if \code{geneSizeControl=TRUE}.}
 
-\item{bg}{Array of MGI/HGNC gene symbols containing the background gene list.}
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.}
 
-\item{genelistSpecies}{Either 'mouse' or 'human' depending on whether MGI
-or HGNC symbols are used for gene lists}
+\item{genelistSpecies}{Species that \code{hits} genes came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or
-HGNC symbols are used for the single cell dataset}
+\item{sctSpecies}{Species that \code{sct_data} came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should
-be over 10000 for publication quality results)}
+\item{output_species}{Species to convert \code{sct_data} and \code{hits} to
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{annotLevel}{an integer indicating which level of the annotation to
-analyse. Default = 1.}
+\item{reps}{Number of random gene lists to generate (\emph{Default: 100},
+but should be >=10,000 for publication-quality results).}
+
+\item{annotLevel}{An integer indicating which level of \code{sct_data} to
+analyse (\emph{Default: 1}).}
 
 \item{full_results}{The full output of
-\code{\link{bootstrap_enrichment_test}} for the same genelist}
+\link[EWCE]{bootstrap_enrichment_test} for the same gene list.}
 
 \item{listFileName}{String used as the root for files saved using this
-function}
+function.}
 
-\item{savePath}{Directory where the BootstrapPlots folder should be saved, 
-default is a temp directory}
+\item{savePath}{Directory where the BootstrapPlots folder should be saved,
+default is a temp directory.}
+
+\item{verbose}{Print messages.}
 }
 \value{
-Saves a set of pdf files containing graphs and returns the file where 
-they are saved. These will be saved with the filename adjusted using the 
-value of listFileName. The files are saved into the 'BootstrapPlot' folder. 
+Saves a set of pdf files containing graphs and returns the file where
+they are saved. These will be saved with the filename adjusted using the
+value of listFileName. The files are saved into the 'BootstrapPlot' folder.
 Files start with one of the following:
 \itemize{
   \item \code{qqplot_noText}: sorts the gene list according to how enriched
-  it is in the relevant celltype. Plots the value in the target list against
+  it is in the relevant cell type. Plots the value in the target list against
   the mean value in the bootstrapped lists.
   \item \code{qqplot_wtGSym}: as above but labels the gene symbols for the
   highest expressed genes.
@@ -63,39 +77,45 @@ Files start with one of the following:
 }
 }
 \description{
-\code{generate_bootstrap_plots} takes a genelist and a single cell type
+\code{generate_bootstrap_plots} takes a gene list and a single cell type
 transcriptome dataset and generates plots which show how the expression of
 the genes in the list compares to those in randomly generated gene lists
 }
 \examples{
-library(ewceData)
-# Load the single cell data
-ctd <- ctd()
+## Load the single cell data
+ctd <- ewceData::ctd()
 
-# Set the parameters for the analysis
-# Use 5 bootstrap lists for speed, for publishable analysis use >10000
+## Set the parameters for the analysis
+## Use 5 bootstrap lists for speed, for publishable analysis use >10000
 reps <- 5
 
-# Load the gene list and get human orthologs
-example_genelist <- example_genelist()
-mouse_to_human_homologs <- mouse_to_human_homologs()
-m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <-
-    unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-#subset mouse.bg for speed but ensure it still contains the hits
-mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
+## Load the gene list and get human orthologs
+hits <- ewceData::example_genelist()[1:100]
 
-# Bootstrap significance test, no control for transcript length or GC content
-full_results <- bootstrap_enrichment_test(
-    sct_data = ctd, hits = mouse.hits,
-    bg = mouse.bg, reps = reps, annotLevel = 1, sctSpecies = "mouse",
-    genelistSpecies = "mouse"
-)
+## Bootstrap significance test,
+##  no control for transcript length or GC content
+## Use pre-computed results to speed up example
+full_results <- EWCE::example_bootstrap_results()
 
-plot_file_pth <- generate_bootstrap_plots(
-    sct_data = ctd, hits = mouse.hits, bg = mouse.bg,
-    reps = reps, full_results = full_results, listFileName = "Example",
-    genelistSpecies = "mouse", sctSpecies = "mouse", annotLevel = 1,
-    savePath=tempdir()
+### Skip this for example purposes
+# full_results <- EWCE::bootstrap_enrichment_test(
+#    sct_data = ctd,
+#    hits = hits,
+#    reps = reps,
+#    annotLevel = 1,
+#    sctSpecies = "mouse",
+#    genelistSpecies = "human"
+# )
+
+plot_file_path <- EWCE::generate_bootstrap_plots(
+    sct_data = ctd,
+    hits = hits,
+    reps = reps,
+    full_results = full_results,
+    listFileName = "Example",
+    sctSpecies = "mouse",
+    genelistSpecies = "human",
+    annotLevel = 1,
+    savePath = tempdir()
 )
 }

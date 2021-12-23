@@ -1,42 +1,45 @@
 #' Add to results to merging list
 #'
-#' \code{add_res_to_merging_list} Adds EWCE results to a list
-#' for merging analysis
+#' \code{add_res_to_merging_list} adds EWCE results to a list
+#' for merging analysis.
 #'
-#' @param full_res results list generated using
-#' \code{\link{bootstrap_enrichment_test}} or \code{\link{ewce_expression_data}}
-#' functions. Multiple results tables can be merged into one
+#' @param full_res Results list generated using
+#' \link[EWCE]{bootstrap_enrichment_test}
+#' or \link[EWCE]{ewce_expression_data} functions.
+#'  Multiple results tables can be merged into one
 #' results table, as long as the 'list' column is set to distinguish them.
 #' @param existing_results Output of previous rounds from adding results to
 #' list. Leave empty if this is the first item in the list.
-#' @return merged results list
+#'
+#' @return Merged results list.
+#'
 #' @examples
 #' # Load the single cell data
-#' library(ewceData)
-#' ctd <- ctd()
+#' ctd <- ewceData::ctd()
 #'
 #' # Load the data
-#' tt_alzh <- tt_alzh()
-#' #tt_alzh_BA36 <- tt_alzh_BA36()
+#' tt_alzh <- ewceData::tt_alzh()
+#' # tt_alzh_BA36 <- ewceData::tt_alzh_BA36()
 #' # Use 3 bootstrap lists for speed, for publishable analysis use >10000
 #' reps <- 3
 #' # Use 5 up/down regulated genes (thresh) for speed, default is 250
-#' thresh = 5
+#' thresh <- 5
 #' # Run EWCE analysis
-#' #tt_results <- ewce_expression_data(
+#' # tt_results <- ewce_expression_data(
 #' #    sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh = thresh,
 #' #    reps = reps, ttSpecies = "human", sctSpecies = "mouse"
-#' #)
-#' #tt_results_36 <- ewce_expression_data(
+#' # )
+#' # tt_results_36 <- ewce_expression_data(
 #' #    sct_data = ctd, tt = tt_alzh_BA36, annotLevel = 1, thresh = thresh,
 #' #    reps = reps, ttSpecies = "human", sctSpecies = "mouse"
-#' #)
+#' # )
 #'
 #' # Fill a list with the results
 #' results <- add_res_to_merging_list(tt_alzh)
-#' #results <- add_res_to_merging_list(tt_alzh_BA36, results)
+#' # results <- add_res_to_merging_list(tt_alzh_BA36, results)
 #' @export
-add_res_to_merging_list <- function(full_res, existing_results = NULL) {
+add_res_to_merging_list <- function(full_res,
+                                    existing_results = NULL) {
     msg <- "ERROR: Cannot merge directional with non-directional results table"
     # Check if the results set is directional
     if (is.null(full_res$bootstrap_data)) {
@@ -51,11 +54,13 @@ add_res_to_merging_list <- function(full_res, existing_results = NULL) {
         }
         # Setup the new entries
         new_entry_up <- list(
-            Direction = "Up", bootstrap_data = full_res$bootstrap_data.up,
+            Direction = "Up",
+            bootstrap_data = full_res$bootstrap_data.up,
             hitCells = full_res$hit.cells.up
         )
         new_entry_down <- list(
-            Direction = "Down", bootstrap_data = full_res$bootstrap_data.down,
+            Direction = "Down",
+            bootstrap_data = full_res$bootstrap_data.down,
             hitCells = full_res$hit.cells.down
         )
         # Add them to the list

@@ -6,41 +6,51 @@
 \usage{
 prepare_genesize_control_network(
   hits,
-  bg,
-  numBOOT = 10000,
-  sctSpecies,
-  sct_data
+  bg = NULL,
+  reps = 10000,
+  no_cores = 1,
+  sctSpecies = NULL,
+  genelistSpecies = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{hits}{Array of MGI gene symbols containing the target gene list. 
-Must be HGNC symbols.}
+\item{hits}{List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if \code{geneSizeControl=TRUE}.}
 
-\item{bg}{Array of MGI gene symbols containing the background gene list 
-(including hit genes). Must be HGNC symbols.}
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.}
 
-\item{numBOOT}{Number of gene lists to sample}
+\item{reps}{Number of gene lists to sample.}
 
-\item{sctSpecies}{Either 'mouse' or 'human' depending on whether MGI or 
-HGNC symbols are used for the single cell dataset}
+\item{no_cores}{Number of cores to parallelise
+bootstrapping \code{reps} over.}
 
-\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
+\item{sctSpecies}{Species that \code{sct_data} came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
+
+\item{genelistSpecies}{Species that \code{hits} genes came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{hitGenes}: Array of HGNC symbols containing the hit genes. 
-  May be slightly reduced if gene length / GC content could not be found 
+  \item \code{hitGenes}: Array of HGNC symbols containing the hit genes.
+  May be slightly reduced if gene length / GC content could not be found
   for all genes.
-  \item \code{list_network}: The control gene lists as a data frame of HGNC 
+  \item \code{list_network}: The control gene lists as a data frame of HGNC
   symbols
 }
 }
 \description{
-\code{prepare_genesize_control_network} takes a genelist and finds 
-semi-randomly selected gene lists which are matched for gene length and 
-GC content
+\code{prepare_genesize_control_network} takes a gene list and finds
+semi-randomly selected gene lists which are matched for gene length and
+GC content.
 }
-\examples{
-# Called by bootstrap_enrichment_test
-}
+\keyword{internal}

@@ -9,15 +9,27 @@ check in the MGI synonm database for whether they match to a proper MGI
 symbol. Where a symbol is found to be an aliases for a gene that is already
 in the dataset, the combined reads are summed together.}
 \usage{
-fix_bad_mgi_symbols(exp, mrk_file_path = NULL, printAllBadSymbols = FALSE)
+fix_bad_mgi_symbols(
+  exp,
+  mrk_file_path = NULL,
+  printAllBadSymbols = FALSE,
+  as_sparse = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{exp}{An expression matrix where the rows are MGI symbols or an SingleCellExperiment (SCE) or other Ranged Summarized Experiment (SE) type object.}
+\item{exp}{An expression matrix where the rows are MGI symbols, or a
+SingleCellExperiment (SCE) or
+other Ranged Summarized Experiment (SE) type object.}
 
 \item{mrk_file_path}{Path to the MRK_List2 file which can be downloaded
 from www.informatics.jax.org/downloads/reports/index.html}
 
 \item{printAllBadSymbols}{Output to console all the bad gene symbols}
+
+\item{as_sparse}{Convert \code{exp} to sparse matrix.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 Returns the expression matrix with the rownames corrected and rows
@@ -32,10 +44,9 @@ These should be checked for any suggestion that excel has corrupted the
 gene names.
 }
 \examples{
-library(ewceData)
 # Load the single cell data
-cortex_mrna <- cortex_mrna()
-#take a subset for speed
-cortex_mrna$exp <- cortex_mrna$exp[1:50,1:5]
+cortex_mrna <- ewceData::cortex_mrna()
+# take a subset for speed
+cortex_mrna$exp <- cortex_mrna$exp[1:50, 1:5]
 cortex_mrna$exp <- fix_bad_mgi_symbols(cortex_mrna$exp)
 }

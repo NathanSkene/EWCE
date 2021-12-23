@@ -7,20 +7,21 @@
 convert_old_ewce_to_new(level1 = NA, level2 = NA, celltype_data = NA)
 }
 \arguments{
-\item{level1}{File path to old level1 of EWCE ctd}
+\item{level1}{File path to old level1 of EWCE ctd.}
 
-\item{level2}{File path to old level2 of EWCE ctd}
+\item{level2}{File path to old level2 of EWCE ctd.}
 
-\item{celltype_data}{The celltype data to be converted}
+\item{celltype_data}{The ctd to be converted.}
 }
 \value{
-ctd The new style data structure
+CellTypeData in the new data structure style.
 }
 \description{
-\code{convert_old_ewce_to_new} Used to get an new style EWCE ctd file 
-(mean_exp/specificity) from old ones (all_scts)
+\code{convert_old_ewce_to_new} Used to get an new style EWCE ctd file
+(mean_exp/specificity) from old ones (all_scts).
 }
 \details{
-If you've already loaded it and want to pass it as a celltype_data 
-structure, then don't set level1 or level2
+If you've already loaded it and want to pass it as a celltype_data
+structure, then don't set level1 or level2.
 }
+\keyword{internal}

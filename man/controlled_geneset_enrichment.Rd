@@ -7,11 +7,17 @@
 controlled_geneset_enrichment(
   disease_genes,
   functional_genes,
-  bg_genes,
+  bg = NULL,
   sct_data,
+  sctSpecies = NULL,
+  output_species = "human",
+  disease_genes_species = NULL,
+  functional_genes_species = NULL,
   annotLevel,
-  reps,
-  controlledCT
+  reps = 100,
+  controlledCT,
+  use_intersect = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -20,22 +26,45 @@ Does not have to be disease genes. Must be from same species as the single
 cell transcriptome dataset.}
 
 \item{functional_genes}{Array of gene symbols containing the functional gene
-list. The enrichment of this geneset within the disease_genes is tested.
+list. The enrichment of this gene set within the disease_genes is tested.
 Must be from same species as the single cell transcriptome dataset.}
 
-\item{bg_genes}{Array of gene symbols containing the background gene list.}
+\item{bg}{List of gene symbols containing the background gene list
+(including hit genes). If \code{bg=NULL},
+ an appropriate gene background will be created automatically.}
 
-\item{sct_data}{List generated using \code{\link{generate_celltype_data}}}
+\item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{annotLevel}{an integer indicating which level of the annotation to
-analyse. Default = 1.}
+\item{sctSpecies}{Species that \code{sct_data} came from
+(no longer limited to just "mouse" and "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{reps}{Number of random gene lists to generate (default=100 but should
-be over 10000 for publication quality results)}
+\item{output_species}{Species to convert \code{sct_data} and \code{hits} to
+(Default: "human").
+See \link[EWCE]{list_species} for all available species.}
 
-\item{controlledCT}{(optional) If not NULL, and instead is the name of a
+\item{disease_genes_species}{Species of the
+\code{disease_genes} gene set.}
+
+\item{functional_genes_species}{Species of the
+\code{functional_genes} gene set.}
+
+\item{annotLevel}{An integer indicating which level of \code{sct_data} to
+analyse (\emph{Default: 1}).}
+
+\item{reps}{Number of random gene lists to generate (\emph{Default: 100},
+but should be >=10,000 for publication-quality results).}
+
+\item{controlledCT}{[Optional] If not NULL, and instead is the name of a
 cell type, then the bootstrapping controls for expression within that
-cell type}
+cell type.}
+
+\item{use_intersect}{When \code{species1} and \code{species2} are both
+different from \code{output_species}, this argument will determine whether 
+to use the intersect (\code{TRUE}) or union (\code{FALSE}) of all genes
+from \code{species1} and \code{species2}.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 A list containing three data frames:
@@ -59,32 +88,28 @@ A list containing three data frames:
 }
 }
 \description{
-\code{controlled_geneset_enrichment} tests whether a functional geneset is
+\code{controlled_geneset_enrichment} tests whether a functional gene set is
 still enriched in a disease gene set after controlling for the
-disease geneset's enrichment in a particular cell type (the 'controlledCT')
+disease gene set's enrichment in a particular cell type (the 'controlledCT')
 }
 \examples{
-library(ewceData)
 # See the vignette for more detailed explanations
 # Gene set enrichment analysis controlling for cell type expression
 # set seed for bootstrap reproducibility
 set.seed(12345678)
-ctd <- ctd()
-mouse_to_human_homologs <- mouse_to_human_homologs()
-m2h = unique(mouse_to_human_homologs[,c("HGNC.symbol","MGI.symbol")])
-schiz_genes <- schiz_genes()
-id_genes <- id_genes()
-mouse.hits.schiz = unique(m2h[m2h$HGNC.symbol \%in\% schiz_genes,"MGI.symbol"])
-mouse.bg  = unique(m2h$MGI.symbol)
-hpsd_genes <- hpsd_genes()
-mouse.hpsd = unique(m2h[m2h$HGNC.symbol \%in\% hpsd_genes,"MGI.symbol"])
+## load merged dataset from vignette
+ctd <- ewceData::ctd()
+schiz_genes <- ewceData::schiz_genes()
+hpsd_genes <- ewceData::hpsd_genes()
 # Use 3 bootstrap lists for speed, for publishable analysis use >10000
-reps=3
-res_hpsd_schiz =
-    controlled_geneset_enrichment(disease_genes=mouse.hits.schiz,
-                                    functional_genes = mouse.hpsd,
-                                    bg_genes = mouse.bg,
-                                    sct_data = ctd, annotLevel = 1,
-                                    reps=reps,
-                                    controlledCT="pyramidal CA1")
+reps <- 3
+
+res_hpsd_schiz <- EWCE::controlled_geneset_enrichment(
+    disease_genes = schiz_genes,
+    functional_genes = hpsd_genes,
+    sct_data = ctd,
+    annotLevel = 1,
+    reps = reps,
+    controlledCT = "pyramidal CA1"
+)
 }

@@ -1,143 +1,188 @@
-#' generate_celltype_data
+#' Generate CellTypeData (CTD) file
 #'
-#' \code{generate_celltype_data} Takes expression & cell type annotations and
-#' creates celltype_data files which contain the mean and specificity matrices
+#' \code{generate_celltype_data} takes gene expression data and
+#' cell type annotations and creates CellTypeData (CTD) files which
+#' contain matrices of mean expression and specificity per cell type.
 #'
 #' @param exp Numerical matrix with row for each gene and column for each cell.
-#' Row names are MGI/HGNC gene symbols. Column names are cell IDs which can be
+#' Row names are gene symbols. Column names are cell IDs which can be
 #' cross referenced against the annot data frame.
 #' @param annotLevels List with arrays of strings containing the cell type
-#' names associated with each column in exp
-#' @param groupName A human readable name for refering to the dataset being
-#' loaded
+#' names associated with each column in \code{exp}.
+#' @param groupName A human readable name for referring to the dataset being
 #' @param no_cores Number of cores that should be used to speedup the
-#' computation. Use no_cores = 1 when using this package in windows system.
-#' @param savePath Directory where the CTD file should be saved
+#' computation.
+#' \emph{NOTE}: Use \code{no_cores=1} when using this package in windows system.
+#' @param savePath Directory where the CTD file should be saved.
+#' @param file_prefix Prefix to add to saved CTD file name.
+#' @param as_sparse Convert \code{exp} to a sparse \code{Matrix}.
+#' @param as_DelayedArray Convert \code{exp} to \code{DelayedArray}.
+#' @param convert_orths If \code{input_species!=output_species} and
+#' \code{convert_orths=TRUE}, will drop genes without
+#' 1:1 \code{output_species} orthologs and then convert \code{exp} gene names
+#' to those of \code{output_species}.
+#' @param input_species The species that the \code{exp} dataset comes from.
+#' See \link[EWCE]{list_species} for all available species.
+#' @param output_species Species to convert \code{exp} to
+#' (Default: "human").
+#' See \link[EWCE]{list_species} for all available species.
+#' @param force_new_file If a file of the same name as the one
+#' being created already exists, overwrite it.
+#' @param specificity_quantiles Compute specificity quantiles.
+#' Recommended to set to \code{TRUE}.
+#' @param dendrograms Add dendrogram plots
+#' @param return_ctd Return the CTD object in a list along with the file name,
+#' instead of just the file name.
 #' @param normSpec Boolean indicating whether specificity data should be
 #' transformed to a normal distribution by cell type, giving equivalent scores
 #' across all cell types.
-#' @return Filenames for the saved celltype_data files
+#' @param verbose Print messages.
+#' @param ... Additional arguments passed to
+#'  \link[orthogene]{convert_orthologs}.
+#' @inheritParams bin_specificity_into_quantiles
+#' @inheritParams prep_dendro
+#' @inheritParams orthogene::convert_orthologs
+#'
+#' @return File names for the saved CellTypeData (CTD) files.
 #' @examples
-#' library(ewceData)
 #' # Load the single cell data
-#' cortex_mrna <- cortex_mrna()
-#' expData <- cortex_mrna$exp
-#' expData <- expData[1:100, ] # Use only a subset to keep the example quick
+#' cortex_mrna <- ewceData::cortex_mrna()
+#' # Use only a subset to keep the example quick
+#' expData <- cortex_mrna$exp[1:100, ]
 #' l1 <- cortex_mrna$annot$level1class
 #' l2 <- cortex_mrna$annot$level2class
 #' annotLevels <- list(l1 = l1, l2 = l2)
-#' fNames_ALLCELLS <-
-#'     generate_celltype_data(exp = expData, annotLevels, "allKImouse",
-#'         savePath=tempdir())
+#' fNames_ALLCELLS <- EWCE::generate_celltype_data(
+#'     exp = expData,
+#'     annotLevels = annotLevels,
+#'     groupName = "allKImouse"
+#' )
 #' @export
-#' @import parallel
-#' @import future
-#' @import ggdendro
-#' @import gridExtra
+#' @importFrom parallel mclapply
 #' @importFrom Matrix Matrix
-#' @import RNOmni
-#' @import ggdendro
-
-generate_celltype_data <- function(exp, annotLevels, groupName, no_cores = 1,
-                                    savePath = tempdir(), normSpec = FALSE) {
-    err_msg <- paste0("NA values detected in expresson matrix. All NA values",
-                        " should be removed before calling EWCE.")
-    if (sum(is.na(exp)) > 0) {
-        stop(err_msg)
+#' @importFrom RNOmni RankNorm
+#' @importFrom methods as is
+#' @importFrom orthogene convert_orthologs
+generate_celltype_data <- function(exp,
+                                   annotLevels,
+                                   groupName,
+                                   no_cores = 1,
+                                   savePath = tempdir(),
+                                   file_prefix = "ctd",
+                                   as_sparse = TRUE,
+                                   as_DelayedArray = FALSE,
+                                   normSpec = FALSE,
+                                   convert_orths = FALSE,
+                                   input_species = "mouse",
+                                   output_species = "human",
+                                   non121_strategy = "drop_both_species",
+                                   force_new_file = TRUE,
+                                   specificity_quantiles = TRUE,
+                                   numberOfBins = 40,
+                                   dendrograms = TRUE,
+                                   return_ctd = FALSE,
+                                   verbose = TRUE,
+                                   ...) {
+    #### Check if input is an SCE or SE object ####
+    res_sce <- check_sce(exp)
+    exp <- res_sce$exp
+    SE_obj <- res_sce$SE_obj
+    #### Check if file already exists ####
+    fNames <- sprintf("%s/%s_%s.rda", savePath, file_prefix, groupName)
+    if (file.exists(fNames) & (!force_new_file)) {
+        messager("+ Pre-existing file of the same name detected.",
+            "Use `force_new_file=TRUE` to overwrite this file.",
+            v = verbose
+        )
+        messager("+ Returning pre-existing file path.", v = verbose)
+        return(fNames)
     }
-    # Calculate the number of cores
-    # cl <- parallel::makeCluster(no_cores)
-    # message(sprintf("Using %s cores",no_cores))
-    # First, check the number of annotations equals the number of columns
-    # in the expression data
-    err_msg2 <- paste0("Error: length of all annotation levels must equal",
-                        " the number of columns in exp matrix")
-    lapply(annotLevels, test <- function(x, exp) {
-        if (length(x) != dim(exp)[2]) {
-            stop(err_msg2)
-        }
-    }, exp)
-
-    # Check group name
-    err_msg3 <- paste0("ERROR: groupName must be set. groupName is used to",
-                        " label the files created by this function.")
-    if (is.null(groupName)) {
-        stop(err_msg3)
+    #### Assign cores #####
+    core_allocation <- assign_cores(
+        worker_cores = no_cores,
+        verbose = verbose
+    )
+    no_cores <- core_allocation$worker_cores
+    #### Check NAs ####
+    check_nas(exp = exp)
+    #### Check annotLevels ####
+    check_annotLevels(
+        annotLevels = annotLevels,
+        exp = exp
+    )
+    #### Check groupName ####
+    check_group_name(groupName = groupName)
+    #### convert orthologs ####
+    if ((input_species != output_species) && convert_orths) {
+        exp <- orthogene::convert_orthologs(
+            gene_df = exp,
+            input_species = input_species,
+            output_species = output_species,
+            non121_strategy = non121_strategy,
+            verbose = verbose,
+            ...
+        )
     }
-    if (groupName == "") {
-        stop(err_msg3)
+    #### Convert to sparse matrix ####
+    exp <- to_sparse_matrix(
+        exp = exp,
+        as_sparse = as_sparse
+    )
+    #### Convert to DelayedArray ####
+    exp <- to_delayed_array(
+        exp = exp,
+        as_DelayedArray = as_DelayedArray
+    )
+    ### Avoid conflicts with parallelized block-wise operations ####
+    if (is_delayed_array(exp)) {
+        no_cores <- 1
     }
-
-    # Convert characters to numbers
-    if (!is(exp)[1] == "dgCMatrix") {
-        exp <- suppressWarnings(apply(exp, 2, function(x) {
-            storage.mode(x) <- "double"
-            x
-        }))
-    }
-
-    # Make exp into a sparse matrix
-    exp <- Matrix::Matrix(exp)
+    #### Initialize ctd ####
     ctd <- list()
     for (i in seq_len(length(annotLevels))) {
         ctd[[length(ctd) + 1]] <- list(annot = annotLevels[[i]])
     }
-    ctd2 <- mclapply(ctd, calculate_meanexp_for_level, exp, mc.cores = no_cores)
-    ctd3 <- mclapply(ctd2, calculate_specificity_for_level, mc.cores = no_cores)
+    #### Calculate mean_exp and specificity ####
+    messager("+ Calculating normalized mean expression.", v = verbose)
+    ctd2 <- parallel::mclapply(ctd, calculate_meanexp_for_level,
+        exp,
+        mc.cores = no_cores
+    )
+    messager("+ Calculating normalized specificity.", v = verbose)
+    ctd3 <- parallel::mclapply(ctd2, calculate_specificity_for_level,
+        mc.cores = no_cores
+    )
     ctd <- ctd3
-    # stopCluster(cl)
-
-    # apply rank norm transformation if hyp param set
-    if (isTRUE(normSpec)) {ctd <- lapply(ctd, rNorm)}
-    # ADD DENDROGRAM DATA TO CTD
-    ctd <- lapply(ctd, bin_specificity_into_quantiles, numberOfBins = 40)
-    ctd <- lapply(ctd, prep_dendro)
-
-    fNames <- sprintf("%s/CellTypeData_%s.rda", savePath, groupName)
-    save(ctd, file = fNames)
-    return(fNames)
-}
-
-#Helper functions
-calculate_meanexp_for_level <- function(ctd_oneLevel, expMatrix) {
-    err_msg <- paste0("There are an equal number of celltypes in expMatrix",
-                        " and ctd_oneLevel but the names do not match")
-    if (dim(expMatrix)[2] == length(unique(ctd_oneLevel$annot))) {
-        message(dim(expMatrix)[2])
-        message(length(ctd_oneLevel$annot))
-        if (sum(!colnames(expMatrix) == ctd_oneLevel$annot) != 0) {
-            stop(err_msg)
-        }
-        ctd_oneLevel$mean_exp <- as.matrix(expMatrix)
-    } else {
-        # Sum reads in each cell type
-        # mean_exp = apply(expMatrix,1,aggregate.over.celltypes,
-        #                   ctd_oneLevel$annot)
-        mm <- model.matrix(~ 0 + ctd_oneLevel$annot)
-        colnames(mm) <- names(table(ctd_oneLevel$annot))
-        mat.summary.mm1 <- expMatrix %*% mm
-
-        # Divide by the number of cells to get the mean
-        cellCounts <- table(ctd_oneLevel$annot)
-        for (i in seq_len(dim(mat.summary.mm1)[2])) {
-            mat.summary.mm1[, i] <- mat.summary.mm1[, i] / cellCounts[i]
-        }
-
-        ctd_oneLevel$mean_exp <- as.matrix(mat.summary.mm1)
+    remove(ctd2, ctd3)
+    #### Apply rank norm transformation if hyp param set ####
+    if (isTRUE(normSpec)) {
+        ctd <- lapply(ctd, rNorm)
     }
-    return(ctd_oneLevel)
-}
-
-calculate_specificity_for_level <- function(ctd_oneLevel) {
-    normalised_meanExp <- t(t(ctd_oneLevel$mean_exp) *
-                                (1 / colSums(ctd_oneLevel$mean_exp)))
-    ctd_oneLevel$specificity <- normalised_meanExp /
-        (apply(normalised_meanExp, 1, sum) + 0.000000000001)
-    return(ctd_oneLevel)
-}
-
-# Use the rank norm transformation on specificity
-rNorm <- function(ctdIN) {
-    ctdIN$specificity <- apply(ctdIN$specificity, 2, RNOmni::RankNorm)
-    return(ctdIN)
+    #### Calculate specificity quantiles ####
+    if (specificity_quantiles) {
+        ctd <- lapply(ctd,
+            bin_specificity_into_quantiles,
+            numberOfBins = numberOfBins
+        )
+    }
+    #### Add dendrograms ####
+    if (dendrograms) {
+        ctd <- lapply(ctd, prep_dendro)
+    }
+    #### Save results ####
+    messager("+ Saving results ==> ", fNames, v = verbose)
+    dir.create(dirname(fNames), showWarnings = FALSE, recursive = TRUE)
+    save(ctd, file = fNames)
+    #### Return ####
+    if (return_ctd) {
+        messager("+ Returning list of CTD file name, and the CTD itself.",
+            v = verbose
+        )
+        return(list(
+            fNames = fNames,
+            ctd = ctd
+        ))
+    } else {
+        return(fNames)
+    }
 }

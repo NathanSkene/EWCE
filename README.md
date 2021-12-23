@@ -1,138 +1,120 @@
-Expression Weighted Celltype Enrichment with *EWCE*
+`EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment
 ================
-Alan Murphy and Nathan Skene
-2021-09-30
+<h4>
+Authors: Alan Murphy, Brian Schilder, and Nathan Skene
+</h4>
+<h4>
+README updated: Dec-22-2021
+</h4>
 
-<!-- Readme.md is generated from Readme.Rmd. Please edit that file -->
-<!-- badges: start -->
+<!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
 
-[![Build
-Status](https://travis-ci.org/NathanSkene/EWCE.svg?branch=master)](https://travis-ci.org/NathanSkene/EWCE)
-<!-- badges: end -->
+[![](https://img.shields.io/badge/devel%20version-1.3.1-black.svg)](https://github.com/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/release%20version-1.2.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
+[![R build
+status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
+[![R build
+status](https://github.com/NathanSkene/EWCE/workflows/DockerHub/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
+[![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
+[![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/download-2293/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![License:
+GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
-# Note
+<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true">
 
-If you have previously used the EWCE package from
-[neurogenomics/EWCE](https://github.com/neurogenomics/EWCE). This
-package, which is available on Bioconductor (3.13, R &gt;= 4.1) offers
-functional improvements. One thing to note is that all functions which
-previously used dot ‘.’ notations to separate words have been updated to
-underscores ’\_’ (e.g, `bootstrap.enrichment.test()` is now
-`bootstrap_enrichment_test()`). The package [vignette
-website](https://nathanskene.github.io/EWCE/articles/EWCE.html) gives
-further details.
+## Introduction
 
-# Introduction
+The *EWCE* R package is designed to facilitate expression weighted cell
+type enrichment analysis as described in our *Frontiers in Neuroscience*
+paper.<sup>1</sup> *EWCE* can be applied to any gene list.
 
-The *EWCE* package is designed to facilitate expression weighted
-celltype enrichment analysis as described in our Frontiers in
-Neuroscience paper.<sup>1</sup>
+Using *EWCE* essentially involves two steps:
 
-The package was originally designed to work with the single cell
-cortical transcriptome data from the Linnarsson lab<sup>2</sup> which is
-available at <http://linnarssonlab.org/cortex/>. Using this package it
-is possible to read in any single cell transcriptome data, provided that
-you have a cell by gene expression matrix (with each cell as a seperate
-column) and a seperate annotation dataframe, with a row for each cell.
+1.  Prepare a single-cell reference; i.e. CellTypeDataset (CTD).
+    Alternatively, you can use one of the pre-generated CTDs we provide
+    via the package `ewceData` (which comes with *EWCE*).  
+2.  Run cell type enrichment on a user-provided gene list.
 
-The *EWCE* process involves testing for whether the genes in a target
-list have higher levels of expression in a given cell type than can
-reasonably be expected by chance. The probability distribution for this
-is estimated by randomly generating gene lists of equal length from a
-set of background genes.
+## Installation
 
-The *EWCE* method can be applied to any gene list. In the paper we
-reported it’s application to genetic and transcriptomic datasets, and in
-this vignette we detail how this can be done.
-
-Note that throughout this vignette we use the terms ‘cell type’ and
-‘sub-cell type’ to refer to two levels of annotation of what a cell type
-is. This is described in further detail in our paper<sup>1</sup>, but
-relates to the two levels of annotation provided in the Linnarsson
-dataset<sup>2</sup>. In this dataset a cell is described as having a
-cell type (i.e. ‘Interneuron’) and subcell type (i.e. ‘Int11’ a.k.a
-Interneuron type 11).
-
-# Overview
-
-The process for using *EWCE* essentially involves three steps.
-
-First, one needs to load the relevant single cell transcriptome dataset.
-Single cell transcriptome data is read in from a text file using the
-`read_celltype_data`.
-
-The user then obtains a gene set and a suitable background gene set. As
-the choice of gene sets is up to the user we do not provide functions
-for doing this. Appropriate choice of background set is discussed in the
-associated publication.
-
-Bootstrapping is then performed using the `bootstrap_enrichment_test`
-function.
-
-# Installing EWCE
-
-The *EWCE* package is available on Bioconductor (3.13). To be able to
-install the package one needs first to install &gt;= R (version 4.1)
-which can be found at <https://cran.r-project.org/>.
-
-    if (!require("BiocManager"))
-        install.packages("BiocManager")
-
-    BiocManager::install("EWCE")
-
-The devel version of *EWCE* which contains the newest features can be
-installed from github by run the following lines of code:
-
-    if (!require("devtools")) {
-      install.packages("devtools")
-    }
-    devtools::install_github("neurogenomics/ewceData")
-    devtools::install_github("nathanskene/ewce")
-
-You can then load the package and data package:
+*EWCE* requires [`R>=4.1`](https://www.r-project.org/) and
+`Bioconductor>=3.14`. To install *EWCE* on Bioconductor run:
 
 ``` r
-library(EWCE)
-library(ewceData)
+if (!require("BiocManager")){install.packages("BiocManager")}
+
+BiocManager::install("EWCE") 
 ```
 
-# Using with docker
+## Documentation
 
-Images with the latest version of EWCE are regularly pushed to
-Dockerhub. If you already have docker installed you can load up a
-working copy using the following commands. Note, that you will need to
-replace the initial directory path with a location on your computer that
-you wish to be able to access from within the docker image.
+### [Website](https://nathanskene.github.io/EWCE)
 
-    docker pull nathanskene/ewce
-    docker run --name=ewce -e PASSWORD=ewcedocker -p 8790:8790 -d -v /User/$USER:/var/ewce nathanskene/ewce:latest
-    docker exec -ti ewce R
+### [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE)
 
-# Getting started
+Includes:
 
-See the [vignette
-website](https://nathanskene.github.io/EWCE/articles/EWCE.html) for
-up-to-date instructions on usage.
+-   A minimal example to get started with running *EWCE*.
+-   How to install and use the dedicated *EWCE* Docker container usage.
+    [Docker](https://www.docker.com/) containers with the latest version
+    of `EWCE` are regularly pushed to
+    [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
-If you have any problems please do file an issue here on github.
+### [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
 
-# Citation
+Additional tutorials of various *EWCE* features, including how to:
 
-If you use the EWCE package as well then please cite
+-   Run cell-type enrichment tests
+-   Create a CellTypeDataset
+-   Merge two single-cell datasets
+-   Run conditional cell-type enrichment tests
+-   Apply to transcriptomic data
 
-[Skene, et al. Identification of Vulnerable Cell Types in Major Brain
-Disorders Using Single Cell Transcriptomes and Expression Weighted Cell
-Type Enrichment. Front. Neurosci,
-2016.](https://www.frontiersin.org/articles/10.3389/fnins.2016.00016/full)
+## Updates
 
-If you use the cortex/hippocampus single cell data associated with this
-package then please cite the following papers:
+Major upgrades to *EWCE* were made in version 1.3.1. Please see the
+[NEWS page](https://nathanskene.github.io/EWCE/articles/news/index.html)
+for more details.
 
-[Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed
-by single-cell RNA-seq. Science,
-2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
+## Troubleshooting
 
-# References
+If you have any problems, please do submit an [Issue here on
+GitHub](https://github.com/nathanskene/EWCE/issues) with a reproducible
+example.
+
+## Citation
+
+If you use `EWCE`, please cite:
+
+<!-- Modify this my editing the file: inst/CITATION  -->
+
+> Nathan G. Skene, Seth G. N. Grant (2016) Identification of Vulnerable
+> Cell Types in Major Brain Disorders Using Single Cell Transcriptomes
+> and Expression Weighted Cell Type Enrichment, *Frontiers in
+> Neuroscience*; 10, <https://doi.org/10.3389/fnins.2016.00016>
+
+If you use the cortex/hippocampus single-cell data associated
+*EWCE*/*ewceData* this package then please cite the following:
+
+> [Zeisel, et al. Cell types in the mouse cortex and hippocampus
+> revealed by single-cell RNA-seq. Science,
+> 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
+
+<hr>
+
+## Contact
+
+### [Neurogenomics Lab](https://www.neurogenomics.co.uk/)
+
+UK Dementia Research Institute  
+Department of Brain Sciences  
+Faculty of Medicine  
+Imperial College London  
+[GitHub](https://github.com/neurogenomics)  
+[DockerHub](https://hub.docker.com/orgs/neurogenomicslab)
+
+## References
 
 <div id="refs" class="references csl-bib-body" line-spacing="2">
 
@@ -144,15 +126,6 @@ vulnerable cell types in major brain disorders using single cell
 transcriptomes and expression weighted cell type enrichment. *Frontiers
 in Neuroscience* (2016).
 doi:[10.3389/fnins.2016.00016](https://doi.org/10.3389/fnins.2016.00016)</span>
-
-</div>
-
-<div id="ref-zeisel2015cell" class="csl-entry">
-
-<span class="csl-left-margin">2. </span><span
-class="csl-right-inline">Zeisel, A. *et al.* Cell types in the mouse
-cortex and hippocampus revealed by single-cell RNA-seq. *Science*
-**347,** 1138–1142 (2015).</span>
 
 </div>
 

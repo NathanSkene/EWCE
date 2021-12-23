@@ -4,21 +4,40 @@
 \alias{ewce_plot}
 \title{Plot EWCE results}
 \usage{
-ewce_plot(total_res, mtc_method = "bonferroni", ctd = NULL)
+ewce_plot(
+  total_res,
+  mtc_method = "bonferroni",
+  ctd = NULL,
+  align = "v",
+  rel_heights = c(0.3, 1),
+  axis = "lr"
+)
 }
 \arguments{
-\item{total_res}{results dataframe generated using
-\code{\link{bootstrap_enrichment_test}} or
-\code{\link{ewce_expression_data}} functions. Multiple results tables can be
+\item{total_res}{Results data.frame generated using
+\link[EWCE]{bootstrap_enrichment_test} or
+\link[EWCE]{ewce_expression_data} functions.
+Multiple results tables can be
 merged into one results table, as long as the 'list' column is set to
-distinguish them.}
+distinguish them.
+Multiple testing correction is then applied across all merged results.}
 
-\item{mtc_method}{method to be used for multiple testing correction.
-Argument is passed to \code{\link{p.adjust}}. Valid options are "holm",
-"hochberg", "hommel", "bonferroni", "BH", "BY",}
+\item{mtc_method}{Method to be used for multiple testing correction.
+Argument is passed to \link[stats]{p.adjust} (DEFAULT: "bonferroni).}
 
-\item{ctd}{Should be provided so that the dendrogram can be taken from it
+\item{ctd}{CellTypeDataset object.
+Should be provided so that the dendrogram can be taken from it
 and added to plots}
+
+\item{align}{(optional) Specifies whether graphs in the grid should be horizontally ("h") or
+vertically ("v") aligned. Options are "none" (default), "hv" (align in both directions), "h", and "v".}
+
+\item{rel_heights}{(optional) Numerical vector of relative rows heights. Works just as
+\code{rel_widths} does, but for rows rather than columns.}
+
+\item{axis}{(optional) Specifies whether graphs should be aligned by the left ("l"), right ("r"), top ("t"), or bottom ("b")
+margins. Options are "none" (default), or a string of any combination of l, r, t, and b in any order (e.g. "tblr" or "rlbt" for aligning all margins).
+Must be specified if any of the graphs are complex (e.g. faceted) and alignment is specified and desired. See \code{\link[cowplot:align_plots]{align_plots()}} for details.}
 }
 \value{
 A ggplot containing the plot
@@ -27,29 +46,14 @@ A ggplot containing the plot
 \code{ewce_plot} generates plots of EWCE enrichment results
 }
 \examples{
-library(ewceData)
-# Load the single cell data
-ctd <- ctd()
+## Bootstrap significance test,
+##  no control for transcript length or GC content
+## Use pre-computed results to speed up example
+full_results <- EWCE::example_bootstrap_results()
 
-# Set the parameters for the analysis
-# Use 3 bootstrap lists for speed, for publishable analysis use >10000
-reps <- 3
-
-# Load the gene list and get human orthologs
-example_genelist <- example_genelist()
-mouse_to_human_homologs <- mouse_to_human_homologs()
-m2h <- unique(mouse_to_human_homologs[, c("HGNC.symbol", "MGI.symbol")])
-mouse.hits <-
-     unique(m2h[m2h$HGNC.symbol \%in\% example_genelist, "MGI.symbol"])
-mouse.bg <- unique(c(m2h$MGI.symbol[1:100],mouse.hits))
-
-# Bootstrap significance test, no control for transcript length or GC content
-full_results <- bootstrap_enrichment_test(
-    sct_data = ctd, hits = mouse.hits,
-    bg = mouse.bg, reps = reps, annotLevel = 2,
-    sctSpecies = "mouse", genelistSpecies = "mouse"
-)
-
-# Generate the plot
-print(ewce_plot(full_results$results, mtc_method = "BH"))
+## Generate the plot
+print(EWCE::ewce_plot(
+    total_res = full_results$results,
+    mtc_method = "BH"
+))
 }

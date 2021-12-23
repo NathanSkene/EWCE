@@ -2,19 +2,26 @@
 % Please edit documentation in R/fix_bad_hgnc_symbols.r
 \name{fix_bad_hgnc_symbols}
 \alias{fix_bad_hgnc_symbols}
-\title{fix_bad_hgnc_symbols
-- Given an expression matrix, wherein the rows are supposed to be HGNC
-symbols, find those symbols which are not official HGNC symbols, then
-correct them if possible. Return the expression matrix with corrected
-symbols.}
+\title{fix_bad_hgnc_symbols}
 \usage{
-fix_bad_hgnc_symbols(exp, dropNonHGNC = FALSE)
+fix_bad_hgnc_symbols(
+  exp,
+  dropNonHGNC = FALSE,
+  as_sparse = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{exp}{An expression matrix where the rows are HGNC symbols or an SingleCellExperiment (SCE) or other Ranged Summarized Experiment (SE) type object.}
+\item{exp}{An expression matrix where the rows are HGNC symbols or a
+SingleCellExperiment (SCE) or other
+ Ranged Summarized Experiment (SE) type object.}
 
 \item{dropNonHGNC}{Boolean. Should symbols not recognised as HGNC symbols
 be dropped?}
+
+\item{as_sparse}{Convert \code{exp} to sparse matrix.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 Returns the expression matrix with the rownames corrected and rows
@@ -23,19 +30,18 @@ Ranged Summarized Experiment (SE) type object was inputted this will be
 returned with the corrected expression matrix under counts.
 }
 \description{
-fix_bad_hgnc_symbols
-- Given an expression matrix, wherein the rows are supposed to be HGNC
+Given an expression matrix, wherein the rows are supposed to be HGNC
 symbols, find those symbols which are not official HGNC symbols, then
 correct them if possible. Return the expression matrix with corrected
 symbols.
 }
 \examples{
-#create example expression matrix, could be part of a exp, annot list obj
-exp <- matrix(data = runif(70),ncol =10)
-#Add HGNC gene names but add with an error:
-#MARCH8 is a HGNC symbol which if opened in excel will convert to Mar-08
-rownames(exp) <- 
-    c("MT-TF","MT-RNR1","MT-TV","MT-RNR2","MT-TL1","MT-ND1","Mar-08")
+# create example expression matrix, could be part of a exp, annot list obj
+exp <- matrix(data = runif(70), ncol = 10)
+# Add HGNC gene names but add with an error:
+# MARCH8 is a HGNC symbol which if opened in excel will convert to Mar-08
+rownames(exp) <-
+    c("MT-TF", "MT-RNR1", "MT-TV", "MT-RNR2", "MT-TL1", "MT-ND1", "Mar-08")
 exp <- fix_bad_hgnc_symbols(exp)
-#fix_bad_hgnc_symbols warns the user of this possible issue 
+# fix_bad_hgnc_symbols warns the user of this possible issue
 }

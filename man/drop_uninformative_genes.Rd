@@ -2,30 +2,118 @@
 % Please edit documentation in R/drop_uninformative_genes.r
 \name{drop_uninformative_genes}
 \alias{drop_uninformative_genes}
-\title{drop_uninformative_genes}
+\title{Drop uninformative genes}
 \usage{
-drop_uninformative_genes(exp, level2annot)
+drop_uninformative_genes(
+  exp,
+  level2annot,
+  mtc_method = "BH",
+  adj_pval_thresh = 1e-05,
+  convert_orths = FALSE,
+  input_species = NULL,
+  output_species = "human",
+  non121_strategy = "drop_both_species",
+  as_sparse = TRUE,
+  as_DelayedArray = FALSE,
+  return_sce = FALSE,
+  no_cores = 1,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{exp}{Expression matrix with gene names as rownames.}
 
-\item{level2annot}{Array of cell types, with each sequentially corresponding 
-a column in the expression matrix}
+\item{level2annot}{Array of cell types, with each sequentially corresponding
+a column in the expression matrix.}
+
+\item{mtc_method}{Multiple-testing correction method used by DGE step.
+See \link[stats]{p.adjust} for more details.}
+
+\item{adj_pval_thresh}{Minimum differential expression significance
+that a gene must demonstrate across \code{level2annot} (i.e. cell types).}
+
+\item{convert_orths}{If \code{input_species!=output_species} and
+\code{convert_orths=TRUE}, will drop genes without
+1:1 \code{output_species} orthologs and then convert \code{exp} gene names
+to those of \code{output_species}.}
+
+\item{input_species}{Which species the gene names in \code{exp} come from.
+See \link[EWCE]{list_species} for all available species.}
+
+\item{output_species}{Which species' genes names to convert \code{exp} to.
+See \link[EWCE]{list_species} for all available species.}
+
+\item{non121_strategy}{How to handle genes that don't have
+1:1 mappings between \code{input_species}:\code{output_species}.
+Options include:\cr
+\itemize{
+\item{\code{"drop_both_species" or "dbs" or 1} : \cr}{
+Drop genes that have duplicate
+mappings in either the \code{input_species} or \code{output_species} \cr
+(\emph{DEFAULT}).}
+\item{\code{"drop_input_species" or "dis" or 2} : \cr}{
+Only drop genes that have duplicate
+mappings in the \code{input_species}.}
+\item{\code{"drop_output_species" or "dos" or 3} : \cr}{
+Only drop genes that have duplicate
+mappings in the \code{output_species}.}
+\item{\code{"keep_both_species" or "kbs" or 4} : \cr}{
+Keep all genes regardless of whether
+they have duplicate mappings in either species.}
+\item{\code{"keep_popular" or "kp" or 5} : \cr}{
+Return only the most "popular" interspecies ortholog mappings.
+ This procedure tends to yield a greater number of returned genes
+ but at the cost of many of them not being true biological 1:1 orthologs.}
+ \item{\code{"sum","mean","median","min" or "max"} : \cr}{
+ When \code{gene_df} is a matrix and \code{gene_output="rownames"},
+  these options will aggregate many-to-one gene mappings
+  (\code{input_species}-to-\code{output_species})
+  after dropping any duplicate genes in the \code{output_species}.
+ }
+}}
+
+\item{as_sparse}{Convert \code{exp} to sparse matrix.}
+
+\item{as_DelayedArray}{Convert \code{exp} to \code{DelayedArray}
+for scalable processing.}
+
+\item{return_sce}{Whether to return the filtered results
+as an expression matrix or a \pkg{SingleCellExperiment}.}
+
+\item{no_cores}{Number of cores to parallelise across.
+Set to \code{NULL} to automatically optimise.}
+
+\item{verbose}{Print messages.}
+
+\item{...}{Additional arguments to be passed to the selected DGE method.}
 }
 \value{
-exp Expression matrix with gene names as rownames.
+exp Expression matrix with gene names as row names.
 }
 \description{
-\code{drop_uninformative_genes} drops genes from an SCT expression matrix 
-if they do not significantly vary between any celltypes.
-Makes this decision based on use of an ANOVA (implemented with Limma). If 
-the F-statistic for variation amongst type2 annotations
-is less than a strict p-threshold, then the gene is dropped.
+\code{drop_uninformative_genes} drops uninformative genes in order to reduce
+compute time and noise in subsequent steps. It achieves this through several
+steps, each of which are optional:
+\itemize{
+\item{Drop non-1:1 orthologs:\cr}{Removes genes that don't have 1:1 orthologs
+with the \code{output_species} ("human" by default).}
+\item{Drop non-varying genes:\cr}{Removes genes that don't vary across cells
+based on variance deciles.}
+\item{Drop non-differentially expressed genes (DEGs):\cr}{
+Removes genes that are not significantly differentially
+expressed across cell-types (multiple DEG methods available).}
+}
 }
 \examples{
-library(ewceData)
-cortex_mrna <- cortex_mrna()
-cortex_mrna$exp <- cortex_mrna$exp[1:300, ] 
-exp2 <- drop_uninformative_genes(exp = cortex_mrna$exp, 
-    level2annot = cortex_mrna$annot$level2class)
+cortex_mrna <- ewceData::cortex_mrna()
+# Use only a subset of genes to keep the example quick
+cortex_mrna$exp <- cortex_mrna$exp[1:300, ]
+
+## Convert orthologs at the same time
+exp2_orth <- drop_uninformative_genes(
+    exp = cortex_mrna$exp,
+    level2annot = cortex_mrna$annot$level2class,
+    input_species = "mouse"
+)
 }

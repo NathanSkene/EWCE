@@ -1,0 +1,17 @@
+citHeader("To cite this package, please use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Identification of Vulnerable Cell 
+Types in Major Brain Disorders Using Single Cell Transcriptomes 
+and Expression Weighted Cell Type Enrichment",
+  author   = "Nathan G. Skene, Seth G. N. Grant",
+  journal  = "Frontiers in Neuroscience",
+  year     = "2016",
+  volume   = "10",
+  number   = NULL,
+  pages    = "16",
+  url      = "https://doi.org/10.3389/fnins.2016.00016",
+  textVersion = paste("Nathan G. Skene, Seth G. N. Grant (2016) Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment, *Frontiers in Neuroscience*; 10, [https://doi.org/10.3389/fnins.2016.00016](https://doi.org/10.3389/fnins.2016.00016)"
+  )
+)
