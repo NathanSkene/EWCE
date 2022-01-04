@@ -18,7 +18,7 @@ results produced by ewce_expression_data."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -73,15 +73,17 @@ results produced by <a href="ewce_expression_data.html">ewce_expression_data</a>
 
     <div id="source">
     <h2>Source</h2>
-    <p><code>
-## Load the single cell data
-ctd &lt;- ewceData::ctd()## Set the parameters for the analysis
-## Use 3 bootstrap lists for speed, for publishable analysis use &gt;10,000
-reps &lt;- 3
-annotLevel &lt;- 1 # &lt;- Use cell level annotations (i.e. Interneurons)
-## Use 5 up/down regulated genes (thresh) for speed, default is 250
-thresh &lt;- 5## Load the top table
-tt_alzh &lt;- ewceData::tt_alzh()tt_results &lt;- EWCE::ewce_expression_data(
+    <p>## Load the single cell data</p>
+<p>ctd &lt;- ewceData::ctd()</p>
+<p>## Set the parameters for the analysis</p>
+<p>## Use 3 bootstrap lists for speed, for publishable analysis use &gt;10,000</p>
+<p>reps &lt;- 3</p>
+<p>annotLevel &lt;- 1 # &lt;- Use cell level annotations (i.e. Interneurons)</p>
+<p>## Use 5 up/down regulated genes (thresh) for speed, default is 250</p>
+<p>thresh &lt;- 5</p>
+<p>## Load the top table</p>
+<p>tt_alzh &lt;- ewceData::tt_alzh()</p>
+<p>tt_results &lt;- EWCE::ewce_expression_data(
     sct_data = ctd,
     tt = tt_alzh,
     annotLevel = 1,
@@ -89,9 +91,8 @@ tt_alzh &lt;- ewceData::tt_alzh()tt_results &lt;- EWCE::ewce_expression_data(
     reps = reps,
     ttSpecies = "human",
     sctSpecies = "mouse"
-) 
-save(tt_results, file = "inst/extdata/tt_results.rda")
-</code></p>
+)</p>
+<p>save(tt_results, file = "inst/extdata/tt_results.rda")</p>
     </div>
     <div id="arguments">
     <h2>Arguments</h2>

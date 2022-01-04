@@ -18,7 +18,7 @@ results produced by bootstrap_enrichment_test."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -73,25 +73,24 @@ results produced by <a href="bootstrap_enrichment_test.html">bootstrap_enrichmen
 
     <div id="source">
     <h2>Source</h2>
-    <p><code>
-# Load the single cell data
-ctd &lt;- ewceData::ctd()
-# Set the parameters for the analysis
-# Use 3 bootstrap lists for speed, for publishable analysis use &gt;=10,000
-reps &lt;- 3
-# Load gene list from Alzheimer's disease GWAS
-example_genelist &lt;- ewceData::example_genelist()# Bootstrap significance test, no control for transcript length or GC content
-full_results &lt;- EWCE::bootstrap_enrichment_test(
+    <p># Load the single cell data</p>
+<p>ctd &lt;- ewceData::ctd()</p>
+<p># Set the parameters for the analysis</p>
+<p># Use 3 bootstrap lists for speed, for publishable analysis use &gt;=10,000</p>
+<p>reps &lt;- 3</p>
+<p># Load gene list from Alzheimer's disease GWAS</p>
+<p>example_genelist &lt;- ewceData::example_genelist()</p>
+<p># Bootstrap significance test, no control for transcript length or GC content</p>
+<p>full_results &lt;- EWCE::bootstrap_enrichment_test(
     sct_data = ctd,
     hits = example_genelist,
     reps = reps,
     annotLevel = 1,
     sctSpecies = "mouse",
     genelistSpecies = "human"
-)
-bootstrap_results &lt;- full_results
-save(bootstrap_results,file = "inst/extdata/bootstrap_results.rda")
-</code></p>
+)</p>
+<p>bootstrap_results &lt;- full_results</p>
+<p>save(bootstrap_results,file = "inst/extdata/bootstrap_results.rda")</p>
     </div>
     <div id="arguments">
     <h2>Arguments</h2>
