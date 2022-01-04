@@ -4,16 +4,22 @@
 \alias{example_bootstrap_results}
 \title{Example bootstrap enrichment results}
 \source{
-\code{
 # Load the single cell data
+
 ctd <- ewceData::ctd()
+
 # Set the parameters for the analysis
+
 # Use 3 bootstrap lists for speed, for publishable analysis use >=10,000
+
 reps <- 3
+
 # Load gene list from Alzheimer's disease GWAS
+
 example_genelist <- ewceData::example_genelist()
 
 # Bootstrap significance test, no control for transcript length or GC content
+
 full_results <- EWCE::bootstrap_enrichment_test(
     sct_data = ctd,
     hits = example_genelist,
@@ -22,9 +28,10 @@ full_results <- EWCE::bootstrap_enrichment_test(
     sctSpecies = "mouse",
     genelistSpecies = "human"
 )
+
 bootstrap_results <- full_results
+
 save(bootstrap_results,file = "inst/extdata/bootstrap_results.rda")
-}
 }
 \usage{
 example_bootstrap_results(verbose = TRUE)

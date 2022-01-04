@@ -4,18 +4,24 @@
 \alias{example_transcriptome_results}
 \title{Example bootstrap celltype enrichment test for transcriptome data}
 \source{
-\code{
 ## Load the single cell data
+
 ctd <- ewceData::ctd()
 
 ## Set the parameters for the analysis
+
 ## Use 3 bootstrap lists for speed, for publishable analysis use >10,000
+
 reps <- 3
+
 annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
+
 ## Use 5 up/down regulated genes (thresh) for speed, default is 250
+
 thresh <- 5
 
 ## Load the top table
+
 tt_alzh <- ewceData::tt_alzh()
 
 tt_results <- EWCE::ewce_expression_data(
@@ -26,9 +32,9 @@ tt_results <- EWCE::ewce_expression_data(
     reps = reps,
     ttSpecies = "human",
     sctSpecies = "mouse"
-) 
+)
+
 save(tt_results, file = "inst/extdata/tt_results.rda")
-}
 }
 \usage{
 example_transcriptome_results(verbose = TRUE)

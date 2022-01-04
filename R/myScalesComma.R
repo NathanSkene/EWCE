@@ -2,9 +2,9 @@
 #'
 #' Adjusts \pkg{ggplot2} label display. See \link[scales]{comma} for details.
 #' Support function for \link[EWCE]{plot_log_bootstrap_distributions}.
-#' 
+#'
 #' @return Numeric vector
-#' 
+#'
 #' @keywords internal
 myScalesComma <- function(x) {
     requireNamespace("scales")
