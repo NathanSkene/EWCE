@@ -134,10 +134,12 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
-                      level <span class="op">=</span> <span class="fl">1</span>,
-                      genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                      metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+                        level <span class="op">=</span> <span class="fl">1</span>,
+                        genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
+                        metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 </div>
 </div>
@@ -470,21 +472,24 @@ Updated: Jan-06-2022
 </h4>
 <p>The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean:</p>
 <div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,
                              mtc_method <span class="op">=</span><span class="st">"BH"</span>,
-                             ctd <span class="op">=</span> <span class="va">ctd</span><span class="op">)</span> <span class="co"># optional (unless you want dendrogram)</span></code></pre></div>
+                               ctd <span class="op">=</span> <span class="va">ctd</span><span class="op">)</span> 
+  <span class="co"># print(plot_list$plain)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Loading required namespace: cowplot</span></code></pre>
 <pre><code><span class="co">## Loading required namespace: gridExtra</span></code></pre>
 <pre><code><span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">## replace the existing scale.</span></code></pre>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># print(plot_list$plain)</span></code></pre></div>
 <p>For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to <a href="https://github.com/ovrhuman" class="external-link">Robert Gordon-Smith</a>, Mres Molecular and Cellular Biosciences, Imperial College London for this solution):</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">withDendro</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">withDendro</span><span class="op">)</span>  
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>If you want to view the characteristics of enrichment for each gene within the list then the <code>generate_bootstrap_plots</code> function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The <code>listFileName</code> argument is used to give the generated graphs a particular file name. The <code>savePath</code> argument is used here to save the files to a temporary directory, this can be updated to your preferred location. The file path where it was saved is returned so the temporary directory can be located if used.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bt_plot_location</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/generate_bootstrap_plots.html">generate_bootstrap_plots</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
   hits <span class="op">=</span> <span class="va">hits</span>,
@@ -500,7 +505,7 @@ Updated: Jan-06-2022
 </h3>
 <p>When analysing genes found through genetic association studies it is important to consider biases which might be introduced as a result of transcript length and GC-content. The package can control for these by selecting the bootstrap lists such that the <em>i<sup>th</sup></em> gene in the random list has properties similar to the<em>i<sup>th</sup></em> gene in the target list. To enable the algorithm to do this it needs to be passed the gene lists as HGNC symbols rather than MGI.</p>
 <p>The bootstrapping function then takes different arguments:</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Bootstrap significance test controlling for transcript length and GC content</span>
 <span class="va">cont_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
@@ -641,10 +646,12 @@ Updated: Jan-06-2022
 <h4 id="plot-results-1">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-1"></a>
 </h4>
 <p>We plot these results using <code>ewce_plot</code>:</p>
-<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,
                              mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>This shows that the controlled method generates enrichments that are generally comparable to the standard method.</p>
 </div>
@@ -653,7 +660,7 @@ Updated: Jan-06-2022
 <h3 id="test-different-ctd-levels">Test different CTD levels<a class="anchor" aria-label="anchor" href="#test-different-ctd-levels"></a>
 </h3>
 <p>Both the analyses shown above were run on level 1 annotations. It is possible to test on the level 2 cell type level annotations by changing one of the arguments.</p>
-<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Bootstrap significance test controlling for transcript length and GC content</span>
 <span class="va">cont_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,
                                                 hits <span class="op">=</span> <span class="va">hits</span>, 
@@ -795,10 +802,12 @@ Updated: Jan-06-2022
 <div class="section level4">
 <h4 id="plot-results-2">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-2"></a>
 </h4>
-<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,
+<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,
                              mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>With the cell subtype analysis each microglial subtype was enriched and correspondingly we see here that the microglial cell type is enriched.</p>
 </div>
@@ -808,12 +817,12 @@ Updated: Jan-06-2022
 </h3>
 <p>It is often useful to plot results from multiple gene list analyses together. The <code>ewce_plot</code> function allows multiple enrichment analyses to be performed together. To achieve this the results data frames are just appended onto each other, with an additional <code>list</code> column added detailing which analysis they relate to.</p>
 <p>To demonstrate this we need to first generate a second analysis so let us sample thirty random genes, and run the bootstrapping analysis on it.</p>
-<div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### Generate random gene list ####</span>
 <span class="va">human.bg</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/mouse_to_human_homologs.html" class="external-link">mouse_to_human_homologs</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">HGNC.symbol</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gene.list.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">human.bg</span>,size <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
 
 <span class="va">second_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,
@@ -927,7 +936,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## 1 significant cell type enrichment results @ q&lt;0.05 :</span></code></pre>
 <pre><code><span class="co">##               CellType annotLevel p fold_change sd_from_mean q</span>
 <span class="co">## 1 astrocytes_ependymal          1 0    1.478319     2.759059 0</span></code></pre>
-<div class="sourceCode" id="cb502"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb501"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">full_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,
                        list<span class="op">=</span><span class="st">"Alzheimers"</span><span class="op">)</span>
 <span class="va">rando_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">second_results</span><span class="op">$</span><span class="va">results</span>,
@@ -937,10 +946,12 @@ Updated: Jan-06-2022
 <h4 id="plot-results-3">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-3"></a>
 </h4>
 <p>Here we apply multiple-testing correction (BH = Benjamini-Hochberg) to guard against positive results due to chance.</p>
-<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,
+<div class="sourceCode" id="cb502"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,
                              mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>As expected, the second randomly generated gene list shows no significant enrichment results.</p>
 </div>
@@ -968,12 +979,12 @@ Updated: Jan-06-2022
 <p><em>EWCE</em> can generate CTD from two different data input types: 1. A gene x cell expression matrix (can be dense matrix, sparse matrix, data.frame, or DelayedArray).<br>
 2. A <code>SingleCellExperiment</code> (SCE) or <code>SummarizedExperiment</code> object.</p>
 <p>To check the data, we can quickly plot the distribution of expression of a given gene across all the cell types.</p>
-<div class="sourceCode" id="cb504"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># example datasets held in ewceData package</span>
 <span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb507"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb506"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gene</span> <span class="op">&lt;-</span> <span class="st">"Necab1"</span>
 <span class="va">cellExpDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Expression<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="va">gene</span>,<span class="op">]</span>,
                           Celltype<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">[</span>
@@ -991,7 +1002,7 @@ Updated: Jan-06-2022
 <h2 id="convert-single-cell-formats">Convert single-cell formats<a class="anchor" aria-label="anchor" href="#convert-single-cell-formats"></a>
 </h2>
 <p>If you would like to try running the functions on an SCE object instead, we can convert <code>cortex_mrna</code> with the package <a href="https://github.com/bschilder/scKirby" class="external-link"><code>scKirby</code></a>. <code>scKirby</code> automatically infers the input file type and converts it to SCE format by default.</p>
-<div class="sourceCode" id="cb508"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb507"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"SingleCellExperiment"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SingleCellExperiment"</span><span class="op">)</span><span class="op">}</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span> 
 <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"scKirby"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bschilder/scKirby"</span><span class="op">)</span><span class="op">}</span>
@@ -1017,10 +1028,10 @@ Updated: Jan-06-2022
 </h2>
 <p>It is very common for publicly available transcriptome datasets to use incorrect gene symbols (often some gene names will have been mangled by opening in Excel).</p>
 <p>A function is provided to correct these where out of date aliases were used and give a warning if appears possible that excel has mangled some of the gene names. This function can be used with a downloaded reference file like the <a href="%22http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt%22" class="external-link">MRK_List2 file</a> from MGI which lists known synonyms for MGI gene symbols. If no file path is passed, there is a loaded reference dataset of the MRK_List2 which will be used: <code><a href="https://rdrr.io/pkg/ewceData/man/mgi_synonym_data.html" class="external-link">mgi_synonym_data()</a></code>. We recommend running this function on all input datasets.</p>
-<div class="sourceCode" id="cb509"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb508"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">=</span> <span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></code></pre></div>
 <p>For the SCE version, pass the whole SCE object:</p>
-<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb509"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Note that data in SCE object must be in 'counts' assay</span>
 <span class="co">#The fix_bad_hgnc_symbols function can similarly take an SCE object as an input</span>
 <span class="va">cortex_mrna_sce</span> <span class="op">=</span> <span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span></code></pre></div>
@@ -1029,14 +1040,14 @@ Updated: Jan-06-2022
 <h2 id="drop-genes">Drop genes<a class="anchor" aria-label="anchor" href="#drop-genes"></a>
 </h2>
 <p>The vignette takes a while to go through if you use all genes. So let’s restrict to 1000 random genes.</p>
-<div class="sourceCode" id="cb511"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nKeep</span> <span class="op">&lt;-</span> <span class="fl">1000</span>
 <span class="va">must_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span> 
 <span class="va">keep_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">must_keep</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span>,<span class="fl">997</span><span class="op">)</span><span class="op">)</span>
 <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="va">keep_genes</span>,<span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1000 3005</span></code></pre>
-<div class="sourceCode" id="cb513"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb512"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### SCE ####</span>
 <span class="va">nKeep</span> <span class="op">=</span> <span class="fl">1000</span>
 <span class="va">must_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span> 
@@ -1047,12 +1058,12 @@ Updated: Jan-06-2022
 <h2 id="normalization-optional">Normalization [Optional]<a class="anchor" aria-label="anchor" href="#normalization-optional"></a>
 </h2>
 <p>A different number of reads is found across each cell. We suggest using <a href="https://cran.r-project.org/web/packages/sctransform/index.html" class="external-link"><code>scTransform</code></a> to normalise for differences due to cell size, then linearly scale. Note that this might be slow.</p>
-<div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb513"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp_scT_normed</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/sct_normalize.html">sct_normalize</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span> </code></pre></div>
 <div class="section level3">
 <h3 id="singlecellexperiment">SingleCellExperiment<a class="anchor" aria-label="anchor" href="#singlecellexperiment"></a>
 </h3>
-<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### SCE ####</span>
 <span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assays</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span><span class="op">$</span><span class="va">normcounts</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/sct_normalize.html">sct_normalize</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assays</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span></code></pre></div>
 <p>Note that this is optional (and was not used in the original EWCE publication) so by all means ignore this <code>scTransform</code> step.</p>
@@ -1066,7 +1077,7 @@ Updated: Jan-06-2022
 <h3 id="parallelisation-1">Parallelisation<a class="anchor" aria-label="anchor" href="#parallelisation-1"></a>
 </h3>
 <p>You can now speed up the DGE process by parallelising across multiple cores with the parameter <code>no_cores</code> (<code>=1</code> by default).</p>
-<div class="sourceCode" id="cb516"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate cell type data for just the cortex/hippocampus data  </span>
 <span class="va">exp_CortexOnly_DROPPED</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes</a></span><span class="op">(</span>
   exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>, 
@@ -1080,7 +1091,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 228 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.9905837 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 0.9575796 secs</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -1092,7 +1103,7 @@ Updated: Jan-06-2022
 <h3 id="parallelisation-2">Parallelisation<a class="anchor" aria-label="anchor" href="#parallelisation-2"></a>
 </h3>
 <p>You can now speed up <code>generate_celltype_data</code> by parallelising across multiple cores with the parameter <code>no_cores</code> (<code>=1</code> by default).</p>
-<div class="sourceCode" id="cb525"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">annotLevels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>level1class<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level1class</span>,
                     level2class<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span>
 
@@ -1111,14 +1122,14 @@ Updated: Jan-06-2022
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
 <pre><code><span class="co">## Loading required namespace: ggdendro</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpirrZkZ/ctd_kiCortexOnly.rda</span></code></pre>
-<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpWv10pf/ctd_kiCortexOnly.rda</span></code></pre>
+<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_CortexOnly</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_CortexOnly</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="singlecellexperiment-1">SingleCellExperiment<a class="anchor" aria-label="anchor" href="#singlecellexperiment-1"></a>
 </h3>
-<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### SCE ####</span>
 <span class="co"># Generate cell type data for just the cortex/hippocampus data</span>
 <span class="va">exp_CortexOnly_DROPPED</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes</a></span><span class="op">(</span>exp<span class="op">=</span><span class="va">cortex_mrna_sce</span>,
@@ -1146,7 +1157,7 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="load-hypothalamus-dataset">Load hypothalamus dataset<a class="anchor" aria-label="anchor" href="#load-hypothalamus-dataset"></a>
 </h2>
-<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hypothalamus_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/hypothalamus_mrna.html" class="external-link">hypothalamus_mrna</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
@@ -1154,7 +1165,7 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="fix-bad-mgi-symbols">Fix bad MGI symbols<a class="anchor" aria-label="anchor" href="#fix-bad-mgi-symbols"></a>
 </h2>
-<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span>exp <span class="op">=</span> <span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
@@ -1167,7 +1178,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Converting to sparse matrix.</span></code></pre>
 <pre><code><span class="co">## 0 rows should have been corrected by checking synonyms.</span></code></pre>
 <pre><code><span class="co">## 1808 rows STILL do not have proper MGI symbols.</span></code></pre>
-<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span>exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
@@ -1185,7 +1196,7 @@ Updated: Jan-06-2022
 <h2 id="merge-ctd">Merge CTD<a class="anchor" aria-label="anchor" href="#merge-ctd"></a>
 </h2>
 <p>Merge the CTDs - again this can be run with SCE or other ranged SE objects as input.</p>
-<div class="sourceCode" id="cb563"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">merged_KI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/merge_two_expfiles.html">merge_two_expfiles</a></span><span class="op">(</span>exp1 <span class="op">=</span> <span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">exp</span>, 
                                       exp2 <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>,
                                       annot1 <span class="op">=</span> <span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">annot</span>, 
@@ -1203,7 +1214,7 @@ Updated: Jan-06-2022
 <h2 id="drop-uninformative-genes">Drop uninformative genes<a class="anchor" aria-label="anchor" href="#drop-uninformative-genes"></a>
 </h2>
 <p>Drop genes which don’t vary significantly between cell types.</p>
-<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exp_merged_DROPPED</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes</a></span><span class="op">(</span>
   exp <span class="op">=</span> <span class="va">merged_KI</span><span class="op">$</span><span class="va">exp</span>, 
   drop_nonhuman_genes <span class="op">=</span> <span class="cn">TRUE</span>, 
@@ -1216,12 +1227,12 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 1 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.7493095 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 0.7411826 secs</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="generate-celltypedataset-1">Generate CellTypeDataset<a class="anchor" aria-label="anchor" href="#generate-celltypedataset-1"></a>
 </h2>
-<div class="sourceCode" id="cb578"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">annotLevels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>level1class<span class="op">=</span><span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level1class</span>,
                    level2class<span class="op">=</span><span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span>
 
@@ -1240,8 +1251,8 @@ Updated: Jan-06-2022
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpirrZkZ/ctd_MergedKI.rda</span></code></pre>
-<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpWv10pf/ctd_MergedKI.rda</span></code></pre>
+<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_MergedKI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_MergedKI</span><span class="op">)</span> </code></pre></div>
 </div>
 <div class="section level2">
@@ -1251,33 +1262,39 @@ Updated: Jan-06-2022
 <p>Note firstly, that it is a list such that <code>ctd[[1]]</code> contains data relating to level 1 annotations and <code>ctd[[2]]</code> relates to level 2 annotations.</p>
 <p>Using the <code>ggplot2</code> package to visualise the data, let us examine the expression of a few genes. If you have not already done so you will need to first install the ggplot2 package with <code>install.packages("ggplot2")</code>.</p>
 <p>For this example we use a subset of the genes from the merged dataset generated above, which is accessed using <code><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ewceData::ctd()</a></code>. We recommend that you use the code above to regenerate this though and drop the first command from the below section.</p>
-<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## You can also import the pre-merged cortex and hypothalamus dataset</span>
 <span class="co"># generated by Karolinska institute. `ewceData::ctd()` is the same file as </span>
 <span class="co"># ctd_MergedKI above.</span>
 <span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
-<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="va">ctd_MergedKI</span> 
 
-<span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+<span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
                       level <span class="op">=</span> <span class="fl">1</span>,
                       genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                      metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span></code></pre></div>
+                      metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span> 
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
 <p>This graph shows the average expression of three genes: <em>Apoe, Gfap</em> and <em>Gapdh</em>. While there are substantial differences in which cell types express these genes, the dominant effect seen here is the overall expression level of the data. For the purposes of this analysis though, we are not interested in overall expression level and only wish to know about the proportion of a genes expression which is found in a particular cell type. We can study this instead using the following code which examines the data frame <code>ctd[[1]]$specificity</code>:</p>
-<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
                       level <span class="op">=</span> <span class="fl">1</span>,
                       genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                      metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span></code></pre></div>
+                      metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
 <p>We can now see in this graph that <em>Gfap</em> is the most specific to a cell type (Type 1 Astrocytes) of any of those three genes, with over 60% of its expression found in that cell type.</p>
 <p>It can also be seen that the majority of expression of Gapdh is in neurons but because their are a greater number of neuronal subtypes, the total expression proportion appears lower. We can examine expression across level 2 cell type level annotations by looking at <code>ctd[[2]]$specificity</code>:</p>
-<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
                       level <span class="op">=</span> <span class="fl">2</span>,
                       genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                      metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span></code></pre></div>
+                      metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
 </div>
 </div>
@@ -1287,15 +1304,15 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="prepare-data">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data"></a>
 </h2>
-<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## NOTE: rep=100 for demo purposes only. </span>
 <span class="co">## Use &gt;=10,000 for publication-quality results.</span>
 <span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">100</span> 
@@ -1312,7 +1329,7 @@ Updated: Jan-06-2022
 <h3 id="parallelisation-3">Parallelisation<a class="anchor" aria-label="anchor" href="#parallelisation-3"></a>
 </h3>
 <p>You can now speed up the bootstrapping process by parallelising across multiple cores with the parameter <code>no_cores</code> (<code>=1</code> by default).</p>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unconditional_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
   hits <span class="op">=</span> <span class="va">hits</span>,
@@ -1425,7 +1442,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## 1 significant cell type enrichment results @ q&lt;0.05 :</span></code></pre>
 <pre><code><span class="co">##    CellType annotLevel p fold_change sd_from_mean q</span>
 <span class="co">## 1 microglia          1 0    2.072508     3.667557 0</span></code></pre>
-<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb695"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">conditional_results_micro</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span> <span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
   hits <span class="op">=</span> <span class="va">hits</span>,
@@ -1538,7 +1555,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Sorting results by p-value.</span></code></pre>
 <pre><code><span class="co">## Computing BH-corrected q-values.</span></code></pre>
 <pre><code><span class="co">## 0 significant cell type enrichment results @ q&lt;0.05 :</span></code></pre>
-<div class="sourceCode" id="cb795"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">conditional_results_astro</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
   hits <span class="op">=</span> <span class="va">hits</span>,
@@ -1655,7 +1672,7 @@ Updated: Jan-06-2022
 <div class="section level3">
 <h3 id="merge-and-plot-results">Merge and plot results<a class="anchor" aria-label="anchor" href="#merge-and-plot-results"></a>
 </h3>
-<div class="sourceCode" id="cb894"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb893"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">merged_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">unconditional_results</span><span class="op">$</span><span class="va">results</span>,
              list<span class="op">=</span><span class="st">"Unconditional Enrichment"</span><span class="op">)</span>,
@@ -1667,9 +1684,8 @@ Updated: Jan-06-2022
 <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,
                              mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span> 
-<span class="op">}</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
+ <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 <p>When controlling for astrocytes the enrichment in astrocytes is totally abolished as expected, and vica versa. The enrichment in microglia remains strongly significant however after controlling for astrocytes., suggesting that this enrichment is independent of that in astrocytes.</p>
 </div>
@@ -1678,7 +1694,7 @@ Updated: Jan-06-2022
 <h2 id="gene-set-enrichment-analysis-controlling-for-cell-type-expression">Gene set enrichment analysis controlling for cell type expression<a class="anchor" aria-label="anchor" href="#gene-set-enrichment-analysis-controlling-for-cell-type-expression"></a>
 </h2>
 <p>Traditionally the standard analysis run on all gene sets was the GO enrichment analysis. Once you have established that a given gene list is enriched for a given cell type, it becomes questionable whether a GO enrichment is driven purely by the underlying cell type enrichment. For instance, it is well established that genes associated with schizophrenia are enriched for the human post-synaptic density genes, however, it has also been shown that schizophrenia is enriched for specificity in CA1 pyramidal neurons (which highly express hPSD genes). These two enrichments can be disassociated using the following analysis:</p>
-<div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb894"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set seed for bootstrap reproducibility </span>
 
 <span class="va">mouse_to_human_homologs</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/mouse_to_human_homologs.html" class="external-link">mouse_to_human_homologs</a></span><span class="op">(</span><span class="op">)</span>
@@ -1735,7 +1751,7 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="controlling-for-multiple-cell-types">Controlling for multiple cell types<a class="anchor" aria-label="anchor" href="#controlling-for-multiple-cell-types"></a>
 </h2>
-<div class="sourceCode" id="cb896"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">controlledCTs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span><span class="op">)</span>
 
 <span class="va">res_hpsd_schiz</span> <span class="op">=</span> 
@@ -1780,15 +1796,15 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="prepare-data-1">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data-1"></a>
 </h2>
-<div class="sourceCode" id="cb897"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb896"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb900"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb899"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="co">## loading from cache</span></code></pre>
-<div class="sourceCode" id="cb902"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb901"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## NOTE: rep=100 for demo purposes only. </span>
 <span class="co">## Use &gt;=10,000 for publication-quality results.</span>
 <span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">100</span> </code></pre></div>
@@ -1800,7 +1816,7 @@ Updated: Jan-06-2022
 <p>To demonstrate this we have an example dataset <code>tt_alzh</code>. This data frame was generated using <code>limma</code> from a set of post-mortem tissue samples from Brodmann area 46 which were described in a paper by the Haroutunian lab<span class="citation"><sup>3</sup></span>.</p>
 <p>The first step is to load the data, obtain the MGI ids, sort the rows by t-statistic and then select the most up/down-regulated genes. The package then has a function <code>ewce_expression_data</code> which thresholds and selects the gene sets, and calls the EWCE function.</p>
 <p>Below we show the function call using the default settings, but if desired different threshold values can be used, or alternative columns used to sort the table.</p>
-<div class="sourceCode" id="cb903"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb902"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ewce_expression_data calls bootstrap_enrichment_test so  </span>
 <span class="va">tt_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,
                                           tt <span class="op">=</span> <span class="va">tt_alzh</span>,
@@ -2002,9 +2018,11 @@ Updated: Jan-06-2022
 <h3 id="plot-results-4">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-4"></a>
 </h3>
 <p>The results of this analysis can be plotted using the <code>ewce_plot</code> function.</p>
-<div class="sourceCode" id="cb1080"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span><span class="va">tt_results</span><span class="op">$</span><span class="va">joint_results</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb1079"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span><span class="va">tt_results</span><span class="op">$</span><span class="va">joint_results</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-34-1.png" width="672"></p>
 <p>As was reported in our paper, neuronal genes are found to be downregulated while glial genes are upregulated.</p>
 </div>
@@ -2013,7 +2031,7 @@ Updated: Jan-06-2022
 <h2 id="generating-bootstrap-plots-for-transcriptomes">Generating bootstrap plots for transcriptomes<a class="anchor" aria-label="anchor" href="#generating-bootstrap-plots-for-transcriptomes"></a>
 </h2>
 <p>A common request is to explain which differentially expressed genes are associated with a cell type…</p>
-<div class="sourceCode" id="cb1081"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1080"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">full_result_path</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/generate_bootstrap_plots_for_transcriptome.html">generate_bootstrap_plots_for_transcriptome</a></span><span class="op">(</span>
   sct_data <span class="op">=</span> <span class="va">ctd</span>,
   tt <span class="op">=</span> <span class="va">tt_alzh</span>,
@@ -2033,14 +2051,14 @@ Updated: Jan-06-2022
 <div class="section level3">
 <h3 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a>
 </h3>
-<div class="sourceCode" id="cb1082"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1081"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tt_alzh_BA36</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA36.html" class="external-link">tt_alzh_BA36</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">tt_alzh_BA44</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA44.html" class="external-link">tt_alzh_BA44</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="run-ewce-analysis">Run EWCE analysis<a class="anchor" aria-label="anchor" href="#run-ewce-analysis"></a>
 </h3>
-<div class="sourceCode" id="cb1083"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1082"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tt_results_36</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,
                                              tt <span class="op">=</span> <span class="va">tt_alzh_BA36</span>,
                                              annotLevel <span class="op">=</span> <span class="fl">1</span>,
@@ -2063,7 +2081,7 @@ Updated: Jan-06-2022
                                 reps <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></code></pre></div>
 <p>The results can then be plotted as normal using the <code>ewce_plot</code> function.</p>
-<div class="sourceCode" id="cb1084"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1083"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
 <p>The merged results from all three Alzheimer’s brain regions are found to be remarkably similar, as was reported in our paper.</p>
@@ -2073,7 +2091,7 @@ Updated: Jan-06-2022
 <div class="section level1">
 <h1 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h1>
-<details><div class="sourceCode" id="cb1085"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb1084"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## R Under development (unstable) (2021-12-30 r81418)</span>
 <span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span>

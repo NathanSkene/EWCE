@@ -148,16 +148,20 @@ Updated: Jan-06-2022
 </h4>
 <p>Plot the expression of four markers genes across all cell types in the CTD.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt_exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt_exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
                           level <span class="op">=</span> <span class="fl">1</span>,
                           genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                          metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span></code></pre></div>
+                          metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt_spec</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plt_spec</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,
                            level <span class="op">=</span> <span class="fl">2</span>,
                            genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,
-                           metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span></code></pre></div>
+                           metric <span class="op">=</span> <span class="st">"specificity"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-3-1.png" width="864"></p>
 </div>
 </div>
@@ -391,15 +395,16 @@ Updated: Jan-06-2022
 <p>The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean.</p>
 <p>The dendrogram at the top shows how the cell types are hierarchically clustered by transcriptional similarity.</p>
 <div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,
                              mtc_method <span class="op">=</span> <span class="st">"BH"</span>,
-                             ctd <span class="op">=</span> <span class="va">ctd</span><span class="op">)</span></code></pre></div>
+                             ctd <span class="op">=</span> <span class="va">ctd</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">withDendro</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Loading required namespace: cowplot</span></code></pre>
 <pre><code><span class="co">## Loading required namespace: gridExtra</span></code></pre>
 <pre><code><span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">## replace the existing scale.</span></code></pre>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">withDendro</span><span class="op">)</span></code></pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
@@ -421,12 +426,11 @@ Updated: Jan-06-2022
 <p>Once the image has been created, you can launch it with:</p>
 <pre><code>docker run \
   -d \
-  --rm \
   -e ROOT=true \
   -e PASSWORD=bioc \
   -v ~/Desktop:/Desktop \
   -v /Volumes:/Volumes \
-  -p 8788:8787 \
+  -p 8787:8787 \
   neurogenomicslab/ewce</code></pre>
 <ul>
 <li>The <code>-d</code> ensures the container will run in “detached” mode, which means it will persist even after you’ve closed your command line session.<br>
@@ -447,14 +451,14 @@ Updated: Jan-06-2022
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>Finally, launch the containerised Rstudio by entering the following URL in any web browser: <a href="http://localhost:8788/" class="external-link">http://localhost:8788/</a></p>
+<p>Finally, launch the containerised Rstudio by entering the following URL in any web browser: <a href="http://localhost:8787/" class="external-link">http://localhost:8787/</a></p>
 <p>Login using the credentials set during the Installation steps.</p>
 </div>
 </div>
 <div class="section level1">
 <h1 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h1>
-<details><div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## R Under development (unstable) (2021-12-30 r81418)</span>
 <span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span>
