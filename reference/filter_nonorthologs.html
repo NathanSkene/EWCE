@@ -21,7 +21,7 @@ The new files are then saved to disk, appending
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -80,6 +80,7 @@ The new files are then saved to disk, appending
   convert_nonhuman_genes <span class="op">=</span> <span class="cn">TRUE</span>,
   annot_levels <span class="op">=</span> <span class="cn">NULL</span>,
   suffix <span class="op">=</span> <span class="st">"_orthologs"</span>,
+  method <span class="op">=</span> <span class="st">"homologene"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -97,6 +98,13 @@ row names to human gene names.</p></dd>
 <dd><p>[Optional] Names of each annotation level.</p></dd>
 <dt>suffix</dt>
 <dd><p>Suffix to add to the file name (right before <em>.rda</em>).</p></dd>
+<dt>method</dt>
+<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
+<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
+Also gives</p></li>
+</ul><p>(slower but more species and genes) or
+<code>"homologene"</code> (faster but fewer species and genes).</p></dd>
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 </dl></div>

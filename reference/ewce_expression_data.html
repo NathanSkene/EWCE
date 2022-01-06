@@ -19,7 +19,7 @@ in the up- and down- regulated genes."><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -81,6 +81,7 @@ in the up- and down- regulated genes.</p>
   sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
   output_species <span class="op">=</span> <span class="cn">NULL</span>,
   bg <span class="op">=</span> <span class="cn">NULL</span>,
+  method <span class="op">=</span> <span class="st">"homologene"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -122,6 +123,13 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 <dd><p>List of gene symbols containing the background gene list
 (including hit genes). If <code>bg=NULL</code>,
  an appropriate gene background will be created automatically.</p></dd>
+<dt>method</dt>
+<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
+<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
+Also gives</p></li>
+</ul><p>(slower but more species and genes) or
+<code>"homologene"</code> (faster but fewer species and genes).</p></dd>
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 </dl></div>
@@ -178,34 +186,33 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to data.frame</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting genes from input_gene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 15,259 genes extracted.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting mouse ==&gt; human orthologs using: gprofiler</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting mouse ==&gt; human orthologs using: homologene</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in gprofiler.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using stored `gprofiler_orgs`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: mouse</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for mouse</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: mmusculus</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 10090</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in gprofiler.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using stored `gprofiler_orgs`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: hsapiens</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for genes without orthologs in human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting genes from input_gene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 16,021 genes extracted.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 13,416 genes extracted.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting genes from ortholog_gene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 16,021 genes extracted.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 2,769 NAs of all kinds from ortholog_gene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 13,416 genes extracted.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for genes without 1:1 orthologs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 478 genes that have multiple input_gene per ortholog_gene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 299 genes that have multiple ortholog_gene per input_gene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 46 genes that have multiple input_gene per ortholog_gene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 56 genes that have multiple ortholog_gene per input_gene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering gene_df with gene_map</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning gene_map as dictionary</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =========== REPORT SUMMARY ===========</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Total genes dropped after convert_orthologs :</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    3,025 / 15,259 (20%)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    2,016 / 15,259 (13%)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Total genes remaining after convert_orthologs :</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    12,234 / 15,259 (80%)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    13,243 / 15,259 (87%)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in gprofiler.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using stored `gprofiler_orgs`.</span>

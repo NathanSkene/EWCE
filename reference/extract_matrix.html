@@ -18,7 +18,7 @@ from a CellTypeDataset object."><!-- mathjax --><script src="https://cdnjs.cloud
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -76,6 +76,7 @@ from a CellTypeDataset object.</p>
   output_species <span class="op">=</span> <span class="st">"human"</span>,
   metric <span class="op">=</span> <span class="st">"specificity"</span>,
   non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,
+  method <span class="op">=</span> <span class="st">"homologene"</span>,
   numberOfBins <span class="op">=</span> <span class="fl">40</span>,
   remove_unlabeled_clusters <span class="op">=</span> <span class="cn">FALSE</span>,
   force_new_quantiles <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -129,6 +130,13 @@ Return only the most "popular" interspecies ortholog mappings.
   (<code>input_species</code>-to-<code>output_species</code>)
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
+<dt>method</dt>
+<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
+<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
+Also gives</p></li>
+</ul><p>(slower but more species and genes) or
+<code>"homologene"</code> (faster but fewer species and genes).</p></dd>
 <dt>numberOfBins</dt>
 <dd><p>Number of non-zero quantile bins.</p></dd>
 <dt>remove_unlabeled_clusters</dt>
