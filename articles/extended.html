@@ -106,6 +106,7 @@ Updated: Jan-06-2022
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></code></pre></div>
+<p><strong>NOTE</strong>: This documentation is for the development version of <code>EWCE</code>. See <a href="https://bioconductor.org/packages/release/bioc/html/EWCE.html" class="external-link">Bioconductor</a> for documentation on the current release version.</p>
 </div>
 <div class="section level1">
 <h1 id="run-cell-type-enrichment-tests">Run cell-type enrichment tests<a class="anchor" aria-label="anchor" href="#run-cell-type-enrichment-tests"></a>
@@ -1078,7 +1079,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 228 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.9591622 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 1.096467 secs</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -1109,7 +1110,7 @@ Updated: Jan-06-2022
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
 <pre><code><span class="co">## Loading required namespace: ggdendro</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/Rtmp0JKmDN/ctd_kiCortexOnly.rda</span></code></pre>
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpMIgBXk/ctd_kiCortexOnly.rda</span></code></pre>
 <div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_CortexOnly</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_CortexOnly</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1214,7 +1215,7 @@ Updated: Jan-06-2022
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 1 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.7342141 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 0.8212054 secs</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="generate-celltypedataset-1">Generate CellTypeDataset<a class="anchor" aria-label="anchor" href="#generate-celltypedataset-1"></a>
@@ -1238,7 +1239,7 @@ Updated: Jan-06-2022
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/Rtmp0JKmDN/ctd_MergedKI.rda</span></code></pre>
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpMIgBXk/ctd_MergedKI.rda</span></code></pre>
 <div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_MergedKI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_MergedKI</span><span class="op">)</span> </code></pre></div>
 </div>
@@ -1662,8 +1663,11 @@ Updated: Jan-06-2022
   <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">conditional_results_astro</span><span class="op">$</span><span class="va">results</span>,
              list<span class="op">=</span><span class="st">"Conditional Enrichment (Astrocyte controlled)"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,
-                             mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span>
+ <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,
+                             mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span> 
+<span class="op">}</span><span class="op">)</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></code></pre></div>
 <p><img src="extended_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 <p>When controlling for astrocytes the enrichment in astrocytes is totally abolished as expected, and vica versa. The enrichment in microglia remains strongly significant however after controlling for astrocytes., suggesting that this enrichment is independent of that in astrocytes.</p>
@@ -1673,7 +1677,8 @@ Updated: Jan-06-2022
 <h2 id="gene-set-enrichment-analysis-controlling-for-cell-type-expression">Gene set enrichment analysis controlling for cell type expression<a class="anchor" aria-label="anchor" href="#gene-set-enrichment-analysis-controlling-for-cell-type-expression"></a>
 </h2>
 <p>Traditionally the standard analysis run on all gene sets was the GO enrichment analysis. Once you have established that a given gene list is enriched for a given cell type, it becomes questionable whether a GO enrichment is driven purely by the underlying cell type enrichment. For instance, it is well established that genes associated with schizophrenia are enriched for the human post-synaptic density genes, however, it has also been shown that schizophrenia is enriched for specificity in CA1 pyramidal neurons (which highly express hPSD genes). These two enrichments can be disassociated using the following analysis:</p>
-<pre><code><span class="co"># set seed for bootstrap reproducibility </span>
+<div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># set seed for bootstrap reproducibility </span>
 
 <span class="va">mouse_to_human_homologs</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/mouse_to_human_homologs.html" class="external-link">mouse_to_human_homologs</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">m2h</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">mouse_to_human_homologs</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HGNC.symbol"</span>,<span class="st">"MGI.symbol"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
@@ -1723,13 +1728,14 @@ Updated: Jan-06-2022
                                               reps<span class="op">=</span><span class="va">reps</span>, 
                                               controlledCT<span class="op">=</span><span class="st">"pyramidal SS"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_hpsd_id</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rbfox_id</span><span class="op">)</span></code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rbfox_id</span><span class="op">)</span></code></pre></div>
 <p>The analysis also tests for enrichment of Rbfox binding genes in the schizophrenia susceptibility genes, as well as both hPSD and Rbfox genes in Intellectual Disability genes. All of the enrichments are confirmed as still being present after controlling for the associated cell type, apart from the enrichment of PSD genes in Schizophrenia which falls from borderline to non-significant.</p>
 </div>
 <div class="section level2">
 <h2 id="controlling-for-multiple-cell-types">Controlling for multiple cell types<a class="anchor" aria-label="anchor" href="#controlling-for-multiple-cell-types"></a>
 </h2>
-<pre><code><span class="va">controlledCTs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span><span class="op">)</span>
+<div class="sourceCode" id="cb896"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">controlledCTs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span><span class="op">)</span>
 
 <span class="va">res_hpsd_schiz</span> <span class="op">=</span> 
   <span class="fu"><a href="../reference/controlled_geneset_enrichment.html">controlled_geneset_enrichment</a></span><span class="op">(</span>disease_genes<span class="op">=</span><span class="va">mouse.hits.schiz</span>, 
@@ -1764,7 +1770,7 @@ Updated: Jan-06-2022
                                               reps<span class="op">=</span><span class="va">reps</span>, 
                                               controlledCT<span class="op">=</span><span class="va">controlledCTs</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_hpsd_id</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rbfox_id</span><span class="op">)</span></code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rbfox_id</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
