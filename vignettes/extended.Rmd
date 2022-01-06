@@ -277,9 +277,11 @@ cont_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
 #### Plot results
 
 ```{r, error=TRUE}
-plot_list <- EWCE::ewce_plot(total_res = cont_results$results,
+try({
+  plot_list <- EWCE::ewce_plot(total_res = cont_results$results,
                              mtc_method = "BH")
-print(plot_list$plain)
+  print(plot_list$plain)
+})
 ```
 
 With the cell subtype analysis each microglial subtype was enriched and correspondingly we see here that the microglial cell type is enriched.
