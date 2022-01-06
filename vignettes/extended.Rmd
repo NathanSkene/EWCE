@@ -20,6 +20,7 @@ library(ggplot2)
 set.seed(1234)
 ```
 
+**NOTE**: This documentation is for the development version of `EWCE`. See [Bioconductor](https://bioconductor.org/packages/release/bioc/html/EWCE.html) for documentation on the current release version.  
 
 # Run cell-type enrichment tests 
 
@@ -192,7 +193,7 @@ knitr::kable(full_results$results)
 
 The results can be visualised using another function, which shows for each cell type, the number of standard deviations from the mean the level of expression was found to be in the target gene list, relative to the bootstrapped mean:
 
-```{r}
+```{r, error=TRUE}
 plot_list <- EWCE::ewce_plot(total_res = full_results$results,
                              mtc_method ="BH",
                              ctd = ctd) # optional (unless you want dendrogram)
@@ -201,7 +202,7 @@ plot_list <- EWCE::ewce_plot(total_res = full_results$results,
 
 For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to [Robert Gordon-Smith](https://github.com/ovrhuman), Mres Molecular and Cellular Biosciences, Imperial College London for this solution):
 
-```{r}
+```{r, error=TRUE}
 print(plot_list$withDendro)
 ```
 
@@ -241,7 +242,7 @@ cont_results <- EWCE::bootstrap_enrichment_test(
 
 We plot these results using `ewce_plot`:
 
-```{r}
+```{r, error=TRUE}
 plot_list <- EWCE::ewce_plot(total_res = cont_results$results,
                              mtc_method = "BH")
 print(plot_list$plain)
@@ -305,7 +306,7 @@ merged_results = rbind(full_res2, rando_res2)
 
 Here we apply multiple-testing correction (BH = Benjamini-Hochberg) to guard against positive results due to chance.
 
-```{r}
+```{r, error=TRUE}
 plot_list <- EWCE::ewce_plot(total_res = merged_results,
                              mtc_method = "BH")
 print(plot_list$plain)
@@ -362,7 +363,7 @@ This is stored and can be loaded as follows from `ewceData` package.
 To check the data, we can quickly plot the distribution of 
 expression of a given gene across all the cell types.
 
-```{r }
+```{r, error=TRUE}
 # example datasets held in ewceData package
 cortex_mrna <- ewceData::cortex_mrna()
 
@@ -653,7 +654,7 @@ ctd <- ewceData::ctd()
 ```
 
 
-```{r, fig.width = 7, fig.height = 4} 
+```{r, fig.width = 7, fig.height = 4, error=TRUE} 
 ctd <- ctd_MergedKI 
 
 plt <- EWCE::plot_ctd(ctd = ctd,
@@ -671,7 +672,7 @@ the proportion of a genes expression which is found in a particular cell type.
 We can study this instead using the following code which examines the 
 data frame `ctd[[1]]$specificity`:
 
-```{r, fig.width = 7, fig.height = 4}
+```{r, fig.width = 7, fig.height = 4, error=TRUE}
 plt <- EWCE::plot_ctd(ctd = ctd,
                       level = 1,
                       genes = c("Apoe","Gfap","Gapdh"),
@@ -689,7 +690,7 @@ We can examine expression across level 2 cell type level annotations
 by looking at `ctd[[2]]$specificity`:
 
 
-```{r, fig.width = 7, fig.height = 4}
+```{r, fig.width = 7, fig.height = 4, error=TRUE}
 plt <- EWCE::plot_ctd(ctd = ctd,
                       level = 2,
                       genes = c("Apoe","Gfap","Gapdh"),
@@ -757,7 +758,7 @@ conditional_results_astro <- EWCE::bootstrap_enrichment_test(
 
 ### Merge and plot results
 
-```{r}
+```{r, error=TRUE}
 merged_results <- rbind(
   data.frame(unconditional_results$results,
              list="Unconditional Enrichment"),
@@ -766,8 +767,11 @@ merged_results <- rbind(
   data.frame(conditional_results_astro$results,
              list="Conditional Enrichment (Astrocyte controlled)")
 )
-plot_list <- EWCE::ewce_plot(total_res = merged_results,
-                             mtc_method = "BH")
+try({
+ plot_list <- EWCE::ewce_plot(total_res = merged_results,
+                             mtc_method = "BH") 
+})
+
 print(plot_list$plain)
 ```
 
@@ -788,7 +792,7 @@ it has also been shown that schizophrenia is enriched for specificity
 in CA1 pyramidal neurons (which highly express hPSD genes). 
 These two enrichments can be disassociated using the following analysis:
 
-```
+```R
 # set seed for bootstrap reproducibility 
 
 mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
@@ -851,7 +855,7 @@ which falls from borderline to non-significant.
 
 ## Controlling for multiple cell types
 
-```  
+```R  
 controlledCTs = c("pyramidal CA1","pyramidal SS","interneurons")
 
 res_hpsd_schiz = 
@@ -941,7 +945,7 @@ tt_results <- EWCE::ewce_expression_data(sct_data = ctd,
 
 The results of this analysis can be plotted using the `ewce_plot` function.
 
-```{r fig.width = 7, fig.height = 4}
+```{r fig.width = 7, fig.height = 4, error=TRUE}
 plot_list <- EWCE::ewce_plot(tt_results$joint_results)
 print(plot_list$plain)
 ```

@@ -5,6 +5,11 @@ New features
 * `method` argument from `orthogene::create_background` and `orthogene::convert_orthologs` is now passed up as an argument to `EWCE` functions to give users more control. "homologene" chosen as default for all functions. "homologene" has fewer species than "orthogene" but doesnt need to import data from the web. It also has more 1:1 mouse:human orthologs. 
 * Include notes on mismatches between GitHub documentation and current Bioc release version. 
 
+Bug fixes
+
+* Add `try({})` and `error=TRUE` to avoid *"polygon edge not found"* error in vignettes.  
+
+
 # EWCE 1.3.1
 
 New features  
@@ -65,7 +70,7 @@ benchmarking to see how each affects the `EWCE` results.
 gene mappings in *extended* vignette. 
 * Record extra info in `standardise_ctd` output:
     - "species": both `input_species` and `output_species` 
-    - "versions": of `EWCE`, `orthogene`, and `homologene`
+    - "versions": of `EWCE`, `orthogene`, and `homologene`  
 
 
 # EWCE 1.0.0
