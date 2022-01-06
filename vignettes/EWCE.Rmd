@@ -60,17 +60,22 @@ ctd <- ewceData::ctd()
 
 Plot the expression of four markers genes across all cell types in the CTD.
 
-```{r, fig.width=7, fig.height=5}
-plt_exp <- EWCE::plot_ctd(ctd = ctd,
+```{r, fig.width=7, fig.height=5, error=TRUE}
+try({
+  plt_exp <- EWCE::plot_ctd(ctd = ctd,
                           level = 1,
                           genes = c("Apoe","Gfap","Gapdh"),
                           metric = "mean_exp")
+})
 ```
-```{r, fig.width=9, fig.height=5}
-plt_spec <- EWCE::plot_ctd(ctd = ctd,
+
+```{r, fig.width=9, fig.height=5, error=TRUE}
+try({
+  plt_spec <- EWCE::plot_ctd(ctd = ctd,
                            level = 2,
                            genes = c("Apoe","Gfap","Gapdh"),
                            metric = "specificity")
+})
 ```
 
 
@@ -132,11 +137,13 @@ The results can be visualised using another function, which shows for each cell 
 
 The dendrogram at the top shows how the cell types are hierarchically clustered by transcriptional similarity.
  
-```{r }
-plot_list <- EWCE::ewce_plot(total_res = full_results$results,
+```{r, error=TRUE}
+try({
+  plot_list <- EWCE::ewce_plot(total_res = full_results$results,
                              mtc_method = "BH",
                              ctd = ctd)
-print(plot_list$withDendro)
+  print(plot_list$withDendro)
+})
 ```
      
 
@@ -166,12 +173,11 @@ Once the image has been created, you can launch it with:
 ```
 docker run \
   -d \
-  --rm \
   -e ROOT=true \
   -e PASSWORD=bioc \
   -v ~/Desktop:/Desktop \
   -v /Volumes:/Volumes \
-  -p 8788:8787 \
+  -p 8787:8787 \
   `r docker_user`/`r pkg`
 ```  
 
@@ -198,7 +204,7 @@ singularity pull docker://`r docker_user`/`r pkg`
 
 Finally, launch the containerised Rstudio by entering the 
 following URL in any web browser:
-[http://localhost:8788/](http://localhost:8788/)
+[http://localhost:8787/](http://localhost:8787/)
 
 Login using the credentials set during the Installation steps.  
 
