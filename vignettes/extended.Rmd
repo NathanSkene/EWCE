@@ -371,12 +371,12 @@ gene <- "Necab1"
 cellExpDist <- data.frame(Expression=cortex_mrna$exp[gene,],
                           Celltype=cortex_mrna$annot[
                             colnames(cortex_mrna$exp),]$level1class)
-
-ggplot(cellExpDist) + 
+try({
+  ggplot(cellExpDist) + 
   geom_boxplot(aes(x=Celltype, y=Expression), outlier.alpha = .5) + 
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  
+})
 ```
 
 To note for the analysis of the `cortex_mrna` dataset, 
