@@ -12,6 +12,7 @@ extract_matrix(
   output_species = "human",
   metric = "specificity",
   non121_strategy = "drop_both_species",
+  method = "homologene",
   numberOfBins = 40,
   remove_unlabeled_clusters = FALSE,
   force_new_quantiles = FALSE,
@@ -65,6 +66,16 @@ Return only the most "popular" interspecies ortholog mappings.
   after dropping any duplicate genes in the \code{output_species}.
  }
 }}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{numberOfBins}{Number of non-zero quantile bins.}
 

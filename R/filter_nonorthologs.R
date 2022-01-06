@@ -18,6 +18,7 @@
 #' @param convert_nonhuman_genes Whether to convert the \code{exp}
 #' row names to human gene names.
 #' @param verbose Print messages.
+#' @inheritParams orthogene::convert_orthologs
 #'
 #' @return List of the filtered CellTypeData file names.
 #'
@@ -34,6 +35,7 @@ filter_nonorthologs <- function(filenames,
                                 convert_nonhuman_genes = TRUE,
                                 annot_levels = NULL,
                                 suffix = "_orthologs",
+                                method = "homologene",
                                 verbose = TRUE) {
     if (is.null(input_species)) {
         messager("No input_species provided. Setting to 'mouse'", v = verbose)
@@ -76,7 +78,7 @@ filter_nonorthologs <- function(filenames,
                     gene_input = "rownames",
                     input_species = input_species,
                     non121_strategy = "drop_both_species",
-                    method = "homologene",
+                    method = method,
                     verbose = FALSE
                 )
             }

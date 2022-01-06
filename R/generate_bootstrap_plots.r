@@ -78,6 +78,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      genelistSpecies = NULL,
                                      sctSpecies = NULL,
                                      output_species = "human",
+                                     method = "homologene",
                                      reps = 100,
                                      annotLevel = 1,
                                      full_results = NA,
@@ -114,6 +115,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         input_species = sctSpecies,
         output_species = output_species,
         dataset = "sct_data",
+        method = method,
         verbose = FALSE
     )
     sctSpecies <- output_species

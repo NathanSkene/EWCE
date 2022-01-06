@@ -15,6 +15,7 @@ ewce_expression_data(
   sctSpecies = NULL,
   output_species = NULL,
   bg = NULL,
+  method = "homologene",
   verbose = TRUE
 )
 }
@@ -53,6 +54,16 @@ See \link[EWCE]{list_species} for all available species.}
 \item{bg}{List of gene symbols containing the background gene list
 (including hit genes). If \code{bg=NULL},
  an appropriate gene background will be created automatically.}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{verbose}{Print messages.}
 }

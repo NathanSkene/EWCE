@@ -25,6 +25,8 @@ you can use one of the pre-generated CTDs we provide via the package `ewceData`
 (which comes with `EWCE`).  
 2. Run cell type enrichment on a gene list using the `bootstrap_enrichment_test` function. 
 
+**NOTE**: This documentation is for the development version of `EWCE`. See [Bioconductor](https://bioconductor.org/packages/release/bioc/html/EWCE.html) for documentation on the current release version. 
+
 # Setup
 
 ```{r setup, include=TRUE}

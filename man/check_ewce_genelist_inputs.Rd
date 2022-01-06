@@ -11,6 +11,7 @@ check_ewce_genelist_inputs(
   genelistSpecies = NULL,
   sctSpecies = NULL,
   output_species = "human",
+  method = "homologene",
   geneSizeControl = FALSE,
   standardise = FALSE,
   verbose = TRUE
@@ -38,6 +39,16 @@ See \link[EWCE]{list_species} for all available species.}
 \item{output_species}{Species to convert \code{sct_data} and \code{hits} to
 (Default: "human").
 See \link[EWCE]{list_species} for all available species.}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{geneSizeControl}{Whether you want to control for
 GC content and transcript length. Recommended if the gene list originates

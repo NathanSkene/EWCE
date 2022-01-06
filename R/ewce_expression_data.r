@@ -16,6 +16,7 @@
 #' @param ttSpecies The species the differential expression table
 #' was generated from.
 #' @inheritParams bootstrap_enrichment_test
+#' @inheritParams orthogene::convert_orthologs
 #'
 #' @return A list containing five data frames:
 #' \itemize{
@@ -69,6 +70,7 @@ ewce_expression_data <- function(sct_data,
                                  sctSpecies = NULL,
                                  output_species = NULL,
                                  bg = NULL,
+                                 method = "homologene",
                                  verbose = TRUE) {
     #### Check args ####
     check_ewce_expression_data_args(sortBy = sortBy,
@@ -101,6 +103,7 @@ ewce_expression_data <- function(sct_data,
         output_species = output_species,
         bg = bg,
         use_intersect = TRUE,
+        method = method,
         verbose = verbose
     )
     bg <- bg_out$bg 
@@ -112,6 +115,7 @@ ewce_expression_data <- function(sct_data,
         output_species = output_species,
         force_standardise = sctSpecies!=output_species,
         dataset = "sct_data",
+        method = method,
         verbose = FALSE
     )
     sctSpecies <- output_species 

@@ -5,6 +5,7 @@
 #' \link[EWCE]{ewce_expression_data}.
 #' 
 #' @inheritParams ewce_expression_data
+#' @inheritParams orthogene::convert_orthologs
 #' 
 #' @returns List of 3 items
 #' 
@@ -13,6 +14,7 @@ prepare_tt <- function(tt,
                        tt_genecol = NULL,
                        ttSpecies,
                        output_species,
+                       method = "homologene",
                        verbose = TRUE){
     #### Infer gene column in tt ####
     if(is.null(tt_genecol)){
@@ -27,7 +29,8 @@ prepare_tt <- function(tt,
                                            gene_output = "columns",
                                            input_species = ttSpecies,
                                            output_species = output_species,
-                                           method = "homologene")
+                                           method = method, 
+                                           verbose = verbose)
         tt_genecol <- "ortholog_gene"
         ttSpecies <- output_species
     }

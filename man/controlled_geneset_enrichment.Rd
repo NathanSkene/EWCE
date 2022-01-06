@@ -13,6 +13,7 @@ controlled_geneset_enrichment(
   output_species = "human",
   disease_genes_species = NULL,
   functional_genes_species = NULL,
+  method = "homologene",
   annotLevel,
   reps = 100,
   controlledCT,
@@ -48,6 +49,16 @@ See \link[EWCE]{list_species} for all available species.}
 
 \item{functional_genes_species}{Species of the
 \code{functional_genes} gene set.}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{annotLevel}{An integer indicating which level of \code{sct_data} to
 analyse (\emph{Default: 1}).}

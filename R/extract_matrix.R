@@ -27,6 +27,7 @@ extract_matrix <- function(ctd,
                            output_species = "human",
                            metric = "specificity",
                            non121_strategy = "drop_both_species",
+                           method = "homologene",
                            numberOfBins = 40,
                            remove_unlabeled_clusters = FALSE,
                            force_new_quantiles = FALSE,
@@ -87,7 +88,7 @@ extract_matrix <- function(ctd,
             input_species = input_species,
             output_species = output_species,
             non121_strategy = non121_strategy,
-            method = "homologene",
+            method = method,
             verbose = FALSE
         )
     }

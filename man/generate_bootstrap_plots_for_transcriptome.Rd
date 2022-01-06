@@ -24,6 +24,7 @@ generate_bootstrap_plots_for_transcriptome(
   celltype_col = "CellType",
   plot_types = c("bootstrap", "bootstrap_distributions", "log_bootstrap_distributions"),
   savePath = tempdir(),
+  method = "homologene",
   verbose = TRUE
 )
 }
@@ -86,6 +87,16 @@ significance values.}
 
 \item{savePath}{Directory where the \emph{BootstrapPlots} folder
 should be saved, default is a temp directory.}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{verbose}{Print messages.}
 }

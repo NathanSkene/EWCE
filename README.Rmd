@@ -56,7 +56,10 @@ BiocManager::install("EWCE")
 
 ## Documentation 
 
-### [Website](https://`r owner`.github.io/`r pkg`) 
+### [Website](https://`r owner`.github.io/`r pkg`)  
+
+**NOTE**: This documentation is for the development version of ``r pkg``. See [Bioconductor](https://bioconductor.org/packages/release/bioc/html/EWCE.html) for documentation on the current release version.  
+
 ### [Getting started](https://`r owner`.github.io/`r pkg`/articles/`r pkg`)   
 
 Includes:  

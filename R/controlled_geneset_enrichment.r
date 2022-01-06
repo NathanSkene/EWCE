@@ -66,6 +66,7 @@ controlled_geneset_enrichment <- function(disease_genes,
                                           output_species = "human",
                                           disease_genes_species = NULL,
                                           functional_genes_species = NULL,
+                                          method = "homologene",
                                           annotLevel,
                                           reps = 100,
                                           controlledCT,
@@ -97,6 +98,7 @@ controlled_geneset_enrichment <- function(disease_genes,
         output_species = output_species,
         bg = bg,
         use_intersect = use_intersect,
+        method = method,
         verbose = verbose
     )
     #### Use background generated in create_background_multilist ####
@@ -110,6 +112,7 @@ controlled_geneset_enrichment <- function(disease_genes,
         dataset = "sct_data",
         input_species = sctSpecies,
         output_species = output_species,
+        method = method,
         verbose = verbose
     )
     sctSpecies <- output_species

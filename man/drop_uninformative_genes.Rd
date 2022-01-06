@@ -13,6 +13,7 @@ drop_uninformative_genes(
   input_species = NULL,
   output_species = "human",
   non121_strategy = "drop_both_species",
+  method = "homologene",
   as_sparse = TRUE,
   as_DelayedArray = FALSE,
   return_sce = FALSE,
@@ -72,6 +73,16 @@ Return only the most "popular" interspecies ortholog mappings.
   after dropping any duplicate genes in the \code{output_species}.
  }
 }}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{as_sparse}{Convert \code{exp} to sparse matrix.}
 

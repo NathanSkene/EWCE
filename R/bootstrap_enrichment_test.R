@@ -38,6 +38,7 @@
 #' @param mtc_method Multiple-testing correction method
 #' (passed to \link[stats]{p.adjust}).
 #' @param verbose Print messages.
+#' @inheritParams orthogene::convert_orthologs
 #'
 #' @return A list containing three data frames:
 #' \itemize{
@@ -79,6 +80,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       genelistSpecies = NULL,
                                       sctSpecies = NULL,
                                       output_species = "human",
+                                      method = "homologene",
                                       reps = 100,
                                       no_cores = 1,
                                       annotLevel = 1,
@@ -114,6 +116,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         species2 = genelistSpecies,
         output_species = output_species,
         bg = bg,
+        method = method,
         verbose = verbose
     )
     #### Convert CTD to standardized human genes ####
@@ -123,6 +126,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         input_species = sctSpecies,
         output_species = output_species,
         dataset = "sct_data",
+        method = method,
         verbose = FALSE
     )
     sctSpecies <- output_species

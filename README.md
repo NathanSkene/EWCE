@@ -4,12 +4,12 @@
 Authors: Alan Murphy, Brian Schilder, and Nathan Skene
 </h4>
 <h4>
-README updated: Dec-22-2021
+README updated: Jan-06-2022
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
 
-[![](https://img.shields.io/badge/devel%20version-1.3.1-black.svg)](https://github.com/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/devel%20version-1.3.2-black.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/badge/release%20version-1.2.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
 [![R build
 status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
@@ -17,7 +17,7 @@ status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg
 status](https://github.com/NathanSkene/EWCE/workflows/DockerHub/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
 [![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
-[![](https://img.shields.io/badge/download-2293/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-2333/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
@@ -50,6 +50,11 @@ BiocManager::install("EWCE")
 ## Documentation
 
 ### [Website](https://nathanskene.github.io/EWCE)
+
+**NOTE**: This documentation is for the development version of `EWCE`.
+See
+[Bioconductor](https://bioconductor.org/packages/release/bioc/html/EWCE.html)
+for documentation on the current release version.
 
 ### [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE)
 

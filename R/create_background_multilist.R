@@ -43,16 +43,17 @@ create_background_multilist <- function(gene_list1,
             gene_df = gene_list1,
             input_species = gene_list1_species,
             output_species = output_species,
-            gene_output = "dict"
+            gene_output = "dict",
+            method = method,
+            verbose = verbose
         )
     }
     bg1 <- orthogene::create_background(
         species1 = gene_list1_species,
         species2 = output_species,
-        method = "homologene",
+        method = method,
         verbose = verbose
     )
-
     #### Gene list 2 ####
     #### check gene_list2 args #####
     if (gene_list2_species != output_species) {
@@ -60,7 +61,9 @@ create_background_multilist <- function(gene_list1,
             gene_df = gene_list2,
             input_species = gene_list2_species,
             output_species = output_species,
-            gene_output = "dict"
+            gene_output = "dict",
+            method = method,
+            verbose = verbose
         )
     }
     if (gene_list1_species == gene_list2_species) {
@@ -70,7 +73,7 @@ create_background_multilist <- function(gene_list1,
         bg2 <- orthogene::create_background(
             species1 = gene_list2_species,
             species2 = output_species,
-            method = "homologene",
+            method = method,
             verbose = verbose
         )
         #### Create union background ####

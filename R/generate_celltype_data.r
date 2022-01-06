@@ -76,6 +76,7 @@ generate_celltype_data <- function(exp,
                                    input_species = "mouse",
                                    output_species = "human",
                                    non121_strategy = "drop_both_species",
+                                   method = "homologene",
                                    force_new_file = TRUE,
                                    specificity_quantiles = TRUE,
                                    numberOfBins = 40,
@@ -120,6 +121,7 @@ generate_celltype_data <- function(exp,
             output_species = output_species,
             non121_strategy = non121_strategy,
             verbose = verbose,
+            method = method,
             ...
         )
     }

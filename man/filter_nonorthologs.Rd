@@ -10,6 +10,7 @@ filter_nonorthologs(
   convert_nonhuman_genes = TRUE,
   annot_levels = NULL,
   suffix = "_orthologs",
+  method = "homologene",
   verbose = TRUE
 )
 }
@@ -24,6 +25,16 @@ row names to human gene names.}
 \item{annot_levels}{[Optional] Names of each annotation level.}
 
 \item{suffix}{Suffix to add to the file name (right before \emph{.rda}).}
+
+\item{method}{R package to to use for gene mapping:
+\itemize{
+\item{\code{"gprofiler"} : Slower but more species and genes.}
+\item{\code{"homologene"} : Faster but fewer species and genes.}
+\item{\code{"babelgene"} : Faster but fewer species and genes.
+Also gives }
+}
+ (slower but more species and genes) or
+\code{"homologene"} (faster but fewer species and genes).}
 
 \item{verbose}{Print messages.}
 }

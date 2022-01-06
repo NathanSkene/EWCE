@@ -8,6 +8,7 @@
 #' @param standardise If \code{input_species==output_species},
 #' should the genes be standardised using \link[orthogene]{map_genes}?
 #' @inheritParams bootstrap_enrichment_test
+#' @inheritParams orthogene::convert_orthologs
 #'
 #' @return A list containing
 #' \itemize{
@@ -36,6 +37,7 @@ check_ewce_genelist_inputs <- function(sct_data,
                                        genelistSpecies = NULL,
                                        sctSpecies = NULL,
                                        output_species = "human",
+                                       method = "homologene",
                                        geneSizeControl = FALSE,
                                        standardise = FALSE,
                                        verbose = TRUE) {
@@ -66,6 +68,7 @@ check_ewce_genelist_inputs <- function(sct_data,
         species2 = genelistSpecies,
         output_species = output_species,
         bg = bg,
+        method = method,
         verbose = verbose
     )
     #### Convert CTD ####
@@ -77,6 +80,7 @@ check_ewce_genelist_inputs <- function(sct_data,
             input_species = sctSpecies,
             output_species = output_species,
             dataset = "sct_data",
+            method = method,
             verbose = FALSE
         )
     }
@@ -99,7 +103,7 @@ check_ewce_genelist_inputs <- function(sct_data,
             genes = hits,
             input_species = genelistSpecies,
             output_species = output_species,
-            method = "homologene",
+            method = method,
             verbose = FALSE
         )$ortholog_gene
     }

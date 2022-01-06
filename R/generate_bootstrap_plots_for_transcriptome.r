@@ -21,6 +21,7 @@
 #'  should be saved, default is a temp directory.
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams ewce_expression_data
+#' @inheritParams orthogene::convert_orthologs
 #'
 #' @return Saves a set of PDF files containing graphs and returns the file where
 #' they are saved. These will be saved with the filename adjusted using the
@@ -96,6 +97,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
                    "bootstrap_distributions",
                    "log_bootstrap_distributions"),
     savePath = tempdir(),
+    method = "homologene",
     verbose = TRUE) {
     
     requireNamespace("grDevices") 
@@ -129,6 +131,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
         output_species = output_species,
         bg = bg,
         use_intersect = TRUE,
+        method = method,
         verbose = verbose
     )
     bg <- bg_out$bg
@@ -142,6 +145,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
         output_species = output_species,
         force_standardise = sctSpecies!=output_species,
         dataset = "sct_data",
+        method = method,
         verbose = FALSE
     )
     sctSpecies <- output_species 
