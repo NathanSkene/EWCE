@@ -71,6 +71,7 @@ add '$specificity_quantiles' to a ctd</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bin_specificity_into_quantiles</span><span class="op">(</span>
   <span class="va">ctdIN</span>,
   <span class="va">numberOfBins</span>,
+  matrix_name <span class="op">=</span> <span class="st">"specificity_quantiles"</span>,
   as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
@@ -79,10 +80,13 @@ add '$specificity_quantiles' to a ctd</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ctdIN</dt>
-<dd><p>A single annotLevel of a ctd, i.e. ctd[[1]] (the function is
-intended to be used via apply)</p></dd>
+<dd><p>A single annotLevel of a ctd, i.e. <code>ctd[[1]]</code> 
+(the function is intended to be used via <code>apply</code>).</p></dd>
 <dt>numberOfBins</dt>
-<dd><p>Number of quantile 'bins' to use (40 is recommended)</p></dd>
+<dd><p>Number of quantile 'bins' to use (40 is recommended).</p></dd>
+<dt>matrix_name</dt>
+<dd><p>Name of the specificity matrix to create 
+(default: "specificity_quantiles").</p></dd>
 <dt>as_sparse</dt>
 <dd><p>Convert to sparseMatrix.</p></dd>
 <dt>verbose</dt>
@@ -90,16 +94,16 @@ intended to be used via apply)</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ctd with $specificity_quantiles.</p>
+    <p>A ctd with "specificity_quantiles" matrix in each level 
+(or whatever <code>matrix_name</code> was set to.).</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/neurogenomics/ewceData" class="external-link">ewceData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ctd</span>, <span class="va">bin_specificity_into_quantiles</span>, numberOfBins <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ctd</span>, <span class="fu">EWCE</span><span class="fu">::</span><span class="va">bin_specificity_into_quantiles</span>, numberOfBins <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ctd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">specificity_quantiles</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span><span class="op">)</span></span>

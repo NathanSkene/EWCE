@@ -1,8 +1,8 @@
 pandoc: 2.14.0.3
 pkgdown: 2.0.1.9000
-pkgdown_sha: b273ac6e9057e5c5abcf45730e8f8770de0e890c
+pkgdown_sha: 72200017e36ad6a99706d085699e974ad5b3e417
 articles:
   EWCE: EWCE.html
   extended: extended.html
-last_built: 2022-01-06T17:05Z
+last_built: 2022-01-07T18:04Z
 
