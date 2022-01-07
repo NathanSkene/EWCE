@@ -7,30 +7,34 @@
 bin_specificity_into_quantiles(
   ctdIN,
   numberOfBins,
+  matrix_name = "specificity_quantiles",
   as_sparse = TRUE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is
-intended to be used via apply)}
+\item{ctdIN}{A single annotLevel of a ctd, i.e. \code{ctd[[1]]} 
+(the function is intended to be used via \code{apply}).}
 
-\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended).}
+
+\item{matrix_name}{Name of the specificity matrix to create 
+(default: "specificity_quantiles").}
 
 \item{as_sparse}{Convert to sparseMatrix.}
 
 \item{verbose}{Print messages.}
 }
 \value{
-A ctd with $specificity_quantiles.
+A ctd with "specificity_quantiles" matrix in each level 
+(or whatever \code{matrix_name} was set to.).
 }
 \description{
 \code{bin_specificity_into_quantiles} is an internal function used to convert
 add '$specificity_quantiles' to a ctd
 }
 \examples{
-library(ewceData)
-ctd <- ctd()
-ctd <- lapply(ctd, bin_specificity_into_quantiles, numberOfBins = 40)
+ctd <- ewceData::ctd()
+ctd <- lapply(ctd, EWCE::bin_specificity_into_quantiles, numberOfBins = 40)
 print(ctd[[1]]$specificity_quantiles[1:3, ])
 }

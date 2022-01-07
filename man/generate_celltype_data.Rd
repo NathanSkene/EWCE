@@ -111,7 +111,7 @@ being created already exists, overwrite it.}
 \item{specificity_quantiles}{Compute specificity quantiles.
 Recommended to set to \code{TRUE}.}
 
-\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended).}
 
 \item{dendrograms}{Add dendrogram plots}
 
