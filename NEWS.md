@@ -4,6 +4,8 @@ New features
 
 * `method` argument from `orthogene::create_background` and `orthogene::convert_orthologs` is now passed up as an argument to `EWCE` functions to give users more control. "homologene" chosen as default for all functions. "homologene" has fewer species than "orthogene" but doesnt need to import data from the web. It also has more 1:1 mouse:human orthologs. 
 * Include notes on mismatches between GitHub documentation and current Bioc release version. 
+* Allow `bin_specificity_into_quantiles` to set specificity matrix
+name produced. 
 
 Bug fixes
 
