@@ -164,8 +164,7 @@ jobs:
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
         run: |
-          ## Edit below if you have any Windows system dependencies
-        shell: Rscript {0}
+          npm install curl 
 
       - name: Install BiocManager
         run: |

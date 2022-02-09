@@ -70,12 +70,10 @@ plt_exp <- EWCE::plot_ctd(ctd = ctd,
 ```
 
 ```{r, fig.width=9, fig.height=5, error=TRUE}
-try({
-  plt_spec <- EWCE::plot_ctd(ctd = ctd,
-                           level = 2,
-                           genes = c("Apoe","Gfap","Gapdh"),
-                           metric = "specificity")
-})
+plt_spec <- EWCE::plot_ctd(ctd = ctd,
+                         level = 2,
+                         genes = c("Apoe","Gfap","Gapdh"),
+                         metric = "specificity")
 ```
 
 
@@ -138,12 +136,10 @@ The results can be visualised using another function, which shows for each cell 
 The dendrogram at the top shows how the cell types are hierarchically clustered by transcriptional similarity.
  
 ```{r, error=TRUE}
-try({
-  plot_list <- EWCE::ewce_plot(total_res = full_results$results,
-                             mtc_method = "BH",
-                             ctd = ctd)
-  print(plot_list$withDendro)
-})
+plot_list <- EWCE::ewce_plot(total_res = full_results$results,
+                           mtc_method = "BH",
+                           ctd = ctd)
+print(plot_list$withDendro)
 ```
      
 
