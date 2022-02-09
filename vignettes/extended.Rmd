@@ -203,7 +203,7 @@ try({
 })
 ```
 
-For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to [Robert Gordon-Smith](https://github.com/ovrhuman), Mres Molecular and Cellular Biosciences, Imperial College London for this solution):
+For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to [Robert Gordon-Smith](https://github.com/bobGSmith) for this solution):
 
 ```{r, error=TRUE}
 try({
@@ -398,7 +398,7 @@ if there is any difference.
 ## Convert single-cell formats
 
 If you would like to try running the functions 
-on an SCE object instead, we can convert `cortex_mrna` with the package [`scKirby`](https://github.com/bschilder/scKirby). 
+on an SCE object instead, we can convert `cortex_mrna` with the package [`scKirby`](https://github.com/neurogenomics/scKirby). 
 `scKirby` automatically infers the input file type and converts it 
 to SCE format by default. 
 
@@ -434,7 +434,7 @@ A function is provided to correct these where out of date aliases were used
 and give a warning if appears possible that excel has mangled some of
 the gene names. This function can be used with a downloaded reference 
 file like the 
-[MRK_List2 file]("http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt") 
+[MRK_List2 file](http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt) 
 from MGI which lists known synonyms for MGI gene symbols. 
 If no file path is passed, there is a loaded reference dataset of the 
 MRK_List2 which will be used: `mgi_synonym_data()`. 
@@ -474,7 +474,7 @@ cortex_mrna_sce = cortex_mrna_sce[keep_genes,]
 
 ## Normalization [Optional] 
 
-A different number of reads is found across each cell. We suggest using [`scTransform`](https://cran.r-project.org/web/packages/sctransform/index.html) to normalise for differences due to cell size, then linearly scale. 
+A different number of reads is found across each cell. We suggest using [`scTransform`](https://github.com/satijalab/sctransform) to normalise for differences due to cell size, then linearly scale. 
 Note that this might be slow.
 
 ```{r, style="max-height: 100px;", warning=FALSE, eval = FALSE}

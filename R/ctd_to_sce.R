@@ -1,6 +1,6 @@
 #' CellTypeDataset to SingleCellExperiment
 #'
-#' Copied from \href{https://github.com/bschilder/scKirby}{scKirby},
+#' Copied from \href{https://github.com/neurogenomics/scKirby}{scKirby},
 #'  which is not yet on CRAN or Bioconductor.
 #'
 #' @param object CellTypeDataset object.

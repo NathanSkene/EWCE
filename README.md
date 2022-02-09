@@ -1,27 +1,23 @@
 `EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment
 ================
-<h4>
-Authors: Alan Murphy, Brian Schilder, and Nathan Skene
-</h4>
-<h4>
-README updated: Jan-06-2022
-</h4>
-
-<!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
-
-[![](https://img.shields.io/badge/devel%20version-1.3.2-black.svg)](https://github.com/NathanSkene/EWCE)
+<img height='200' src='https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true'><br><br>
+[![](https://img.shields.io/badge/devel%20version-1.3.3-black.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/badge/release%20version-1.2.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
 [![R build
 status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
-[![R build
-status](https://github.com/NathanSkene/EWCE/workflows/DockerHub/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
 [![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
-[![](https://img.shields.io/badge/download-2333/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-2422/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
+<h4>
+Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
+</h4>
+<h4>
+README updated: <i>Feb-09-2022</i>
+</h4>
 
-<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true">
+<!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
 
 ## Introduction
 
@@ -49,7 +45,7 @@ BiocManager::install("EWCE")
 
 ## Documentation
 
-### [Website](https://nathanskene.github.io/EWCE)
+### [Website](https://nathanskene.github.io/EWCE/)
 
 **NOTE**: This documentation is for the development version of `EWCE`.
 See
@@ -79,8 +75,8 @@ Additional tutorials of various *EWCE* features, including how to:
 ## Updates
 
 Major upgrades to *EWCE* were made in version 1.3.1. Please see the
-[NEWS page](https://nathanskene.github.io/EWCE/articles/news/index.html)
-for more details.
+[NEWS page](https://nathanskene.github.io/EWCE/news/index.html) for more
+details.
 
 ## Troubleshooting
 
@@ -104,7 +100,7 @@ If you use the cortex/hippocampus single-cell data associated
 
 > [Zeisel, et al. Cell types in the mouse cortex and hippocampus
 > revealed by single-cell RNA-seq. Science,
-> 2015.](http://www.sciencemag.org/content/early/2015/02/18/science.aaa1934.abstract)
+> 2015.](https://doi.org/10.1126/science.aaa1934)
 
 <hr>
 

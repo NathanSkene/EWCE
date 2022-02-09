@@ -6,6 +6,9 @@ bibliography: ../inst/cit/EWCE.bib
 csl: ../inst/cit/nature.csl
 output:
   BiocStyle::html_document:
+    md_extensions: [ 
+      "-autolink_bare_uris" 
+    ]
 vignette: >
   %\VignetteIndexEntry{Getting started}
   %\VignetteEngine{knitr::rmarkdown}
@@ -49,8 +52,7 @@ Load a CTD previously generated from mouse cortex and hypothalamus single-cell R
 
 #### CTD levels 
 
-Each level of a CTD corresponds to increasingly refined cell-type/-subtype annotations. For example, in the CTD  `ewceData::ctd()` level 1 includes the cell-type "interneurons", while level 2 breaks these this group into 16 different
-interneuron subtypes ("Int...").
+Each level of a CTD corresponds to increasingly refined cell-type/-subtype annotations. For example, in the CTD  `ewceData::ctd()` level 1 includes the cell-type "interneurons", while level 2 breaks these this group into 16 different interneuron subtypes ("Int...").
 
 ```{r}
 ctd <- ewceData::ctd()
@@ -61,12 +63,10 @@ ctd <- ewceData::ctd()
 Plot the expression of four markers genes across all cell types in the CTD.
 
 ```{r, fig.width=7, fig.height=5, error=TRUE}
-try({
-  plt_exp <- EWCE::plot_ctd(ctd = ctd,
-                          level = 1,
-                          genes = c("Apoe","Gfap","Gapdh"),
-                          metric = "mean_exp")
-})
+plt_exp <- EWCE::plot_ctd(ctd = ctd,
+                        level = 1,
+                        genes = c("Apoe","Gfap","Gapdh"),
+                        metric = "mean_exp")
 ```
 
 ```{r, fig.width=9, fig.height=5, error=TRUE}
@@ -204,7 +204,7 @@ singularity pull docker://`r docker_user`/`r pkg`
 
 Finally, launch the containerised Rstudio by entering the 
 following URL in any web browser:
-[http://localhost:8787/](http://localhost:8787/)
+*http://localhost:8787/* 
 
 Login using the credentials set during the Installation steps.  
 

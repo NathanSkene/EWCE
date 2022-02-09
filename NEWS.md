@@ -6,6 +6,7 @@ New features
 * Include notes on mismatches between GitHub documentation and current Bioc release version. 
 * Allow `bin_specificity_into_quantiles` to set specificity matrix
 name produced. 
+* Merge GHA workflow yamls into one. 
 
 Bug fixes
 

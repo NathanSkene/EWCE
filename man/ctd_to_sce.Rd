@@ -19,7 +19,7 @@ ctd_to_sce(object, as_sparse = TRUE, as_DelayedArray = FALSE, verbose = TRUE)
 SingleCellExperiment
 }
 \description{
-Copied from \href{https://github.com/bschilder/scKirby}{scKirby},
+Copied from \href{https://github.com/neurogenomics/scKirby}{scKirby},
  which is not yet on CRAN or Bioconductor.
 }
 \examples{
