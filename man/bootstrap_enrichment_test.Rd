@@ -50,10 +50,9 @@ See \link[EWCE]{list_species} for all available species.}
 \item{\code{"gprofiler"} : Slower but more species and genes.}
 \item{\code{"homologene"} : Faster but fewer species and genes.}
 \item{\code{"babelgene"} : Faster but fewer species and genes.
-Also gives }
-}
- (slower but more species and genes) or
-\code{"homologene"} (faster but fewer species and genes).}
+Also gives consensus scores for each gene mapping based on a
+ several different data sources.}
+}}
 
 \item{reps}{Number of random gene lists to generate (\emph{Default: 100},
 but should be >=10,000 for publication-quality results).}
