@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
       </span>
     </div>
 
@@ -86,37 +86,25 @@
   <div class="contents col-md-9">
 <div class="section level1">
 <div class="page-header"><h1 id="ewce-expression-weighted-celltype-enrichment">
-<code>EWCE</code>: <code>E</code>xpression <code>W</code>eighted
-<code>C</code>elltype <code>E</code>nrichment<a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment"></a>
+<code>EWCE</code>: <code>E</code>xpression <code>W</code>eighted <code>C</code>elltype <code>E</code>nrichment<a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment"></a>
 </h1></div>
-<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true"><br><br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.3.3-black.svg"></a>
-<a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.3.3-green.svg"></a>
-<a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg" alt="R build status"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a>
-<a href="https://codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a>
-<a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-2483/total-green.svg"></a>
-<a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a>
+<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true"><br><br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.5.1-black.svg"></a> <a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.4.0-green.svg"></a> <a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg" alt="R build status"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a> <a href="https://app.codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://app.codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-2612/total-green.svg"></a> <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a>
 <h4 id="ewce-expression-weighted-celltype-enrichment-1">
 Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-1"></a>
 </h4>
 <h4 id="ewce-expression-weighted-celltype-enrichment-2">
-README updated: <i>Mar-08-2022</i>
+README updated: <i>Apr-28-2022</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-2"></a>
 </h4>
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <em>EWCE</em> R package is designed to facilitate expression
-weighted cell type enrichment analysis as described in our <em>Frontiers
-in Neuroscience</em> paper<sup>1</sup>. <em>EWCE</em> can be applied to
-any gene list.</p>
+<p>The <em>EWCE</em> R package is designed to facilitate expression weighted cell type enrichment analysis as described in our <em>Frontiers in Neuroscience</em> paper<sup>1</sup>. <em>EWCE</em> can be applied to any gene list.</p>
 <p>Using <em>EWCE</em> essentially involves two steps:</p>
 <ol style="list-style-type: decimal">
-<li>Prepare a single-cell reference; i.e. CellTypeDataset (CTD).
-Alternatively, you can use one of the pre-generated CTDs we provide via
-the package <code>ewceData</code> (which comes with
-<em>EWCE</em>).<br>
+<li>Prepare a single-cell reference; i.e. CellTypeDataset (CTD). Alternatively, you can use one of the pre-generated CTDs we provide via the package <code>ewceData</code> (which comes with <em>EWCE</em>).<br>
 </li>
 <li>Run cell type enrichment on a user-provided gene list.</li>
 </ol>
@@ -124,9 +112,7 @@ the package <code>ewceData</code> (which comes with
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><em>EWCE</em> requires <a href="https://www.r-project.org/" class="external-link"><code>R&gt;=4.1</code></a> and
-<code>Bioconductor&gt;=3.14</code>. To install <em>EWCE</em> on
-Bioconductor run:</p>
+<p><em>EWCE</em> requires <a href="https://www.r-project.org/" class="external-link"><code>R&gt;=4.1</code></a> and <code>Bioconductor&gt;=3.14</code>. To install <em>EWCE</em> on Bioconductor run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span><span class="op">}</span>
 
@@ -139,30 +125,23 @@ Bioconductor run:</p>
 <h3 id="website">
 <a href="https://nathanskene.github.io/EWCE/" class="external-link">Website</a><a class="anchor" aria-label="anchor" href="#website"></a>
 </h3>
-<p><strong>NOTE</strong>: This documentation is for the development
-version of <code>EWCE</code>. See <a href="https://bioconductor.org/packages/release/bioc/html/EWCE.html" class="external-link">Bioconductor</a>
-for documentation on the current release version.</p>
+<p><strong>NOTE</strong>: This documentation is for the development version of <code>EWCE</code>. See <a href="https://bioconductor.org/packages/release/bioc/html/EWCE.html" class="external-link">Bioconductor</a> for documentation on the current release version.</p>
 </div>
 <div class="section level3">
 <h3 id="getting-started">
-<a href="https://nathanskene.github.io/EWCE/articles/EWCE" class="external-link">Getting
-started</a><a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<a href="https://nathanskene.github.io/EWCE/articles/EWCE" class="external-link">Getting started</a><a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h3>
 <p>Includes:</p>
 <ul>
 <li>A minimal example to get started with running <em>EWCE</em>.</li>
-<li>How to install and use the dedicated <em>EWCE</em> Docker container
-usage. <a href="https://www.docker.com/" class="external-link">Docker</a> containers with the
-latest version of <code>EWCE</code> are regularly pushed to <a href="https://hub.docker.com/repository/docker/neurogenomicslab/ewce" class="external-link">Dockerhub</a>.</li>
+<li>How to install and use the dedicated <em>EWCE</em> Docker container usage. <a href="https://www.docker.com/" class="external-link">Docker</a> containers with the latest version of <code>EWCE</code> are regularly pushed to <a href="https://hub.docker.com/repository/docker/neurogenomicslab/ewce" class="external-link">Dockerhub</a>.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="extended-examples">
-<a href="https://nathanskene.github.io/EWCE/articles/extended.html" class="external-link">Extended
-examples</a><a class="anchor" aria-label="anchor" href="#extended-examples"></a>
+<a href="https://nathanskene.github.io/EWCE/articles/extended.html" class="external-link">Extended examples</a><a class="anchor" aria-label="anchor" href="#extended-examples"></a>
 </h3>
-<p>Additional tutorials of various <em>EWCE</em> features, including how
-to:</p>
+<p>Additional tutorials of various <em>EWCE</em> features, including how to:</p>
 <ul>
 <li>Run cell-type enrichment tests</li>
 <li>Create a CellTypeDataset</li>
@@ -175,15 +154,12 @@ to:</p>
 <div class="section level2">
 <h2 id="updates">Updates<a class="anchor" aria-label="anchor" href="#updates"></a>
 </h2>
-<p>Major upgrades to <em>EWCE</em> were made in version 1.3.1. Please
-see the <a href="https://nathanskene.github.io/EWCE/news/index.html" class="external-link">NEWS page</a>
-for more details.</p>
+<p>Major upgrades to <em>EWCE</em> were made in version 1.3.1. Please see the <a href="https://nathanskene.github.io/EWCE/news/index.html" class="external-link">NEWS page</a> for more details.</p>
 </div>
 <div class="section level2">
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
 </h2>
-<p>If you have any problems, please do submit an <a href="https://github.com/nathanskene/EWCE/issues" class="external-link">Issue here on
-GitHub</a> with a reproducible example.</p>
+<p>If you have any problems, please do submit an <a href="https://github.com/nathanskene/EWCE/issues" class="external-link">Issue here on GitHub</a> with a reproducible example.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -191,18 +167,11 @@ GitHub</a> with a reproducible example.</p>
 <p>If you use <code>EWCE</code>, please cite:</p>
 <!-- Modify this my editing the file: inst/CITATION  -->
 <blockquote>
-<p>Nathan G. Skene, Seth G. N. Grant (2016) Identification of Vulnerable
-Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and
-Expression Weighted Cell Type Enrichment, <em>Frontiers in
-Neuroscience</em>; 10, <a href="https://doi.org/10.3389/fnins.2016.00016" class="external-link uri">https://doi.org/10.3389/fnins.2016.00016</a></p>
+<p>Nathan G. Skene, Seth G. N. Grant (2016) Identification of Vulnerable Cell Types in Major Brain Disorders Using Single Cell Transcriptomes and Expression Weighted Cell Type Enrichment, <em>Frontiers in Neuroscience</em>; 10, <a href="https://doi.org/10.3389/fnins.2016.00016" class="external-link uri">https://doi.org/10.3389/fnins.2016.00016</a></p>
 </blockquote>
-<p>If you use the cortex/hippocampus single-cell data associated
-<em>EWCE</em>/<em>ewceData</em> this package then please cite the
-following:</p>
+<p>If you use the cortex/hippocampus single-cell data associated <em>EWCE</em>/<em>ewceData</em> this package then please cite the following:</p>
 <blockquote>
-<p><a href="https://doi.org/10.1126/science.aaa1934" class="external-link">Zeisel, et al. Cell
-types in the mouse cortex and hippocampus revealed by single-cell
-RNA-seq. Science, 2015.</a></p>
+<p><a href="https://doi.org/10.1126/science.aaa1934" class="external-link">Zeisel, et al. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science, 2015.</a></p>
 </blockquote>
 <hr>
 </div>
@@ -211,8 +180,7 @@ RNA-seq. Science, 2015.</a></p>
 </h2>
 <div class="section level3">
 <h3 id="neurogenomics-lab">
-<a href="https://www.neurogenomics.co.uk/" class="external-link">Neurogenomics
-Lab</a><a class="anchor" aria-label="anchor" href="#neurogenomics-lab"></a>
+<a href="https://www.neurogenomics.co.uk/" class="external-link">Neurogenomics Lab</a><a class="anchor" aria-label="anchor" href="#neurogenomics-lab"></a>
 </h3>
 <p>UK Dementia Research Institute<br>
 Department of Brain Sciences<br>
@@ -226,10 +194,7 @@ Imperial College London<br><a href="https://github.com/neurogenomics" class="ext
 <div id="refs" class="references csl-bib-body" line-spacing="2">
 <div id="ref-skene_2016" class="csl-entry">
 <div class="csl-left-margin">1. </div>
-<div class="csl-right-inline">Skene, N. &amp; Grant, S. Identification of
-vulnerable cell types in major brain disorders using single cell
-transcriptomes and expression weighted cell type enrichment.
-<em>Frontiers in Neuroscience</em> (2016). <a href="doi:%5B10.3389/fnins.2016.00016" class="uri">doi:[10.3389/fnins.2016.00016</a>](<a href="https://doi.org/10.3389/fnins.2016.00016" class="external-link uri">https://doi.org/10.3389/fnins.2016.00016</a>)</div>
+<div class="csl-right-inline">Skene, N. &amp; Grant, S. Identification of vulnerable cell types in major brain disorders using single cell transcriptomes and expression weighted cell type enrichment. <em>Frontiers in Neuroscience</em> (2016). <a href="doi:%5B10.3389/fnins.2016.00016" class="uri">doi:[10.3389/fnins.2016.00016</a>](<a href="https://doi.org/10.3389/fnins.2016.00016" class="external-link uri">https://doi.org/10.3389/fnins.2016.00016</a>)</div>
 </div>
 </div>
 </div>
@@ -283,8 +248,7 @@ transcriptomes and expression weighted cell type enrichment.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer>

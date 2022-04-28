@@ -18,7 +18,7 @@ Wrapper function for map_species."><!-- mathjax --><script src="https://cdnjs.cl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
       </span>
     </div>
 
@@ -86,28 +86,28 @@ Wrapper function for <a href="https://rdrr.io/pkg/orthogene/man/map_species.html
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">list_species</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning table with all species.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  scientific_name taxonomy_id     source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   Mus musculus       10090 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Rattus norvegicus       10116 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           Kluyveromyces lactis       28985 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4             Magnaporthe oryzae      318829 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          Eremothecium gossypii       33169 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           Arabidopsis thaliana        3702 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                   Oryza sativa        4530 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      Schizosaccharomyces pombe        4896 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       Saccharomyces cerevisiae        4932 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10             Neurospora crassa        5141 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11        Caenorhabditis elegans        6239 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12             Anopheles gambiae        7165 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Drosophila melanogaster        7227 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14                   Danio rerio        7955 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Xenopus (Silurana) tropicalis        8364 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16                 Gallus gallus        9031 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17                Macaca mulatta        9544 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18               Pan troglodytes        9598 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19                  Homo sapiens        9606 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        Canis lupus familiaris        9615 homologene</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21                    Bos taurus        9913 homologene</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  scientific_name taxonomy_id     source            id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   Mus musculus       10090 homologene     mmusculus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Rattus norvegicus       10116 homologene   rnorvegicus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           Kluyveromyces lactis       28985 homologene       klactis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             Magnaporthe oryzae      318829 homologene       moryzae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          Eremothecium gossypii       33169 homologene     egossypii</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           Arabidopsis thaliana        3702 homologene     athaliana</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                   Oryza sativa        4530 homologene       osativa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      Schizosaccharomyces pombe        4896 homologene        spombe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       Saccharomyces cerevisiae        4932 homologene   scerevisiae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10             Neurospora crassa        5141 homologene       ncrassa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        Caenorhabditis elegans        6239 homologene      celegans</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12             Anopheles gambiae        7165 homologene      agambiae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Drosophila melanogaster        7227 homologene dmelanogaster</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                   Danio rerio        7955 homologene        drerio</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Xenopus (Silurana) tropicalis        8364 homologene   xtropicalis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                 Gallus gallus        9031 homologene       ggallus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17                Macaca mulatta        9544 homologene      mmulatta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18               Pan troglodytes        9598 homologene  ptroglodytes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                  Homo sapiens        9606 homologene      hsapiens</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20        Canis lupus familiaris        9615 homologene  clfamiliaris</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                    Bos taurus        9913 homologene       btaurus</span>
 </code></pre></div>
     </div>
   </div>
@@ -122,8 +122,7 @@ Wrapper function for <a href="https://rdrr.io/pkg/orthogene/man/map_species.html
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>

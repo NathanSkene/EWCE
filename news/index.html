@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
       </span>
     </div>
 
@@ -64,46 +64,27 @@
 <h2 class="page-header" data-toc-text="1.3.3" id="ewce-133">EWCE 1.3.3<a class="anchor" aria-label="anchor" href="#ewce-133"></a></h2>
 <p>New features</p>
 <ul><li>
-<code>method</code> argument from
-<code><a href="https://rdrr.io/pkg/orthogene/man/create_background.html" class="external-link">orthogene::create_background</a></code> and
-<code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code> is now passed up as an
-argument to <code>EWCE</code> functions to give users more control.
-“homologene” chosen as default for all functions. “homologene” has fewer
-species than “orthogene” but doesnt need to import data from the web. It
-also has more 1:1 mouse:human orthologs.</li>
-<li>Include notes on mismatches between GitHub documentation and current
-Bioc release version.</li>
-<li>Allow <code>bin_specificity_into_quantiles</code> to set specificity
-matrix name produced.</li>
+<code>method</code> argument from <code><a href="https://rdrr.io/pkg/orthogene/man/create_background.html" class="external-link">orthogene::create_background</a></code> and <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code> is now passed up as an argument to <code>EWCE</code> functions to give users more control. “homologene” chosen as default for all functions. “homologene” has fewer species than “orthogene” but doesnt need to import data from the web. It also has more 1:1 mouse:human orthologs.</li>
+<li>Include notes on mismatches between GitHub documentation and current Bioc release version.</li>
+<li>Allow <code>bin_specificity_into_quantiles</code> to set specificity matrix name produced.</li>
 <li>Merge GHA workflow yamls into one.</li>
 </ul><p>Bug fixes</p>
-<ul><li>Add <code>try({})</code> and <code>error=TRUE</code> to avoid
-<em>“polygon edge not found”</em> error in vignettes.</li>
+<ul><li>Add <code>try({})</code> and <code>error=TRUE</code> to avoid <em>“polygon edge not found”</em> error in vignettes.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.1" id="ewce-131">EWCE 1.3.1<a class="anchor" aria-label="anchor" href="#ewce-131"></a></h2>
 <p>New features</p>
 <ul><li>Major changes: Pull Request from <em>bschilder_dev</em> branch.</li>
-<li>All functions can now use lists and CellTypeDatasets (CTD) from any
-species and convert them to a common species (human by default) via
-<code>orthogene</code>.<br></li>
-<li>Automated CTD standardisation via
-<code>standardise_ctd</code>.<br></li>
+<li>All functions can now use lists and CellTypeDatasets (CTD) from any species and convert them to a common species (human by default) via <code>orthogene</code>.<br></li>
+<li>Automated CTD standardisation via <code>standardise_ctd</code>.<br></li>
 <li>Can handle (sparse) matrices.<br></li>
-<li>Can create CTD from very large datasets using
-<code>DelayedArray</code> object class.<br></li>
-<li>All functions automatically create appropriate gene backgrounds
-given species.<br></li>
+<li>Can create CTD from very large datasets using <code>DelayedArray</code> object class.<br></li>
+<li>All functions automatically create appropriate gene backgrounds given species.<br></li>
 <li>More modular, simplified vignettes.<br></li>
-<li>Additional gene pre-filtering options (DESeq2, MAST, variance
-quantiles).<br></li>
+<li>Additional gene pre-filtering options (DESeq2, MAST, variance quantiles).<br></li>
 <li>New/improved plotting functions (e.g. <code>plot_ctd</code>).<br></li>
-<li>Added example bootstrapping enrichment results as <em>extdata</em>
-to speed up examples (documented in <em>data.R</em>). Accessed via
-<code><a href="../reference/example_bootstrap_results.html">EWCE::example_bootstrap_results()</a></code>.</li>
-<li>Replaced GHA workflow with check-bioc to automatically: run R-CMD
-checks, run <code>BiocCheck</code>, and rebuild/deploy pkgdown
-site.</li>
+<li>Added example bootstrapping enrichment results as <em>extdata</em> to speed up examples (documented in <em>data.R</em>). Accessed via <code><a href="../reference/example_bootstrap_results.html">EWCE::example_bootstrap_results()</a></code>.</li>
+<li>Replaced GHA workflow with check-bioc to automatically: run R-CMD checks, run <code>BiocCheck</code>, and rebuild/deploy pkgdown site.</li>
 <li>Parallelised functions:
 <ul><li>
 <code>drop_uninformative_genes</code><br></li>
@@ -112,8 +93,7 @@ site.</li>
 <li>
 <code>bootstrap_enrichment_test</code><br></li>
 </ul></li>
-<li>Added tests (multiple functions tests per file to reduce number of
-times <code>ewceData</code> files have to be downloaded):
+<li>Added tests (multiple functions tests per file to reduce number of times <code>ewceData</code> files have to be downloaded):
 <ul><li><code>test-DelayedArray</code></li>
 <li><code>test-merge_sce</code></li>
 <li><code>test-get_celltype_table</code></li>
@@ -121,78 +101,50 @@ times <code>ewceData</code> files have to be downloaded):
 <li><code>test-run_DGE</code></li>
 <li><code>test-check_percent_hits</code></li>
 </ul></li>
-<li>Added function <code><a href="../reference/is_32bit.html">is_32bit()</a></code> to all tests to ensure they
-don’t get run twice on Windows OS.<br></li>
+<li>Added function <code><a href="../reference/is_32bit.html">is_32bit()</a></code> to all tests to ensure they don’t get run twice on Windows OS.<br></li>
 <li>Added GitHub Actions workflows:
 <ul><li>
-<code>check-bioc-docker.yml</code>: Runs CRAN/Bioc checks, rebuilds
-and pushes <code>pkgdown</code> website, runs and uploads test coverage
-report,</li>
+<code>check-bioc-docker.yml</code>: Runs CRAN/Bioc checks, rebuilds and pushes <code>pkgdown</code> website, runs and uploads test coverage report,</li>
 <li>
-<code>dockerhub.yml</code>: Builds Bioconductor Docker container
-with <code>EWCE</code> installed, runs CRAN checks and (if checks are
-successful) pushes container to <a href="https://hub.docker.com/repository/docker/neurogenomicslab/ewce" class="external-link"><em>neurogenomicslab</em>
-DockerHub</a>.<br></li>
+<code>dockerhub.yml</code>: Builds Bioconductor Docker container with <code>EWCE</code> installed, runs CRAN checks and (if checks are successful) pushes container to <a href="https://hub.docker.com/repository/docker/neurogenomicslab/ewce" class="external-link"><em>neurogenomicslab</em> DockerHub</a>.<br></li>
 </ul></li>
-<li>Removed <code>docs</code> folder, as the documentation website comes
-from the <em>gh-pages</em> branch now, and is automatically built by GHA
-workflow after each push to <em>main</em> branch.</li>
-<li>Added new exported function <code>fix_celltype_names</code> to help
-with standardising celltype names in alignment with
-<code>standardise_ctd</code>.</li>
+<li>Removed <code>docs</code> folder, as the documentation website comes from the <em>gh-pages</em> branch now, and is automatically built by GHA workflow after each push to <em>main</em> branch.</li>
+<li>Added new exported function <code>fix_celltype_names</code> to help with standardising celltype names in alignment with <code>standardise_ctd</code>.</li>
 <li>
-<code>generate_bootstrap_plots_for_transcriptome</code>: Now
-supports any species (not just mouse or human).
-<ul><li>Converts CTD and DGE table (<code>tt</code>) into
-<code>output_species</code> gene symbols.</li>
+<code>generate_bootstrap_plots_for_transcriptome</code>: Now supports any species (not just mouse or human).
+<ul><li>Converts CTD and DGE table (<code>tt</code>) into <code>output_species</code> gene symbols.</li>
 <li>Automatically generates appropriate gene background.<br></li>
-<li>Faster due to now having the option to only generate certain plot
-types.<br></li>
+<li>Faster due to now having the option to only generate certain plot types.<br></li>
 </ul></li>
-<li>Provide precomputed results from <code>ewce_expression_data</code>
-via new <code>example_transcriptome_results</code> function.<br></li>
-<li>Reduced build runtime and oversized vignettes by not evaluating
-certain code chunks.
+<li>Provide precomputed results from <code>ewce_expression_data</code> via new <code>example_transcriptome_results</code> function.<br></li>
+<li>Reduced build runtime and oversized vignettes by not evaluating certain code chunks.
 <ul><li>Prevent <em>extended</em> vignette from running entirely.</li>
 </ul></li>
 <li>
 <code>@return</code> documentation for internal functions.<br></li>
 <li>Added more installation checks to GHA.</li>
-<li>Fixed inconsistent naming of unit test files: <code>test_</code>
-==&gt; <code>test-</code>
+<li>Fixed inconsistent naming of unit test files: <code>test_</code> ==&gt; <code>test-</code>
 </li>
-<li>Removed DGE args in <code>drop_uninformative_genes</code> for now
-until we run benchmarking to see how each affects the <code>EWCE</code>
-results.<br></li>
+<li>Removed DGE args in <code>drop_uninformative_genes</code> for now until we run benchmarking to see how each affects the <code>EWCE</code> results.<br></li>
 <li>Make <code>bootstrap_plots</code> function internal.</li>
-<li>Add report on how <code>orthogene</code> improve within- and
-across-species gene mappings in <em>extended</em> vignette.</li>
+<li>Add report on how <code>orthogene</code> improve within- and across-species gene mappings in <em>extended</em> vignette.</li>
 <li>Record extra info in <code>standardise_ctd</code> output:
-<ul><li>“species”: both <code>input_species</code> and
-<code>output_species</code>
+<ul><li>“species”: both <code>input_species</code> and <code>output_species</code>
 </li>
-<li>“versions”: of <code>EWCE</code>, <code>orthogene</code>, and
-<code>homologene</code>
+<li>“versions”: of <code>EWCE</code>, <code>orthogene</code>, and <code>homologene</code>
 </li>
 </ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="ewce-100">EWCE 1.0.0<a class="anchor" aria-label="anchor" href="#ewce-100"></a></h2>
 <p>New Features</p>
-<ul><li>EWCE v1.0 on Bioconductor replaces the defunct <a href="https://bioconductor.riken.jp/packages/3.5/bioc/html/EWCE.html" class="external-link">EWCE
-v1.3.0</a> available on Bioconductor v3.5.</li>
-<li>EWCE has been rendered scalable to the analysis of large
-datasets</li>
+<ul><li>EWCE v1.0 on Bioconductor replaces the defunct <a href="https://bioconductor.riken.jp/packages/3.5/bioc/html/EWCE.html" class="external-link">EWCE v1.3.0</a> available on Bioconductor v3.5.</li>
+<li>EWCE has been rendered scalable to the analysis of large datasets</li>
 <li>
-<code><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes()</a></code> has been expanded to allow
-the utilisation of differential expression approaches</li>
-<li>EWCE can now handle SingleCellExperiment (SCE) objects or other
-Ranged SummarizedExperiment (SE) data types and as input as well as the
-original format, described as a single cell transcriptome (SCT)
-object.</li>
+<code><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes()</a></code> has been expanded to allow the utilisation of differential expression approaches</li>
+<li>EWCE can now handle SingleCellExperiment (SCE) objects or other Ranged SummarizedExperiment (SE) data types and as input as well as the original format, described as a single cell transcriptome (SCT) object.</li>
 </ul><p>Deprecated &amp; Defunct</p>
-<ul><li>The following functions have been renamed to use underscore in
-compliance with Bioconductor nomenclature:
+<ul><li>The following functions have been renamed to use underscore in compliance with Bioconductor nomenclature:
 <ul><li>
 <code>check.ewce.genelist.inputs</code><br></li>
 <li>
@@ -248,8 +200,7 @@ compliance with Bioconductor nomenclature:
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>
