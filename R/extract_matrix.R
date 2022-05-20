@@ -75,8 +75,7 @@ extract_matrix <- function(ctd,
         )
         mat <- orthogene::aggregate_mapped_genes(
             gene_df = mat,
-            input_species = input_species,
-            non121_strategy = "sum",
+            input_species = input_species, 
             verbose = verbose
         )
     }
@@ -88,6 +87,7 @@ extract_matrix <- function(ctd,
             input_species = input_species,
             output_species = output_species,
             non121_strategy = non121_strategy,
+            agg_fun = "sum",
             method = method,
             verbose = FALSE
         )

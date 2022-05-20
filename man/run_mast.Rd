@@ -20,7 +20,16 @@ See \link[stats]{p.adjust} for more details.}
 
 \item{no_cores}{Number of cores to parallelise DGE across.}
 
-\item{...}{Additional arguments to be passed to the selected DGE method.}
+\item{...}{Additional arguments to be passed to
+\link[gprofiler2]{gorth} or \link[homologene]{homologene}.\cr\cr
+\emph{NOTE}: To return only the most "popular"
+interspecies ortholog mappings,
+supply \code{mthreshold=1} here AND set \code{method="gprofiler"} above.
+This procedure tends to yield a greater number of returned genes but at
+ the cost of many of them not being true biological 1:1 orthologs.\cr\cr
+ For more details, please see
+\href{https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html}{
+ here}.}
 }
 \value{
 \code{MAST} results

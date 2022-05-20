@@ -19,6 +19,7 @@
 #' row names to human gene names.
 #' @param verbose Print messages.
 #' @inheritParams orthogene::convert_orthologs
+#' @inheritDotParams orthogene::convert_orthologs
 #'
 #' @return List of the filtered CellTypeData file names.
 #'
@@ -36,7 +37,9 @@ filter_nonorthologs <- function(filenames,
                                 annot_levels = NULL,
                                 suffix = "_orthologs",
                                 method = "homologene",
-                                verbose = TRUE) {
+                                non121_strategy = "drop_both_species",
+                                verbose = TRUE,
+                                ...) {
     if (is.null(input_species)) {
         messager("No input_species provided. Setting to 'mouse'", v = verbose)
         input_species <- "mouse"
@@ -77,9 +80,10 @@ filter_nonorthologs <- function(filenames,
                     gene_df = ctd[[lvl]][[x]],
                     gene_input = "rownames",
                     input_species = input_species,
-                    non121_strategy = "drop_both_species",
+                    non121_strategy = non121_strategy,
                     method = method,
-                    verbose = FALSE
+                    verbose = FALSE,
+                    ...
                 )
             }
         }

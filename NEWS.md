@@ -1,6 +1,17 @@
+# EWCE 1.5.2
+
+## New features
+
+* Made substantial updates to `orthogene`, so going through and making sure everything still works / is able to take advantage of new features (e.g. separation of `non121_strategy` and `agg_func` args, many:many mapping):  
+    - `filter_nonorthologs`: Pass up args from `orthogene::convert_orthologs`.
+    - `generate_celltype_data`: @inheritDotParams
+* Update GHA. 
+* Bump to R (>= 4.2) now that we're developing on Bioc 3.16. 
+
+
 # EWCE 1.3.3
 
-New features
+## New features
 
 * `method` argument from `orthogene::create_background` and `orthogene::convert_orthologs` is now passed up as an argument to `EWCE` functions to give users more control. "homologene" chosen as default for all functions. "homologene" has fewer species than "orthogene" but doesnt need to import data from the web. It also has more 1:1 mouse:human orthologs. 
 * Include notes on mismatches between GitHub documentation and current Bioc release version. 
@@ -8,14 +19,14 @@ New features
 name produced. 
 * Merge GHA workflow yamls into one. 
 
-Bug fixes
+## Bug fixes
 
 * Add `try({})` and `error=TRUE` to avoid *"polygon edge not found"* error in vignettes.  
 
 
 # EWCE 1.3.1
 
-New features  
+## New features  
 
 * Major changes: Pull Request from *bschilder_dev* branch. 
 * All functions can now use lists and CellTypeDatasets (CTD) from any species 
@@ -78,7 +89,7 @@ gene mappings in *extended* vignette.
 
 # EWCE 1.0.0
 
-New Features  
+## New features  
 
 * EWCE v1.0 on Bioconductor replaces the defunct [EWCE v1.3.0](https://bioconductor.riken.jp/packages/3.5/bioc/html/EWCE.html)
 available on Bioconductor v3.5.

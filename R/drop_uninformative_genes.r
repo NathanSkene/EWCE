@@ -33,10 +33,10 @@
 #'  for scalable processing.
 #' @param no_cores Number of cores to parallelise across.
 #' Set to \code{NULL} to automatically optimise.
-#' @param verbose Print messages.
-#' @param ... Additional arguments to be passed to the selected DGE method.
+#' @param verbose Print messages. 
 #' @inheritParams orthogene::convert_orthologs
 #' @inheritParams generate_celltype_data
+#' @inheritDotParams orthogene::convert_orthologs
 #'
 #' @return exp Expression matrix with gene names as row names.
 #' @examples

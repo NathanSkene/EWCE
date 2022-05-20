@@ -37,11 +37,10 @@
 #' transformed to a normal distribution by cell type, giving equivalent scores
 #' across all cell types.
 #' @param verbose Print messages.
-#' @param ... Additional arguments passed to
-#'  \link[orthogene]{convert_orthologs}.
 #' @inheritParams bin_specificity_into_quantiles
 #' @inheritParams prep_dendro
 #' @inheritParams orthogene::convert_orthologs
+#' @inheritDotParams orthogene::convert_orthologs
 #'
 #' @return File names for the saved CellTypeData (CTD) files.
 #' @examples
@@ -119,9 +118,11 @@ generate_celltype_data <- function(exp,
             gene_df = exp,
             input_species = input_species,
             output_species = output_species,
-            non121_strategy = non121_strategy,
-            verbose = verbose,
             method = method,
+            non121_strategy = non121_strategy,
+            as_sparse = as_sparse,
+            as_DelayedArray = as_DelayedArray,
+            verbose = verbose,
             ...
         )
     }

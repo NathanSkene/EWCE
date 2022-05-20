@@ -1,7 +1,7 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 1.5.1
+Version: 1.5.2
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",
@@ -26,7 +26,7 @@ Description: Used to determine which cell types are enriched within gene lists. 
 URL: https://github.com/NathanSkene/EWCE 
 BugReports: https://github.com/NathanSkene/EWCE/issues 
 License: GPL-3
-Depends: R (>= 4.1),
+Depends: R (>= 4.2),
          RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
@@ -74,6 +74,6 @@ biocViews: GeneExpression, Transcription, DifferentialExpression,
         mRNAMicroarray, OneChannel, RNASeq,
         BiomedicalInformatics, Proteomics, Visualization,
         FunctionalGenomics, SingleCell 
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Encoding: UTF-8
 Config/testthat/edition: 3 

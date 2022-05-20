@@ -31,7 +31,7 @@ different from \code{output_species}, this argument will determine whether
 to use the intersect (\code{TRUE}) or union (\code{FALSE}) of all genes
 from \code{species1} and \code{species2}.}
 
-\item{method}{R package to to use for gene mapping:
+\item{method}{R package to use for gene mapping:
 \itemize{
 \item{\code{"gprofiler"} : Slower but more species and genes.}
 \item{\code{"homologene"} : Faster but fewer species and genes.}
