@@ -1,4 +1,4 @@
-# EWCE 1.5.2
+# EWCE 1.5.1
 
 ## New features
 
@@ -8,6 +8,10 @@
 * Update GHA. 
 * Bump to R (>= 4.2) now that we're developing on Bioc 3.16. 
 
+## Bug fixes
+
+* Avoid downloading large "MRK_List2.rpt" file any more than 
+is necessary for testing. 
 
 # EWCE 1.3.3
 

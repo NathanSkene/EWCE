@@ -5,12 +5,6 @@ test_that("Filter genes without 1 to 1 homolog test", {
     # Use Vignette Dataset to check function output
     if (!is_32bit()) {
         cortex_mrna <- ewceData::cortex_mrna()
-        if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))) {
-            download.file(
-                "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
-                destfile = sprintf("%s/MRK_List2.rpt", tempdir())
-            )
-        }
         nKeep <- 1000
         must_keep <- c("Apoe", "Gfap", "Gapdh")
         set.seed(123458)

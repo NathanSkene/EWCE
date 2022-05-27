@@ -8,7 +8,8 @@ test_that("method to remove/fix an expected set of genes", {
 
         # IMPORTANT!: Do not delete. Check that outputs "EWCE_return" will fail otherwise.
         if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))) {
-            download.file(
+            options(timeout = 60*3) # huge file, takes a long time
+            utils::download.file(
                 "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
                 destfile = sprintf("%s/MRK_List2.rpt", tempdir())
             )
@@ -145,10 +146,10 @@ test_that("method to remove/fix an expected set of genes", {
 
         # Ensure output is the same for the two data types
         cortex_mrna$exp <- suppressWarnings(
-            fix_bad_mgi_symbols(exp = cortex_mrna$exp)
+            EWCE::fix_bad_mgi_symbols(exp = cortex_mrna$exp)
         )
         cortex_mrna_SCE <- suppressWarnings(
-            fix_bad_mgi_symbols(exp = cortex_mrna_SCE)
+            EWCE::fix_bad_mgi_symbols(exp = cortex_mrna_SCE)
         )
         # fail if not the exact same
         testthat::expect_true(all.equal(

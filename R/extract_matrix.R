@@ -13,6 +13,7 @@
 #' @inheritParams standardise_ctd
 #' @inheritParams drop_uninformative_genes
 #' @inheritParams orthogene::convert_orthologs
+#' @inheritDotParams orthogene::convert_orthologs
 #'
 #' @return (specificity) matrix.
 #'
@@ -35,7 +36,8 @@ extract_matrix <- function(ctd,
                            as_DelayedArray = FALSE,
                            rename_columns = TRUE,
                            make_columns_unique = FALSE,
-                           verbose = TRUE) {
+                           verbose = TRUE,
+                           ...) {
     ### Avoid confusing Biocheck
     Gene <- max_exp <- NULL
 
@@ -87,9 +89,9 @@ extract_matrix <- function(ctd,
             input_species = input_species,
             output_species = output_species,
             non121_strategy = non121_strategy,
-            agg_fun = "sum",
             method = method,
-            verbose = FALSE
+            verbose = FALSE,
+            ...
         )
     }
     #### Replace problematic characters in colnames ####

@@ -7,7 +7,8 @@
 check_group_name(groupName)
 }
 \arguments{
-\item{groupName}{A human readable name for referring to the dataset being}
+\item{groupName}{A human readable name for referring to the dataset
+being used.}
 }
 \value{
 Null output.

@@ -36,7 +36,8 @@ cross referenced against the annot data frame.}
 \item{annotLevels}{List with arrays of strings containing the cell type
 names associated with each column in \code{exp}.}
 
-\item{groupName}{A human readable name for referring to the dataset being}
+\item{groupName}{A human readable name for referring to the dataset
+being used.}
 
 \item{no_cores}{Number of cores that should be used to speedup the
 computation.

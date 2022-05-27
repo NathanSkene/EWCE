@@ -9,7 +9,8 @@
 #' cross referenced against the annot data frame.
 #' @param annotLevels List with arrays of strings containing the cell type
 #' names associated with each column in \code{exp}.
-#' @param groupName A human readable name for referring to the dataset being
+#' @param groupName A human readable name for referring to the dataset
+#'  being used.
 #' @param no_cores Number of cores that should be used to speedup the
 #' computation.
 #' \emph{NOTE}: Use \code{no_cores=1} when using this package in windows system.

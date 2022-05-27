@@ -20,7 +20,8 @@ extract_matrix(
   as_DelayedArray = FALSE,
   rename_columns = TRUE,
   make_columns_unique = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  ...
 )
 }
 \arguments{
@@ -97,6 +98,63 @@ Set \code{=TRUE} to override this and generate new quantiles.}
 \item{verbose}{Print messages.
 Set \code{verbose=2} if you want to print all messages
  from internal functions as well.}
+
+\item{...}{
+  Arguments passed on to \code{\link[orthogene:convert_orthologs]{orthogene::convert_orthologs}}
+  \describe{
+    \item{\code{gene_df}}{Data object containing the genes
+(see \code{gene_input} for options on how
+the genes can be stored within the object).\cr
+Can be one of the following formats:\cr
+\itemize{
+\item{\code{matrix} : \cr}{A sparse or dense matrix.}
+\item{\code{data.frame} : \cr}{A \code{data.frame},
+ \code{data.table}. or \code{tibble}.}
+\item{code{list} : \cr}{A \code{list} or character \code{vector}.}
+}
+Genes, transcripts, proteins, SNPs, or genomic ranges
+ can be provided in any format
+(HGNC, Ensembl, RefSeq, UniProt, etc.) and will be
+automatically converted to gene symbols unless
+specified otherwise with the \code{...} arguments.\cr
+\emph{Note}: If you set \code{method="homologene"}, you
+must either supply genes in gene symbol format (e.g. "Sox2")
+ OR set \code{standardise_genes=TRUE}.}
+    \item{\code{gene_input}}{Which aspect of \code{gene_df} to
+get gene names from:\cr
+\itemize{
+\item{\code{"rownames"} : \cr}{From row names of data.frame/matrix.}
+\item{\code{"colnames"} : \cr}{From column names of data.frame/matrix.}
+\item{\code{<column name>} : \cr}{From a column in \code{gene_df},
+ e.g. \code{"gene_names"}.}
+}}
+    \item{\code{gene_output}}{How to return genes.
+Options include:\cr
+\itemize{
+\item{\code{"rownames"} : \cr}{As row names of \code{gene_df}.}
+\item{\code{"colnames"} : \cr}{As column names of \code{gene_df}.}
+\item{\code{"columns"} : \cr}{As new columns "input_gene", "ortholog_gene"
+(and "input_gene_standard" if \code{standardise_genes=TRUE})
+in \code{gene_df}.}
+\item{\code{"dict"} : \cr}{As a dictionary (named list) where the names
+are input_gene and the values are ortholog_gene}.
+\item{\code{"dict_rev"} : \cr}{As a reversed dictionary (named list)
+where the names are ortholog_gene and the values are input_gene}.
+}}
+    \item{\code{standardise_genes}}{If \code{TRUE} AND
+\code{gene_output="columns"}, a new column "input_gene_standard"
+will be added to \code{gene_df} containing standardised HGNC symbols
+identified by \link[gprofiler2]{gorth}.}
+    \item{\code{drop_nonorths}}{Drop genes that don't have an ortholog
+in the \code{output_species}.}
+    \item{\code{agg_fun}}{Aggregation function passed to 
+ \link[orthogene]{aggregate_mapped_genes}. 
+Set to \code{NULL} to skip aggregation step (default).}
+    \item{\code{mthreshold}}{Maximum number of ortholog names per gene to show.
+Passed to \link[gprofiler2]{gorth}.
+Only used when \code{method="gprofiler"} (\emph{DEFAULT : }\code{Inf}).}
+    \item{\code{sort_rows}}{Sort \code{gene_df} rows alphanumerically.}
+  }}
 }
 \value{
 (specificity) matrix.

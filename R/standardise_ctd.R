@@ -25,6 +25,7 @@
 #' @inheritParams extract_matrix
 #' @inheritParams drop_uninformative_genes
 #' @inheritParams orthogene::convert_orthologs
+#' @inheritDotParams orthogene::convert_orthologs
 #'
 #' @return Standardised CellTypeDataset.
 #'
@@ -53,7 +54,8 @@ standardise_ctd <- function(ctd,
                             as_DelayedArray = FALSE,
                             rename_columns = TRUE,
                             make_columns_unique = FALSE,
-                            verbose = TRUE) {
+                            verbose = TRUE,
+                            ...) {
     #### Handle verbosity at different levels ####
     if (verbose == 2) {
         verbose <- TRUE
@@ -88,7 +90,8 @@ standardise_ctd <- function(ctd,
             as_DelayedArray = as_DelayedArray,
             rename_columns = rename_columns,
             make_columns_unique = make_columns_unique,
-            verbose = verbose2
+            verbose = verbose2,
+            ...
         )
         spec <- extract_matrix(
             ctd = ctd,
@@ -104,7 +107,8 @@ standardise_ctd <- function(ctd,
             force_new_quantiles = force_new_quantiles,
             as_sparse = as_sparse,
             as_DelayedArray = as_DelayedArray,
-            verbose = verbose2
+            verbose = verbose2,
+            ...
         )
         specQ <- extract_matrix(
             ctd = ctd,
@@ -120,7 +124,8 @@ standardise_ctd <- function(ctd,
             force_new_quantiles = force_new_quantiles,
             as_sparse = as_sparse,
             as_DelayedArray = as_DelayedArray,
-            verbose = verbose2
+            verbose = verbose2,
+            ...
         )
         #### Add extra items ####
         annot <- if ("annot" %in% names(ctd[[lvl]]) & keep_annot) {

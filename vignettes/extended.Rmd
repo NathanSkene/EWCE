@@ -437,7 +437,7 @@ file like the
 [MRK_List2 file](http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt) 
 from MGI which lists known synonyms for MGI gene symbols. 
 If no file path is passed, there is a loaded reference dataset of the 
-MRK_List2 which will be used: `mgi_synonym_data()`. 
+MRK_List2 which will be used: `ewceData::mgi_synonym_data()`. 
 We recommend running this function on all input datasets.
 
 ```R
