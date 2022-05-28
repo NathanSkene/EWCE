@@ -122,7 +122,6 @@ generate_celltype_data <- function(exp,
             method = method,
             non121_strategy = non121_strategy,
             as_sparse = as_sparse,
-            as_DelayedArray = as_DelayedArray,
             verbose = verbose,
             ...
         )
