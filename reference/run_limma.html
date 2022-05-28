@@ -82,7 +82,15 @@ See <a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adju
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 <dt>...</dt>
-<dd><p>Additional arguments to be passed to the selected DGE method.</p></dd>
+<dd><p>Additional arguments to be passed to
+<a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a> or <a href="https://rdrr.io/pkg/homologene/man/homologene.html" class="external-link">homologene</a>.<br><br><em>NOTE</em>: To return only the most "popular"
+interspecies ortholog mappings,
+supply <code>mthreshold=1</code> here AND set <code>method="gprofiler"</code> above.
+This procedure tends to yield a greater number of returned genes but at
+ the cost of many of them not being true biological 1:1 orthologs.<br><br>
+ For more details, please see
+<a href="https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html" class="external-link">
+ here</a>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

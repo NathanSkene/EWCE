@@ -93,7 +93,8 @@ and convert all matrices to sparse matrices and/or <code>DelayedArray</code>.</p
   as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,
   rename_columns <span class="op">=</span> <span class="cn">TRUE</span>,
   make_columns_unique <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -136,7 +137,7 @@ Return only the most "popular" interspecies ortholog mappings.
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
@@ -171,6 +172,69 @@ numeric column names.</p></dd>
 <dd><p>Print messages.
 Set <code>verbose=2</code> if you want to print all messages
  from internal functions as well.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code></p><dl><dt><code>gene_df</code></dt>
+<dd><p>Data object containing the genes
+(see <code>gene_input</code> for options on how
+the genes can be stored within the object).<br>
+Can be one of the following formats:<br></p><ul><li><p><code>matrix</code> : <br>A sparse or dense matrix.</p></li>
+<li><p><code>data.frame</code> : <br>A <code>data.frame</code>,
+ <code>data.table</code>. or <code>tibble</code>.</p></li>
+<li><p>codelist : <br>A <code>list</code> or character <code>vector</code>.</p></li>
+</ul><p>Genes, transcripts, proteins, SNPs, or genomic ranges
+ can be provided in any format
+(HGNC, Ensembl, RefSeq, UniProt, etc.) and will be
+automatically converted to gene symbols unless
+specified otherwise with the <code>...</code> arguments.<br><em>Note</em>: If you set <code>method="homologene"</code>, you
+must either supply genes in gene symbol format (e.g. "Sox2")
+ OR set <code>standardise_genes=TRUE</code>.</p></dd>
+
+    <dt><code>gene_input</code></dt>
+<dd><p>Which aspect of <code>gene_df</code> to
+get gene names from:<br></p><ul><li><p><code>"rownames"</code> : <br>From row names of data.frame/matrix.</p></li>
+<li><p><code>"colnames"</code> : <br>From column names of data.frame/matrix.</p></li>
+<li><p><code>&lt;column name&gt;</code> : <br>From a column in <code>gene_df</code>,
+ e.g. <code>"gene_names"</code>.</p></li>
+</ul></dd>
+
+    <dt><code>gene_output</code></dt>
+<dd><p>How to return genes.
+Options include:<br></p><ul><li><p><code>"rownames"</code> : <br>As row names of <code>gene_df</code>.</p></li>
+<li><p><code>"colnames"</code> : <br>As column names of <code>gene_df</code>.</p></li>
+<li><p><code>"columns"</code> : <br>As new columns "input_gene", "ortholog_gene"
+(and "input_gene_standard" if <code>standardise_genes=TRUE</code>)
+in <code>gene_df</code>.</p></li>
+<li><p><code>"dict"</code> : <br>As a dictionary (named list) where the names
+are input_gene and the values are ortholog_gene.</p></li>
+<li><p><code>"dict_rev"</code> : <br>As a reversed dictionary (named list)
+where the names are ortholog_gene and the values are input_gene.</p></li>
+</ul></dd>
+
+    <dt><code>standardise_genes</code></dt>
+<dd><p>If <code>TRUE</code> AND
+<code>gene_output="columns"</code>, a new column "input_gene_standard"
+will be added to <code>gene_df</code> containing standardised HGNC symbols
+identified by <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.</p></dd>
+
+    <dt><code>drop_nonorths</code></dt>
+<dd><p>Drop genes that don't have an ortholog
+in the <code>output_species</code>.</p></dd>
+
+    <dt><code>agg_fun</code></dt>
+<dd><p>Aggregation function passed to 
+ <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
+Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
+
+    <dt><code>mthreshold</code></dt>
+<dd><p>Maximum number of ortholog names per gene to show.
+Passed to <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.
+Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</code>).</p></dd>
+
+    <dt><code>sort_rows</code></dt>
+<dd><p>Sort <code>gene_df</code> rows alphanumerically.</p></dd>
+
+  
+</dl></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
