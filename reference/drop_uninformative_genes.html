@@ -28,7 +28,7 @@ expressed across cell-types (multiple DEG methods available).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.2</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@ Return only the most "popular" interspecies ortholog mappings.
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
 <dt>method</dt>
-<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
@@ -222,11 +222,6 @@ identified by <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="ext
 <dd><p>Drop genes that don't have an ortholog
 in the <code>output_species</code>.</p></dd>
 
-    <dt><code>agg_fun</code></dt>
-<dd><p>Aggregation function passed to 
- <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
-Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
-
     <dt><code>mthreshold</code></dt>
 <dd><p>Maximum number of ortholog names per gene to show.
 Passed to <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.
@@ -264,7 +259,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for cells with no expressed genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> DGE:: Limma...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 3 / 300 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1065021 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1131809 secs</span>
 </code></pre></div>
     </div>
   </div>

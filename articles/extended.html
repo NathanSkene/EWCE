@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.2</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ Authors: Alan Murphy, Brian Schilder, and Nathan Skene
 </h4></h4>
             
             <h4 data-toc-skip class="date"><h4>
-Updated: May-28-2022
+Updated: May-30-2022
 </h4></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/vignettes/extended.Rmd" class="external-link"><code>vignettes/extended.Rmd</code></a></small>
@@ -1169,7 +1169,7 @@ default).</p>
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 230 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.9875669 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 0.8873224 secs</span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1205,7 +1205,7 @@ parallelising across multiple cores with the parameter
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
 <pre><code><span class="co">## Loading required namespace: ggdendro</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpntEdYW/ctd_kiCortexOnly.rda</span></code></pre>
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpBri3E6/ctd_kiCortexOnly.rda</span></code></pre>
 <div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_CortexOnly</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_CortexOnly</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1325,7 +1325,7 @@ objects as input.</p>
 <pre><code><span class="co">## Checking for cells with no expressed genes.</span></code></pre>
 <pre><code><span class="co">## DGE:: Limma...</span></code></pre>
 <pre><code><span class="co">## 1 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></code></pre>
-<pre><code><span class="co">## Time difference of 0.7894945 secs</span></code></pre>
+<pre><code><span class="co">## Time difference of 0.8889971 secs</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="generate-celltypedataset-1">Generate CellTypeDataset<a class="anchor" aria-label="anchor" href="#generate-celltypedataset-1"></a>
@@ -1349,7 +1349,7 @@ objects as input.</p>
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span>
 <span class="co">## Converting to sparse matrix.</span></code></pre>
-<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpntEdYW/ctd_MergedKI.rda</span></code></pre>
+<pre><code><span class="co">## + Saving results ==&gt;  /tmp/RtmpBri3E6/ctd_MergedKI.rda</span></code></pre>
 <div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd_MergedKI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_MergedKI</span><span class="op">)</span> </code></pre></div>
 </div>
@@ -2219,13 +2219,13 @@ to be remarkably similar, as was reported in our paper.</p>
 <span class="co">## other attached packages:</span>
 <span class="co">##  [1] ewceData_1.5.0      ExperimentHub_2.5.0 AnnotationHub_3.5.0</span>
 <span class="co">##  [4] BiocFileCache_2.5.0 dbplyr_2.1.1        BiocGenerics_0.43.0</span>
-<span class="co">##  [7] ggplot2_3.3.6       EWCE_1.5.1          RNOmni_1.0.0       </span>
+<span class="co">##  [7] ggplot2_3.3.6       EWCE_1.5.2          RNOmni_1.0.0       </span>
 <span class="co">## [10] BiocStyle_2.25.0   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##   [1] backports_1.4.1               systemfonts_1.0.4            </span>
 <span class="co">##   [3] plyr_1.8.7                    lazyeval_0.2.2               </span>
-<span class="co">##   [5] orthogene_1.3.0               BiocParallel_1.31.5          </span>
+<span class="co">##   [5] orthogene_1.3.0               BiocParallel_1.31.6          </span>
 <span class="co">##   [7] GenomeInfoDb_1.33.3           digest_0.6.29                </span>
 <span class="co">##   [9] yulab.utils_0.0.4             htmltools_0.5.2              </span>
 <span class="co">##  [11] fansi_1.0.3                   magrittr_2.0.3               </span>
