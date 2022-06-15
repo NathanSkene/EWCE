@@ -28,7 +28,7 @@ row names to human gene names.}
 
 \item{suffix}{Suffix to add to the file name (right before \emph{.rda}).}
 
-\item{method}{R package to to use for gene mapping:
+\item{method}{R package to use for gene mapping:
 \itemize{
 \item{\code{"gprofiler"} : Slower but more species and genes.}
 \item{\code{"homologene"} : Faster but fewer species and genes.}
@@ -119,6 +119,9 @@ Use \link[orthogene]{map_species} to return a full list
  of available species.}
     \item{\code{drop_nonorths}}{Drop genes that don't have an ortholog
 in the \code{output_species}.}
+    \item{\code{agg_fun}}{Aggregation function passed to 
+ \link[orthogene]{aggregate_mapped_genes}. 
+Set to \code{NULL} to skip aggregation step (default).}
     \item{\code{mthreshold}}{Maximum number of ortholog names per gene to show.
 Passed to \link[gprofiler2]{gorth}.
 Only used when \code{method="gprofiler"} (\emph{DEFAULT : }\code{Inf}).}
@@ -134,6 +137,8 @@ Only works if \code{gene_df} is one of the following classes:\cr
 If \code{gene_df} is a sparse matrix to begin with,
 it will be returned as a sparse matrix
  (so long as \code{gene_output=} \code{"rownames"} or \code{"colnames"}).}
+    \item{\code{as_DelayedArray}}{Convert aggregated matrix to
+\link[DelayedArray]{DelayedArray}.}
     \item{\code{sort_rows}}{Sort \code{gene_df} rows alphanumerically.}
   }}
 }

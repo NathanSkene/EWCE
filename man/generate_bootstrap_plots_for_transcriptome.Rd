@@ -88,7 +88,7 @@ significance values.}
 \item{savePath}{Directory where the \emph{BootstrapPlots} folder
 should be saved, default is a temp directory.}
 
-\item{method}{R package to to use for gene mapping:
+\item{method}{R package to use for gene mapping:
 \itemize{
 \item{\code{"gprofiler"} : Slower but more species and genes.}
 \item{\code{"homologene"} : Faster but fewer species and genes.}

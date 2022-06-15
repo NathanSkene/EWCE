@@ -1,3 +1,10 @@
+# EWCE 1.5.2
+
+## New features
+
+* `drop_uninformative_genes`:
+    - Expose new args: `dge_method`, `dge_test`, `min_variance_decile`
+
 # EWCE 1.5.1
 
 ## New features
