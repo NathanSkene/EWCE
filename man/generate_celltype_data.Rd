@@ -96,7 +96,7 @@ Return only the most "popular" interspecies ortholog mappings.
  }
 }}
 
-\item{method}{R package to use for gene mapping:
+\item{method}{R package to to use for gene mapping:
 \itemize{
 \item{\code{"gprofiler"} : Slower but more species and genes.}
 \item{\code{"homologene"} : Faster but fewer species and genes.}
@@ -168,9 +168,6 @@ will be added to \code{gene_df} containing standardised HGNC symbols
 identified by \link[gprofiler2]{gorth}.}
     \item{\code{drop_nonorths}}{Drop genes that don't have an ortholog
 in the \code{output_species}.}
-    \item{\code{agg_fun}}{Aggregation function passed to 
- \link[orthogene]{aggregate_mapped_genes}. 
-Set to \code{NULL} to skip aggregation step (default).}
     \item{\code{mthreshold}}{Maximum number of ortholog names per gene to show.
 Passed to \link[gprofiler2]{gorth}.
 Only used when \code{method="gprofiler"} (\emph{DEFAULT : }\code{Inf}).}
