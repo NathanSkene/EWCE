@@ -87,7 +87,7 @@ Authors: Alan Murphy, Brian Schilder, and Nathan Skene
 </h4></h4>
             
             <h4 data-toc-skip class="date"><h4>
-Updated: May-30-2022
+Updated: Jun-15-2022
 </h4></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/vignettes/EWCE.Rmd" class="external-link"><code>vignettes/EWCE.Rmd</code></a></small>
@@ -153,7 +153,7 @@ cell-type/-subtype annotations. For example, in the CTD
 interneuron subtypes (“Int…”).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## snapshotDate(): 2022-05-17</span></code></pre>
+<pre><code><span class="co">## snapshotDate(): 2022-06-15</span></code></pre>
 <pre><code><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></code></pre>
 <pre><code><span class="co">## loading from cache</span></code></pre>
 </div>
@@ -267,8 +267,8 @@ across multiple cores with the parameter <code>no_cores</code>
 <pre><code><span class="co">## Extracting genes from ortholog_gene.</span></code></pre>
 <pre><code><span class="co">## 17,355 genes extracted.</span></code></pre>
 <pre><code><span class="co">## Checking for genes without 1:1 orthologs.</span></code></pre>
-<pre><code><span class="co">## Dropping 131 genes that have multiple input_gene per ortholog_gene.</span></code></pre>
-<pre><code><span class="co">## Dropping 498 genes that have multiple ortholog_gene per input_gene.</span></code></pre>
+<pre><code><span class="co">## Dropping 131 genes that have multiple input_gene per ortholog_gene (many:1).</span></code></pre>
+<pre><code><span class="co">## Dropping 498 genes that have multiple ortholog_gene per input_gene (1:many).</span></code></pre>
 <pre><code><span class="co">## Filtering gene_df with gene_map</span></code></pre>
 <pre><code><span class="co">## Adding input_gene col to gene_df.</span></code></pre>
 <pre><code><span class="co">## Adding ortholog_gene col to gene_df.</span></code></pre>
@@ -512,7 +512,7 @@ URL in any web browser: <em><a href="http://localhost:8787/" class="external-lin
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
 <span class="co">## [1] ewceData_1.5.0      ExperimentHub_2.5.0 AnnotationHub_3.5.0</span>
-<span class="co">## [4] BiocFileCache_2.5.0 dbplyr_2.1.1        BiocGenerics_0.43.0</span>
+<span class="co">## [4] BiocFileCache_2.5.0 dbplyr_2.2.0        BiocGenerics_0.43.0</span>
 <span class="co">## [7] EWCE_1.5.2          RNOmni_1.0.0        BiocStyle_2.25.0   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
@@ -520,58 +520,58 @@ URL in any web browser: <em><a href="http://localhost:8787/" class="external-lin
 <span class="co">##   [3] ggsignif_0.6.3                ellipsis_0.3.2               </span>
 <span class="co">##   [5] rprojroot_2.0.3               XVector_0.37.0               </span>
 <span class="co">##   [7] GenomicRanges_1.49.0          fs_1.5.2                     </span>
-<span class="co">##   [9] aplot_0.1.4                   farver_2.1.0                 </span>
+<span class="co">##   [9] aplot_0.1.6                   farver_2.1.0                 </span>
 <span class="co">##  [11] ggpubr_0.4.0                  bit64_4.0.5                  </span>
 <span class="co">##  [13] interactiveDisplayBase_1.35.0 AnnotationDbi_1.59.1         </span>
-<span class="co">##  [15] fansi_1.0.3                   orthogene_1.3.0              </span>
-<span class="co">##  [17] cachem_1.0.6                  knitr_1.39                   </span>
-<span class="co">##  [19] jsonlite_1.8.0                broom_0.8.0                  </span>
-<span class="co">##  [21] png_0.1-7                     shiny_1.7.1                  </span>
-<span class="co">##  [23] BiocManager_1.30.18           compiler_4.2.0               </span>
-<span class="co">##  [25] httr_1.4.3                    backports_1.4.1              </span>
-<span class="co">##  [27] lazyeval_0.2.2                assertthat_0.2.1             </span>
-<span class="co">##  [29] Matrix_1.4-1                  fastmap_1.1.0                </span>
-<span class="co">##  [31] limma_3.53.2                  cli_3.3.0                    </span>
-<span class="co">##  [33] later_1.3.0                   htmltools_0.5.2              </span>
-<span class="co">##  [35] tools_4.2.0                   gtable_0.3.0                 </span>
-<span class="co">##  [37] glue_1.6.2                    GenomeInfoDbData_1.2.8       </span>
-<span class="co">##  [39] reshape2_1.4.4                dplyr_1.0.9                  </span>
-<span class="co">##  [41] rappdirs_0.3.3                Rcpp_1.0.8.3                 </span>
-<span class="co">##  [43] carData_3.0-5                 Biobase_2.57.1               </span>
-<span class="co">##  [45] jquerylib_0.1.4               pkgdown_2.0.3.9000           </span>
-<span class="co">##  [47] vctrs_0.4.1                   Biostrings_2.65.0            </span>
-<span class="co">##  [49] nlme_3.1-157                  ape_5.6-2                    </span>
-<span class="co">##  [51] babelgene_22.3                xfun_0.31                    </span>
-<span class="co">##  [53] stringr_1.4.0                 mime_0.12                    </span>
-<span class="co">##  [55] lifecycle_1.0.1               rstatix_0.7.0                </span>
-<span class="co">##  [57] zlibbioc_1.43.0               scales_1.2.0                 </span>
-<span class="co">##  [59] ragg_1.2.2                    promises_1.2.0.1             </span>
-<span class="co">##  [61] MatrixGenerics_1.9.0          parallel_4.2.0               </span>
-<span class="co">##  [63] SummarizedExperiment_1.27.1   gprofiler2_0.2.1             </span>
-<span class="co">##  [65] SingleCellExperiment_1.19.0   yaml_2.3.5                   </span>
-<span class="co">##  [67] curl_4.3.2                    gridExtra_2.3                </span>
-<span class="co">##  [69] memoise_2.0.1                 ggfun_0.0.6                  </span>
-<span class="co">##  [71] ggplot2_3.3.6                 yulab.utils_0.0.4            </span>
-<span class="co">##  [73] sass_0.4.1                    stringi_1.7.6                </span>
-<span class="co">##  [75] RSQLite_2.2.14                highr_0.9                    </span>
-<span class="co">##  [77] BiocVersion_3.16.0            S4Vectors_0.35.0             </span>
-<span class="co">##  [79] desc_1.4.1                    tidytree_0.3.9               </span>
-<span class="co">##  [81] filelock_1.0.2                BiocParallel_1.31.6          </span>
-<span class="co">##  [83] GenomeInfoDb_1.33.3           rlang_1.0.2                  </span>
-<span class="co">##  [85] pkgconfig_2.0.3               systemfonts_1.0.4            </span>
-<span class="co">##  [87] bitops_1.0-7                  matrixStats_0.62.0           </span>
-<span class="co">##  [89] evaluate_0.15                 lattice_0.20-45              </span>
-<span class="co">##  [91] purrr_0.3.4                   labeling_0.4.2               </span>
-<span class="co">##  [93] htmlwidgets_1.5.4             treeio_1.21.0                </span>
-<span class="co">##  [95] patchwork_1.1.1               cowplot_1.1.1                </span>
-<span class="co">##  [97] bit_4.0.4                     tidyselect_1.1.2             </span>
-<span class="co">##  [99] plyr_1.8.7                    magrittr_2.0.3               </span>
-<span class="co">## [101] bookdown_0.26                 R6_2.5.1                     </span>
-<span class="co">## [103] IRanges_2.31.0                generics_0.1.2               </span>
-<span class="co">## [105] DelayedArray_0.23.0           DBI_1.1.2                    </span>
-<span class="co">## [107] withr_2.5.0                   pillar_1.7.0                 </span>
-<span class="co">## [109] KEGGREST_1.37.0               abind_1.4-5                  </span>
-<span class="co">## [111] RCurl_1.98-1.6                tibble_3.1.7                 </span>
+<span class="co">##  [15] fansi_1.0.3                   orthogene_1.3.1              </span>
+<span class="co">##  [17] codetools_0.2-18              cachem_1.0.6                 </span>
+<span class="co">##  [19] knitr_1.39                    jsonlite_1.8.0               </span>
+<span class="co">##  [21] broom_0.8.0                   png_0.1-7                    </span>
+<span class="co">##  [23] shiny_1.7.1                   BiocManager_1.30.18          </span>
+<span class="co">##  [25] compiler_4.2.0                httr_1.4.3                   </span>
+<span class="co">##  [27] backports_1.4.1               lazyeval_0.2.2               </span>
+<span class="co">##  [29] assertthat_0.2.1              Matrix_1.4-1                 </span>
+<span class="co">##  [31] fastmap_1.1.0                 limma_3.53.3                 </span>
+<span class="co">##  [33] cli_3.3.0                     later_1.3.0                  </span>
+<span class="co">##  [35] htmltools_0.5.2               tools_4.2.0                  </span>
+<span class="co">##  [37] gtable_0.3.0                  glue_1.6.2                   </span>
+<span class="co">##  [39] GenomeInfoDbData_1.2.8        reshape2_1.4.4               </span>
+<span class="co">##  [41] dplyr_1.0.9                   rappdirs_0.3.3               </span>
+<span class="co">##  [43] Rcpp_1.0.8.3                  carData_3.0-5                </span>
+<span class="co">##  [45] Biobase_2.57.1                jquerylib_0.1.4              </span>
+<span class="co">##  [47] pkgdown_2.0.4.9000            vctrs_0.4.1                  </span>
+<span class="co">##  [49] Biostrings_2.65.1             nlme_3.1-157                 </span>
+<span class="co">##  [51] ape_5.6-2                     babelgene_22.3               </span>
+<span class="co">##  [53] xfun_0.31                     stringr_1.4.0                </span>
+<span class="co">##  [55] mime_0.12                     lifecycle_1.0.1              </span>
+<span class="co">##  [57] rstatix_0.7.0                 zlibbioc_1.43.0              </span>
+<span class="co">##  [59] scales_1.2.0                  ragg_1.2.2                   </span>
+<span class="co">##  [61] promises_1.2.0.1              MatrixGenerics_1.9.0         </span>
+<span class="co">##  [63] parallel_4.2.0                SummarizedExperiment_1.27.1  </span>
+<span class="co">##  [65] gprofiler2_0.2.1              SingleCellExperiment_1.19.0  </span>
+<span class="co">##  [67] yaml_2.3.5                    curl_4.3.2                   </span>
+<span class="co">##  [69] gridExtra_2.3                 memoise_2.0.1                </span>
+<span class="co">##  [71] ggfun_0.0.6                   ggplot2_3.3.6                </span>
+<span class="co">##  [73] yulab.utils_0.0.4             sass_0.4.1                   </span>
+<span class="co">##  [75] stringi_1.7.6                 RSQLite_2.2.14               </span>
+<span class="co">##  [77] highr_0.9                     BiocVersion_3.16.0           </span>
+<span class="co">##  [79] S4Vectors_0.35.1              desc_1.4.1                   </span>
+<span class="co">##  [81] tidytree_0.3.9                filelock_1.0.2               </span>
+<span class="co">##  [83] BiocParallel_1.31.8           GenomeInfoDb_1.33.3          </span>
+<span class="co">##  [85] rlang_1.0.2                   pkgconfig_2.0.3              </span>
+<span class="co">##  [87] systemfonts_1.0.4             bitops_1.0-7                 </span>
+<span class="co">##  [89] matrixStats_0.62.0            evaluate_0.15                </span>
+<span class="co">##  [91] lattice_0.20-45               purrr_0.3.4                  </span>
+<span class="co">##  [93] labeling_0.4.2                htmlwidgets_1.5.4            </span>
+<span class="co">##  [95] treeio_1.21.0                 patchwork_1.1.1              </span>
+<span class="co">##  [97] cowplot_1.1.1                 bit_4.0.4                    </span>
+<span class="co">##  [99] tidyselect_1.1.2              plyr_1.8.7                   </span>
+<span class="co">## [101] magrittr_2.0.3                bookdown_0.27                </span>
+<span class="co">## [103] R6_2.5.1                      IRanges_2.31.0               </span>
+<span class="co">## [105] generics_0.1.2                DelayedArray_0.23.0          </span>
+<span class="co">## [107] DBI_1.1.2                     pillar_1.7.0                 </span>
+<span class="co">## [109] KEGGREST_1.37.2               abind_1.4-5                  </span>
+<span class="co">## [111] RCurl_1.98-1.7                tibble_3.1.7                 </span>
 <span class="co">## [113] homologene_1.4.68.19.3.27     crayon_1.5.1                 </span>
 <span class="co">## [115] car_3.0-13                    utf8_1.2.2                   </span>
 <span class="co">## [117] plotly_4.10.0                 rmarkdown_2.14               </span>
@@ -618,7 +618,7 @@ transcriptomes and expression weighted cell type enrichment.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer>

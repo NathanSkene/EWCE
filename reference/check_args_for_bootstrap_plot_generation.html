@@ -87,44 +87,67 @@ generate_bootstrap_plots_for_transcriptome."><!-- mathjax --><script src="https:
     <h2>Arguments</h2>
     <dl><dt>sct_data</dt>
 <dd><p>List generated using <a href="generate_celltype_data.html">generate_celltype_data</a>.</p></dd>
+
+
 <dt>tt</dt>
 <dd><p>Differential expression table.
 Can be output of <a href="https://rdrr.io/pkg/limma/man/toptable.html" class="external-link">topTable</a> function.
 Minimum requirement is that one column stores a metric of
 increased/decreased expression (i.e. log fold change, t-statistic for
 differential expression etc) and another contains gene symbols.</p></dd>
+
+
 <dt>thresh</dt>
 <dd><p>The number of up- and down- regulated genes to be included in
 each analysis (Default: 250).</p></dd>
+
+
 <dt>annotLevel</dt>
 <dd><p>An integer indicating which level of <code>sct_data</code> to
 analyse (<em>Default: 1</em>).</p></dd>
+
+
 <dt>reps</dt>
 <dd><p>Number of random gene lists to generate (<em>Default: 100</em>,
 but should be &gt;=10,000 for publication-quality results).</p></dd>
+
+
 <dt>full_results</dt>
 <dd><p>The full output of
 <a href="ewce_expression_data.html">ewce_expression_data</a> for the same gene list.</p></dd>
+
+
 <dt>listFileName</dt>
 <dd><p>String used as the root for files saved using
 this function.</p></dd>
+
+
 <dt>showGNameThresh</dt>
 <dd><p>Integer. If a gene has over X percent of it's
 expression proportion in a cell type, then list the gene name.</p></dd>
+
+
 <dt>ttSpecies</dt>
 <dd><p>The species the differential expression table
 was generated from.</p></dd>
+
+
 <dt>sctSpecies</dt>
 <dd><p>Species that <code>sct_data</code> came from
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>sortBy</dt>
 <dd><p>Column name of metric in <code>tt</code>
 which should be used to sort up- from down- regulated genes (Default: "t").</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Null output.</p>
+    
+
+<p>Null output.</p>
     </div>
 
   </div>
@@ -139,7 +162,7 @@ which should be used to sort up- from down- regulated genes (Default: "t").</p><
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

@@ -93,18 +93,30 @@ from a CellTypeDataset object.</p>
     <h2>Arguments</h2>
     <dl><dt>ctd</dt>
 <dd><p>Input CellTypeData.</p></dd>
+
+
 <dt>dataset</dt>
 <dd><p>CellTypeData. name.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>CTD level to extract from.</p></dd>
+
+
 <dt>input_species</dt>
 <dd><p>Which species the gene names in <code>exp</code> come from.
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>output_species</dt>
 <dd><p>Which species' genes names to convert <code>exp</code> to.
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>metric</dt>
 <dd><p>Name of the matrix to extract.</p></dd>
+
+
 <dt>non121_strategy</dt>
 <dd><p>How to handle genes that don't have
 1:1 mappings between <code>input_species</code>:<code>output_species</code>.
@@ -131,35 +143,55 @@ Return only the most "popular" interspecies ortholog mappings.
   (<code>input_species</code>-to-<code>output_species</code>)
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
+
+
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
  several different data sources.</p></li>
 </ul></dd>
+
+
 <dt>numberOfBins</dt>
 <dd><p>Number of non-zero quantile bins.</p></dd>
+
+
 <dt>remove_unlabeled_clusters</dt>
 <dd><p>Remove any samples that have
 numeric column names.</p></dd>
+
+
 <dt>force_new_quantiles</dt>
 <dd><p>By default, quantile computation is
 skipped if they have already been computed.
 Set <code>=TRUE</code> to override this and generate new quantiles.</p></dd>
+
+
 <dt>as_sparse</dt>
 <dd><p>Convert to sparse matrix.</p></dd>
+
+
 <dt>as_DelayedArray</dt>
 <dd><p>Convert to <code>DelayedArray</code>.</p></dd>
+
+
 <dt>rename_columns</dt>
 <dd><p>Remove <code>replace_chars</code> from column names.</p></dd>
+
+
 <dt>make_columns_unique</dt>
 <dd><p>Rename each columns with the prefix
 <code>dataset.species.celltype</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.
 Set <code>verbose=2</code> if you want to print all messages
  from internal functions as well.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code></p><dl><dt><code>gene_df</code></dt>
 <dd><p>Data object containing the genes
@@ -208,6 +240,11 @@ identified by <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="ext
 <dd><p>Drop genes that don't have an ortholog
 in the <code>output_species</code>.</p></dd>
 
+    <dt><code>agg_fun</code></dt>
+<dd><p>Aggregation function passed to 
+ <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
+Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
+
     <dt><code>mthreshold</code></dt>
 <dd><p>Maximum number of ortholog names per gene to show.
 Passed to <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.
@@ -218,10 +255,13 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
   
 </dl></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>(specificity) matrix.</p>
+    
+
+<p>(specificity) matrix.</p>
     </div>
 
   </div>
@@ -236,7 +276,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

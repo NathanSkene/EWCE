@@ -99,76 +99,119 @@ and generates plots which show how the expression of the genes in
     <h2>Arguments</h2>
     <dl><dt>sct_data</dt>
 <dd><p>List generated using <a href="generate_celltype_data.html">generate_celltype_data</a>.</p></dd>
+
+
 <dt>tt</dt>
 <dd><p>Differential expression table.
 Can be output of <a href="https://rdrr.io/pkg/limma/man/toptable.html" class="external-link">topTable</a> function.
 Minimum requirement is that one column stores a metric of
 increased/decreased expression (i.e. log fold change, t-statistic for
 differential expression etc) and another contains gene symbols.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>List of gene symbols containing the background gene list
 (including hit genes). If <code>bg=NULL</code>,
  an appropriate gene background will be created automatically.</p></dd>
+
+
 <dt>thresh</dt>
 <dd><p>The number of up- and down- regulated genes to be included in
 each analysis (Default: 250).</p></dd>
+
+
 <dt>annotLevel</dt>
 <dd><p>An integer indicating which level of <code>sct_data</code> to
 analyse (<em>Default: 1</em>).</p></dd>
+
+
 <dt>reps</dt>
 <dd><p>Number of random gene lists to generate (<em>Default: 100</em>,
 but should be &gt;=10,000 for publication-quality results).</p></dd>
+
+
 <dt>full_results</dt>
 <dd><p>The full output of
 <a href="ewce_expression_data.html">ewce_expression_data</a> for the same gene list.</p></dd>
+
+
 <dt>listFileName</dt>
 <dd><p>String used as the root for files saved using
 this function.</p></dd>
+
+
 <dt>showGNameThresh</dt>
 <dd><p>Integer. If a gene has over X percent of it's
 expression proportion in a cell type, then list the gene name.</p></dd>
+
+
 <dt>ttSpecies</dt>
 <dd><p>The species the differential expression table
 was generated from.</p></dd>
+
+
 <dt>sctSpecies</dt>
 <dd><p>Species that <code>sct_data</code> came from
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>output_species</dt>
 <dd><p>Species to convert <code>sct_data</code> and <code>hits</code> to
 (Default: "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>sortBy</dt>
 <dd><p>Column name of metric in <code>tt</code>
 which should be used to sort up- from down- regulated genes (Default: "t").</p></dd>
+
+
 <dt>sig_only</dt>
 <dd><p>Should plots only be generated for cells which have
 significant changes?</p></dd>
+
+
 <dt>sig_col</dt>
 <dd><p>Column name in <code>tt</code> that contains the
 significance values.</p></dd>
+
+
 <dt>sig_thresh</dt>
 <dd><p>Threshold by which to filter <code>tt</code> by <code>sig_col</code>.</p></dd>
+
+
 <dt>celltype_col</dt>
 <dd><p>Column within <code>tt</code> that contains celltype names.</p></dd>
+
+
 <dt>plot_types</dt>
 <dd><p>Plot types to generate.</p></dd>
+
+
 <dt>savePath</dt>
 <dd><p>Directory where the <em>BootstrapPlots</em> folder
 should be saved, default is a temp directory.</p></dd>
+
+
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
  several different data sources.</p></li>
 </ul></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Saves a set of PDF files containing graphs and returns the file where
+    
+
+<p>Saves a set of PDF files containing graphs and returns the file where
 they are saved. These will be saved with the filename adjusted using the
 value of <code>listFileName.</code> The files are saved into the
 <em>BootstrapPlot</em> folder.
@@ -243,8 +286,8 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting genes from ortholog_gene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 13,416 genes extracted.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for genes without 1:1 orthologs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 46 genes that have multiple input_gene per ortholog_gene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 56 genes that have multiple ortholog_gene per input_gene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 46 genes that have multiple input_gene per ortholog_gene (many:1).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 56 genes that have multiple ortholog_gene per input_gene (1:many).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering gene_df with gene_map</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning gene_map as dictionary</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -289,8 +332,8 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting genes from ortholog_gene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 17,355 genes extracted.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for genes without 1:1 orthologs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 131 genes that have multiple input_gene per ortholog_gene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 498 genes that have multiple ortholog_gene per input_gene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 131 genes that have multiple input_gene per ortholog_gene (many:1).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Dropping 498 genes that have multiple ortholog_gene per input_gene (1:many).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering gene_df with gene_map</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding input_gene col to gene_df.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding ortholog_gene col to gene_df.</span>
@@ -351,7 +394,7 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

@@ -101,40 +101,64 @@ contain matrices of mean expression and specificity per cell type.</p>
 <dd><p>Numerical matrix with row for each gene and column for each cell.
 Row names are gene symbols. Column names are cell IDs which can be
 cross referenced against the annot data frame.</p></dd>
+
+
 <dt>annotLevels</dt>
 <dd><p>List with arrays of strings containing the cell type
 names associated with each column in <code>exp</code>.</p></dd>
+
+
 <dt>groupName</dt>
 <dd><p>A human readable name for referring to the dataset
 being used.</p></dd>
+
+
 <dt>no_cores</dt>
 <dd><p>Number of cores that should be used to speedup the
 computation.
 <em>NOTE</em>: Use <code>no_cores=1</code> when using this package in windows system.</p></dd>
+
+
 <dt>savePath</dt>
 <dd><p>Directory where the CTD file should be saved.</p></dd>
+
+
 <dt>file_prefix</dt>
 <dd><p>Prefix to add to saved CTD file name.</p></dd>
+
+
 <dt>as_sparse</dt>
 <dd><p>Convert <code>exp</code> to a sparse <code>Matrix</code>.</p></dd>
+
+
 <dt>as_DelayedArray</dt>
 <dd><p>Convert <code>exp</code> to <code>DelayedArray</code>.</p></dd>
+
+
 <dt>normSpec</dt>
 <dd><p>Boolean indicating whether specificity data should be
 transformed to a normal distribution by cell type, giving equivalent scores
 across all cell types.</p></dd>
+
+
 <dt>convert_orths</dt>
 <dd><p>If <code>input_species!=output_species</code> and
 <code>convert_orths=TRUE</code>, will drop genes without
 1:1 <code>output_species</code> orthologs and then convert <code>exp</code> gene names
 to those of <code>output_species</code>.</p></dd>
+
+
 <dt>input_species</dt>
 <dd><p>The species that the <code>exp</code> dataset comes from.
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>output_species</dt>
 <dd><p>Species to convert <code>exp</code> to
 (Default: "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>non121_strategy</dt>
 <dd><p>How to handle genes that don't have
 1:1 mappings between <code>input_species</code>:<code>output_species</code>.
@@ -161,28 +185,44 @@ Return only the most "popular" interspecies ortholog mappings.
   (<code>input_species</code>-to-<code>output_species</code>)
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
+
+
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
  several different data sources.</p></li>
 </ul></dd>
+
+
 <dt>force_new_file</dt>
 <dd><p>If a file of the same name as the one
 being created already exists, overwrite it.</p></dd>
+
+
 <dt>specificity_quantiles</dt>
 <dd><p>Compute specificity quantiles.
 Recommended to set to <code>TRUE</code>.</p></dd>
+
+
 <dt>numberOfBins</dt>
 <dd><p>Number of quantile 'bins' to use (40 is recommended).</p></dd>
+
+
 <dt>dendrograms</dt>
 <dd><p>Add dendrogram plots</p></dd>
+
+
 <dt>return_ctd</dt>
 <dd><p>Return the CTD object in a list along with the file name,
 instead of just the file name.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code></p><dl><dt><code>gene_df</code></dt>
 <dd><p>Data object containing the genes
@@ -231,6 +271,11 @@ identified by <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="ext
 <dd><p>Drop genes that don't have an ortholog
 in the <code>output_species</code>.</p></dd>
 
+    <dt><code>agg_fun</code></dt>
+<dd><p>Aggregation function passed to 
+ <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
+Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
+
     <dt><code>mthreshold</code></dt>
 <dd><p>Maximum number of ortholog names per gene to show.
 Passed to <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.
@@ -241,10 +286,13 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
   
 </dl></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>File names for the saved CellTypeData (CTD) files.</p>
+    
+
+<p>File names for the saved CellTypeData (CTD) files.</p>
     </div>
 
     <div id="ref-examples">
@@ -274,7 +322,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ggdendro</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/Rtmp4NYFbN/ctd_allKImouse.rda</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmpCFNqKL/ctd_allKImouse.rda</span>
 </code></pre></div>
     </div>
   </div>
@@ -289,7 +337,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

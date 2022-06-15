@@ -94,58 +94,87 @@ disease gene set's enrichment in a particular cell type (the 'controlledCT')</p>
 <dd><p>Array of gene symbols containing the disease gene list.
 Does not have to be disease genes. Must be from same species as the single
 cell transcriptome dataset.</p></dd>
+
+
 <dt>functional_genes</dt>
 <dd><p>Array of gene symbols containing the functional gene
 list. The enrichment of this gene set within the disease_genes is tested.
 Must be from same species as the single cell transcriptome dataset.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>List of gene symbols containing the background gene list
 (including hit genes). If <code>bg=NULL</code>,
  an appropriate gene background will be created automatically.</p></dd>
+
+
 <dt>sct_data</dt>
 <dd><p>List generated using <a href="generate_celltype_data.html">generate_celltype_data</a>.</p></dd>
+
+
 <dt>sctSpecies</dt>
 <dd><p>Species that <code>sct_data</code> came from
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>output_species</dt>
 <dd><p>Species to convert <code>sct_data</code> and <code>hits</code> to
 (Default: "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>disease_genes_species</dt>
 <dd><p>Species of the
 <code>disease_genes</code> gene set.</p></dd>
+
+
 <dt>functional_genes_species</dt>
 <dd><p>Species of the
 <code>functional_genes</code> gene set.</p></dd>
+
+
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
  several different data sources.</p></li>
 </ul></dd>
+
+
 <dt>annotLevel</dt>
 <dd><p>An integer indicating which level of <code>sct_data</code> to
 analyse (<em>Default: 1</em>).</p></dd>
+
+
 <dt>reps</dt>
 <dd><p>Number of random gene lists to generate (<em>Default: 100</em>,
 but should be &gt;=10,000 for publication-quality results).</p></dd>
+
+
 <dt>controlledCT</dt>
 <dd><p>[Optional] If not NULL, and instead is the name of a
 cell type, then the bootstrapping controls for expression within that
 cell type.</p></dd>
+
+
 <dt>use_intersect</dt>
 <dd><p>When <code>species1</code> and <code>species2</code> are both
 different from <code>output_species</code>, this argument will determine whether 
 to use the intersect (<code>TRUE</code>) or union (<code>FALSE</code>) of all genes
 from <code>species1</code> and <code>species2</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing three data frames:</p><ul><li><p><code>p_controlled</code> The probability that functional_genes are
+    
+
+<p>A list containing three data frames:</p><ul><li><p><code>p_controlled</code> The probability that functional_genes are
   enriched in disease_genes while controlling for the level of specificity
   in controlledCT</p></li>
 <li><p><code>z_controlled</code> The z-score that functional_genes are enriched
@@ -220,7 +249,7 @@ from <code>species1</code> and <code>species2</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

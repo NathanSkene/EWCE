@@ -91,22 +91,34 @@ The new files are then saved to disk, appending
     <h2>Arguments</h2>
     <dl><dt>filenames</dt>
 <dd><p>List of file names for sct_data saved as <em>.rda</em> files.</p></dd>
+
+
 <dt>input_species</dt>
 <dd><p>Which species the gene names in <code>exp</code> come from.</p></dd>
+
+
 <dt>convert_nonhuman_genes</dt>
 <dd><p>Whether to convert the <code>exp</code>
 row names to human gene names.</p></dd>
+
+
 <dt>annot_levels</dt>
 <dd><p>[Optional] Names of each annotation level.</p></dd>
+
+
 <dt>suffix</dt>
 <dd><p>Suffix to add to the file name (right before <em>.rda</em>).</p></dd>
+
+
 <dt>method</dt>
-<dd><p>R package to to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
+<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
 Also gives consensus scores for each gene mapping based on a
  several different data sources.</p></li>
 </ul></dd>
+
+
 <dt>non121_strategy</dt>
 <dd><p>How to handle genes that don't have
 1:1 mappings between <code>input_species</code>:<code>output_species</code>.
@@ -133,8 +145,12 @@ Return only the most "popular" interspecies ortholog mappings.
   (<code>input_species</code>-to-<code>output_species</code>)
   after dropping any duplicate genes in the <code>output_species</code>.</p></li>
 </ul></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code></p><dl><dt><code>gene_df</code></dt>
 <dd><p>Data object containing the genes
@@ -188,6 +204,11 @@ Use <a href="https://rdrr.io/pkg/orthogene/man/map_species.html" class="external
 <dd><p>Drop genes that don't have an ortholog
 in the <code>output_species</code>.</p></dd>
 
+    <dt><code>agg_fun</code></dt>
+<dd><p>Aggregation function passed to 
+ <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
+Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
+
     <dt><code>mthreshold</code></dt>
 <dd><p>Maximum number of ortholog names per gene to show.
 Passed to <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="external-link">gorth</a>.
@@ -204,15 +225,22 @@ Only works if <code>gene_df</code> is one of the following classes:<br></p><ul><
 it will be returned as a sparse matrix
  (so long as <code>gene_output=</code> <code>"rownames"</code> or <code>"colnames"</code>).</p></dd>
 
+    <dt><code>as_DelayedArray</code></dt>
+<dd><p>Convert aggregated matrix to
+<a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-class.html" class="external-link">DelayedArray</a>.</p></dd>
+
     <dt><code>sort_rows</code></dt>
 <dd><p>Sort <code>gene_df</code> rows alphanumerically.</p></dd>
 
   
 </dl></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List of the filtered CellTypeData file names.</p>
+    
+
+<p>List of the filtered CellTypeData file names.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -258,7 +286,7 @@ now a wrapper for <code>filter_nonorthologs</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

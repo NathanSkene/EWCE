@@ -96,32 +96,49 @@ scMerge</a>.</p>
     <dl><dt>sce_list</dt>
 <dd><p>A list contains the <code>SingleCellExperiment</code>
 Object from each batch.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>A string indicates the method of combining the
 gene expression matrix, either <code>union</code> or <code>intersect</code>.
  Default to <code>intersect</code>. <code>union</code> only supports matrix class.</p></dd>
+
+
 <dt>cut_off_batch</dt>
 <dd><p>A numeric vector indicating the cut-off for
 the proportion of a gene is expressed within each batch.</p></dd>
+
+
 <dt>cut_off_overall</dt>
 <dd><p>A numeric vector  indicating the cut-off for
 the proportion of a gene is expressed overall data.</p></dd>
+
+
 <dt>use_assays</dt>
 <dd><p>A string vector indicating the expression matrices
 to be combined.
 The first assay named will be used to determine the proportion of zeros.</p></dd>
+
+
 <dt>colData_names</dt>
 <dd><p>A string vector indicating the <code>colData</code>
 that are combined.</p></dd>
+
+
 <dt>batch_names</dt>
 <dd><p>A string vector indicating the batch names for
 the output SCE object.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>SingleCellExperiment</code> object with the list of SCE
+    
+
+<p>A <code>SingleCellExperiment</code> object with the list of SCE
 objects combined.</p>
     </div>
     <div id="author">
@@ -154,7 +171,7 @@ objects combined.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

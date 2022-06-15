@@ -87,29 +87,44 @@ GC content.</p>
 <dd><p>List of gene symbols containing the target gene list.
 Will automatically be converted to human gene symbols
 if <code>geneSizeControl=TRUE</code>.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>List of gene symbols containing the background gene list
 (including hit genes). If <code>bg=NULL</code>,
  an appropriate gene background will be created automatically.</p></dd>
+
+
 <dt>reps</dt>
 <dd><p>Number of gene lists to sample.</p></dd>
+
+
 <dt>no_cores</dt>
 <dd><p>Number of cores to parallelise
 bootstrapping <code>reps</code> over.</p></dd>
+
+
 <dt>sctSpecies</dt>
 <dd><p>Species that <code>sct_data</code> came from
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>genelistSpecies</dt>
 <dd><p>Species that <code>hits</code> genes came from
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing three data frames:</p><ul><li><p><code>hitGenes</code>: Array of HGNC symbols containing the hit genes.
+    
+
+<p>A list containing three data frames:</p><ul><li><p><code>hitGenes</code>: Array of HGNC symbols containing the hit genes.
   May be slightly reduced if gene length / GC content could not be found
   for all genes.</p></li>
 <li><p><code>list_network</code>: The control gene lists as a data frame of HGNC
@@ -128,7 +143,7 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

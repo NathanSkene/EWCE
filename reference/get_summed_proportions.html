@@ -87,35 +87,54 @@ obtain the mean specificity in each sampled list (and the target list).</p>
     <h2>Arguments</h2>
     <dl><dt>hitGenes</dt>
 <dd><p>list of gene names. The target gene set.</p></dd>
+
+
 <dt>sct_data</dt>
 <dd><p>List generated using <a href="generate_celltype_data.html">generate_celltype_data</a>.</p></dd>
+
+
 <dt>annotLevel</dt>
 <dd><p>An integer indicating which level of <code>sct_data</code> to
 analyse (<em>Default: 1</em>).</p></dd>
+
+
 <dt>reps</dt>
 <dd><p>Number of random gene lists to generate (<em>Default: 100</em>,
 but should be &gt;=10,000 for publication-quality results).</p></dd>
+
+
 <dt>no_cores</dt>
 <dd><p>Number of cores to parallelise
 bootstrapping <code>reps</code> over.</p></dd>
+
+
 <dt>geneSizeControl</dt>
 <dd><p>Whether you want to control for
 GC content and transcript length. Recommended if the gene list originates
 from genetic studies (<em>Default: FALSE</em>).
 If set to <code>TRUE</code>, then <code>hits</code> must be from humans.</p></dd>
+
+
 <dt>controlledCT</dt>
 <dd><p>[Optional] If not NULL, and instead is the name of a
 cell type, then the bootstrapping controls for expression within that
 cell type.</p></dd>
+
+
 <dt>control_network</dt>
 <dd><p>If <code>geneSizeControl=TRUE</code>,
 then must provide the control network.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing three data frames:</p><ul><li><p><code>hit.cells</code>: vector containing the summed proportion of
+    
+
+<p>A list containing three data frames:</p><ul><li><p><code>hit.cells</code>: vector containing the summed proportion of
   expression in each cell type for the target list</p></li>
 <li><p><code>bootstrap_data</code>: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the
@@ -139,7 +158,7 @@ then must provide the control network.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

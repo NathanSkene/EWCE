@@ -86,27 +86,40 @@ Multiple results tables can be
 merged into one results table, as long as the 'list' column is set to
 distinguish them.
 Multiple testing correction is then applied across all merged results.</p></dd>
+
+
 <dt>mtc_method</dt>
 <dd><p>Method to be used for multiple testing correction.
 Argument is passed to <a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a> (DEFAULT: "bonferroni).</p></dd>
+
+
 <dt>ctd</dt>
 <dd><p>CellTypeDataset object.
 Should be provided so that the dendrogram can be taken from it
 and added to plots</p></dd>
+
+
 <dt>align</dt>
 <dd><p>(optional) Specifies whether graphs in the grid should be horizontally ("h") or
 vertically ("v") aligned. Options are "none" (default), "hv" (align in both directions), "h", and "v".</p></dd>
+
+
 <dt>rel_heights</dt>
 <dd><p>(optional) Numerical vector of relative rows heights. Works just as
 <code>rel_widths</code> does, but for rows rather than columns.</p></dd>
+
+
 <dt>axis</dt>
 <dd><p>(optional) Specifies whether graphs should be aligned by the left ("l"), right ("r"), top ("t"), or bottom ("b")
 margins. Options are "none" (default), or a string of any combination of l, r, t, and b in any order (e.g. "tblr" or "rlbt" for aligning all margins).
 Must be specified if any of the graphs are complex (e.g. faceted) and alignment is specified and desired. See <code><a href="https://wilkelab.org/cowplot/reference/align_plots.html" class="external-link">align_plots()</a></code> for details.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot containing the plot</p>
+    
+
+<p>A ggplot containing the plot</p>
     </div>
 
     <div id="ref-examples">
@@ -141,7 +154,7 @@ Must be specified if any of the graphs are complex (e.g. faceted) and alignment 
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

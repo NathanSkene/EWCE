@@ -91,49 +91,80 @@ standardize each, and then merge into one CTD.</p>
     <h2>Arguments</h2>
     <dl><dt>CTD_list</dt>
 <dd><p>(Named) list of <code>CellTypeDatasets</code>.</p></dd>
+
+
 <dt>save_dir</dt>
 <dd><p>The directory to save merged files in.</p></dd>
+
+
 <dt>standardise_CTD</dt>
 <dd><p>Whether to run <code>standardise_ctd</code>.</p></dd>
+
+
 <dt>as_SCE</dt>
 <dd><p>If <code>=T</code>, will return a the merged CTD
 as a <code>SingleCellExperiment.</code>
 Otherwise, will return a list of unmerged CTD.</p></dd>
+
+
 <dt>gene_union</dt>
 <dd><p>Whether to take the gene union or intersection
 when merging matrices (mean_exp,specificity, etc.).</p></dd>
+
+
 <dt>merge_levels</dt>
 <dd><p>Which CTD levels you want to merge.
 Can be a single value (e.g. <code>merge_levels=5</code>)
 or a list c(e.g. <code>merge_levels=c(1:5)</code>).
 If some CTD don't have the same number of levels,
 the maximum level depth available in that CTD will be used instead.</p></dd>
+
+
 <dt>save_split_SCE</dt>
 <dd><p>Whether to save individual SCE files
 in the subdirectory <em>standardized_CTD_SCE</em>.</p></dd>
+
+
 <dt>save_split_CTD</dt>
 <dd><p>Whether to save individual CTD files
 in the subdirectory <em>standardized_CTD</em>.</p></dd>
+
+
 <dt>save_merged_SCE</dt>
 <dd><p>Save the final merged SCE object, or simply 
 to return it.</p></dd>
+
+
 <dt>force_new_quantiles</dt>
 <dd><p>If specificity quantiles matrix already exists,
 create a new one.</p></dd>
+
+
 <dt>numberOfBins</dt>
 <dd><p>Number of bins to compute specificity quantiles with.</p></dd>
+
+
 <dt>as_sparse</dt>
 <dd><p>Convert matrices to sparse matrix.</p></dd>
+
+
 <dt>as_DelayedArray</dt>
 <dd><p>Convert matrices to <code>DelayedArray</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code>standardise_ctd</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List of CellTypeDatasets or SingleCellExperiments.</p>
+    
+
+<p>List of CellTypeDatasets or SingleCellExperiments.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -176,7 +207,7 @@ create a new one.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The assay 'mean_exp' will be used to determine the proportion of zeroes for each batch.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "level_1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "level_2"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving SCE_merged ==&gt; /tmp/Rtmp4NYFbN/merged/CTD_SCE_merged.union.rds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving SCE_merged ==&gt; /tmp/RtmpCFNqKL/merged/CTD_SCE_merged.union.rds</span>
 </code></pre></div>
     </div>
   </div>
@@ -191,7 +222,7 @@ create a new one.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>
