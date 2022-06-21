@@ -1,3 +1,11 @@
+# EWCE 1.5.3
+
+## New features
+
+* `genelistSpecies` now passed to `prepare_genesize_control_network` in 
+`bootstrap_enrichment_test` meaning gene list species will be inferred from user
+input.
+
 # EWCE 1.5.2
 
 ## New features
