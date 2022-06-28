@@ -61,11 +61,12 @@ test_that("bootstrap enrichment runs as expected", {
         )
         options(warn = 0)
         # check the BootstrapPlots folder exists and is non-empty
+        boot_dir <- file.path(boot_plot_dir1,"BootstrapPlots") 
         testthat::expect_true(
-            dir.exists(sprintf("%s/BootstrapPlots", boot_plot_dir1))
+            dir.exists(boot_dir)
         )
         testthat::expect_true(
-            length(list.files(sprintf("%s/BootstrapPlots", boot_plot_dir1))) > 0
+            length(list.files(boot_dir)) > 0
         )
 
 
@@ -97,11 +98,12 @@ test_that("bootstrap enrichment runs as expected", {
         )
         options(warn = 0)
         # check the BootstrapPlots folder exists and is non-empty
+        boot_dir2 <- file.path(boot_plot_dir2,"BootstrapPlots")
         testthat::expect_true(
-            dir.exists(sprintf("%s/BootstrapPlots", boot_plot_dir2))
+            dir.exists(boot_dir2)
         )
         testthat::expect_true(
-            length(list.files(sprintf("%s/BootstrapPlots", boot_plot_dir2))) > 0
+            length(list.files(boot_dir2)) > 0
         )
     }
 })

@@ -52,10 +52,12 @@ plot_log_bootstrap_distributions <- function(dat,
     actVals <- cbind(actVals[order(actVals$Pos), ], ast)
     # - Plot the graph!
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/bootDists_LOG_%s___%s____%s.pdf",
-        savePath, tag, listFileName, cc
-    ), width = wd, height = 4)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("bootDists_LOG_%s___%s____%s.pdf",
+                 tag, listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = wd, height = 4)
     print(
         ggplot(melt_boot) +
             geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +

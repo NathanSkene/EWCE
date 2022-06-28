@@ -123,9 +123,10 @@ merge_ctd <- function(CTD_list,
         )
         if (save_merged_SCE) {
             merged_dir <- file.path(save_dir, "merged")
-            save_path <- paste0(
-                merged_dir, "/CTD_SCE_merged.",
-                if (gene_union) "union" else "intersect", ".rds"
+            save_path <- file.path(
+                merged_dir, paste0(
+                    "CTD_SCE_merged.",
+                    if (gene_union) "union" else "intersect", ".rds")
             )
             dir.create(merged_dir, showWarnings = FALSE, recursive = TRUE)
             messager("Saving SCE_merged ==>", save_path, v = verbose)

@@ -60,10 +60,12 @@ bootstrap_plot <- function(exp_mats,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot with gene names
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/qqplot_wtGSym____%s____%s.pdf", savePath,
-        listFileName, cc
-    ), width = 3.5, height = 3.5)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("qqplot_wtGSym____%s____%s.pdf", 
+                listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
 
     print(basic_graph +
         geom_text(aes_string(label = "symLab"),
@@ -79,10 +81,12 @@ bootstrap_plot <- function(exp_mats,
         vals = hit_exp
     )
 
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/bootDists____%s____%s.pdf", savePath,
-        listFileName, cc
-    ), width = 3.5, height = 3.5)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("bootDists____%s____%s.pdf",
+                listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     melt_boot$Pos <- as.factor(melt_boot$Pos)
 
     print(ggplot(melt_boot) +
@@ -135,10 +139,13 @@ bootstrap_plot <- function(exp_mats,
     actVals <- cbind(actVals[order(actVals$Pos), ], ast)
     # - Plot the graph!
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/bootDists_LOG____%s____%s.pdf",
-        savePath, listFileName, cc
-    ), width = wd, height = 4)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("bootDists_LOG____%s____%s.pdf",
+                listFileName, cc
+        )
+    )
+    grDevices::pdf(pdf_path, width = wd, height = 4)
     # melt_boot$Exp=melt_boot$Exp+0.00000001
     melt_boot <- melt_boot[melt_boot$Exp != 0, ]
     gg <- ggplot(melt_boot) +

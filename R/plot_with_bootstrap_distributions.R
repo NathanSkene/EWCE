@@ -23,10 +23,12 @@ plot_with_bootstrap_distributions <- function(exp_mats,
         vals = hit_exp
     )
   
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/bootDists_%s___%s____%s.pdf",
-        savePath, tag, listFileName, cc
-    ), width = 3.5, height = 3.5)
+    pdf_path <- file.path(
+        savePath,
+        sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf",
+                tag, listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     
     melt_boot$Pos <- as.factor(melt_boot$Pos)
     print(ggplot(melt_boot) +

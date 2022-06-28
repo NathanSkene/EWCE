@@ -168,7 +168,8 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     #### Get specificity scores of the hit genes ####
     hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
     #### Create subdir ####
-    if (!file.exists(sprintf("%s/BootstrapPlots", savePath))) {
+    boot_dir <- file.path(savePath,"BootstrapPlots")
+    if (!file.exists(boot_dir)) {
         dir.create(file.path(savePath, "BootstrapPlots"))
     }
     #### Iteratively create QQ plots ####

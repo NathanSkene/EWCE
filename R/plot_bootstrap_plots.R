@@ -25,10 +25,12 @@ plot_bootstrap_plots <- function(dat,
         geom_abline(intercept = 0, slope = 1, colour = "red")
     
     #### Plot without text #### 
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/qqplot_noText_%s___%s____%s.pdf",
-        savePath, tag, listFileName, cc
-    ), width = 3.5, height = 3.5)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("qqplot_noText_%s___%s____%s.pdf",
+                tag, listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     print(basic_graph + ggtitle(cc))
     grDevices::dev.off()
 
@@ -45,10 +47,12 @@ plot_bootstrap_plots <- function(dat,
         geom_abline(intercept = 0, slope = 1, colour = "red")
 
     # Plot with gene names
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/qqplot_wtGSym_%s___%s____%s.pdf",
-        savePath, tag, listFileName, cc
-    ), width = 3.5, height = 3.5)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("qqplot_wtGSym_%s___%s____%s.pdf",
+                tag, listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     print(basic_graph +
         geom_text(aes_string(label = "symLab"),
             hjust = 0, vjust = 0, size = 3
@@ -57,10 +61,12 @@ plot_bootstrap_plots <- function(dat,
     grDevices::dev.off()
 
     # Plot BIG with gene names
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/qqplot_wtGSymBIG_%s___%s____%s.pdf",
-        savePath, tag, listFileName, cc
-    ), width = 15, height = 15)
+    pdf_path <- file.path(
+        savePath,"BootstrapPlots",
+        sprintf("qqplot_wtGSymBIG_%s___%s____%s.pdf",
+                tag, listFileName, cc
+    ))
+    grDevices::pdf(pdf_path, width = 15, height = 15)
     print(basic_graph +
         geom_text(aes_string(label = "symLab"),
             hjust = 0,

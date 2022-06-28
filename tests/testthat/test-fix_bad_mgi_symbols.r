@@ -7,11 +7,12 @@ test_that("method to remove/fix an expected set of genes", {
         cortex_mrna <- ewceData::cortex_mrna()
 
         # IMPORTANT!: Do not delete. Check that outputs "EWCE_return" will fail otherwise.
-        if (!file.exists(sprintf("%s/MRK_List2.rpt", tempdir()))) {
+        tmp_mark_list <- file.path(tempdir(),"MRK_List2.rpt")
+        if (!file.exists(tmp_mark_list)) {
             options(timeout = 60*3) # huge file, takes a long time
             utils::download.file(
                 "http://www.informatics.jax.org/downloads/reports/MRK_List2.rpt",
-                destfile = sprintf("%s/MRK_List2.rpt", tempdir())
+                destfile = tmp_mark_list
             )
         }
         # take a subset for testing
@@ -24,8 +25,7 @@ test_that("method to remove/fix an expected set of genes", {
         # catch error when no exp inputted
         error_return <-
             tryCatch(EWCE::fix_bad_mgi_symbols(
-                exp = NULL # ,
-                # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+                exp = NULL 
             ),
             error = function(e) e,
             warning = function(w) w
@@ -36,8 +36,7 @@ test_that("method to remove/fix an expected set of genes", {
         rownames(test_exp_set_char) <- rownames(test_exp_set)
         error_return2 <-
             tryCatch(EWCE::fix_bad_mgi_symbols(
-                exp = test_exp_set_char # ,
-                # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+                exp = test_exp_set_char 
             ),
             error = function(e) e,
             warning = function(w) w
@@ -56,8 +55,7 @@ test_that("method to remove/fix an expected set of genes", {
         # function should warn the user about this -if warning returned function worked
         warning_return <-
             tryCatch(EWCE::fix_bad_mgi_symbols(
-                test_exp_set # ,
-                # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+                test_exp_set  
             ),
             error = function(e) e,
             warning = function(w) w
@@ -90,7 +88,7 @@ test_that("method to remove/fix an expected set of genes", {
         rownames(test_exp_set)[7] <- "Tm4sf12"
         EWCE_return <- EWCE::fix_bad_mgi_symbols(
             exp = test_exp_set,
-            mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir()),
+            mrk_file_path = tmp_mark_list,
             printAllBadSymbols = TRUE
         )
         # Now the returned value should be the average of the two
@@ -101,8 +99,7 @@ test_that("method to remove/fix an expected set of genes", {
         # check nothing changes when there are no issues
         test_exp_set_15 <- test_exp_set[1:5, ]
         EWCE_output_same_input <- EWCE::fix_bad_mgi_symbols(
-            test_exp_set_15 # ,
-            # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+            test_exp_set_15  
         )
 
 
@@ -112,8 +109,7 @@ test_that("method to remove/fix an expected set of genes", {
             tryCatch(
                 EWCE_output_large <-
                     EWCE::fix_bad_mgi_symbols(
-                        cortex_mrna$exp[1:10000, 1:1000] # ,
-                        # mrk_file_path = sprintf("%s/MRK_List2.rpt", tempdir())
+                        cortex_mrna$exp[1:10000, 1:1000]  
                     ),
                 error = function(e) e,
                 warning = function(w) w

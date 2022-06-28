@@ -14,6 +14,11 @@ input.
     - Expose new args: `dge_method`, `dge_test`, `min_variance_decile`
 * `merged_ctd`: Actually merge the CTDs into one when `as_SCE=FALSE`.
 
+## Bug fixes
+
+* Remove hard-coded file path separators
+(e.g. `sprintf("%s/MRK_List2.rpt", tempdir())`) to be more compatible with Windows.
+
 # EWCE 1.5.1
 
 ## New features

@@ -89,7 +89,7 @@ generate_celltype_data <- function(exp,
     exp <- res_sce$exp
     SE_obj <- res_sce$SE_obj
     #### Check if file already exists ####
-    fNames <- sprintf("%s/%s_%s.rda", savePath, file_prefix, groupName)
+    fNames <- file.path(savePath,paste0(file_prefix,"_",groupName,".rda")) 
     if (file.exists(fNames) & (!force_new_file)) {
         messager("+ Pre-existing file of the same name detected.",
             "Use `force_new_file=TRUE` to overwrite this file.",

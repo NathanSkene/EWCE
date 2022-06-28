@@ -218,7 +218,8 @@ generate_bootstrap_plots_for_transcriptome <- function(
         hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
         graph_theme <- get_graph_theme()
 
-        if (!file.exists(sprintf("%s/BootstrapPlots", savePath))) {
+        boot_dir <- file.path(savePath,"BootstrapPlots")
+        if (!file.exists(boot_dir)) {
             dir.create(file.path(savePath, "BootstrapPlots"),
                 showWarnings = FALSE, recursive = TRUE
             )
