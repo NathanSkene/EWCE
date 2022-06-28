@@ -146,10 +146,11 @@ merge_ctd <- function(CTD_list,
         max_lvl <- min(max_lvl, max(merge_levels))
         CTD_merged <- lapply(seq_len(max_lvl),
                           function(lvl){
-            exp_merged <- lapply(seq_len(length(CTD_list)), function(i){
-                CTD_list[[1]][[lvl]]$mean_exp
+            exp_merged <- lapply(seq_len(length(CTD_list)), 
+                                 function(i){
+                CTD_list[[i]][[lvl]]$mean_exp
             }) %>% do.call(what = cbind)
-            ctd_merged_lvl <- EWCE::generate_celltype_data(
+            ctd_merged_lvl <- generate_celltype_data(
                 exp = exp_merged, 
                 annotLevels = list(colnames(exp_merged)),
                 groupName = tempfile(fileext = paste("level",lvl,sep="_")),
