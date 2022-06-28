@@ -137,7 +137,7 @@ merge_ctd <- function(CTD_list,
             messager("+ Must set `as_SCE=TRUE` in order to merge CTD.",
                 v = verbose
             )
-            messager("+ Returning CTD_list.",
+            messager("+ Returning merged CTD.",
                 v = verbose
             )
         }
