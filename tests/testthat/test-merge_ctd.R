@@ -76,5 +76,11 @@ test_that("merge_sce works", {
             genes = sample(rownames(ctd[[1]]$mean_exp), 4)
         )
         testthat::expect_true(methods::is(gp, "gg"))
+        
+        
+        #### Test 6: merge CTD_list into one CTD 
+        CTD_merged <- EWCE::merge_ctd(CTD_list = CTD_list)
+        testthat::expect_true(EWCE:::is_celltypedataset(CTD_merged))
+        testthat::expect_equal(length(CTD_merged), length(CTD_list[[1]]))
     }
 })

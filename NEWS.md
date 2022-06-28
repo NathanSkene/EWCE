@@ -4,6 +4,7 @@
 
 * `drop_uninformative_genes`:
     - Expose new args: `dge_method`, `dge_test`, `min_variance_decile`
+* `merged_ctd`: Actually merge the CTDs into one when `as_SCE=FALSE`.
 
 # EWCE 1.5.1
 

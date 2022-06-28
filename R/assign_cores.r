@@ -24,7 +24,7 @@ assign_cores <- function(worker_cores = .90,
         reserved_cores <- total_cores - workers
     }
     messager(workers, "core(s) assigned as workers",
-             paste0("(",reserved_cores, "reserved)."),
+             paste0("(",reserved_cores, " reserved)."),
         v = verbose
     )
     #### Handle Windows ####

@@ -29,9 +29,10 @@ merge_ctd(
 
 \item{standardise_CTD}{Whether to run \code{standardise_ctd}.}
 
-\item{as_SCE}{If \code{=T}, will return a the merged CTD
-as a \code{SingleCellExperiment.}
-Otherwise, will return a list of unmerged CTD.}
+\item{as_SCE}{If \code{TRUE} (default), 
+returns the merged results as a named list of 
+\link[SingleCellExperiment]{SingleCellExperiment}s.
+If \code{FALSE}, returns as a CTD object.}
 
 \item{gene_union}{Whether to take the gene union or intersection
 when merging matrices (mean_exp,specificity, etc.).}
@@ -70,18 +71,13 @@ List of CellTypeDatasets or SingleCellExperiments.
 \description{
 Import CellTypeDataset (CTD) references from a remote repository,
 standardize each, and then merge into one CTD.
-}
-\details{
-Optionally, can return these as a merged \code{SingleCellExperiment}.
+Optionally, can return these as a merged
+ \link[SingleCellExperiment]{SingleCellExperiment}.
 }
 \examples{
 ## Let's pretend these are different CTD datasets
 ctd1 <- ewceData::ctd()
 ctd2 <- ctd1
 CTD_list <- list(ctd1, ctd2)
-SCE_merged <- EWCE::merge_ctd(
-    CTD_list = CTD_list,
-    as_SCE = TRUE,
-    gene_union = TRUE
-)
+CTD_merged <- EWCE::merge_ctd(CTD_list = CTD_list)
 }

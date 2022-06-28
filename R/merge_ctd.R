@@ -2,15 +2,16 @@
 #'
 #' Import CellTypeDataset (CTD) references from a remote repository,
 #' standardize each, and then merge into one CTD.
-#'
-#' Optionally, can return these as a merged \code{SingleCellExperiment}.
+#' Optionally, can return these as a merged
+#'  \link[SingleCellExperiment]{SingleCellExperiment}.
 #'
 #' @param CTD_list (Named) list of \code{CellTypeDatasets}.
 #' @param save_dir The directory to save merged files in.
 #' @param standardise_CTD Whether to run \code{standardise_ctd}.
-#' @param as_SCE If \code{=T}, will return a the merged CTD
-#' as a \code{SingleCellExperiment.}
-#' Otherwise, will return a list of unmerged CTD.
+#' @param as_SCE If \code{TRUE} (default), 
+#' returns the merged results as a named list of 
+#' \link[SingleCellExperiment]{SingleCellExperiment}s.
+#' If \code{FALSE}, returns as a CTD object.
 #' @param gene_union Whether to take the gene union or intersection
 #' when merging matrices (mean_exp,specificity, etc.).
 #' @param merge_levels Which CTD levels you want to merge.
@@ -39,11 +40,7 @@
 #' ctd1 <- ewceData::ctd()
 #' ctd2 <- ctd1
 #' CTD_list <- list(ctd1, ctd2)
-#' SCE_merged <- EWCE::merge_ctd(
-#'     CTD_list = CTD_list,
-#'     as_SCE = TRUE,
-#'     gene_union = TRUE
-#' )
+#' CTD_merged <- EWCE::merge_ctd(CTD_list = CTD_list)
 #' @export
 #' @importFrom dplyr %>%
 merge_ctd <- function(CTD_list,
@@ -58,7 +55,7 @@ merge_ctd <- function(CTD_list,
                       force_new_quantiles = FALSE,
                       numberOfBins = 40,
                       as_sparse = TRUE,
-                      as_DelayedArray = FALSE,
+                      as_DelayedArray = FALSE, 
                       verbose = TRUE,
                       ...) {
     #### Ensure it's actually a list ####
@@ -144,6 +141,27 @@ merge_ctd <- function(CTD_list,
                 v = verbose
             )
         }
-        return(CTD_list)
+        #### Merge CTD mean_exp matrices and recompute specificity ####
+        max_lvl <- max_ctd_depth(CTD_list = CTD_list)
+        max_lvl <- min(max_lvl, max(merge_levels))
+        CTD_merged <- lapply(seq_len(max_lvl),
+                          function(lvl){
+            exp_merged <- lapply(seq_len(length(CTD_list)), function(i){
+                CTD_list[[1]][[lvl]]$mean_exp
+            }) %>% do.call(what = cbind)
+            ctd_merged_lvl <- EWCE::generate_celltype_data(
+                exp = exp_merged, 
+                annotLevels = list(colnames(exp_merged)),
+                groupName = tempfile(fileext = paste("level",lvl,sep="_")),
+                convert_orths = FALSE,
+                dendrograms = FALSE, 
+                return_ctd = TRUE, 
+                as_sparse = as_sparse, 
+                as_DelayedArray = as_DelayedArray, 
+                numberOfBins = numberOfBins,
+                verbose = verbose
+            )$ctd[[1]]
+        }) %>% `names<-`(paste("level",seq_len(max_lvl),sep="_")) 
+        return(CTD_merged)
     }
 }
