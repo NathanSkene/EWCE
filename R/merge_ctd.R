@@ -154,7 +154,9 @@ merge_ctd <- function(CTD_list,
             ctd_merged_lvl <- generate_celltype_data(
                 exp = exp_merged, 
                 annotLevels = list(colnames(exp_merged)),
-                groupName = tempfile(fileext = paste("level",lvl,sep="_")),
+                groupName = basename(
+                    tempfile(fileext = paste("level",lvl,sep="_"))
+                ),
                 convert_orths = FALSE,
                 dendrograms = FALSE, 
                 return_ctd = TRUE, 
