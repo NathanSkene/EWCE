@@ -22,7 +22,9 @@ fix_celltype_names <- function(celltypes,
         return(NULL)
     }
     celltypes <- gsub(replace_chars, "_", celltypes)
-    # Remove repeat __
-    celltypes <- gsub("[_+]", "_", celltypes)
+    ### Remove repeating "_" ####
+    celltypes <- gsub("[_]+", "_", celltypes)
+    #### Make sure all are unique ####
+    celltypes <- make.unique(celltypes)
     return(celltypes)
 }

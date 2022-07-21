@@ -14,6 +14,8 @@
     - Fixed by removing conditional and instead always filtering out genes not present in CTD/SCT. 
 * `standardise_ctd`:
     - Add `check_species()`
+* `fix_celltype_names`:
+    - Ensure all celltype names are unique after standardization. 
 
 # EWCE 1.5.3
 
