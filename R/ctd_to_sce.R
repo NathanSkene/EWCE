@@ -32,10 +32,7 @@ ctd_to_sce <- function(object,
         ctd_lvl <- ctd[[lvl]]
         #### Use matrices that are present ###
         matrix_list <- list()
-        for (mtx_name in c(
-            "mean_exp", "median_exp",
-            "specificity", "median_specificity", "specificity_quantiles"
-        )) {
+        for (mtx_name in get_ctd_matrix_names()) {
             if (mtx_name %in% names(ctd_lvl)) {
                 mtx <- ctd_lvl[[mtx_name]]
                 mtx <- to_sparse_matrix(

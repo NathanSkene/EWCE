@@ -70,6 +70,14 @@ standardise_ctd <- function(ctd,
         )
         return(ctd)
     }
+    #### Check species args ####
+    species <- check_species(
+        genelistSpecies = input_species,
+        sctSpecies = output_species,
+        verbose = verbose
+    )
+    input_species <- species$genelistSpecies
+    output_species <- species$sctSpecies
     #### Iterate over CTD levels ####
     messager("Standardising CellTypeDataset", v = verbose)
     new_ctd <- lapply(seq(1, length(ctd)), function(lvl) {

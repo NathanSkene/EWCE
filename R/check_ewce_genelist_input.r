@@ -127,10 +127,10 @@ check_ewce_genelist_inputs <- function(sct_data,
         stop(err_msg5)
     }
     #### Restrict gene sets to only genes in the SCT dataset  ####
-    if (!geneSizeControl) {
+    # if (!geneSizeControl) {
         hits <- hits[hits %in% sct_genes]
         bg <- bg[bg %in% sct_genes]
-    }
+    # }
     #### Remove all hit genes from bg ####
     bg <- bg[!bg %in% hits]
     #### Return list ####

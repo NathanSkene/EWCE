@@ -3,15 +3,6 @@
 \name{filter_ctd_genes}
 \alias{filter_ctd_genes}
 \title{Filter genes in a CellTypeDataset}
-\source{
-\code{
-set.seed(1234)
-ctd <- ewceData::ctd()
-gene_subset <- sample(rownames(ctd[[1]]$mean_exp), 1000)
-ctd_subset <- MAGMA.Celltyping::filter_ctd_genes(ctd = ctd, 
-                                                 gene_subset = gene_subset)
-}
-}
 \usage{
 filter_ctd_genes(ctd, gene_subset)
 }
@@ -27,4 +18,10 @@ Filtered CellTypeDataset.
 Removes rows from each matrix within a CellTypeDataset (CTD) that are not 
 within \code{gene_subset}.
 }
-\keyword{internal}
+\examples{
+ 
+ctd <- ewceData::ctd()
+ctd <- standardise_ctd(ctd, input_species="mouse")
+gene_subset <- rownames(ctd[[1]]$mean_exp)[1:100]
+ctd_subset <- EWCE::filter_ctd_genes(ctd = ctd, gene_subset = gene_subset) 
+}

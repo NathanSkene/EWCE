@@ -8,34 +8,31 @@
 #'
 #' @returns Filtered CellTypeDataset.
 #'
-#' @source 
-#' \code{
-#' set.seed(1234)
+#' @export  
+#' @examples  
 #' ctd <- ewceData::ctd()
-#' gene_subset <- sample(rownames(ctd[[1]]$mean_exp), 1000)
-#' ctd_subset <- MAGMA.Celltyping::filter_ctd_genes(ctd = ctd, 
-#'                                                  gene_subset = gene_subset)
-#' }
-#' @keywords internal
-#' @importFrom dplyr %>%
+#' ctd <- standardise_ctd(ctd, input_species="mouse")
+#' gene_subset <- rownames(ctd[[1]]$mean_exp)[1:100]
+#' ctd_subset <- EWCE::filter_ctd_genes(ctd = ctd, gene_subset = gene_subset) 
 filter_ctd_genes <- function(ctd,
                              gene_subset) {
-    message("Filtering CTD to ", length(gene_subset), " genes.")
-    new_ctd <- lapply(seq_len(length(ctd)), function(lvl) {
-        message("level ", lvl)
-        ctd_lvl <- ctd[[lvl]]
-        mat_names <- names(ctd_lvl)[
-            !names(ctd_lvl) %in% c("annot", "plotting")]
-        other_names <- names(ctd_lvl)[
-            names(ctd_lvl) %in% c("annot", "plotting")]
+    message("Filtering CTD to ", 
+            formatC(length(gene_subset),big.mark = ","), " genes.")
+    
+    new_ctd <- lapply(get_ctd_levels(ctd), 
+                      function(lvl) {
+        message("level: ", lvl)
+        mat_names <- get_ctd_matrix_names(ctd[lvl])                  
+        ctd_lvl <- ctd[[lvl]] 
+        other_names <- names(ctd_lvl)[!names(ctd_lvl) %in% mat_names]
         new_ctd_lvl <- lapply(mat_names, function(mat_nm) {
             message("   - ", mat_nm)
             ctd_lvl[[mat_nm]][rownames(ctd_lvl[[mat_nm]]) %in% gene_subset, ]
-        }) %>% `names<-`(mat_names)
+        }) |> `names<-`(mat_names)
         for (nm in other_names) {
             new_ctd_lvl[nm] <- ctd_lvl[nm]
         }
         return(new_ctd_lvl)
-    }) %>% `names<-`(paste0("level", seq_len(length(ctd))))
+    })
     return(new_ctd)
 }

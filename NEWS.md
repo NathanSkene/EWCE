@@ -1,3 +1,20 @@
+# EWCE 1.5.4
+
+## New features
+
+* `filter_ctd_genes`
+    - Now exported.
+    - Can handle standardized CTD format.
+* `get_ctd_matrix_names`: New function to get a list of all data matrices in CTD.
+    
+## Bug fixes
+
+* `check_ewce_genelist_inputs`: 
+    - User reported potential bug in code:https://github.com/NathanSkene/EWCE/issues/71 
+    - Fixed by removing conditional and instead always filtering out genes not present in CTD/SCT. 
+* `standardise_ctd`:
+    - Add `check_species()`
+
 # EWCE 1.5.3
 
 ## New features
