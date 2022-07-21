@@ -71,16 +71,6 @@ within <code>gene_subset</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_ctd_genes</span><span class="op">(</span><span class="va">ctd</span>, <span class="va">gene_subset</span><span class="op">)</span></code></pre></div>
     </div>
 
-    <div id="source">
-    <h2>Source</h2>
-    <p><code>
-set.seed(1234)
-ctd &lt;- ewceData::ctd()
-gene_subset &lt;- sample(rownames(ctd[[1]]$mean_exp), 1000)
-ctd_subset &lt;- MAGMA.Celltyping::filter_ctd_genes(ctd = ctd, 
-                                                 gene_subset = gene_subset)
-</code></p>
-    </div>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ctd</dt>
@@ -98,6 +88,33 @@ ctd_subset &lt;- MAGMA.Celltyping::filter_ctd_genes(ctd = ctd,
 <p>Filtered CellTypeDataset.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"> </span>
+<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
+<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu"><a href="standardise_ctd.html">standardise_ctd</a></span><span class="op">(</span><span class="va">ctd</span>, input_species<span class="op">=</span><span class="st">"mouse"</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Level: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Level: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
+<span class="r-in"><span class="va">gene_subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ctd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">mean_exp</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">ctd_subset</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">filter_ctd_genes</span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>, gene_subset <span class="op">=</span> <span class="va">gene_subset</span><span class="op">)</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering CTD to 100 genes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> level: level_1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found 3 matrix types across 1 CTD levels.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - mean_exp</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - specificity</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - specificity_quantiles</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> level: level_2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found 3 matrix types across 1 CTD levels.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - mean_exp</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - specificity</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    - specificity_quantiles</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -110,7 +127,7 @@ ctd_subset &lt;- MAGMA.Celltyping::filter_ctd_genes(ctd = ctd,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

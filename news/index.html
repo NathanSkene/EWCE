@@ -61,6 +61,33 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.5.4" id="ewce-154">EWCE 1.5.4<a class="anchor" aria-label="anchor" href="#ewce-154"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-5-4">New features<a class="anchor" aria-label="anchor" href="#new-features-1-5-4"></a></h3>
+<ul><li>
+<code>filter_ctd_genes</code>
+<ul><li>Now exported.</li>
+<li>Can handle standardized CTD format.</li>
+</ul></li>
+<li>
+<code>get_ctd_matrix_names</code>: New function to get a list of all data matrices in CTD.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-5-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-4"></a></h3>
+<ul><li>
+<code>check_ewce_genelist_inputs</code>:
+<ul><li>User reported potential bug in code:<a href="https://github.com/NathanSkene/EWCE/issues/71" class="external-link uri">https://github.com/NathanSkene/EWCE/issues/71</a>
+</li>
+<li>Fixed by removing conditional and instead always filtering out genes not present in CTD/SCT.</li>
+</ul></li>
+<li>
+<code>standardise_ctd</code>:
+<ul><li>Add <code><a href="../reference/check_species.html">check_species()</a></code>
+</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5.3" id="ewce-153">EWCE 1.5.3<a class="anchor" aria-label="anchor" href="#ewce-153"></a></h2>
 <div class="section level3">
 <h3 id="new-features-1-5-3">New features<a class="anchor" aria-label="anchor" href="#new-features-1-5-3"></a></h3>
@@ -251,7 +278,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>
