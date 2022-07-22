@@ -80,97 +80,59 @@ standardise_ctd <- function(ctd,
     output_species <- species$sctSpecies
     #### Iterate over CTD levels ####
     messager("Standardising CellTypeDataset", v = verbose)
-    new_ctd <- lapply(seq(1, length(ctd)), function(lvl) {
-        messager("Level:", lvl, v = verbose)
-        mean_exp <- extract_matrix(
-            ctd = ctd,
-            input_species = input_species,
-            output_species = output_species,
-            dataset = dataset,
-            level = lvl,
-            metric = "mean_exp",
-            non121_strategy = non121_strategy,
-            method = method,
-            numberOfBins = numberOfBins,
-            remove_unlabeled_clusters = remove_unlabeled_clusters,
-            force_new_quantiles = force_new_quantiles,
-            as_sparse = as_sparse,
-            as_DelayedArray = as_DelayedArray,
-            rename_columns = rename_columns,
-            make_columns_unique = make_columns_unique,
-            verbose = verbose2,
-            ...
-        )
-        spec <- extract_matrix(
-            ctd = ctd,
-            input_species = input_species,
-            output_species = output_species,
-            dataset = dataset,
-            level = lvl,
-            metric = "specificity",
-            non121_strategy = non121_strategy,
-            method = method,
-            numberOfBins = numberOfBins,
-            remove_unlabeled_clusters = remove_unlabeled_clusters,
-            force_new_quantiles = force_new_quantiles,
-            as_sparse = as_sparse,
-            as_DelayedArray = as_DelayedArray,
-            verbose = verbose2,
-            ...
-        )
-        specQ <- extract_matrix(
-            ctd = ctd,
-            input_species = input_species,
-            output_species = output_species,
-            dataset = dataset,
-            level = lvl,
-            metric = "specificity_quantiles",
-            non121_strategy = non121_strategy,
-            method = method,
-            numberOfBins = numberOfBins,
-            remove_unlabeled_clusters = remove_unlabeled_clusters,
-            force_new_quantiles = force_new_quantiles,
-            as_sparse = as_sparse,
-            as_DelayedArray = as_DelayedArray,
-            verbose = verbose2,
-            ...
-        )
+    matrices <- get_ctd_matrix_names(ctd = ctd,
+                                     verbose = verbose)
+    new_ctd <- lapply(seq_len(length(ctd)), 
+                      function(lvl) {
+        messager("Processing level:", lvl, v = verbose) 
+        return_list <- list()                  
+        for(m in matrices){
+            return_list[[m]] <- extract_matrix(
+                ctd = ctd,
+                input_species = input_species,
+                output_species = output_species,
+                dataset = dataset,
+                level = lvl,
+                metric = m,
+                non121_strategy = non121_strategy,
+                method = method,
+                numberOfBins = numberOfBins,
+                remove_unlabeled_clusters = remove_unlabeled_clusters,
+                force_new_quantiles = force_new_quantiles,
+                as_sparse = as_sparse,
+                as_DelayedArray = as_DelayedArray,
+                rename_columns = rename_columns,
+                make_columns_unique = make_columns_unique,
+                verbose = verbose2,
+                ...
+            )
+        }     
         #### Add extra items ####
-        annot <- if ("annot" %in% names(ctd[[lvl]]) & keep_annot) {
+        return_list[["annot"]] <- 
+            if ("annot" %in% names(ctd[[lvl]]) & keep_annot) {
             ctd[[lvl]]$annot
         } else {
             NULL
         }
-        plotting <- if ("plotting" %in% names(ctd[[lvl]]) & keep_plots) {
+        return_list[["plotting"]] <- 
+            if ("plotting" %in% names(ctd[[lvl]]) & keep_plots) {
             ctd[[lvl]]$plotting
         } else {
             NULL
         }
-        return(
-            list(
-                "mean_exp" = mean_exp,
-                "specificity" = spec,
-                "specificity_quantiles" = specQ,
-                "annot" = annot,
-                "plotting" = plotting,
-                "standardised" = TRUE,
-                "species" = list(
-                    "input_species" = 
-                        if(is.null(input_species)) "mouse" else input_species,
-                    "output_species" = 
-                        if(is.null(output_species)) "human" else output_species
-                ),
-                "versions" = list(
-                    "EWCE" = utils::packageVersion("EWCE"),
-                    "orthogene" = utils::packageVersion("orthogene"),
-                    "homologene" = utils::packageVersion("homologene")
-                )
-            )
+        return_list[["standardised"]] <- TRUE
+        return_list[["species"]] <- list("input_species" = input_species,
+                                         "output_species" = output_species)
+        return_list[["versions"]] <- list(
+            "EWCE" = utils::packageVersion("EWCE"),
+            "orthogene" = utils::packageVersion("orthogene"),
+            "homologene" = utils::packageVersion("homologene")
         )
+        return(return_list)
     })
     #### Name CTD levels ####
     if (is.null(names(ctd))) {
-        names(new_ctd) <- paste0("level_", seq(1, length(ctd)))
+        names(new_ctd) <- paste0("level_", seq_len(length(ctd)))
     } else {
         names(new_ctd) <- names(ctd)
     }

@@ -106,7 +106,7 @@ extract_matrix <- function(ctd,
         )
     }
     #### Convert to sparse matrix ####
-    exp <- to_sparse_matrix(
+    mat <- to_sparse_matrix(
         exp = mat,
         as_sparse = as_sparse,
         verbose = verbose
