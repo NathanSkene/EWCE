@@ -26,7 +26,7 @@ Description: Used to determine which cell types are enriched within gene lists. 
 URL: https://github.com/NathanSkene/EWCE 
 BugReports: https://github.com/NathanSkene/EWCE/issues 
 License: GPL-3
-Depends: R (>= 4.2),
+Depends: R (>= 4.1),
          RNOmni (>= 1.0)
 VignetteBuilder: knitr
 Imports:
