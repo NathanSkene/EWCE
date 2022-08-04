@@ -77,11 +77,14 @@ standardise_ctd <- function(ctd,
         verbose = verbose
     )
     input_species <- species$genelistSpecies
-    output_species <- species$sctSpecies
-    #### Iterate over CTD levels ####
+    output_species <- species$sctSpecies 
     messager("Standardising CellTypeDataset", v = verbose)
+    #### Check existing matrices ####
     matrices <- get_ctd_matrix_names(ctd = ctd,
                                      verbose = verbose)
+    ## Require specificity_quantiles to be one of them 
+    matrices <- unique(c(matrices,"specificity_quantiles"))
+    #### Iterate over CTD levels ####
     new_ctd <- lapply(seq_len(length(ctd)), 
                       function(lvl) {
         messager("Processing level:", lvl, v = verbose) 

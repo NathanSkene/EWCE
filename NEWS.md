@@ -1,3 +1,12 @@
+# EWCE 1.5.5
+
+
+## Bug fixes
+
+* `standardise_ctd`:
+    - Always force "specificity_quantiles" to be one of the matrices 
+    in each level. 
+
 # EWCE 1.5.4
 
 ## New features
