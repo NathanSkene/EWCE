@@ -1,3 +1,11 @@
+# EWCE 1.5.7
+
+## Bug fixes
+
+* orthogene dependency has been replacing user entered background gene list with
+one generated from all known genes when species across gene lists and reference 
+dataset are the same. This has now been fixed.
+
 # EWCE 1.5.5
 
 ## Bug fixes

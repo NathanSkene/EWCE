@@ -34,7 +34,6 @@ get_summed_proportions <- function(hitGenes,
                                    controlledCT = NULL,
                                    control_network = NULL,
                                    verbose = TRUE) {
-    messager("Computing summed proportions.", v = verbose)
     controlledCT <- fix_celltype_names(celltypes = controlledCT)
     combinedGenes <- rownames(sct_data[[annotLevel]]$mean_exp)
     hitGenes <- hitGenes[hitGenes %in% combinedGenes]

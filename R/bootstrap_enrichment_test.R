@@ -111,14 +111,20 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         controlledCT = controlledCT
     )
     #### Create background if none provided ####
-    bg <- orthogene::create_background(
+    #if statement added down to issue with orthogene:
+    #https://github.com/neurogenomics/orthogene/issues/22
+    if(is.null(bg) | !all(list(sctSpecies,genelistSpecies)==output_species)){
+      bg <- orthogene::create_background(
         species1 = sctSpecies,
         species2 = genelistSpecies,
         output_species = output_species,
-        bg = bg,
         method = method,
+        bg = bg,
         verbose = verbose
-    )
+      )
+    }else{
+      bg <- unique(bg)
+    }
     #### Convert CTD to standardized human genes ####
     messager("Standardising CellTypeDataset", v = verbose)
     sct_data <- standardise_ctd(

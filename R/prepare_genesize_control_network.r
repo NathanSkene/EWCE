@@ -42,14 +42,20 @@ prepare_genesize_control_network <- function(hits,
     genelistSpecies <- species$genelistSpecies
     sctSpecies <- species$sctSpecies
     #### Check background ####
-    bg <- orthogene::create_background(
-        species1 = sctSpecies,
-        species2 = genelistSpecies,
-        output_species = output_species,
-        method = "gprofiler",
-        bg = bg,
-        verbose = verbose
-    )
+    #if statement added down to issue with orthogene:
+    #https://github.com/neurogenomics/orthogene/issues/22
+    if(is.null(bg) | !all(list(sctSpecies,genelistSpecies)==output_species)){
+      bg <- orthogene::create_background(
+          species1 = sctSpecies,
+          species2 = genelistSpecies,
+          output_species = output_species,
+          method = "gprofiler",
+          bg = bg,
+          verbose = verbose
+      )
+    }else{
+      bg <- unique(bg)
+    }
     #### Prepare to query all_hgnc_wtEnsembl ####
     combined_human_genes <- unique(c(hits, bg))
     #### First get all Ensembl gene IDs from the human genes ####
