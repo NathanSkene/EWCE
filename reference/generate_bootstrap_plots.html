@@ -19,7 +19,7 @@ the genes in the list compares to those in randomly generated gene lists"><!-- m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -70,21 +70,21 @@ the genes in the list compares to those in randomly generated gene lists</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">generate_bootstrap_plots</span><span class="op">(</span>
-  sct_data <span class="op">=</span> <span class="cn">NULL</span>,
-  hits <span class="op">=</span> <span class="cn">NULL</span>,
-  bg <span class="op">=</span> <span class="cn">NULL</span>,
-  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  reps <span class="op">=</span> <span class="fl">100</span>,
-  annotLevel <span class="op">=</span> <span class="fl">1</span>,
-  full_results <span class="op">=</span> <span class="cn">NA</span>,
-  listFileName <span class="op">=</span> <span class="st">""</span>,
-  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_bootstrap_plots</span><span class="op">(</span></span>
+<span>  sct_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  reps <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  full_results <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  listFileName <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -181,47 +181,47 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Set the parameters for the analysis</span></span>
-<span class="r-in"><span class="co">## Use 5 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Load the gene list and get human orthologs</span></span>
-<span class="r-in"><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Set the parameters for the analysis</span></span></span>
+<span class="r-in"><span><span class="co">## Use 5 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Load the gene list and get human orthologs</span></span></span>
+<span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Bootstrap significance test,</span></span>
-<span class="r-in"><span class="co">##  no control for transcript length or GC content</span></span>
-<span class="r-in"><span class="co">## Use pre-computed results to speed up example</span></span>
-<span class="r-in"><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Bootstrap significance test,</span></span></span>
+<span class="r-in"><span><span class="co">##  no control for transcript length or GC content</span></span></span>
+<span class="r-in"><span><span class="co">## Use pre-computed results to speed up example</span></span></span>
+<span class="r-in"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading precomputed example bootstrap results.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Skip this for example purposes</span></span>
-<span class="r-in"><span class="co"># full_results &lt;- EWCE::bootstrap_enrichment_test(</span></span>
-<span class="r-in"><span class="co">#    sct_data = ctd,</span></span>
-<span class="r-in"><span class="co">#    hits = hits,</span></span>
-<span class="r-in"><span class="co">#    reps = reps,</span></span>
-<span class="r-in"><span class="co">#    annotLevel = 1,</span></span>
-<span class="r-in"><span class="co">#    sctSpecies = "mouse",</span></span>
-<span class="r-in"><span class="co">#    genelistSpecies = "human"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">plot_file_path</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_bootstrap_plots</span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    hits <span class="op">=</span> <span class="va">hits</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    full_results <span class="op">=</span> <span class="va">full_results</span>,</span>
-<span class="r-in">    listFileName <span class="op">=</span> <span class="st">"Example"</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span>
-<span class="r-in">    genelistSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Skip this for example purposes</span></span></span>
+<span class="r-in"><span><span class="co"># full_results &lt;- EWCE::bootstrap_enrichment_test(</span></span></span>
+<span class="r-in"><span><span class="co">#    sct_data = ctd,</span></span></span>
+<span class="r-in"><span><span class="co">#    hits = hits,</span></span></span>
+<span class="r-in"><span><span class="co">#    reps = reps,</span></span></span>
+<span class="r-in"><span><span class="co">#    annotLevel = 1,</span></span></span>
+<span class="r-in"><span><span class="co">#    sctSpecies = "mouse",</span></span></span>
+<span class="r-in"><span><span class="co">#    genelistSpecies = "human"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">plot_file_path</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_bootstrap_plots</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    hits <span class="op">=</span> <span class="va">hits</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    full_results <span class="op">=</span> <span class="va">full_results</span>,</span></span>
+<span class="r-in"><span>    listFileName <span class="op">=</span> <span class="st">"Example"</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
+<span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>

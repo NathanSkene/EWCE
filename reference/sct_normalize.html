@@ -18,7 +18,7 @@ Uses sctransform."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ Uses <span class="pkg">sctransform</span>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sct_normalize</span><span class="op">(</span><span class="va">exp</span>, as_sparse <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sct_normalize</span><span class="op">(</span><span class="va">exp</span>, as_sparse <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,10 +94,10 @@ Uses <span class="pkg">sctransform</span>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">exp_sct_normed</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">sct_normalize</span><span class="op">(</span>exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span>, <span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">exp_sct_normed</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">sct_normalize</span><span class="op">(</span>exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span>, <span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: sctransform</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating cell attributes from input UMI matrix: log_umi</span>
@@ -110,7 +110,7 @@ Uses <span class="pkg">sctransform</span>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Second step: Get residuals using fitted parameters for 300 genes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating gene attributes</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Wall clock passed: Time difference of 4.741945 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Wall clock passed: Time difference of 6.294831 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing corrected UMI count matrix</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span>
 </code></pre></div>

@@ -22,7 +22,7 @@ and convert all matrices to sparse matrices and/or DelayedArray.'><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -76,26 +76,26 @@ and convert all matrices to sparse matrices and/or <code>DelayedArray</code>.</p
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">standardise_ctd</span><span class="op">(</span>
-  <span class="va">ctd</span>,
-  <span class="va">dataset</span>,
-  input_species <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  force_new_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,
-  force_standardise <span class="op">=</span> <span class="cn">FALSE</span>,
-  remove_unlabeled_clusters <span class="op">=</span> <span class="cn">FALSE</span>,
-  numberOfBins <span class="op">=</span> <span class="fl">40</span>,
-  keep_annot <span class="op">=</span> <span class="cn">TRUE</span>,
-  keep_plots <span class="op">=</span> <span class="cn">TRUE</span>,
-  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
-  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,
-  rename_columns <span class="op">=</span> <span class="cn">TRUE</span>,
-  make_columns_unique <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">standardise_ctd</span><span class="op">(</span></span>
+<span>  <span class="va">ctd</span>,</span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  input_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  force_new_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  force_standardise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_unlabeled_clusters <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  numberOfBins <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  keep_annot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep_plots <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rename_columns <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  make_columns_unique <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -280,14 +280,14 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">ctd_std</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">standardise_ctd</span><span class="op">(</span></span>
-<span class="r-in">    ctd <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    input_species <span class="op">=</span> <span class="st">"mouse"</span>,</span>
-<span class="r-in">    dataset <span class="op">=</span> <span class="st">"Zeisel2016"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">ctd_std</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">standardise_ctd</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    ctd <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    input_species <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
+<span class="r-in"><span>    dataset <span class="op">=</span> <span class="st">"Zeisel2016"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found 5 matrix types across 2 CTD levels.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing level: 1</span>

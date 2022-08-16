@@ -18,7 +18,7 @@ for merging analysis."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ for merging analysis.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_res_to_merging_list</span><span class="op">(</span><span class="va">full_res</span>, existing_results <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_res_to_merging_list</span><span class="op">(</span><span class="va">full_res</span>, existing_results <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,34 +95,34 @@ list. Leave empty if this is the first item in the list.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2022-07-22</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Load the data</span></span>
-<span class="r-in"><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load the data</span></span></span>
+<span class="r-in"><span><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># tt_alzh_BA36 &lt;- ewceData::tt_alzh_BA36()</span></span>
-<span class="r-in"><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="co"># Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span>
-<span class="r-in"><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
-<span class="r-in"><span class="co"># Run EWCE analysis</span></span>
-<span class="r-in"><span class="co"># tt_results &lt;- ewce_expression_data(</span></span>
-<span class="r-in"><span class="co">#    sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh = thresh,</span></span>
-<span class="r-in"><span class="co">#    reps = reps, ttSpecies = "human", sctSpecies = "mouse"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"><span class="co"># tt_results_36 &lt;- ewce_expression_data(</span></span>
-<span class="r-in"><span class="co">#    sct_data = ctd, tt = tt_alzh_BA36, annotLevel = 1, thresh = thresh,</span></span>
-<span class="r-in"><span class="co">#    reps = reps, ttSpecies = "human", sctSpecies = "mouse"</span></span>
-<span class="r-in"><span class="co"># )</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Fill a list with the results</span></span>
-<span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">add_res_to_merging_list</span><span class="op">(</span><span class="va">tt_alzh</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># results &lt;- add_res_to_merging_list(tt_alzh_BA36, results)</span></span>
+<span class="r-in"><span><span class="co"># tt_alzh_BA36 &lt;- ewceData::tt_alzh_BA36()</span></span></span>
+<span class="r-in"><span><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="co"># Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span></span>
+<span class="r-in"><span><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
+<span class="r-in"><span><span class="co"># Run EWCE analysis</span></span></span>
+<span class="r-in"><span><span class="co"># tt_results &lt;- ewce_expression_data(</span></span></span>
+<span class="r-in"><span><span class="co">#    sct_data = ctd, tt = tt_alzh, annotLevel = 1, thresh = thresh,</span></span></span>
+<span class="r-in"><span><span class="co">#    reps = reps, ttSpecies = "human", sctSpecies = "mouse"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span><span class="co"># tt_results_36 &lt;- ewce_expression_data(</span></span></span>
+<span class="r-in"><span><span class="co">#    sct_data = ctd, tt = tt_alzh_BA36, annotLevel = 1, thresh = thresh,</span></span></span>
+<span class="r-in"><span><span class="co">#    reps = reps, ttSpecies = "human", sctSpecies = "mouse"</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fill a list with the results</span></span></span>
+<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">add_res_to_merging_list</span><span class="op">(</span><span class="va">tt_alzh</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># results &lt;- add_res_to_merging_list(tt_alzh_BA36, results)</span></span></span>
 </code></pre></div>
     </div>
   </div>

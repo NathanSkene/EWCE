@@ -18,7 +18,7 @@ targetting the same scientific problem"><!-- mathjax --><script src="https://cdn
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ targetting the same scientific problem</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">merged_ewce</span><span class="op">(</span><span class="va">results</span>, reps <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merged_ewce</span><span class="op">(</span><span class="va">results</span>, reps <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,34 +94,34 @@ enrichment of the stated cell type in the gene list.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="co"># Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span>
-<span class="r-in"><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Load the data</span></span>
-<span class="r-in"><span class="va">tt_alzh_BA36</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA36.html" class="external-link">tt_alzh_BA36</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="co"># Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span></span>
+<span class="r-in"><span><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load the data</span></span></span>
+<span class="r-in"><span><span class="va">tt_alzh_BA36</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA36.html" class="external-link">tt_alzh_BA36</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">tt_alzh_BA44</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA44.html" class="external-link">tt_alzh_BA44</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">tt_alzh_BA44</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA44.html" class="external-link">tt_alzh_BA44</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run EWCE analysis</span></span>
-<span class="r-in"><span class="va">tt_results_36</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    tt <span class="op">=</span> <span class="va">tt_alzh_BA36</span>,</span>
-<span class="r-in">    thresh <span class="op">=</span> <span class="va">thresh</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run EWCE analysis</span></span></span>
+<span class="r-in"><span><span class="va">tt_results_36</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    tt <span class="op">=</span> <span class="va">tt_alzh_BA36</span>,</span></span>
+<span class="r-in"><span>    thresh <span class="op">=</span> <span class="va">thresh</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: genelistSpecies not provided. Setting to 'human' by default.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing gene_df.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> character format detected.</span>
@@ -231,13 +231,6 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using 1st column of tt as gene column: HGNC.symbol</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -251,19 +244,11 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 6 hit genes remain after filtering.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing summed proportions.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 0 significant cell type enrichment results @ q&lt;0.05 : </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -277,7 +262,6 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 5 hit genes remain after filtering.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing summed proportions.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
@@ -285,15 +269,15 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.224151     4.191031 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2            microglia          1 0    1.431964     0.883168 0</span>
-<span class="r-in"><span class="va">tt_results_44</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    tt <span class="op">=</span> <span class="va">tt_alzh_BA44</span>,</span>
-<span class="r-in">    thresh <span class="op">=</span> <span class="va">thresh</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">tt_results_44</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    tt <span class="op">=</span> <span class="va">tt_alzh_BA44</span>,</span></span>
+<span class="r-in"><span>    thresh <span class="op">=</span> <span class="va">thresh</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: genelistSpecies not provided. Setting to 'human' by default.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing gene_df.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> character format detected.</span>
@@ -403,13 +387,6 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using 1st column of tt as gene column: HGNC.symbol</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -423,7 +400,6 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 6 hit genes remain after filtering.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing summed proportions.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
@@ -431,13 +407,6 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.117733     1.772702 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -451,23 +420,22 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 5 hit genes remain after filtering.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing summed proportions.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 0 significant cell type enrichment results @ q&lt;0.05 : </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Fill a list with the results</span></span>
-<span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="add_res_to_merging_list.html">add_res_to_merging_list</a></span><span class="op">(</span><span class="va">tt_results_36</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="add_res_to_merging_list.html">add_res_to_merging_list</a></span><span class="op">(</span><span class="va">tt_results_44</span>, <span class="va">results</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Perform the merged analysis</span></span>
-<span class="r-in"><span class="co"># For publication reps should be higher</span></span>
-<span class="r-in"><span class="va">merged_res</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">merged_ewce</span><span class="op">(</span></span>
-<span class="r-in">    results <span class="op">=</span> <span class="va">results</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="fl">2</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fill a list with the results</span></span></span>
+<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="add_res_to_merging_list.html">add_res_to_merging_list</a></span><span class="op">(</span><span class="va">tt_results_36</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="add_res_to_merging_list.html">add_res_to_merging_list</a></span><span class="op">(</span><span class="va">tt_results_44</span>, <span class="va">results</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Perform the merged analysis</span></span></span>
+<span class="r-in"><span><span class="co"># For publication reps should be higher</span></span></span>
+<span class="r-in"><span><span class="va">merged_res</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">merged_ewce</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    results <span class="op">=</span> <span class="va">results</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   CellType       p        fc sd_from_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal  astrocytes_ependymal 0.00000 1.1085362    1.2856294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural        endothelial_mural 0.22205 1.1812326    0.9703602</span>

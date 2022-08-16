@@ -20,7 +20,7 @@ of annotation, and the dataset from which it was generated."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@ of annotation, and the dataset from which it was generated.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_celltype_table</span><span class="op">(</span><span class="va">annot</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_celltype_table</span><span class="op">(</span><span class="va">annot</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -91,12 +91,12 @@ of annotation, and the dataset from which it was generated.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># See PrepLDSC.Rmd for origin of merged_ALLCELLS$annot</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">dataset_name</span> <span class="op">&lt;-</span> <span class="st">"cortex_mrna"</span></span>
-<span class="r-in"><span class="va">celltype_table</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">get_celltype_table</span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">dataset_name</span> <span class="op">&lt;-</span> <span class="st">"cortex_mrna"</span></span></span>
+<span class="r-in"><span><span class="va">celltype_table</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">get_celltype_table</span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>

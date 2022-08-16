@@ -28,7 +28,7 @@ expressed across cell-types (multiple DEG methods available).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -85,26 +85,26 @@ expressed across cell-types (multiple DEG methods available).</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">drop_uninformative_genes</span><span class="op">(</span>
-  <span class="va">exp</span>,
-  <span class="va">level2annot</span>,
-  dge_method <span class="op">=</span> <span class="st">"limma"</span>,
-  dge_test <span class="op">=</span> <span class="st">"LRT"</span>,
-  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,
-  min_variance_decile <span class="op">=</span> <span class="cn">NULL</span>,
-  adj_pval_thresh <span class="op">=</span> <span class="fl">1e-05</span>,
-  convert_orths <span class="op">=</span> <span class="cn">FALSE</span>,
-  input_species <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
-  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_sce <span class="op">=</span> <span class="cn">FALSE</span>,
-  no_cores <span class="op">=</span> <span class="fl">1</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drop_uninformative_genes</span><span class="op">(</span></span>
+<span>  <span class="va">exp</span>,</span>
+<span>  <span class="va">level2annot</span>,</span>
+<span>  dge_method <span class="op">=</span> <span class="st">"limma"</span>,</span>
+<span>  dge_test <span class="op">=</span> <span class="st">"LRT"</span>,</span>
+<span>  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,</span>
+<span>  min_variance_decile <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  adj_pval_thresh <span class="op">=</span> <span class="fl">1e-05</span>,</span>
+<span>  convert_orths <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  input_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_sce <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -308,18 +308,18 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># Use only a subset of genes to keep the example quick</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span>, <span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Convert orthologs at the same time</span></span>
-<span class="r-in"><span class="va">exp2_orth</span> <span class="op">&lt;-</span> <span class="fu">drop_uninformative_genes</span><span class="op">(</span></span>
-<span class="r-in">    exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>,</span>
-<span class="r-in">    level2annot <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span>,</span>
-<span class="r-in">    input_species <span class="op">=</span> <span class="st">"mouse"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Use only a subset of genes to keep the example quick</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Convert orthologs at the same time</span></span></span>
+<span class="r-in"><span><span class="va">exp2_orth</span> <span class="op">&lt;-</span> <span class="fu">drop_uninformative_genes</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>,</span></span>
+<span class="r-in"><span>    level2annot <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span>,</span></span>
+<span class="r-in"><span>    input_species <span class="op">=</span> <span class="st">"mouse"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Check 300Check 3005</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
@@ -327,7 +327,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for cells with no expressed genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> DGE:: Limma...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 3 / 300 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.0998497 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1504297 secs</span>
 </code></pre></div>
     </div>
   </div>

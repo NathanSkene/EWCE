@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -66,14 +66,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ewce_plot</span><span class="op">(</span>
-  <span class="va">total_res</span>,
-  mtc_method <span class="op">=</span> <span class="st">"bonferroni"</span>,
-  ctd <span class="op">=</span> <span class="cn">NULL</span>,
-  align <span class="op">=</span> <span class="st">"v"</span>,
-  rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1</span><span class="op">)</span>,
-  axis <span class="op">=</span> <span class="st">"lr"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewce_plot</span><span class="op">(</span></span>
+<span>  <span class="va">total_res</span>,</span>
+<span>  mtc_method <span class="op">=</span> <span class="st">"bonferroni"</span>,</span>
+<span>  ctd <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"v"</span>,</span>
+<span>  rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  axis <span class="op">=</span> <span class="st">"lr"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -124,17 +124,17 @@ Must be specified if any of the graphs are complex (e.g. faceted) and alignment 
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Bootstrap significance test,</span></span>
-<span class="r-in"><span class="co">##  no control for transcript length or GC content</span></span>
-<span class="r-in"><span class="co">## Use pre-computed results to speed up example</span></span>
-<span class="r-in"><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Bootstrap significance test,</span></span></span>
+<span class="r-in"><span><span class="co">##  no control for transcript length or GC content</span></span></span>
+<span class="r-in"><span><span class="co">## Use pre-computed results to speed up example</span></span></span>
+<span class="r-in"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading precomputed example bootstrap results.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Generate the plot</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">EWCE</span><span class="fu">::</span><span class="fu">ewce_plot</span><span class="op">(</span></span>
-<span class="r-in">    total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,</span>
-<span class="r-in">    mtc_method <span class="op">=</span> <span class="st">"BH"</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Generate the plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">EWCE</span><span class="fu">::</span><span class="fu">ewce_plot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,</span></span>
+<span class="r-in"><span>    mtc_method <span class="op">=</span> <span class="st">"BH"</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: cowplot</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: gridExtra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plain</span>

@@ -19,7 +19,7 @@ changes for each cell type."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -70,23 +70,23 @@ changes for each cell type.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bootstrap_enrichment_test</span><span class="op">(</span>
-  sct_data <span class="op">=</span> <span class="cn">NULL</span>,
-  hits <span class="op">=</span> <span class="cn">NULL</span>,
-  bg <span class="op">=</span> <span class="cn">NULL</span>,
-  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  reps <span class="op">=</span> <span class="fl">100</span>,
-  no_cores <span class="op">=</span> <span class="fl">1</span>,
-  annotLevel <span class="op">=</span> <span class="fl">1</span>,
-  geneSizeControl <span class="op">=</span> <span class="cn">FALSE</span>,
-  controlledCT <span class="op">=</span> <span class="cn">NULL</span>,
-  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,
-  sort_results <span class="op">=</span> <span class="cn">TRUE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootstrap_enrichment_test</span><span class="op">(</span></span>
+<span>  sct_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  reps <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  no_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  geneSizeControl <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  controlledCT <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,</span>
+<span>  sort_results <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -192,27 +192,27 @@ smallest to largest p-values.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># Set the parameters for the analysis</span></span>
-<span class="r-in"><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;=10,000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="co"># Load gene list from Alzheimer's disease GWAS</span></span>
-<span class="r-in"><span class="va">example_genelist</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Set the parameters for the analysis</span></span></span>
+<span class="r-in"><span><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;=10,000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="co"># Load gene list from Alzheimer's disease GWAS</span></span></span>
+<span class="r-in"><span><span class="va">example_genelist</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Bootstrap significance test, no control for transcript length or GC content</span></span>
-<span class="r-in"><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">bootstrap_enrichment_test</span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    hits <span class="op">=</span> <span class="va">example_genelist</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span>
-<span class="r-in">    genelistSpecies <span class="op">=</span> <span class="st">"human"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Bootstrap significance test, no control for transcript length or GC content</span></span></span>
+<span class="r-in"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">bootstrap_enrichment_test</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    hits <span class="op">=</span> <span class="va">example_genelist</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
+<span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -294,13 +294,13 @@ smallest to largest p-values.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 17 hit genes remain after filtering.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing summed proportions.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 significant cell type enrichment results @ q&lt;0.05 : </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 microglia          1 0    2.069776     8.568962 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1            microglia          1 0    2.009394     4.277172 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 astrocytes_ependymal          1 0    1.467201     3.164665 0</span>
 </code></pre></div>
     </div>
   </div>

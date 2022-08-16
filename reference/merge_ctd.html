@@ -20,7 +20,7 @@ Optionally, can return these as a merged
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -72,23 +72,23 @@ Optionally, can return these as a merged
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">merge_ctd</span><span class="op">(</span>
-  <span class="va">CTD_list</span>,
-  save_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  standardise_CTD <span class="op">=</span> <span class="cn">FALSE</span>,
-  as_SCE <span class="op">=</span> <span class="cn">FALSE</span>,
-  gene_union <span class="op">=</span> <span class="cn">TRUE</span>,
-  merge_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,
-  save_split_SCE <span class="op">=</span> <span class="cn">FALSE</span>,
-  save_split_CTD <span class="op">=</span> <span class="cn">FALSE</span>,
-  save_merged_SCE <span class="op">=</span> <span class="cn">TRUE</span>,
-  force_new_quantiles <span class="op">=</span> <span class="cn">FALSE</span>,
-  numberOfBins <span class="op">=</span> <span class="fl">40</span>,
-  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
-  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merge_ctd</span><span class="op">(</span></span>
+<span>  <span class="va">CTD_list</span>,</span>
+<span>  save_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  standardise_CTD <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  as_SCE <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  gene_union <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  merge_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  save_split_SCE <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  save_split_CTD <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  save_merged_SCE <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  force_new_quantiles <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  numberOfBins <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -174,13 +174,13 @@ create a new one.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Let's pretend these are different CTD datasets</span></span>
-<span class="r-in"><span class="va">ctd1</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Let's pretend these are different CTD datasets</span></span></span>
+<span class="r-in"><span><span class="va">ctd1</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">ctd2</span> <span class="op">&lt;-</span> <span class="va">ctd1</span></span>
-<span class="r-in"><span class="va">CTD_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ctd1</span>, <span class="va">ctd2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">CTD_merged</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">merge_ctd</span><span class="op">(</span>CTD_list <span class="op">=</span> <span class="va">CTD_list</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">ctd2</span> <span class="op">&lt;-</span> <span class="va">ctd1</span></span></span>
+<span class="r-in"><span><span class="va">CTD_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ctd1</span>, <span class="va">ctd2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">CTD_merged</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">merge_ctd</span><span class="op">(</span>CTD_list <span class="op">=</span> <span class="va">CTD_list</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Must set `as_SCE=TRUE` in order to merge CTD.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Returning merged CTD.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
@@ -190,7 +190,7 @@ create a new one.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Calculating normalized specificity.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmpxQfb9m/ctd_file192b30671f87level_1.rda</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/Rtmp1MbpMz/ctd_file160752db0fd2level_1.rda</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Returning list of CTD file name, and the CTD itself.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
@@ -199,7 +199,7 @@ create a new one.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Calculating normalized specificity.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmpxQfb9m/ctd_file192b30507b0flevel_2.rda</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/Rtmp1MbpMz/ctd_file160751c5bc2clevel_2.rda</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Returning list of CTD file name, and the CTD itself.</span>
 </code></pre></div>
     </div>

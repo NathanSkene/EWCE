@@ -19,7 +19,7 @@ and generates plots which show how the expression of the genes in
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -70,29 +70,29 @@ and generates plots which show how the expression of the genes in
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">generate_bootstrap_plots_for_transcriptome</span><span class="op">(</span>
-  <span class="va">sct_data</span>,
-  <span class="va">tt</span>,
-  bg <span class="op">=</span> <span class="cn">NULL</span>,
-  thresh <span class="op">=</span> <span class="fl">250</span>,
-  annotLevel <span class="op">=</span> <span class="fl">1</span>,
-  reps <span class="op">=</span> <span class="fl">100</span>,
-  full_results <span class="op">=</span> <span class="cn">NA</span>,
-  listFileName <span class="op">=</span> <span class="st">""</span>,
-  showGNameThresh <span class="op">=</span> <span class="fl">25</span>,
-  ttSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="cn">NULL</span>,
-  sortBy <span class="op">=</span> <span class="st">"t"</span>,
-  sig_only <span class="op">=</span> <span class="cn">TRUE</span>,
-  sig_col <span class="op">=</span> <span class="st">"q"</span>,
-  sig_thresh <span class="op">=</span> <span class="fl">0.05</span>,
-  celltype_col <span class="op">=</span> <span class="st">"CellType"</span>,
-  plot_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bootstrap"</span>, <span class="st">"bootstrap_distributions"</span>, <span class="st">"log_bootstrap_distributions"</span><span class="op">)</span>,
-  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_bootstrap_plots_for_transcriptome</span><span class="op">(</span></span>
+<span>  <span class="va">sct_data</span>,</span>
+<span>  <span class="va">tt</span>,</span>
+<span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thresh <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>  annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  reps <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  full_results <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  listFileName <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  showGNameThresh <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  ttSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sortBy <span class="op">=</span> <span class="st">"t"</span>,</span>
+<span>  sig_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sig_col <span class="op">=</span> <span class="st">"q"</span>,</span>
+<span>  sig_thresh <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  celltype_col <span class="op">=</span> <span class="st">"CellType"</span>,</span>
+<span>  plot_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bootstrap"</span>, <span class="st">"bootstrap_distributions"</span>, <span class="st">"log_bootstrap_distributions"</span><span class="op">)</span>,</span>
+<span>  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -228,42 +228,42 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Set the parameters for the analysis</span></span>
-<span class="r-in"><span class="co">## Use 3 bootstrap lists for speed, for publishable analysis use &gt;10,000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="va">annotLevel</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># &lt;- Use cell level annotations (i.e. Interneurons)</span></span>
-<span class="r-in"><span class="co">## Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span>
-<span class="r-in"><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Load the top table</span></span>
-<span class="r-in"><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Set the parameters for the analysis</span></span></span>
+<span class="r-in"><span><span class="co">## Use 3 bootstrap lists for speed, for publishable analysis use &gt;10,000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="va">annotLevel</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># &lt;- Use cell level annotations (i.e. Interneurons)</span></span></span>
+<span class="r-in"><span><span class="co">## Use 5 up/down regulated genes (thresh) for speed, default is 250</span></span></span>
+<span class="r-in"><span><span class="va">thresh</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Load the top table</span></span></span>
+<span class="r-in"><span><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## See ?example_transcriptome_results for full code to produce tt_results</span></span>
-<span class="r-in"><span class="va">tt_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_transcriptome_results.html">example_transcriptome_results</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## See ?example_transcriptome_results for full code to produce tt_results</span></span></span>
+<span class="r-in"><span><span class="va">tt_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_transcriptome_results.html">example_transcriptome_results</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading precomputed example transcriptome results.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Bootstrap significance test,</span></span>
-<span class="r-in"><span class="co">## no control for transcript length or GC content</span></span>
-<span class="r-in"><span class="va">savePath</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_bootstrap_plots_for_transcriptome</span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    tt <span class="op">=</span> <span class="va">tt_alzh</span>,</span>
-<span class="r-in">    thresh <span class="op">=</span> <span class="va">thresh</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    full_results <span class="op">=</span> <span class="va">tt_results</span>,</span>
-<span class="r-in">    listFileName <span class="op">=</span> <span class="st">"examples"</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>, </span>
-<span class="r-in">    <span class="co"># Only do one plot type for demo purposes</span></span>
-<span class="r-in">    plot_types <span class="op">=</span> <span class="st">"bootstrap"</span> </span>
-<span class="r-in"><span class="op">)</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Bootstrap significance test,</span></span></span>
+<span class="r-in"><span><span class="co">## no control for transcript length or GC content</span></span></span>
+<span class="r-in"><span><span class="va">savePath</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_bootstrap_plots_for_transcriptome</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    tt <span class="op">=</span> <span class="va">tt_alzh</span>,</span></span>
+<span class="r-in"><span>    thresh <span class="op">=</span> <span class="va">thresh</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    full_results <span class="op">=</span> <span class="va">tt_results</span>,</span></span>
+<span class="r-in"><span>    listFileName <span class="op">=</span> <span class="st">"examples"</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    ttSpecies <span class="op">=</span> <span class="st">"human"</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>, </span></span>
+<span class="r-in"><span>    <span class="co"># Only do one plot type for demo purposes</span></span></span>
+<span class="r-in"><span>    plot_types <span class="op">=</span> <span class="st">"bootstrap"</span> </span></span>
+<span class="r-in"><span><span class="op">)</span> </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: genelistSpecies not provided. Setting to 'human' by default.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aligning celltype names with standardise_ctd format.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing gene_df.</span>

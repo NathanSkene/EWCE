@@ -21,7 +21,7 @@ The new files are then saved to disk, appending
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -74,17 +74,17 @@ The new files are then saved to disk, appending
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_nonorthologs</span><span class="op">(</span>
-  <span class="va">filenames</span>,
-  input_species <span class="op">=</span> <span class="cn">NULL</span>,
-  convert_nonhuman_genes <span class="op">=</span> <span class="cn">TRUE</span>,
-  annot_levels <span class="op">=</span> <span class="cn">NULL</span>,
-  suffix <span class="op">=</span> <span class="st">"_orthologs"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_nonorthologs</span><span class="op">(</span></span>
+<span>  <span class="va">filenames</span>,</span>
+<span>  input_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  convert_nonhuman_genes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  annot_levels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  suffix <span class="op">=</span> <span class="st">"_orthologs"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -252,13 +252,13 @@ now a wrapper for <code>filter_nonorthologs</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ctd</span>, file <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fNames_ALLCELLS_orths</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">filter_nonorthologs</span><span class="op">(</span>filenames <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ctd</span>, file <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fNames_ALLCELLS_orths</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">filter_nonorthologs</span><span class="op">(</span>filenames <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No input_species provided. Setting to 'mouse'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Processing level 1 ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing mean_exp</span>

@@ -19,7 +19,7 @@ disease gene set's enrichment in a particular cell type (the 'controlledCT')"><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -70,22 +70,22 @@ disease gene set's enrichment in a particular cell type (the 'controlledCT')</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">controlled_geneset_enrichment</span><span class="op">(</span>
-  <span class="va">disease_genes</span>,
-  <span class="va">functional_genes</span>,
-  bg <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">sct_data</span>,
-  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  disease_genes_species <span class="op">=</span> <span class="cn">NULL</span>,
-  functional_genes_species <span class="op">=</span> <span class="cn">NULL</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  <span class="va">annotLevel</span>,
-  reps <span class="op">=</span> <span class="fl">100</span>,
-  <span class="va">controlledCT</span>,
-  use_intersect <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">controlled_geneset_enrichment</span><span class="op">(</span></span>
+<span>  <span class="va">disease_genes</span>,</span>
+<span>  <span class="va">functional_genes</span>,</span>
+<span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">sct_data</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  disease_genes_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  functional_genes_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  <span class="va">annotLevel</span>,</span>
+<span>  reps <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  <span class="va">controlledCT</span>,</span>
+<span>  use_intersect <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -194,31 +194,31 @@ from <code>species1</code> and <code>species2</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># See the vignette for more detailed explanations</span></span>
-<span class="r-in"><span class="co"># Gene set enrichment analysis controlling for cell type expression</span></span>
-<span class="r-in"><span class="co"># set seed for bootstrap reproducibility</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345678</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## load merged dataset from vignette</span></span>
-<span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># See the vignette for more detailed explanations</span></span></span>
+<span class="r-in"><span><span class="co"># Gene set enrichment analysis controlling for cell type expression</span></span></span>
+<span class="r-in"><span><span class="co"># set seed for bootstrap reproducibility</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345678</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## load merged dataset from vignette</span></span></span>
+<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">schiz_genes</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/schiz_genes.html" class="external-link">schiz_genes</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">schiz_genes</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/schiz_genes.html" class="external-link">schiz_genes</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">hpsd_genes</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/hpsd_genes.html" class="external-link">hpsd_genes</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">hpsd_genes</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/hpsd_genes.html" class="external-link">hpsd_genes</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span>
-<span class="r-in"><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_hpsd_schiz</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">controlled_geneset_enrichment</span><span class="op">(</span></span>
-<span class="r-in">    disease_genes <span class="op">=</span> <span class="va">schiz_genes</span>,</span>
-<span class="r-in">    functional_genes <span class="op">=</span> <span class="va">hpsd_genes</span>,</span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    reps <span class="op">=</span> <span class="va">reps</span>,</span>
-<span class="r-in">    controlledCT <span class="op">=</span> <span class="st">"pyramidal CA1"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;10000</span></span></span>
+<span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_hpsd_schiz</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">controlled_geneset_enrichment</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    disease_genes <span class="op">=</span> <span class="va">schiz_genes</span>,</span></span>
+<span class="r-in"><span>    functional_genes <span class="op">=</span> <span class="va">hpsd_genes</span>,</span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
+<span class="r-in"><span>    controlledCT <span class="op">=</span> <span class="st">"pyramidal CA1"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: genelistSpecies not provided. Setting to 'human' by default.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: sctSpecies not provided. Setting to 'mouse' by default.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: genelistSpecies not provided. Setting to 'human' by default.</span>

@@ -29,7 +29,7 @@ gene names.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -85,13 +85,13 @@ gene names.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fix_bad_mgi_symbols</span><span class="op">(</span>
-  <span class="va">exp</span>,
-  mrk_file_path <span class="op">=</span> <span class="cn">NULL</span>,
-  printAllBadSymbols <span class="op">=</span> <span class="cn">FALSE</span>,
-  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fix_bad_mgi_symbols</span><span class="op">(</span></span>
+<span>  <span class="va">exp</span>,</span>
+<span>  mrk_file_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  printAllBadSymbols <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -132,13 +132,13 @@ returned with the corrected expression matrix under counts.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># take a subset for speed</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu">fix_bad_mgi_symbols</span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># take a subset for speed</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu">fix_bad_mgi_symbols</span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 5 rows do not have proper MGI symbols</span>

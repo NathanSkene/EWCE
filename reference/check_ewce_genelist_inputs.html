@@ -21,7 +21,7 @@ reduces to 1:1 orthologs."><!-- mathjax --><script src="https://cdnjs.cloudflare
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -74,18 +74,18 @@ reduces to 1:1 orthologs.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">check_ewce_genelist_inputs</span><span class="op">(</span>
-  <span class="va">sct_data</span>,
-  <span class="va">hits</span>,
-  bg <span class="op">=</span> <span class="cn">NULL</span>,
-  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  geneSizeControl <span class="op">=</span> <span class="cn">FALSE</span>,
-  standardise <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_ewce_genelist_inputs</span><span class="op">(</span></span>
+<span>  <span class="va">sct_data</span>,</span>
+<span>  <span class="va">hits</span>,</span>
+<span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  geneSizeControl <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  standardise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -161,20 +161,20 @@ should the genes be standardised using <a href="https://rdrr.io/pkg/orthogene/ma
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="va">example_genelist</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">example_genelist</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Called from "bootstrap_enrichment_test()" and "generate_bootstrap_plots()"</span></span>
-<span class="r-in"><span class="va">checkedLists</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">check_ewce_genelist_inputs</span><span class="op">(</span></span>
-<span class="r-in">    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
-<span class="r-in">    hits <span class="op">=</span> <span class="va">example_genelist</span>,</span>
-<span class="r-in">    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span>
-<span class="r-in">    genelistSpecies <span class="op">=</span> <span class="st">"human"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Called from "bootstrap_enrichment_test()" and "generate_bootstrap_plots()"</span></span></span>
+<span class="r-in"><span><span class="va">checkedLists</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">check_ewce_genelist_inputs</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
+<span class="r-in"><span>    hits <span class="op">=</span> <span class="va">example_genelist</span>,</span></span>
+<span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
+<span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>

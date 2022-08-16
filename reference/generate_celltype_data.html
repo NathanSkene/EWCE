@@ -19,7 +19,7 @@ contain matrices of mean expression and specificity per cell type."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.7</span>
       </span>
     </div>
 
@@ -70,29 +70,29 @@ contain matrices of mean expression and specificity per cell type.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">generate_celltype_data</span><span class="op">(</span>
-  <span class="va">exp</span>,
-  <span class="va">annotLevels</span>,
-  <span class="va">groupName</span>,
-  no_cores <span class="op">=</span> <span class="fl">1</span>,
-  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  file_prefix <span class="op">=</span> <span class="st">"ctd"</span>,
-  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,
-  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,
-  normSpec <span class="op">=</span> <span class="cn">FALSE</span>,
-  convert_orths <span class="op">=</span> <span class="cn">FALSE</span>,
-  input_species <span class="op">=</span> <span class="st">"mouse"</span>,
-  output_species <span class="op">=</span> <span class="st">"human"</span>,
-  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,
-  method <span class="op">=</span> <span class="st">"homologene"</span>,
-  force_new_file <span class="op">=</span> <span class="cn">TRUE</span>,
-  specificity_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,
-  numberOfBins <span class="op">=</span> <span class="fl">40</span>,
-  dendrograms <span class="op">=</span> <span class="cn">TRUE</span>,
-  return_ctd <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_celltype_data</span><span class="op">(</span></span>
+<span>  <span class="va">exp</span>,</span>
+<span>  <span class="va">annotLevels</span>,</span>
+<span>  <span class="va">groupName</span>,</span>
+<span>  no_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  file_prefix <span class="op">=</span> <span class="st">"ctd"</span>,</span>
+<span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  as_DelayedArray <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  normSpec <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  convert_orths <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  input_species <span class="op">=</span> <span class="st">"mouse"</span>,</span>
+<span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
+<span>  force_new_file <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  specificity_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  numberOfBins <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  dendrograms <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_ctd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -297,20 +297,20 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the single cell data</span></span>
-<span class="r-in"><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
+<span class="r-in"><span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span class="co"># Use only a subset to keep the example quick</span></span>
-<span class="r-in"><span class="va">expData</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level1class</span></span>
-<span class="r-in"><span class="va">l2</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span></span>
-<span class="r-in"><span class="va">annotLevels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>l1 <span class="op">=</span> <span class="va">l1</span>, l2 <span class="op">=</span> <span class="va">l2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fNames_ALLCELLS</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_celltype_data</span><span class="op">(</span></span>
-<span class="r-in">    exp <span class="op">=</span> <span class="va">expData</span>,</span>
-<span class="r-in">    annotLevels <span class="op">=</span> <span class="va">annotLevels</span>,</span>
-<span class="r-in">    groupName <span class="op">=</span> <span class="st">"allKImouse"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Use only a subset to keep the example quick</span></span></span>
+<span class="r-in"><span><span class="va">expData</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level1class</span></span></span>
+<span class="r-in"><span><span class="va">l2</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span></span></span>
+<span class="r-in"><span><span class="va">annotLevels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>l1 <span class="op">=</span> <span class="va">l1</span>, l2 <span class="op">=</span> <span class="va">l2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fNames_ALLCELLS</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">generate_celltype_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    exp <span class="op">=</span> <span class="va">expData</span>,</span></span>
+<span class="r-in"><span>    annotLevels <span class="op">=</span> <span class="va">annotLevels</span>,</span></span>
+<span class="r-in"><span>    groupName <span class="op">=</span> <span class="st">"allKImouse"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + Calculating normalized mean expression.</span>
@@ -322,7 +322,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ggdendro</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmpxQfb9m/ctd_allKImouse.rda</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/Rtmp1MbpMz/ctd_allKImouse.rda</span>
 </code></pre></div>
     </div>
   </div>
