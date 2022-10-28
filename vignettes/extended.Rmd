@@ -205,10 +205,8 @@ try({
 
 For publications it can be useful to plot a dendrogram alongside the plot. This can be done by including the cell type data as an additional argument. The dendrogram should automatically align with the graph ticks (thanks to [Robert Gordon-Smith](https://github.com/bobGSmith) for this solution):
 
-```{r, error=TRUE}
-try({
-  print(plot_list$withDendro)  
-})
+```R
+print(plot_list$withDendro)  
 ```
 
 If you want to view the characteristics of enrichment for each gene within the list then the `generate_bootstrap_plots` function should be used. This saves the plots into the BootstrapPlots folder. This takes the results of a bootstrapping analysis so as to only generate plots for significant enrichments. The `listFileName` argument is used to give the generated graphs a particular file name. The `savePath` argument is used here to save the files to a temporary directory, this can be updated to your preferred location. The file path where it was saved is returned so the temporary directory
