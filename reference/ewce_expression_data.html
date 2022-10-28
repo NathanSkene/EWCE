@@ -308,6 +308,7 @@ Also gives consensus scores for each gene mapping based on a
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 19,129 unique genes from entire human genome.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using intersect between background gene lists: 16,482 genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
@@ -316,13 +317,7 @@ Also gives consensus scores for each gene mapping based on a
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -332,18 +327,12 @@ Also gives consensus scores for each gene mapping based on a
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>            CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 endothelial_mural          1 0    2.393329     7.415055 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2         microglia          1 0    2.545384     2.513614 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1         microglia          1 0    2.138646     2.895915 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 endothelial_mural          1 0    1.596961     1.635880 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -351,11 +340,10 @@ Also gives consensus scores for each gene mapping based on a
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 3 significant cell type enrichment results @ q&lt;0.05 : </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>        CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1  pyramidal_SS          1 0    2.397246    12.001535 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2  interneurons          1 0    1.932982     3.329294 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 3 pyramidal_CA1          1 0    1.407643     1.766998 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       CellType annotLevel p fold_change sd_from_mean q</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 interneurons          1 0    1.503900     3.110272 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 pyramidal_SS          1 0    2.128335     2.655205 0</span>
 </code></pre></div>
     </div>
   </div>

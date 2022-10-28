@@ -225,6 +225,7 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 19,129 unique genes from entire human genome.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using intersect between background gene lists: 16,482 genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
@@ -233,13 +234,7 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -247,17 +242,14 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 0 significant cell type enrichment results @ q&lt;0.05 : </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1     oligodendrocytes          1 0    1.313818     2.646143 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 astrocytes_ependymal          1 0    1.487044     1.612899 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -267,8 +259,8 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.224151     4.191031 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2            microglia          1 0    1.431964     0.883168 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.676314     2.884786 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2    endothelial_mural          1 0    1.157809     1.739302 0</span>
 <span class="r-in"><span><span class="va">tt_results_44</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
 <span class="r-in"><span>    tt <span class="op">=</span> <span class="va">tt_alzh_BA44</span>,</span></span>
@@ -381,6 +373,7 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 19,129 unique genes from entire human genome.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using intersect between background gene lists: 16,482 genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
@@ -389,13 +382,7 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -404,18 +391,12 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 significant cell type enrichment results @ q&lt;0.05 : </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.117733     1.772702 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>           CellType annotLevel p fold_change sd_from_mean q</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 oligodendrocytes          1 0    2.063554     2.314898 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
@@ -437,20 +418,20 @@ enrichment of the stated cell type in the gene list.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   CellType       p        fc sd_from_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal  astrocytes_ependymal 0.00000 1.1085362    1.2856294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural        endothelial_mural 0.22205 1.1812326    0.9703602</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> interneurons                  interneurons 0.78105 0.8810868   -0.9603920</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> microglia                        microglia 0.88590 0.7078227   -1.0418535</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> oligodendrocytes          oligodendrocytes 0.10840 1.4355292    1.7647364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_CA1                pyramidal_CA1 0.77865 0.9375842   -0.5361467</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_SS                  pyramidal_SS 0.78105 0.8904476   -0.6809819</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal1 astrocytes_ependymal 0.33590 1.2693838    1.1068131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural1       endothelial_mural 0.44720 1.0927378    0.3493661</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> interneurons1                 interneurons 0.77400 0.9037984   -0.5445426</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> microglia1                       microglia 0.33550 1.2110639    0.8711333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> oligodendrocytes1         oligodendrocytes 0.44330 0.8909209   -0.3577225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_CA11               pyramidal_CA1 0.88665 0.8424858   -0.9950617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_SS1                 pyramidal_SS 0.88870 0.8300489   -1.2543483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal  astrocytes_ependymal 0.11205 1.3703915   1.18525188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural        endothelial_mural 0.55400 1.0199714   0.10290830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> interneurons                  interneurons 1.00000 0.8229062  -1.95190031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> microglia                        microglia 0.78000 0.7009158  -0.77415624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> oligodendrocytes          oligodendrocytes 0.00000 1.5991609   3.90104234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_CA1                pyramidal_CA1 1.00000 0.7990429  -1.78278545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_SS                  pyramidal_SS 0.44280 1.0177329   0.09121036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal1 astrocytes_ependymal 0.22465 1.2326993   1.12486317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural1       endothelial_mural 0.33590 1.0296877   0.15622962</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> interneurons1                 interneurons 0.21900 1.0673199   0.33984804</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> microglia1                       microglia 0.44770 1.0389860   0.13472568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> oligodendrocytes1         oligodendrocytes 0.55280 0.8823795  -0.40297655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_CA11               pyramidal_CA1 0.33345 1.0845669   0.37326136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pyramidal_SS1                 pyramidal_SS 0.77625 0.7344582  -1.11442367</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Direction</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> astrocytes_ependymal         Up</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> endothelial_mural            Up</span>
