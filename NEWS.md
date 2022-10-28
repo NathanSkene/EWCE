@@ -1,3 +1,9 @@
+# EWCE 1.5.8
+
+## Bug fixes
+
+* GHA fix.
+
 # EWCE 1.5.7
 
 ## Bug fixes
