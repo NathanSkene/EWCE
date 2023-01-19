@@ -16,7 +16,8 @@ ewce_expression_data(
   output_species = NULL,
   bg = NULL,
   method = "homologene",
-  verbose = TRUE
+  verbose = TRUE,
+  localHub = FALSE
 )
 }
 \arguments{
@@ -65,6 +66,11 @@ Also gives consensus scores for each gene mapping based on a
 }}
 
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 A list containing five data frames:

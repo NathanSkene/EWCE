@@ -37,10 +37,15 @@ tt_results <- EWCE::ewce_expression_data(
 save(tt_results, file = "inst/extdata/tt_results.rda")
 }
 \usage{
-example_transcriptome_results(verbose = TRUE)
+example_transcriptome_results(verbose = TRUE, localHub = FALSE)
 }
 \arguments{
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 List with 5 items.

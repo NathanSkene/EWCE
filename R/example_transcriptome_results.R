@@ -4,6 +4,10 @@
 #' results produced by \link[EWCE]{ewce_expression_data}.
 #'
 #' @param verbose Print messages.
+#' @param localHub If working offline, add argument localHub=TRUE to work 
+#' with a local, non-updated hub; It will only have resources available that
+#' have previously been downloaded. If offline, Please also see BiocManager
+#' vignette section on offline use to ensure proper functionality. 
 #'
 #' @source
 #' ## Load the single cell data
@@ -41,7 +45,7 @@
 #' @export
 #' @examples
 #' tt_results <- EWCE::example_transcriptome_results()
-example_transcriptome_results <- function(verbose = TRUE) {
+example_transcriptome_results <- function(verbose = TRUE, localHub=FALSE) {
     fname <- system.file("extdata/tt_results.rda",
                          package = "EWCE"
     )
@@ -52,12 +56,12 @@ example_transcriptome_results <- function(verbose = TRUE) {
     } else {
         messager("Recomputing example transcriptome results.",
                  v = verbose)
-        ctd <- ewceData::ctd()
+        ctd <- ewceData::ctd(localHub = localHub)
         reps <- 3
         annotLevel <- 1 # <- Use cell level annotations (i.e. Interneurons)
         thresh <- 5
         ## Load the top table
-        tt_alzh <- ewceData::tt_alzh()
+        tt_alzh <- ewceData::tt_alzh(localHub = localHub)
         tt_results <- ewce_expression_data(
             sct_data = ctd,
             tt = tt_alzh,
@@ -65,7 +69,8 @@ example_transcriptome_results <- function(verbose = TRUE) {
             thresh = thresh,
             reps = reps,
             ttSpecies = "human",
-            sctSpecies = "mouse"
+            sctSpecies = "mouse",
+            localHub = localHub
         )
     }
     return(tt_results)

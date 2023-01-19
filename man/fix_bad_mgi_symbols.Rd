@@ -14,7 +14,8 @@ fix_bad_mgi_symbols(
   mrk_file_path = NULL,
   printAllBadSymbols = FALSE,
   as_sparse = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  localHub = FALSE
 )
 }
 \arguments{
@@ -30,6 +31,11 @@ from www.informatics.jax.org/downloads/reports/index.html}
 \item{as_sparse}{Convert \code{exp} to sparse matrix.}
 
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 Returns the expression matrix with the rownames corrected and rows

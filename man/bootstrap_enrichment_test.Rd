@@ -19,7 +19,8 @@ bootstrap_enrichment_test(
   controlledCT = NULL,
   mtc_method = "BH",
   sort_results = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  localHub = FALSE
 )
 }
 \arguments{
@@ -79,6 +80,11 @@ cell type.}
 smallest to largest p-values.}
 
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 A list containing three data frames:

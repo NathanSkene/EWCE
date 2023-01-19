@@ -1,7 +1,7 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 1.7.0
+Version: 1.7.1
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",
@@ -33,7 +33,7 @@ Imports:
     stats, 
     utils,
     methods,  
-    ewceData,
+    ewceData (>= 1.7.1),
     dplyr,
     ggplot2,
     reshape2, 
@@ -74,6 +74,6 @@ biocViews: GeneExpression, Transcription, DifferentialExpression,
         mRNAMicroarray, OneChannel, RNASeq,
         BiomedicalInformatics, Proteomics, Visualization,
         FunctionalGenomics, SingleCell 
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 Config/testthat/edition: 3 

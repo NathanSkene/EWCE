@@ -5,6 +5,10 @@
 #' GC content.
 #'
 #' @param reps Number of gene lists to sample.
+#' @param localHub If working offline, add argument localHub=TRUE to work 
+#' with a local, non-updated hub; It will only have resources available that
+#' have previously been downloaded. If offline, Please also see BiocManager
+#' vignette section on offline use to ensure proper functionality. 
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams orthogene::create_background
 #'
@@ -27,7 +31,8 @@ prepare_genesize_control_network <- function(hits,
                                              no_cores = 1,
                                              sctSpecies = NULL,
                                              genelistSpecies = NULL,
-                                             verbose = TRUE) {
+                                             verbose = TRUE,
+                                             localHub = FALSE) {
     target <- Gene.Symbol <- NULL
 
     ## Currently, can only convert to human genes
@@ -109,7 +114,7 @@ prepare_genesize_control_network <- function(hits,
     }
     ### GET THE TRANSCRIPT LENGTHS AND GC CONTENT FROM ewceData ####
     ensembl_transcript_lengths_GCcontent <-
-        ewceData::ensembl_transcript_lengths_GCcontent()
+        ewceData::ensembl_transcript_lengths_GCcontent(localHub = localHub)
 
     all_lengths <-
         ensembl_transcript_lengths_GCcontent[

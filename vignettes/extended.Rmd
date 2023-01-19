@@ -52,6 +52,9 @@ try({
 })
 ```
 
+**Note** - You can load `ewceData::ctd()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 ### Gene lists
 
@@ -63,6 +66,10 @@ This example gene list is stored within the `ewceData` package:
 hits <- ewceData::example_genelist()
 print(hits)
 ```
+
+**Note** - You can load `ewceData::example_genelist()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 #### Gene formats and species 
 
@@ -93,6 +100,7 @@ updated using the [Homologene](https://www.ncbi.nlm.nih.gov/homologene) database
 exp <- ctd[[1]]$mean_exp
 
 #### Old conversion method ####
+#if running offline pass localhub = TRUE
 m2h <- ewceData::mouse_to_human_homologs()
 exp_old <- exp[rownames(exp) %in% m2h$MGI.symbol,]
 
@@ -112,7 +120,8 @@ functions, such as `EWCE::bootstrap_enrichment_test(hits = <gene_list>)`.
 
 Not only can it map these gene lists across species, but it can also map them
 within species. For example, if you provide a list of Ensembl IDs, 
-it will automatically convert them to standardised HGNC gene symbols so they're compatible with the similarly standardised CellTypeDataset.
+it will automatically convert them to standardised HGNC gene symbols so they're 
+compatible with the similarly standardised CellTypeDataset.
 
 
 ### Setting analysis parameters
@@ -151,6 +160,10 @@ full_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
                                                 reps = reps,
                                                 annotLevel = annotLevel)
 ```
+
+**Note** - You can run `bootstrap_enrichment_test()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 A note on both the background and target gene lists, 
 other common gene list objects can be used as inputs such as
@@ -231,6 +244,7 @@ The bootstrapping function then takes different arguments:
 
 ```{r}
 # Bootstrap significance test controlling for transcript length and GC content
+#if running offline pass localhub = TRUE
 cont_results <- EWCE::bootstrap_enrichment_test(
   sct_data = ctd,
   hits = hits,
@@ -263,6 +277,7 @@ Both the analyses shown above were run on level 1 annotations. It is possible to
 
 ```{r}
 # Bootstrap significance test controlling for transcript length and GC content
+#if running offline pass localhub = TRUE
 cont_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
                                                 hits = hits, 
                                                 sctSpecies = "mouse",
@@ -295,9 +310,11 @@ To demonstrate this we need to first generate a second analysis so let us sample
 
 ```{r}
 #### Generate random gene list ####
+#if running offline pass localhub = TRUE
 human.bg <- ewceData::mouse_to_human_homologs()$HGNC.symbol
 gene.list.2 <- sample(human.bg,size = 30)
 
+#if running offline pass localhub = TRUE
 second_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
                                                   sctSpecies = "mouse",
                                                   hits = gene.list.2, 
@@ -375,6 +392,7 @@ expression of a given gene across all the cell types.
 
 ```{r, error=TRUE}
 # example datasets held in ewceData package
+#if running offline pass localhub = TRUE
 cortex_mrna <- ewceData::cortex_mrna()
 
 gene <- "Necab1"
@@ -439,8 +457,13 @@ MRK_List2 which will be used: `ewceData::mgi_synonym_data()`.
 We recommend running this function on all input datasets.
 
 ```R
+#if running offline pass localhub = TRUE
 cortex_mrna$exp = fix_bad_mgi_symbols(cortex_mrna$exp)
 ```
+
+**Note** - You can run `fix_bad_mgi_symbols()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 For the SCE version, pass the whole SCE object: 
 
@@ -449,6 +472,10 @@ For the SCE version, pass the whole SCE object:
 #The fix_bad_hgnc_symbols function can similarly take an SCE object as an input
 cortex_mrna_sce = fix_bad_mgi_symbols(cortex_mrna_sce)
 ```
+
+**Note** - You can run `ewce_expression_data()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 ## Drop genes
 
@@ -587,12 +614,14 @@ and then calculate specificity:
 ## Load hypothalamus dataset 
 
 ```{r}
+#if running offline pass localhub = TRUE
 hypothalamus_mrna <- ewceData::hypothalamus_mrna()
 ```
 
 ## Fix bad MGI symbols
 
 ```{r} 
+#if running offline pass localhub = TRUE
 hypothalamus_mrna$exp <- EWCE::fix_bad_mgi_symbols(exp = hypothalamus_mrna$exp)
 cortex_mrna$exp <- EWCE::fix_bad_mgi_symbols(exp = cortex_mrna$exp)
 ```
@@ -660,6 +689,7 @@ drop the first command from the below section.
 ## You can also import the pre-merged cortex and hypothalamus dataset
 # generated by Karolinska institute. `ewceData::ctd()` is the same file as 
 # ctd_MergedKI above.
+#if running offline pass localhub = TRUE
 ctd <- ewceData::ctd() 
 ```
 
@@ -718,6 +748,7 @@ try({
 ## Prepare data 
 
 ```{r}
+#if running offline pass localhub = TRUE
 ctd <- ewceData::ctd()
 hits <- ewceData::example_genelist()
 
@@ -744,6 +775,7 @@ You can now speed up the bootstrapping process by parallelising across
 multiple cores with the parameter `no_cores` (`=1` by default).
 
 ```{r }
+#if running offline pass localhub = TRUE
 unconditional_results <- EWCE::bootstrap_enrichment_test(
   sct_data = ctd,
   hits = hits,
@@ -916,6 +948,7 @@ print(res_rbfox_id)
 ## Prepare data 
 
 ```{r}
+#if running offline pass localhub = TRUE
 ctd <- ewceData::ctd()
 tt_alzh <- ewceData::tt_alzh()
 
@@ -954,6 +987,10 @@ tt_results <- EWCE::ewce_expression_data(sct_data = ctd,
                                           ttSpecies = "human",
                                           sctSpecies = "mouse")
 ```
+
+**Note** - You can run `ewce_expression_data()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 ### Plot results 
 
@@ -1000,6 +1037,7 @@ To demonstrate this we use a two further Alzheimer's transcriptome datasets comi
 ### Load data
 
 ```R
+#if running offline pass localhub = TRUE
 tt_alzh_BA36 <- ewceData::tt_alzh_BA36()
 tt_alzh_BA44 <- ewceData::tt_alzh_BA44() 
 ```

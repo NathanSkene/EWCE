@@ -58,6 +58,10 @@ Each level of a CTD corresponds to increasingly refined cell-type/-subtype annot
 ctd <- ewceData::ctd()
 ```
 
+**Note** - You can load `ewceData::ctd()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
+
 #### Plot CTD mean_exp
 
 Plot the expression of four markers genes across all cell types in the CTD.
@@ -88,10 +92,13 @@ hits <- ewceData::example_genelist()
 print(hits)
 ```
 
+**Note** - You can load `ewceData::example_genelist()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
  
 ## 2. Run cell type enrichment tests
 
-We now run the cell type enrichment tests on the gene list. Since the CTD is from mouse data (and is annotated using mouse genes) we specify the argument `sctSpecies="mouse"`. `bootstrap_enrichment_test` will automaticlaly convert the mouse genes to human genes.
+We now run the cell type enrichment tests on the gene list. Since the CTD is from mouse data (and is annotated using mouse genes) we specify the argument `sctSpecies="mouse"`. `bootstrap_enrichment_test` will automatically convert the mouse genes to human genes.
 
 Since the gene list came from GWAS in humans, we set `genelistSpecies="human"`.
 
@@ -121,7 +128,10 @@ full_results <- EWCE::bootstrap_enrichment_test(sct_data = ctd,
                                                 annotLevel = annotLevel)
 ```
 
- 
+
+**Note** - You can run `bootstrap_enrichment_test()` offline by passing 
+`localhub = TRUE`. This will work off a previously cached version of the 
+reference dataset from `ExperimentHub`.
 
 The main table of results is stored in `full_results$results`.
 

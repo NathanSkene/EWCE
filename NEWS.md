@@ -1,3 +1,11 @@
+# EWCE 1.7.1
+
+## New features
+
+* Offline runs enabled with functions using reference datasets 
+(from `ewceData`). These functions have the parameter `localhub` added to 
+control this.
+
 # EWCE 1.5.8
 
 ## Bug fixes

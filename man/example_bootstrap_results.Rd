@@ -34,10 +34,15 @@ bootstrap_results <- full_results
 save(bootstrap_results,file = "inst/extdata/bootstrap_results.rda")
 }
 \usage{
-example_bootstrap_results(verbose = TRUE)
+example_bootstrap_results(verbose = TRUE, localHub = FALSE)
 }
 \arguments{
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 List with 3 items.

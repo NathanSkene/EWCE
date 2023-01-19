@@ -38,6 +38,10 @@
 #' @param mtc_method Multiple-testing correction method
 #' (passed to \link[stats]{p.adjust}).
 #' @param verbose Print messages.
+#' @param localHub If working offline, add argument localHub=TRUE to work 
+#' with a local, non-updated hub; It will only have resources available that
+#' have previously been downloaded. If offline, Please also see BiocManager
+#' vignette section on offline use to ensure proper functionality. 
 #' @inheritParams orthogene::convert_orthologs
 #'
 #' @return A list containing three data frames:
@@ -88,7 +92,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       controlledCT = NULL,
                                       mtc_method = "BH",
                                       sort_results = TRUE,
-                                      verbose = TRUE) {
+                                      verbose = TRUE,
+                                      localHub = FALSE) {
     core_allocation <- assign_cores(
         worker_cores = no_cores,
         verbose = verbose
@@ -160,7 +165,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
             bg = bg,
             reps = reps,
             sctSpecies = sctSpecies,
-            genelistSpecies = genelistSpecies
+            genelistSpecies = genelistSpecies,
+            localHub = localHub
         )
         control_network <- control_related[["list_network"]]
         hitGenes <- control_related[["hitGenes"]]

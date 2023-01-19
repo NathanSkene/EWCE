@@ -11,7 +11,8 @@ prepare_genesize_control_network(
   no_cores = 1,
   sctSpecies = NULL,
   genelistSpecies = NULL,
-  verbose = TRUE
+  verbose = TRUE,
+  localHub = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,11 @@ See \link[EWCE]{list_species} for all available species.}
 See \link[EWCE]{list_species} for all available species.}
 
 \item{verbose}{Print messages.}
+
+\item{localHub}{If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.}
 }
 \value{
 A list containing three data frames:

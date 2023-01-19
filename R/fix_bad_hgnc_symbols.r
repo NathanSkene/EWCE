@@ -12,6 +12,10 @@
 #' be dropped?
 #' @param as_sparse Convert \code{exp} to sparse matrix.
 #' @param verbose Print messages.
+#' @param localHub If working offline, add argument localHub=TRUE to work 
+#' with a local, non-updated hub; It will only have resources available that
+#' have previously been downloaded. If offline, Please also see BiocManager
+#' vignette section on offline use to ensure proper functionality. 
 #'
 #' @returns Returns the expression matrix with the rownames corrected and rows
 #' representing the same gene merged. If a SingleCellExperiment (SCE) or other
@@ -35,7 +39,8 @@
 fix_bad_hgnc_symbols <- function(exp,
                                  dropNonHGNC = FALSE,
                                  as_sparse = TRUE,
-                                 verbose = TRUE) {
+                                 verbose = TRUE,
+                                 localHub = FALSE) {
     # Check arguments
     err_msg <- paste0(
         "'exp' is null. It should be a numerical",
@@ -63,7 +68,7 @@ fix_bad_hgnc_symbols <- function(exp,
         stop("exp must be either matrix (sparse or dense) or data.frame")
     }
     #### First, find which gene symbols are not proper HGNC symbols ####
-    all_hgnc <- ewceData::all_hgnc()
+    all_hgnc <- ewceData::all_hgnc(localHub = localHub)
     not_HGNC <- rownames(exp)[!rownames(exp) %in% all_hgnc]
     messager(sprintf(
         "%s of %s are not proper HGNC symbols.",

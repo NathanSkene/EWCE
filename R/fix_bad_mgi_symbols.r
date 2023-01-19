@@ -16,6 +16,10 @@
 #' @param printAllBadSymbols Output to console all the bad gene symbols
 #' @param as_sparse Convert \code{exp} to sparse matrix.
 #' @param verbose Print messages.
+#' @param localHub If working offline, add argument localHub=TRUE to work 
+#' with a local, non-updated hub; It will only have resources available that
+#' have previously been downloaded. If offline, Please also see BiocManager
+#' vignette section on offline use to ensure proper functionality. 
 #'
 #' @returns Returns the expression matrix with the rownames corrected and rows
 #' representing the same gene merged. If no corrections are necessary, input
@@ -37,7 +41,8 @@ fix_bad_mgi_symbols <- function(exp,
                                 mrk_file_path = NULL,
                                 printAllBadSymbols = FALSE,
                                 as_sparse = TRUE,
-                                verbose = TRUE) {
+                                verbose = TRUE,
+                                localHub = FALSE) {
     # Check arguments
     err_msg <- paste0(
         "'exp' is null. It should be a numerical",
@@ -81,7 +86,7 @@ fix_bad_mgi_symbols <- function(exp,
         )
     }
     # Check for symbols which are not real MGI symbols
-    all_mgi <- ewceData::all_mgi()
+    all_mgi <- ewceData::all_mgi(localHub = localHub)
     not_MGI <- rownames(exp)[!rownames(exp) %in% all_mgi]
     messager(sprintf("%s rows do not have proper MGI symbols", length(not_MGI)),
         v = verbose
@@ -124,7 +129,7 @@ fix_bad_mgi_symbols <- function(exp,
     )
     # Load data from MGI to check for synonyms
     if (is.null(mrk_file_path)) {
-        mgi_data <- ewceData::mgi_synonym_data()
+        mgi_data <- ewceData::mgi_synonym_data(localHub = localHub)
     } else {
         if (!file.exists(mrk_file_path)) {
             stop(err_msg3)
@@ -133,7 +138,7 @@ fix_bad_mgi_symbols <- function(exp,
             sep = "\t",
             stringsAsFactors = FALSE
         )
-        mgi_synonym_data <- ewceData::mgi_synonym_data()
+        mgi_synonym_data <- ewceData::mgi_synonym_data(localHub = localHub)
         if (!"Marker.Synonyms..pipe.separated." %in%
             colnames(mgi_synonym_data)) {
             stop(err_msg4)

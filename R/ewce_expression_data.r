@@ -71,7 +71,8 @@ ewce_expression_data <- function(sct_data,
                                  output_species = NULL,
                                  bg = NULL,
                                  method = "homologene",
-                                 verbose = TRUE) {
+                                 verbose = TRUE,
+                                 localHub = FALSE) {
     #### Check args ####
     check_ewce_expression_data_args(sortBy = sortBy,
                                     tt = tt, 
@@ -147,7 +148,8 @@ ewce_expression_data <- function(sct_data,
         annotLevel = annotLevel,
         geneSizeControl = FALSE,
         genelistSpecies = ttSpecies,
-        sctSpecies = sctSpecies
+        sctSpecies = sctSpecies,
+        localHub = localHub
     )
     full_res_down <-
         bootstrap_enrichment_test(
@@ -158,7 +160,8 @@ ewce_expression_data <- function(sct_data,
             annotLevel = annotLevel,
             geneSizeControl = FALSE,
             genelistSpecies = ttSpecies,
-            sctSpecies = sctSpecies
+            sctSpecies = sctSpecies,
+            localHub = localHub
         )
 
     joint_results <- rbind(
