@@ -5,6 +5,9 @@
 * Use `rworkflows` GHA.
     - Add `rworkflows::use_badges` to *README.Rmd*.
     - Remove *Dockerfile* (no longer necessary).
+    - Make all 3 platforms (Linux, Mac, Windows) use Bioc dev, 
+        as `ewceData (>=1.7.1)` is now required, due to a fix made only 
+        in the development version of `rtracklayer`.
 * Remove `cowplot` dependency.
 * Replace all `%>%` with `|>`
 
