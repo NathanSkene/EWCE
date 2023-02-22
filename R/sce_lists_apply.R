@@ -37,5 +37,5 @@ sce_lists_apply <- function(SCE_lists,
         } else {
             return(sce_lvl)
         }
-    }) %>% `names<-`(names(SCE_lists))
+    }) |> `names<-`(names(SCE_lists))
 }

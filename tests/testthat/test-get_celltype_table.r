@@ -19,29 +19,31 @@ test_that("get_celltype_table works", {
             exp = exp,
             log10_norm = FALSE
         )
-        testthat::expect_equal(nrow(exp_filt1), 54)
+        testthat::expect_equal(nrow(exp_filt1), 180)
         ## SCT normalization
         exp_norm <- EWCE::sct_normalize(exp = exp)
         exp_filt2 <- EWCE:::filter_variance_quantiles(
             exp = exp_norm,
             log10_norm = FALSE
         )
-        testthat::expect_equal(nrow(exp_filt2), 0)
+        testthat::expect_equal(nrow(exp_filt2), 180)
         ## Log normalization
         exp_filt3 <- EWCE:::filter_variance_quantiles(
             exp = exp,
             log10_norm = TRUE
         )
-        testthat::expect_equal(nrow(exp_filt3), 255)
+        testthat::expect_equal(nrow(exp_filt3), 180)
         ## SCT normalization + Log normalization
         exp_filt4 <- EWCE:::filter_variance_quantiles(
             exp = exp_norm,
             log10_norm = TRUE
         )
-        testthat::expect_equal(nrow(exp_filt4), 209)
+        testthat::expect_equal(nrow(exp_filt4), 180)
 
-        ## CONCLUSION: log normalisation is essential
-        ## to avoid filtering out too many genes
-        # (default now set to log10_norm = TRUE).
+        ## CONCLUSION:
+        ## log normalisation has no effect using computing quantiles 
+        ## using the "EWCE" method (default), 
+        ## but is essential when computing quantiles using 
+        ## the stats::ecdf method.
     }
 })

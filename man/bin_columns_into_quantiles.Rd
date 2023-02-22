@@ -5,34 +5,33 @@
 \title{\code{bin_columns_into_quantiles}}
 \usage{
 bin_columns_into_quantiles(
-  matrixIn,
+  vec,
   numberOfBins = 40,
   defaultBin = as.integer(numberOfBins/2)
 )
 }
 \arguments{
-\item{matrixIn}{The matrix of specificity values}
+\item{vec}{The vector of gene of specificity values.}
 
-\item{numberOfBins}{Number of quantile 'bins' to use (40 is recommended)}
+\item{numberOfBins}{Number of quantile bins to use (40 is recommended).}
 
 \item{defaultBin}{Which bin to assign when there's only one
 non-zero quantile. In situations where there's only one non-zero quantile,
-\code{cut()} throws an error. Avoid these situations by
+\link[base]{cut} throws an error. Avoid these situations by
 using a default quantile.}
 }
 \value{
-A matrix with same shape as matrixIn but with columns storing
-quantiles instead of specificity
+A vector with same length as \code{vec} but with columns storing
+quantiles instead of specificity.
 }
 \description{
 \code{bin_columns_into_quantiles} is an internal function used to convert a
-matrix of specificity (with columns of cell types) intom a matrix of
-specificity quantiles
+vector of specificity  into a vector of specificity quantiles.
+This function can be iterated across a matrix using \link[base]{apply} 
+to create a matrix of specificity quantiles.
 }
 \examples{
 ctd <- ewceData::ctd()
 ctd[[1]]$specificity_quantiles <- apply(ctd[[1]]$specificity, 2,
-    FUN = bin_columns_into_quantiles,
-    numberOfBins = 40
-)
+    FUN = bin_columns_into_quantiles)
 }

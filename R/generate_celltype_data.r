@@ -162,14 +162,14 @@ generate_celltype_data <- function(exp,
         ctd <- lapply(ctd, rNorm)
     }
     #### Calculate specificity quantiles ####
-    if (specificity_quantiles) {
+    if (isTRUE(specificity_quantiles)) {
         ctd <- lapply(ctd,
             bin_specificity_into_quantiles,
             numberOfBins = numberOfBins
         )
     }
     #### Add dendrograms ####
-    if (dendrograms) {
+    if (isTRUE(dendrograms)) {
         ctd <- lapply(ctd, prep_dendro)
     }
     #### Save results ####
@@ -177,7 +177,7 @@ generate_celltype_data <- function(exp,
     dir.create(dirname(fNames), showWarnings = FALSE, recursive = TRUE)
     save(ctd, file = fNames)
     #### Return ####
-    if (return_ctd) {
+    if (isTRUE(return_ctd)) {
         messager("+ Returning list of CTD file name, and the CTD itself.",
             v = verbose
         )

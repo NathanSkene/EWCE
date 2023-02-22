@@ -1,14 +1,6 @@
 ---
 title: "`EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment"
-author: "<img height='200' src='https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true'><br><br>
-        `r badger::badge_github_version(color = 'black')` 
-        `r badger::badge_bioc_release(color='green')`
-        `r badger::badge_github_actions(action = 'R-CMD-check-bioc')`
-        `r badger::badge_last_commit()`
-        `r badger::badge_codecov()` 
-        `r badger::badge_bioc_download(by = 'total', color='green')`
-        `r badger::badge_license()` 
-        <h4>Authors: <i>`r auths <- eval(parse(text = gsub('person','c',read.dcf('DESCRIPTION', fields = 'Authors@R'))));paste(auths[names(auths)=='given'],auths[names(auths)=='family'], collapse = ', ')`</i></h4>" 
+author: "`r rworkflows::use_badges(add_bioc_release = TRUE, add_bioc_download_month = TRUE, add_bioc_download_rank = TRUE, add_bioc_download_total = TRUE)`" 
 date: "<h4>README updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
 bibliography: inst/cit/EWCE.bib
 csl: inst/cit/nature.csl
@@ -23,7 +15,8 @@ pkg <- read.dcf("DESCRIPTION", fields = "Package")[1]
 title <- read.dcf("DESCRIPTION", fields = "Title")[1]
 description <- read.dcf("DESCRIPTION", fields = "Description")[1]
 URL <- read.dcf('DESCRIPTION', fields = 'URL')[1]
-owner <- tolower(strsplit(URL,"/")[[1]][4])
+owner <- strsplit(URL,"/")[[1]][4]
+repo <- strsplit(URL,"/")[[1]][5]
 ```
  
 

@@ -73,7 +73,7 @@ prepare_genesize_control_network <- function(hits,
         method = "gprofiler",
         ensure_filter_nas = FALSE,
         verbose = verbose
-    ) %>%
+    ) |>
         dplyr::rename(
             ensembl_gene_id = target,
             gene_symbol = Gene.Symbol

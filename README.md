@@ -1,20 +1,23 @@
 `EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment
 ================
-<img height='200' src='https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true'><br><br>
-[![](https://img.shields.io/badge/devel%20version-1.3.3-black.svg)](https://github.com/NathanSkene/EWCE)
-[![](https://img.shields.io/badge/release%20version-1.2.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
+<img src= 'https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png' height= '300' ><br><br><br><br>
+[![](https://img.shields.io/badge/devel%20version-1.7.1-black.svg)](https://github.com/NathanSkene/EWCE)
 [![R build
-status](https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
+status](https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
+[![](https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://codecov.io/gh/NathanSkene/EWCE)
-[![](https://img.shields.io/badge/download-2422/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-<h4>
-Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
+[![](https://img.shields.io/badge/release%20version-1.6.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
+[![](https://img.shields.io/badge/download-104/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-3478/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![download](http://www.bioconductor.org/shields/downloads/release/EWCE.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)  
+<h4>  
+Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>  
 </h4>
-<h4>
-README updated: <i>Feb-09-2022</i>
+<h4>  
+README updated: <i>Feb-21-2023</i>  
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -23,7 +26,7 @@ README updated: <i>Feb-09-2022</i>
 
 The *EWCE* R package is designed to facilitate expression weighted cell
 type enrichment analysis as described in our *Frontiers in Neuroscience*
-paper.<sup>1</sup> *EWCE* can be applied to any gene list.
+paper<sup>1</sup>. *EWCE* can be applied to any gene list.
 
 Using *EWCE* essentially involves two steps:
 
@@ -45,32 +48,32 @@ BiocManager::install("EWCE")
 
 ## Documentation
 
-### [Website](https://nathanskene.github.io/EWCE/)
+### [Website](https://NathanSkene.github.io/EWCE/)
 
 **NOTE**: This documentation is for the development version of `EWCE`.
 See
 [Bioconductor](https://bioconductor.org/packages/release/bioc/html/EWCE.html)
 for documentation on the current release version.
 
-### [Getting started](https://nathanskene.github.io/EWCE/articles/EWCE)
+### [Getting started](https://NathanSkene.github.io/EWCE/articles/EWCE)
 
 Includes:
 
--   A minimal example to get started with running *EWCE*.
--   How to install and use the dedicated *EWCE* Docker container usage.
-    [Docker](https://www.docker.com/) containers with the latest version
-    of `EWCE` are regularly pushed to
-    [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
+- A minimal example to get started with running *EWCE*.
+- How to install and use the dedicated *EWCE* Docker container usage.
+  [Docker](https://www.docker.com/) containers with the latest version
+  of `EWCE` are regularly pushed to
+  [Dockerhub](https://hub.docker.com/repository/docker/neurogenomicslab/ewce).
 
-### [Extended examples](https://nathanskene.github.io/EWCE/articles/extended.html)
+### [Extended examples](https://NathanSkene.github.io/EWCE/articles/extended.html)
 
 Additional tutorials of various *EWCE* features, including how to:
 
--   Run cell-type enrichment tests
--   Create a CellTypeDataset
--   Merge two single-cell datasets
--   Run conditional cell-type enrichment tests
--   Apply to transcriptomic data
+- Run cell-type enrichment tests
+- Create a CellTypeDataset
+- Merge two single-cell datasets
+- Run conditional cell-type enrichment tests
+- Apply to transcriptomic data
 
 ## Updates
 
@@ -121,11 +124,11 @@ Imperial College London
 
 <div id="ref-skene_2016" class="csl-entry">
 
-<span class="csl-left-margin">1. </span><span
-class="csl-right-inline">Skene, N. & Grant, S. Identification of
-vulnerable cell types in major brain disorders using single cell
-transcriptomes and expression weighted cell type enrichment. *Frontiers
-in Neuroscience* (2016).
+<span class="csl-left-margin">1.
+</span><span class="csl-right-inline">Skene, N. & Grant, S.
+Identification of vulnerable cell types in major brain disorders using
+single cell transcriptomes and expression weighted cell type enrichment.
+*Frontiers in Neuroscience* (2016).
 doi:[10.3389/fnins.2016.00016](https://doi.org/10.3389/fnins.2016.00016)</span>
 
 </div>

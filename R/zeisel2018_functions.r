@@ -3,7 +3,7 @@
 # search_zeisel2018_celltypes <- function(target_celltype="purkinje",
 #                                         verbose=T){
 #     z18.celltypes <- ewceData::zeisel2018.celltypes()
-#     z18.terms <- z18.celltypes[grep(target_celltype,z18.celltypes$Description,ignore.case = T),]$`Cluster name` %>% unique()
+#     z18.terms <- z18.celltypes[grep(target_celltype,z18.celltypes$Description,ignore.case = T),]$`Cluster name` |> unique()
 #     if(verbose){
 #         print(paste(length(z18.terms),"matching celltype(s)",
 #                     "identified in zeisel2018."))
@@ -38,7 +38,7 @@
 #         grep(target_celltype,
 #              colnames(ctd.zeisel2018[[lvl]]$mean_exp), ignore.case = T, value = T)
 #         # return(unique(colnames(ctd.zeisel2018[[lvl]]$mean_exp)))
-#     }) %>% `names<-`(names(ctd.zeisel2018))
+#     }) |> `names<-`(names(ctd.zeisel2018))
 # }
 #
 #
@@ -67,26 +67,26 @@
 #     #### Create mean expression quantiles matrix ####
 #     mean_exp_q <- sapply(colnames(mean_exp), function(x){
 #         bin_columns_into_quantiles(mean_exp[,x], 41)
-#     }) %>% `row.names<-`(row.names(mean_exp)) %>%
-#         `colnames<-`(colnames(mean_exp)) %>%
+#     }) |> `row.names<-`(row.names(mean_exp)) |>
+#         `colnames<-`(colnames(mean_exp)) |>
 #         as("sparseMatrix")
 #     ## Sometimes you have to limit the number of genes or else everything is enriched
 #     celltype_specific <- (sapply(target_cols, function(x){
 #         g1 <- row.names(specQ)[specQ[,x]==max(specQ[,x], na.rm = T)]
 #         if(!is.null(max_specificity_genes)){
-#             top_genes <- data.frame(specificity=spec[,x], gene = row.names(spec) ) %>%
+#             top_genes <- data.frame(specificity=spec[,x], gene = row.names(spec) ) |>
 #                 dplyr::arrange(desc(specificity))
 #             g1 <- top_genes$gene[1:min(length(g1),max_specificity_genes, na.rm = T)]
 #         }
 #         return(g1)
-#     }) %>% reshape2::melt())$value %>% unique()
+#     }) |> reshape2::melt())$value |> unique()
 #     print(paste("+",length(celltype_specific),"celltype_specific markers identified."))
 #
 #     celltype_expressed <- (sapply(target_cols, function(x){
 #         g2 <- row.names(mean_exp_q)[ mean_exp_q[,x]==max(mean_exp_q[,x],na.rm = T)]
 #         if(!is.null(max_expression_genes)) g2 <- g2[1:max_expression_genes]
 #         return(g2)
-#     }) %>% reshape2::melt())$value %>% unique()
+#     }) |> reshape2::melt())$value |> unique()
 #     print(paste("+",length(celltype_expressed),"celltype_expressed markers identified."))
 #
 #     ### Return different genes sets depending on arguments ####

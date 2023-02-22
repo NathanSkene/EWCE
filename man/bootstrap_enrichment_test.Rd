@@ -120,6 +120,5 @@ full_results <- EWCE::bootstrap_enrichment_test(
     reps = reps,
     annotLevel = 1,
     sctSpecies = "mouse",
-    genelistSpecies = "human"
-)
+    genelistSpecies = "human")
 }

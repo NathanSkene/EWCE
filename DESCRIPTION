@@ -49,6 +49,7 @@ Imports:
     orthogene (>= 0.99.8),
     data.table
 Suggests: 
+    rworkflows,
     remotes, 
     knitr, 
     BiocStyle, 
@@ -61,14 +62,10 @@ Suggests:
     DESeq2,  
     MAST,
     DelayedMatrixStats,
-    cowplot,
     ggdendro,
-    grDevices, 
-    grid, 
-    gridExtra,
+    grDevices,
     scales,
-    magick,
-    badger
+    patchwork
 biocViews: GeneExpression, Transcription, DifferentialExpression,
         GeneSetEnrichment, Genetics, Microarray,
         mRNAMicroarray, OneChannel, RNASeq,

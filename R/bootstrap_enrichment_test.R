@@ -72,10 +72,9 @@
 #'     reps = reps,
 #'     annotLevel = 1,
 #'     sctSpecies = "mouse",
-#'     genelistSpecies = "human"
-#' )
+#'     genelistSpecies = "human")
 #' @export
-#' @importFrom dplyr %>% arrange desc
+#' @importFrom dplyr arrange desc
 #' @importFrom stats p.adjust sd
 #' @importFrom orthogene create_background
 bootstrap_enrichment_test <- function(sct_data = NULL,

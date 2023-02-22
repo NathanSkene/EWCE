@@ -23,7 +23,6 @@
 #'
 #' @keywords internal
 #' @importFrom data.table data.table rbindlist
-#' @importFrom dplyr %>%
 #' @importFrom parallel mclapply
 get_summed_proportions <- function(hitGenes,
                                    sct_data,
@@ -90,7 +89,7 @@ get_summed_proportions <- function(hitGenes,
             annotLevel = annotLevel
         )
         return(data.table::data.table(t(bootstrap_res)))
-    }, mc.cores = no_cores) %>%
+    }, mc.cores = no_cores) |>
         data.table::rbindlist()
     #### Conver to matrix format ####
     bootstrap_data <- as.matrix(bootstrap_data)

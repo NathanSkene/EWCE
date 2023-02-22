@@ -7,7 +7,6 @@
 #' @keywords internal
 #' @importFrom  parallel mclapply
 #' @importFrom data.table data.table
-#' @importFrom dplyr %>%
 create_list_network <- function(data_byGene2,
                                 hitGenes_NEW,
                                 reps = 10000,
@@ -31,9 +30,9 @@ create_list_network <- function(data_byGene2,
             size = reps,
             replace = TRUE
         ))
-    }, mc.cores = no_cores) %>%
-        do.call(what = "cbind") %>%
-        as.matrix() %>%
+    }, mc.cores = no_cores) |>
+        do.call(what = "cbind") |>
+        as.matrix() |>
         `colnames<-`(NULL)
     return(list_network)
 }

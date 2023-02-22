@@ -10,7 +10,7 @@
 #'  to keep values from.
 #' @param verbose Print messages.
 #' 
-#' @return Filtered \code{exp}.
+#' @returns Filtered \code{exp}.
 #' @keywords internal
 filter_variance_quantiles <- function(exp,
                                       log10_norm = TRUE,
@@ -19,10 +19,13 @@ filter_variance_quantiles <- function(exp,
                                           n_quantiles / 2
                                       ),
                                       verbose = TRUE) {
+    # templateR:::args2vars(filter_variance_quantiles)
+    # exp <- ewceData::ctd()[[1]]$mean_exp
+    
     exp_orig <- exp
     messager("Filtering by variance quantiles.", v = verbose)
     #### Log normalise to avoid skewed quantiles ####
-    if (log10_norm) {
+    if (isTRUE(log10_norm)) {
         exp <- log10(exp + 1e-12)
     }
     #### Convert to DelayedArray to take advantage of rowVars func #####
@@ -33,18 +36,10 @@ filter_variance_quantiles <- function(exp,
         rownames(exp)
     )
     #### Convert to quantiles ####
-    quant <- calc_quantiles(
-        vec = gene_variance,
-        n_quantiles = n_quantiles,
-        verbose = verbose
-    )
+    quant <- bin_columns_into_quantiles(vec = gene_variance,
+                                        numberOfBins = n_quantiles)
     #### Remove genes below the min_variance_quantile ####
-    gene_variance <- gene_variance[
-        quant >= (min_variance_quantile / n_quantiles)
-    ]
-    # DelayedMatrixStats::rowQuantiles(gene_variance)
-    # hist(log(gene_variance), breaks=50)
-    orig.dim <- dim(exp)
+    gene_variance <- gene_variance[quant>=min_variance_quantile] 
     messager(paste(
         formatC(nrow(exp) - length(gene_variance), big.mark = ","),
         "/",

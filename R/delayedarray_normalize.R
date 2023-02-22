@@ -9,9 +9,10 @@
 #' @param min_max Whether to min/max-normalise \code{exp}.
 #' @param no_cores Number of cores to parallelise across.
 #'
-#' @return Normalised matrix.
+#' @returns Normalised matrix.
 #'
 #' @keywords internal
+#' @importFrom methods show
 delayedarray_normalize <- function(exp,
                                    log_norm = TRUE,
                                    min_max = TRUE,
@@ -21,11 +22,11 @@ delayedarray_normalize <- function(exp,
     requireNamespace("graphics")
     mat <- exp
     core_allocation <- assign_cores(worker_cores = no_cores)
-    if (log_norm) {
+    if (isTRUE(log_norm)) {
         mat_log <- log1p(mat)
         mat <- mat_log
     }
-    if (min_max) {
+    if (isTRUE(min_max)) {
         col_max <- DelayedArray::colMaxs(mat, na.rm = TRUE)
         col_min <- DelayedArray::colMins(mat, na.rm = TRUE)
         mat_normed <- DelayedArray::t((DelayedArray::t(mat) - col_min) /
@@ -33,7 +34,8 @@ delayedarray_normalize <- function(exp,
         mat <- mat_normed
     }
     if (plot_hists) {
-        graphics::hist(DelayedArray::colMeans(exp, na.rm = TRUE)) %>% print()
+        graphics::hist(DelayedArray::colMeans(exp, na.rm = TRUE)) |> 
+            methods::show()
     }
     return(mat)
 }

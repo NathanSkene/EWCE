@@ -7,10 +7,12 @@
 ewce_plot(
   total_res,
   mtc_method = "bonferroni",
+  q_threshold = 0.05,
   ctd = NULL,
-  align = "v",
-  rel_heights = c(0.3, 1),
-  axis = "lr"
+  annotLevel = 1,
+  heights = c(0.3, 1),
+  make_dendro = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,22 +27,26 @@ Multiple testing correction is then applied across all merged results.}
 \item{mtc_method}{Method to be used for multiple testing correction.
 Argument is passed to \link[stats]{p.adjust} (DEFAULT: "bonferroni).}
 
+\item{q_threshold}{Corrected significance threshold.}
+
 \item{ctd}{CellTypeDataset object.
 Should be provided so that the dendrogram can be taken from it
-and added to plots}
+and added to plots.}
 
-\item{align}{(optional) Specifies whether graphs in the grid should be horizontally ("h") or
-vertically ("v") aligned. Options are "none" (default), "hv" (align in both directions), "h", and "v".}
+\item{annotLevel}{An integer indicating which level of \code{ctd} to
+analyse (\emph{Default: 1}).}
 
-\item{rel_heights}{(optional) Numerical vector of relative rows heights. Works just as
-\code{rel_widths} does, but for rows rather than columns.}
+\item{heights}{The relative heights row in the grid. 
+Will get repeated to match the dimensions of the grid.
+Passed to \link[patchwork]{wrap_plots}.}
 
-\item{axis}{(optional) Specifies whether graphs should be aligned by the left ("l"), right ("r"), top ("t"), or bottom ("b")
-margins. Options are "none" (default), or a string of any combination of l, r, t, and b in any order (e.g. "tblr" or "rlbt" for aligning all margins).
-Must be specified if any of the graphs are complex (e.g. faceted) and alignment is specified and desired. See \code{\link[cowplot:align_plots]{align_plots()}} for details.}
+\item{make_dendro}{Add a dendrogram (requires \code{ctd}).}
+
+\item{verbose}{Print messages.}
 }
 \value{
-A ggplot containing the plot
+A named list containing versions of the \link[ggplot2]{ggplot}
+ with and without the dendrogram.
 }
 \description{
 \code{ewce_plot} generates plots of EWCE enrichment results
@@ -49,11 +55,6 @@ A ggplot containing the plot
 ## Bootstrap significance test,
 ##  no control for transcript length or GC content
 ## Use pre-computed results to speed up example
-full_results <- EWCE::example_bootstrap_results()
-
-## Generate the plot
-print(EWCE::ewce_plot(
-    total_res = full_results$results,
-    mtc_method = "BH"
-))
+total_res <- EWCE::example_bootstrap_results()$results 
+plt <- ewce_plot(total_res = total_res)
 }

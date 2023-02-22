@@ -42,7 +42,6 @@
 #' CTD_list <- list(ctd1, ctd2)
 #' CTD_merged <- EWCE::merge_ctd(CTD_list = CTD_list)
 #' @export
-#' @importFrom dplyr %>%
 merge_ctd <- function(CTD_list,
                       save_dir = tempdir(),
                       standardise_CTD = FALSE,
@@ -79,7 +78,7 @@ merge_ctd <- function(CTD_list,
                 ctd = CTD_list[[x]],
                 ...
             )
-        }) %>% `names<-`(names(CTD_list))
+        }) |> `names<-`(names(CTD_list))
     }
     #### Split and save the standardized CTD files ####
     if (save_split_CTD) {
@@ -105,12 +104,12 @@ merge_ctd <- function(CTD_list,
                 saveRDS(sce, file.path(split_SCE_dir, paste0(x, ".rds")))
             }
             return(sce)
-        }) %>% `names<-`(names(CTD_list))
+        }) |> `names<-`(names(CTD_list))
 
         #### Split the standardized SCE files ####
         SCE_paths <- lapply(names(SCE_lists), function(x) {
             file.path(split_SCE_dir, paste0(x, ".rds"))
-        }) %>% `names<-`(names(SCE_lists))
+        }) |> `names<-`(names(SCE_lists))
         #### Merge SCE ####
         SCE_merged <- merge_sce_list(
             SCE_lists = SCE_lists,
@@ -150,7 +149,7 @@ merge_ctd <- function(CTD_list,
             exp_merged <- lapply(seq_len(length(CTD_list)), 
                                  function(i){
                 CTD_list[[i]][[lvl]]$mean_exp
-            }) %>% do.call(what = cbind)
+            }) |> do.call(what = cbind)
             ctd_merged_lvl <- generate_celltype_data(
                 exp = exp_merged, 
                 annotLevels = list(colnames(exp_merged)),
@@ -165,7 +164,7 @@ merge_ctd <- function(CTD_list,
                 numberOfBins = numberOfBins,
                 verbose = verbose
             )$ctd[[1]]
-        }) %>% `names<-`(paste("level",seq_len(max_lvl),sep="_")) 
+        }) |> `names<-`(paste("level",seq_len(max_lvl),sep="_")) 
         return(CTD_merged)
     }
 }

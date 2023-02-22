@@ -19,7 +19,7 @@
 #'
 #' @keywords internal
 #' @importFrom DelayedArray rowMaxs DelayedArray
-#' @importFrom dplyr %>% mutate group_by slice_max
+#' @importFrom dplyr mutate group_by slice_max
 #' @importFrom methods as
 extract_matrix <- function(ctd,
                            dataset,

@@ -4,7 +4,7 @@
 \alias{prep_dendro}
 \title{Prepare dendrogram}
 \usage{
-prep_dendro(ctdIN)
+prep_dendro(ctdIN, expand = c(0, 0.66))
 }
 \arguments{
 \item{ctdIN}{A single annotLevel of a ctd, i.e. ctd[[1]] (the function is

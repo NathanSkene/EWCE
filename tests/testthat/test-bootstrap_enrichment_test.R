@@ -31,14 +31,7 @@ test_that("bootstrap enrichment runs as expected", {
         )
         # Fail if microglia not returned
         # (occasionally astrocytes will also appear enriched with low reps)
-        testthat::expect_true("microglia" %in% ewce_sig_cell_types)
-        #### ewce_plot ####
-        ewce_plot_res <- EWCE::ewce_plot(
-            total_res = full_results$results,
-            mtc_method = "BH"
-        )$plain
-        # Fail if any but ggplot returned
-        testthat::expect_true(is(ewce_plot_res, "gg"))
+        testthat::expect_true("microglia" %in% ewce_sig_cell_types) 
 
         #----------------------------------------------------------
         # Check generate_bootstrap_plots and

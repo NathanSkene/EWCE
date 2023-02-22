@@ -13,105 +13,101 @@
 #' Argument is passed to \link[stats]{p.adjust} (DEFAULT: "bonferroni).
 #' @param ctd CellTypeDataset object.
 #' Should be provided so that the dendrogram can be taken from it
-#' and added to plots
-#' @inheritParams cowplot::plot_grid
+#' and added to plots.
+#' @param annotLevel An integer indicating which level of \code{ctd} to
+#' analyse (\emph{Default: 1}).
+#' @param make_dendro Add a dendrogram (requires \code{ctd}).
+#' @param heights The relative heights row in the grid. 
+#' Will get repeated to match the dimensions of the grid.
+#' Passed to \link[patchwork]{wrap_plots}.
+#' @inheritParams check_percent_hits 
 #'
-#' @return A ggplot containing the plot
+#' @returns A named list containing versions of the \link[ggplot2]{ggplot}
+#'  with and without the dendrogram. 
 #'
+#' @export
+#' @import ggplot2
+#' @importFrom stats p.adjust
 #' @examples
 #' ## Bootstrap significance test,
 #' ##  no control for transcript length or GC content
 #' ## Use pre-computed results to speed up example
-#' full_results <- EWCE::example_bootstrap_results()
-#'
-#' ## Generate the plot
-#' print(EWCE::ewce_plot(
-#'     total_res = full_results$results,
-#'     mtc_method = "BH"
-#' ))
-#' @export
-#' @import ggplot2
-#' @importFrom stats p.adjust
+#' total_res <- EWCE::example_bootstrap_results()$results 
+#' plt <- ewce_plot(total_res = total_res)
 ewce_plot <- function(total_res,
                       mtc_method = "bonferroni",
+                      q_threshold = 0.05,
                       ctd = NULL,
-                      align = "v",
-                      rel_heights = c(.3, 1),
-                      axis = "lr") {
-    requireNamespace("cowplot")
-    requireNamespace("gridExtra")
-    requireNamespace("grid")
-    err_msg <- paste0(
-        "ERROR: Invalid mtc_method argument. Please see",
-        " '?p.adjust' for valid methods."
-    )
-    if (!mtc_method %in% c(
-        "holm", "hochberg", "hommel",
-        "bonferroni", "BH", "BY", "fdr", "none"
-    )) {
-        stop(err_msg)
-    }
+                      annotLevel = 1, 
+                      heights = c(.3, 1), 
+                      make_dendro = FALSE,
+                      verbose = TRUE) {
+    # templateR:::args2vars(ewce_plot)
+     
+    requireNamespace("ggplot2")
+    requireNamespace("patchwork")    
+    
+    check_mtc_method(mtc_method = mtc_method)
     multiList <- TRUE
-    if (is.null(total_res$list)) {
-        multiList <- FALSE
-    }
-
-    # Check if ctd is provided (if so, dendrogram is to be added)
-    make_dendro <- FALSE
-    if (!is.null(ctd)) {
-        make_dendro <- TRUE
-        # If using dendrogram... Find the relevant level of the CTD annotation
-        cells_in_ctd <- function(ctdIN, cells) {
-            if (sum(!cells %in% colnames(ctdIN$specificity) == 0)) {
-                return(1)
-            } else {
-                return(0)
-            }
-        }
-        if (length(ctd[[1]]$plotting) > 0) {
-            annotLevel <-
-                which(unlist(lapply(ctd,
-                    FUN = cells_in_ctd,
-                    cells = as.character(
-                        total_res$CellType
-                    )
-                )) == 1)
-            err_msg2 <- paste0(
-                "All of the cells within total_res should come",
-                " from a single annotation layer of the CTD"
-            )
-            if (length(annotLevel) == 0) {
-                stop(err_msg2)
-            }
-        }
-
-        # Set order of cells
-        if (length(ctd[[annotLevel]]$plotting) > 0) {
-            total_res$CellType <-
-                factor(total_res$CellType,
-                    levels = ctd[[annotLevel]]$plotting$cell_ordering
+    if (is.null(total_res$list)) multiList <- FALSE
+    #### If using dendrogram ####
+    if(isTRUE(make_dendro)){
+        #### Check if ctd is provided ####
+        if(is.null(ctd)){
+            messager(
+                "Warning: Can only add the dendrogram when ctd is provided.",
+                "Setting make_dendro=FALSE.",
+                v=verbose)
+            make_dendro <- FALSE
+        } else {
+            # Find the relevant level of the CTD annotation 
+            if (length(ctd[[annotLevel]]$plotting) > 0) {
+                annotLevel <-
+                    which(unlist(lapply(ctd,
+                                        FUN = cells_in_ctd,
+                                        cells = as.character(
+                                            total_res$CellType
+                                        )
+                    )) == 1)
+                err_msg2 <- paste0(
+                    "All of the cells within total_res should come",
+                    " from a single annotation layer of the CTD"
                 )
-        }
+                if (length(annotLevel) == 0) {
+                    stop(err_msg2)
+                }
+            }
+            #### Set order of cells ####
+            if (length(ctd[[annotLevel]]$plotting) > 0) {
+                total_res$CellType <-
+                    factor(x = fix_celltype_names(total_res$CellType),
+                           levels = fix_celltype_names(
+                               ctd[[annotLevel]]$plotting$cell_ordering
+                           ), 
+                           ordered = TRUE
+                    )
+            }
+        } 
     }
-
     #### Multiple testing correction across all rows ####
-    if ("q" %in% colnames(total_res)) {
+    if (!"q" %in% colnames(total_res)) {
         total_res$q <- stats::p.adjust(total_res$p,
             method = mtc_method
         )
     }
     #### Mark significant rows with asterixes ####
     ast_q <- rep("", dim(total_res)[1])
-    ast_q[total_res$q < 0.05] <- "*"
+    ast_q[total_res$q < q_threshold] <- "*"
     total_res$ast_q <- ast_q
     #### Plot ####
     total_res$sd_from_mean[total_res$sd_from_mean < 0] <- 0
-    graph_theme <- theme_bw(base_size = 12, base_family = "Helvetica") +
-        theme(
-            text = element_text(size = 14),
-            axis.title.y = element_text(vjust = 0.6),
-            strip.background = element_rect(fill = "white"),
-            strip.text = element_text(color = "black")
+    graph_theme <- ggplot2::theme_bw(base_size = 12, 
+                                     base_family = "Helvetica") +
+        ggplot2::theme(
+            text = ggplot2::element_text(size = 14),
+            axis.title.y = ggplot2::element_text(vjust = 0.6),
+            strip.background = ggplot2::element_rect(fill = "white"),
+            strip.text = ggplot2::element_text(color = "black")
         )
 
     upperLim <- max(abs(total_res$sd_from_mean), na.rm = TRUE)
@@ -119,70 +115,64 @@ ewce_plot <- function(total_res,
     total_res$abs_sd <- abs(total_res$sd_from_mean)
 
     if ("Direction" %in% colnames(total_res)) {
-        the_plot <- ggplot(total_res) +
-            geom_bar(aes_string(
-                x = "CellType", y = "abs_sd",
-                fill = "Direction"
+        the_plot <- ggplot2::ggplot(total_res) +
+            ggplot2::geom_bar(
+                ggplot2::aes_string(x = "CellType", y = "abs_sd",
+                                    fill = "Direction"
             ),
             position = "dodge", stat = "identity"
             ) +
             graph_theme
     } else {
-        the_plot <- ggplot(total_res) +
-            geom_bar(aes_string(x = "CellType", y = "abs_sd", fill = "abs_sd"),
+        the_plot <- ggplot2::ggplot(total_res) +
+            ggplot2::geom_bar(
+                ggplot2::aes_string(x = "CellType", y = "abs_sd", 
+                                    fill = "abs_sd"),
                 stat = "identity"
             ) +
-            scale_fill_gradient(low = "blue", high = "red") +
+            ggplot2::scale_fill_gradient(low = "blue", high = "red") +
             graph_theme +
-            theme(legend.position = "none")
+            ggplot2::theme(legend.position = "none")
     }
 
     # Setup the main plot
     the_plot <- the_plot +
-        theme(
-            plot.margin = grid::unit(c(1, 0, 0, 0), "mm"),
-            axis.text.x = element_text(angle = 55, hjust = 1)
+        ggplot2::theme(
+            plot.margin = ggplot2::unit(c(.5, 0, 0, 0), "mm"),
+            axis.text.x = ggplot2::element_text(angle = 55, hjust = 1)
         ) +
-        theme(panel.border = element_rect(
+        ggplot2::theme(panel.border = ggplot2::element_rect(
             colour = "black",
-            fill = NA, size = 1
+            fill = NA, linewidth = 1
         )) +
-        xlab("") +
-        theme(strip.text.y = element_text(angle = 0)) +
-        coord_cartesian(ylim = c(0, 1.1 * upperLim)) +
-        ylab("Std.Devs. from the mean") +
-        theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+        ggplot2::xlab("Cell type") +
+        ggplot2::theme(strip.text.y = ggplot2::element_text(angle = 0)) +
+        ggplot2::ylab("Std.Devs. from the mean") 
 
     the_plot <- the_plot +
-        scale_y_continuous(breaks = c(0, ceiling(upperLim * 0.66))) +
-        geom_text(aes_string(label = "ast_q", x = "CellType", y = "y_ast"),
+        ggplot2::scale_y_continuous(breaks = c(0, ceiling(upperLim * 0.66)),
+                                    expand = c(0, 1.1)) +
+        ggplot2::geom_text(
+            ggplot2::aes_string(label = "ast_q", x = "CellType", y = "y_ast"),
             size = 10
         )
-    if (multiList) {
+    if (isTRUE(multiList)) {
         the_plot <- the_plot +
-            facet_grid("list ~ .", scales = "free", space = "free_x")
+            ggplot2::facet_grid("list ~ .", 
+                                scales = "free", 
+                                space = "free_x")
     }
-
-    # Prepare output
+    #### Prepare output list ####
     output <- list()
-    output$plain <- the_plot
-
-    if (make_dendro) {
-        the_dendrogram <-
-            ctd[[annotLevel]]$plotting$ggdendro_horizontal +
-            theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm")) +
-            scale_x_discrete(breaks = total_res$CellType)
-        # scale_x_discrete to set the mapping of the dendro to the x axis scale
-        combined_plot <-
-            cowplot::plot_grid(the_dendrogram, the_plot,
-                align = align,
-                rel_heights = rel_heights,
-                axis = axis,
-                ncol = 1
-            )
-        # align arg to "v" and rel_heights c(0.3,1) make dend & barchart closer
-        # two prev comments adjustments by Robert Gordon-Smith
-        output$withDendro <- combined_plot
+    output$plain <- the_plot 
+    if (isTRUE(make_dendro)) {
+        ctdIN <- prep_dendro(ctdIN = ctd[[annotLevel]], 
+                             expand = c(0, .66))  
+        output$withDendro <- patchwork::wrap_plots(
+            ctdIN$plotting$ggdendro_horizontal,
+            the_plot, 
+            heights = heights,
+            ncol = 1)
     }
 
     return(output)

@@ -14,7 +14,6 @@
 #' ctd <- ewceData::ctd()
 #' sce <- EWCE::ctd_to_sce(ctd)
 #' @export
-#' @importFrom dplyr %>%
 ctd_to_sce <- function(object,
                        as_sparse = TRUE,
                        as_DelayedArray = FALSE,
@@ -50,7 +49,7 @@ ctd_to_sce <- function(object,
         }
         sce <- SingleCellExperiment::SingleCellExperiment(
             assays = matrix_list,
-            colData = data.frame(colnames(matrix_list[[1]])) %>%
+            colData = data.frame(colnames(matrix_list[[1]])) |>
                 `colnames<-`(lvl),
             rowData = data.frame(
                 gene = row.names(matrix_list[[1]]),
@@ -58,7 +57,7 @@ ctd_to_sce <- function(object,
             )
         )
         # sce <- check_sce_rownames(sce, verbose = verbose)
-    }) %>% `names<-`(names(ctd))
+    }) |> `names<-`(names(ctd))
     ## "SCE_list" class messes up other functions that expect class "list"
     # class(sce_list) <- "SCE_list"
     return(sce_list)

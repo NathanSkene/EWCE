@@ -43,7 +43,7 @@ merge_sce_list <- function(SCE_lists = NULL,
             print(dataset)
             sce <- readRDS(x)
             return(sce)
-        }) %>% `names<-`(gsub(pattern, "", basename(sce_files)))
+        }) |> `names<-`(gsub(pattern, "", basename(sce_files)))
     }
     #### Merge SCE_lists into one SCE ####
     max_depth <- max_ctd_depth(SCE_lists)
@@ -63,7 +63,7 @@ merge_sce_list <- function(SCE_lists = NULL,
             method = if (gene_union) "union" else "intersect",
             batch_names = names(sce.lvl)
         )
-    }) %>% `names<-`(paste("level", merge_levels, sep = "_"))
+    }) |> `names<-`(paste("level", merge_levels, sep = "_"))
     #### Convert back to sparseDM ####
     SCE_merged <- sce_merged_apply(SCE_merged,
         as_sparse = as_sparse,

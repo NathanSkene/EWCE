@@ -2,6 +2,39 @@
 
 ## New features
 
+* Use `rworkflows` GHA.
+    - Add `rworkflows::use_badges` to *README.Rmd*.
+    - Remove *Dockerfile* (no longer necessary).
+* Remove `cowplot` dependency.
+* Replace all `%>%` with `|>`
+
+## Bug fixes
+
+* `calc_quantiles`:
+    - This function was only used in `filter_variance_quantiles` 
+    - Compare `stats::ecdf` vs. `dplyr::ntile` methods.
+    - Remove from `EWCE` as it's not longer used anywhere.
+* `bin_columns_into_quantiles`:
+    - Rename arg `matrixIn` --> `vec` to reflect what the function actually does.
+* `filter_variance_quantiles`:
+    - Change to use `bin_columns_into_quantiles` instead of `calc_quantiles` 
+        to be consistent with how quantiles are handled in the rest of `EWCE`.
+    - Updated tests in *test-get_celltype_table.r* to reflect that the 
+        number of genes filtered is unaffected by the normalization procedure 
+        (when quantiles are computed with `stats::quantile`).
+* `ewce_plot`:
+    - Celltypes were producing NAs because the names in the results
+        were not always standardized in the same way as the CTD. 
+        Now this is done internally.
+    - Celltypes were not ordered factors, 
+        meaning the dendrogram didn't line up correctly.
+    - Switched from `gridArrange`/`cowplot` to `patchwork`.
+    - Added dedicated unit tests file: *test-ewce_plot.r*
+
+# EWCE 1.7.1
+
+## New features
+
 * Offline runs enabled with functions using reference datasets 
 (from `ewceData`). These functions have the parameter `localhub` added to 
 control this.

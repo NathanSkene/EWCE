@@ -36,5 +36,5 @@ sce_merged_apply <- function(SCE_merged,
             }
         }
         return(sce_lvl)
-    }) %>% `names<-`(names(SCE_merged))
+    }) |> `names<-`(names(SCE_merged))
 }
