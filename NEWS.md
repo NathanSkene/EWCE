@@ -1,4 +1,4 @@
-# EWCE 1.7.1
+# EWCE 1.7.2
 
 ## New features
 
