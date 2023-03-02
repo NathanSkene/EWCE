@@ -1,4 +1,4 @@
-# EWCE 1.7.2
+# EWCE 1.7.2 
 
 ## New features
 
@@ -11,7 +11,7 @@
 * `drop_uninformative_genes` / `generate_celltype_data`
     - Pass `verbose` arg to matrix formatting functions.
 
-# EWCE 1.7.1
+# EWCE 1.7.1 
 
 ## New features
 
