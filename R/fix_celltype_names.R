@@ -9,7 +9,7 @@
 #' @param celltypes Character vector of celltype names.
 #' @param replace_chars Regex string of characters to replace
 #'  with "_" when renaming columns.
-#'
+#' @param make_unique Make all entries unique.
 #' @returns Fixed celltype names.
 #'
 #' @export
@@ -17,7 +17,8 @@
 #' ct <- c("microglia", "astryocytes", "Pyramidal SS")
 #' ct_fixed <- fix_celltype_names(celltypes = ct)
 fix_celltype_names <- function(celltypes,
-                               replace_chars = "[-]|[.]|[ ]|[//]|[\\/]") {
+                               replace_chars = "[-]|[.]|[ ]|[//]|[\\/]",
+                               make_unique = TRUE) {
     if (is.null(celltypes)) {
         return(NULL)
     }
@@ -25,6 +26,8 @@ fix_celltype_names <- function(celltypes,
     ### Remove repeating "_" ####
     celltypes <- gsub("[_]+", "_", celltypes)
     #### Make sure all are unique ####
-    celltypes <- make.unique(celltypes)
+    if(isTRUE(make_unique)){
+        celltypes <- make.unique(celltypes)   
+    }
     return(celltypes)
 }

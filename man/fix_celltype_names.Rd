@@ -4,13 +4,19 @@
 \alias{fix_celltype_names}
 \title{Fix celltype names}
 \usage{
-fix_celltype_names(celltypes, replace_chars = "[-]|[.]|[ ]|[//]|[\\\\/]")
+fix_celltype_names(
+  celltypes,
+  replace_chars = "[-]|[.]|[ ]|[//]|[\\\\/]",
+  make_unique = TRUE
+)
 }
 \arguments{
 \item{celltypes}{Character vector of celltype names.}
 
 \item{replace_chars}{Regex string of characters to replace
 with "_" when renaming columns.}
+
+\item{make_unique}{Make all entries unique.}
 }
 \value{
 Fixed celltype names.

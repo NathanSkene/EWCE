@@ -129,12 +129,14 @@ generate_celltype_data <- function(exp,
     #### Convert to sparse matrix ####
     exp <- to_sparse_matrix(
         exp = exp,
-        as_sparse = as_sparse
+        as_sparse = as_sparse, 
+        verbose = verbose
     )
     #### Convert to DelayedArray ####
     exp <- to_delayed_array(
         exp = exp,
-        as_DelayedArray = as_DelayedArray
+        as_DelayedArray = as_DelayedArray, 
+        verbose = verbose
     )
     ### Avoid conflicts with parallelized block-wise operations ####
     if (is_delayed_array(exp)) {

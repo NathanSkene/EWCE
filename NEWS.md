@@ -1,3 +1,16 @@
+# EWCE 1.7.2
+
+## New features
+
+* `fix_celltype_names`
+    - Add new arg `make_unique` to make this function easily usable for vectors
+        where the same celltype appears multiple times.
+        
+## Bug fixes
+
+* `drop_uninformative_genes` / `generate_celltype_data`
+    - Pass `verbose` arg to matrix formatting functions.
+
 # EWCE 1.7.1
 
 ## New features
