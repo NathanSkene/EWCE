@@ -4,10 +4,10 @@
 \alias{cell_list_dist}
 \title{cell_list_dist}
 \usage{
-cell_list_dist(hitGenes, sct_data, annotLevel)
+cell_list_dist(hits, sct_data, annotLevel)
 }
 \arguments{
-\item{hitGenes}{List of gene symbols containing the target gene list.}
+\item{hits}{List of gene symbols containing the target gene list.}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
@@ -15,7 +15,8 @@ cell_list_dist(hitGenes, sct_data, annotLevel)
 analyse (\emph{Default: 1}).}
 }
 \value{
-Output (#fix).
+The summed specificity of each celltype
+ across a  set of \code{hits}.
 }
 \description{
 specificity is generated in the main_CellTypeAnalysis_Preperation.r file

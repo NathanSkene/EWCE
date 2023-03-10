@@ -4,18 +4,33 @@
 \alias{bootstrap_plot}
 \title{Bootstrap plot}
 \usage{
-bootstrap_plot(exp_mats, hit.exp, cc, savePath, listFileName, show_plot = TRUE)
+bootstrap_plot(
+  gene_data,
+  exp_mats = NULL,
+  save_dir = file.path(tempdir(), "BootstrapPlots"),
+  listFileName,
+  hit_thresh = 25,
+  facets = "CellType",
+  scales = "free_x",
+  show_plot = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{exp_mats}{Resampled specificty data for bootstrapping tests.}
+\item{gene_data}{Output from \link[EWCE]{compute_gene_scores}.}
 
-\item{hit.exp}{Specificity scores of the hit genes.}
+\item{exp_mats}{Output of \code{generate_bootstrap_plots_exp_mats}.}
 
-\item{cc}{Cell-types to plot.}
-
-\item{savePath}{Path to save plots to.}
+\item{save_dir}{Directory to save plots to.}
 
 \item{listFileName}{listFileName}
+
+\item{facets}{This argument is soft-deprecated, please use \code{rows}
+and \code{cols} instead.}
+
+\item{scales}{Are scales shared across all facets (the default,
+\code{"fixed"}), or do they vary across rows (\code{"free_x"}),
+columns (\code{"free_y"}), or both rows and columns (\code{"free"})?}
 
 \item{show_plot}{Print the plot.}
 }

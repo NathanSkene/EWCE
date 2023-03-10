@@ -44,31 +44,32 @@
 #' vignette section on offline use to ensure proper functionality. 
 #' @inheritParams orthogene::convert_orthologs
 #'
-#' @return A list containing three data frames:
+#' @returns A list containing three elements:
 #' \itemize{
-#'   \item \code{results}: dataframe in which each row gives the statistics
-#'   (p-value, fold change and number of standard deviations from the mean)
-#'   associated with the enrichment of the stated cell type in the gene list
 #'   \item \code{hit.cells}: vector containing the summed proportion of
-#'   expression in each cell type for the target list
+#'   expression in each cell type for the target list.
+#'   \item \code{gene_data: } data.table showing the number of time each gene 
+#'    appeared in the bootstrap sample.
 #'   \item \code{bootstrap_data}: matrix in which each row represents the
 #'   summed proportion of expression in each cell type for one of the
 #'   random lists
+#'   \item \code{controlledCT}: the controlled cell type (if applicable)
 #' }
+#'
 #'
 #' @examples
 #' # Load the single cell data
-#' ctd <- ewceData::ctd()
+#' sct_data <- ewceData::ctd()
 #' # Set the parameters for the analysis
 #' # Use 3 bootstrap lists for speed, for publishable analysis use >=10,000
 #' reps <- 3
 #' # Load gene list from Alzheimer's disease GWAS
-#' example_genelist <- ewceData::example_genelist()
+#' hits <- ewceData::example_genelist()
 #'
 #' # Bootstrap significance test, no control for transcript length or GC content
 #' full_results <- EWCE::bootstrap_enrichment_test(
-#'     sct_data = ctd,
-#'     hits = example_genelist,
+#'     sct_data = sct_data,
+#'     hits = hits,
 #'     reps = reps,
 #'     annotLevel = 1,
 #'     sctSpecies = "mouse",
@@ -93,6 +94,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       sort_results = TRUE,
                                       verbose = TRUE,
                                       localHub = FALSE) {
+    # devoptera::args2vars(bootstrap_enrichment_test)
+    
     core_allocation <- assign_cores(
         worker_cores = no_cores,
         verbose = verbose
@@ -168,20 +171,20 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
             localHub = localHub
         )
         control_network <- control_related[["list_network"]]
-        hitGenes <- control_related[["hitGenes"]]
+        hits <- control_related[["hits"]]
         nonHits <- unique(control_related[["list_network"]]) # mouse.bg
-        combinedGenes <- c(hitGenes, nonHits) # c(mouse.hits,mouse.bg)
-        if (length(hitGenes) != dim(control_network)[2]) {
+        combinedGenes <- c(hits, nonHits) # c(mouse.hits,mouse.bg)
+        if (length(hits) != dim(control_network)[2]) {
             err_msg2 <- paste0(
                 "ERROR! AFTER CALCULATING BOOTSTRAPPING NETWORK",
                 " WITH LENGTH + GC CONTROLS, size of list_network",
-                " is not same length as hitGenes"
+                " is not same length as hits"
             )
             stop(err_msg2)
         }
     } else {
         messager("Running without gene size control.", v = verbose)
-        hitGenes <- hits # mouse.hits
+        hits <- hits # mouse.hits
         nonHits <- bg # mouse.bg
         combinedGenes <- c(hits, nonHits) # c(mouse.hits,mouse.bg)
     }
@@ -200,15 +203,14 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     # STORE THE BOOTSTRAP WEIGHTINGS (bootstrap_data)
     cells <- unique(colnames(sct_data[[annotLevel]]$specificity))
     # GENERATE hit.cells and bootstrap_data IN ONE GO
-    messager(formatC(length(unique(hitGenes)), big.mark = ","),
+    messager(formatC(length(unique(hits)), big.mark = ","),
         "hit genes remain after filtering.",
         v = verbose
     )
-    if (!geneSizeControl) {
-        control_network <- NULL
-    }
+    if (isFALSE(geneSizeControl)) control_network <- NULL
+    #### Get summed proportions ####
     sumProp <- get_summed_proportions(
-        hitGenes = hitGenes,
+        hits = hits,
         sct_data = sct_data,
         annotLevel = annotLevel,
         reps = reps,
@@ -220,6 +222,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     )
     hit.cells <- sumProp$hit.cells
     bootstrap_data <- sumProp$bootstrap_data
+    gene_data <- sumProp$gene_data
 
     #### EXTRACTING THE DETAILS ####
     # - CALCULATING P-VALUE, FOLD CHANGE AND MARKERS ETC
@@ -263,7 +266,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     } ## End for loop
 
     #### Sort results ####
-    if (sort_results) {
+    if (isTRUE(sort_results)) {
         messager("Sorting results by p-value.", v = verbose)
         results <- dplyr::arrange(results, p, dplyr::desc(sd_from_mean))
     }
@@ -286,6 +289,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     full_results <- list(
         results = results,
         hit.cells = hit.cells,
+        gene_data = gene_data,
         bootstrap_data = bootstrap_data
     )
     return(full_results)

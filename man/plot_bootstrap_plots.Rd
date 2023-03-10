@@ -12,7 +12,7 @@ plot_bootstrap_plots(
   showGNameThresh,
   graph_theme,
   maxX,
-  savePath
+  save_dir
 )
 }
 \value{

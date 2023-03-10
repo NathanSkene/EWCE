@@ -9,7 +9,7 @@ check_generate_controlled_bootstrap_geneset(
   controlledCT,
   annotLevel,
   sct_data,
-  hitGenes
+  hits
 )
 }
 \arguments{
@@ -22,7 +22,9 @@ analyse (\emph{Default: 1}).}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
-\item{hitGenes}{list of gene names. The target gene set.}
+\item{hits}{List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if \code{geneSizeControl=TRUE}.}
 }
 \value{
 Null output.

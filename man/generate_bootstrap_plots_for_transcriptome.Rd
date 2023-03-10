@@ -23,7 +23,7 @@ generate_bootstrap_plots_for_transcriptome(
   sig_thresh = 0.05,
   celltype_col = "CellType",
   plot_types = c("bootstrap", "bootstrap_distributions", "log_bootstrap_distributions"),
-  savePath = tempdir(),
+  save_dir = file.path(tempdir(), "BootstrapPlots"),
   method = "homologene",
   verbose = TRUE
 )
@@ -85,8 +85,8 @@ significance values.}
 
 \item{plot_types}{Plot types to generate.}
 
-\item{savePath}{Directory where the \emph{BootstrapPlots} folder
-should be saved, default is a temp directory.}
+\item{save_dir}{Directory where the BootstrapPlots folder should be saved,
+default is a temp directory.}
 
 \item{method}{R package to use for gene mapping:
 \itemize{

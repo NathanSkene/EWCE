@@ -16,9 +16,9 @@
 #'  significance values.
 #' @param sig_thresh Threshold by which to filter \code{tt} by \code{sig_col}.
 #' @param celltype_col Column within \code{tt} that contains celltype names.
-#' @param plot_types Plot types to generate.
-#' @param savePath Directory where the \emph{BootstrapPlots} folder
-#'  should be saved, default is a temp directory.
+#' @param plot_types Plot types to generate. 
+#' @param save_dir Directory where the BootstrapPlots folder should be saved,
+#' default is a temp directory.
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams ewce_expression_data
 #' @inheritParams orthogene::convert_orthologs
@@ -96,7 +96,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
     plot_types = c("bootstrap",
                    "bootstrap_distributions",
                    "log_bootstrap_distributions"),
-    savePath = tempdir(),
+    save_dir = file.path(tempdir(),"BootstrapPlots"),
     method = "homologene",
     verbose = TRUE) {
     
@@ -197,14 +197,14 @@ generate_bootstrap_plots_for_transcriptome <- function(
             combinedGenes <- unique(as.character(unname(combinedGenes)))
         }
         #### Get expression data of bootstrapped genes ####
-        if (sig_only) {
+        if (isTRUE(sig_only)) {
             signif_res <- as.character(results[[celltype_col]])[
                 results[[sig_col]] < sig_thresh]
         } else {
             signif_res <- as.character(results[[celltype_col]])
         }
         signif_res <- fix_celltype_names(celltypes = signif_res)
-        #### Create matices of bootstrapped genes ####
+        #### Create matrices of bootstrapped genes ####
         exp_mats <- get_exp_data_for_bootstrapped_genes(
             results = results,
             signif_res = signif_res,
@@ -216,14 +216,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
         ) 
         #### Get expression levels of the hit genes ####
         hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
-        graph_theme <- get_graph_theme()
-
-        boot_dir <- file.path(savePath,"BootstrapPlots")
-        if (!file.exists(boot_dir)) {
-            dir.create(file.path(savePath, "BootstrapPlots"),
-                showWarnings = FALSE, recursive = TRUE
-            )
-        }
+        graph_theme <- theme_graph() 
         tag <- sprintf("thresh%s__dir%s", thresh, dirS)
         
         #### Create QQ plots ####
@@ -237,8 +230,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
                 Gnames = hit_exp_names
             )
             dat$hit <- dat$hit * 100
-            dat$boot <- dat$boot * 100
-            maxHit <- max(dat$hit, na.rm = TRUE)
+            dat$boot <- dat$boot * 100 
             maxX <- max(dat$boot, na.rm = TRUE) +
                 0.1 * max(dat$boot, na.rm = TRUE)
             #### Plot several variants of the graph #### 
@@ -251,7 +243,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
                     showGNameThresh = showGNameThresh,
                     graph_theme = graph_theme,
                     maxX = maxX,
-                    savePath = savePath
+                    save_dir = save_dir
                 )
             }
             
@@ -264,7 +256,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
                     tag = tag,
                     listFileName = listFileName,
                     graph_theme = graph_theme,
-                    savePath = savePath
+                    save_dir = save_dir
                 )
             }
             #### Plot with LOG bootstrap distribution ####
@@ -277,11 +269,11 @@ generate_bootstrap_plots_for_transcriptome <- function(
                     tag = tag,
                     listFileName = listFileName,
                     graph_theme = graph_theme,
-                    savePath = savePath
+                    save_dir = save_dir
                 )
             }
         }
     }
     #### return path to the saved directory in case tempdir() used ####
-    return(savePath)
+    return(save_dir)
 }

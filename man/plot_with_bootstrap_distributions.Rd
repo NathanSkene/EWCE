@@ -11,7 +11,7 @@ plot_with_bootstrap_distributions(
   tag,
   listFileName,
   graph_theme,
-  savePath
+  save_dir
 )
 }
 \value{

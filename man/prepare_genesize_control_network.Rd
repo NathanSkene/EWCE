@@ -47,7 +47,7 @@ vignette section on offline use to ensure proper functionality.}
 \value{
 A list containing three data frames:
 \itemize{
-  \item \code{hitGenes}: Array of HGNC symbols containing the hit genes.
+  \item \code{hits}: Array of HGNC symbols containing the hit genes.
   May be slightly reduced if gene length / GC content could not be found
   for all genes.
   \item \code{list_network}: The control gene lists as a data frame of HGNC

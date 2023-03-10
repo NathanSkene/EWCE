@@ -126,7 +126,7 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             output_species = "monkey"
         )
         monkey_res <- bootstrap_enrichment_test(
-            sct_data = ctd,
+            sct_data = ctd_monkey,
             hits = mouse.hits,
             reps = reps,
             annotLevel = level,
@@ -218,8 +218,8 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
         testthat::expect_true(methods::is(fail_return2, "error"))
         testthat::expect_true(top_res_rat == "microglia")
         testthat::expect_false(any(is.na(rat_res$results)))
-        testthat::expect_true(top_res_monkey == "astrocytes_ependymal")
-        testthat::expect_true(all(is.na(monkey_res$results$fold_change)))
+        testthat::expect_true(top_res_monkey == "microglia")
+        testthat::expect_false(any(is.na(monkey_res$results)))
         testthat::expect_true(methods::is(fail_return3, "error"))
         testthat::expect_true(methods::is(fail_return2_5, "error"))
         testthat::expect_true(methods::is(fail_return5, "error"))

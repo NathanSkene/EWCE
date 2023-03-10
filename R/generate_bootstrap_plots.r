@@ -2,21 +2,24 @@
 #'
 #' \code{generate_bootstrap_plots} takes a gene list and a single cell type
 #' transcriptome dataset and generates plots which show how the expression of
-#' the genes in the list compares to those in randomly generated gene lists
-#'
-#'
+#' the genes in the list compares to those in randomly generated gene lists.
 #' @param full_results The full output of
 #' \link[EWCE]{bootstrap_enrichment_test} for the same gene list.
 #' @param listFileName String used as the root for files saved using this
 #' function.
-#' @param savePath Directory where the BootstrapPlots folder should be saved,
+#' @param save_dir Directory where the BootstrapPlots folder should be saved,
 #' default is a temp directory.
+#' @param adj_pval_thresh Adjusted p-value threshold of celltypes to include
+#' in plots.
 #' @inheritParams bootstrap_enrichment_test
+#' @inheritParams bootstrap_plot
 #' @inheritParams orthogene::create_background
+#' @inheritParams ggplot2::facet_grid
 #'
-#' @return Saves a set of pdf files containing graphs and returns the file where
-#' they are saved. These will be saved with the filename adjusted using the
-#' value of listFileName. The files are saved into the 'BootstrapPlot' folder.
+#' @returns Saves a set of pdf files containing graphs and returns the file where
+#' they are saved. These will be saved with the file name adjusted using the
+#' value of \code{listFileName}. The files are saved into the 
+#' 'BootstrapPlot' folder.
 #' Files start with one of the following:
 #' \itemize{
 #'   \item \code{qqplot_noText}: sorts the gene list according to how enriched
@@ -30,10 +33,13 @@
 #'   y-axis shown on a log scale
 #' }
 #'
-#'
+#' @export
+#' @import ggplot2
+#' @importFrom reshape2 melt
+#' @importFrom orthogene create_background
 #' @examples
 #' ## Load the single cell data
-#' ctd <- ewceData::ctd()
+#' sct_data <- ewceData::ctd()
 #'
 #' ## Set the parameters for the analysis
 #' ## Use 5 bootstrap lists for speed, for publishable analysis use >10000
@@ -57,21 +63,15 @@
 #' #    genelistSpecies = "human"
 #' # )
 #'
-#' plot_file_path <- EWCE::generate_bootstrap_plots(
-#'     sct_data = ctd,
+#' output <- EWCE::generate_bootstrap_plots(
+#'     sct_data = sct_data,
 #'     hits = hits,
 #'     reps = reps,
 #'     full_results = full_results,
-#'     listFileName = "Example",
 #'     sctSpecies = "mouse",
 #'     genelistSpecies = "human",
-#'     annotLevel = 1,
-#'     savePath = tempdir()
+#'     annotLevel = 1
 #' )
-#' @export
-#' @import ggplot2
-#' @importFrom reshape2 melt
-#' @importFrom orthogene create_background
 generate_bootstrap_plots <- function(sct_data = NULL,
                                      hits = NULL,
                                      bg = NULL,
@@ -81,10 +81,18 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      method = "homologene",
                                      reps = 100,
                                      annotLevel = 1,
-                                     full_results = NA,
-                                     listFileName = "",
-                                     savePath = tempdir(),
+                                     full_results = NULL,
+                                     listFileName = paste0("_level",
+                                                           annotLevel),
+                                     adj_pval_thresh = 0.05,
+                                     facets = "CellType",
+                                     scales = "free_x",
+                                     save_dir = file.path(tempdir(),
+                                                          "BootstrapPlots"),  
+                                     show_plot = TRUE,
                                      verbose = TRUE) {
+    # devoptera::args2vars(generate_bootstrap_plots)
+    
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,
@@ -127,9 +135,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     check_full_results(
         full_results = full_results,
         sct_data = sct_data
-    )
-    #### Add annotLevel to file name tag ###
-    listFileName <- sprintf("%s_level%s", listFileName, annotLevel)
+    ) 
     results <- full_results$results
     #### Check gene lists ####
     checkedLists <- check_ewce_genelist_inputs(
@@ -143,46 +149,49 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     hits <- checkedLists$hits
     bg <- checkedLists$bg
     combinedGenes <- unique(c(hits, bg))
+    #### Check significant results #### 
+    signif_ct <- rownames(results)[results$q < adj_pval_thresh]
+    if(length(signif_ct)==0){
+        stp <- "Must have >0 significant celltypes."
+        stop(stp)
+    } else {
+        messager(length(signif_ct),"celltype(s) remain @ <=",adj_pval_thresh,
+                 v=verbose)  
+    } 
     #### Get specificity data of bootstrapped genes ####
-    signif_res <- rownames(results)[results$p < 0.05]
-    nReps <- reps
-    exp_mats <- list()
-    for (cc in signif_res) {
-        exp_mats[[cc]] <- matrix(0,
-            nrow = nReps,
-            ncol = length(hits)
-        )
-        rownames(exp_mats[[cc]]) <- sprintf("Rep%s", seq_len(nReps))
-    }
-    for (s in seq_len(nReps)) {
-        bootstrap_set <- sample(x = combinedGenes, 
-                                size = length(hits))
-        ValidGenes <- rownames(sct_data[[annotLevel]]$specificity)[
-            rownames(sct_data[[annotLevel]]$specificity) %in% bootstrap_set
-        ]
-        expD <- sct_data[[annotLevel]]$specificity[ValidGenes, ]
-        for (cc in signif_res) {
-            exp_mats[[cc]][s, ] <- sort(expD[, cc])
+    if(!is.null(full_results) && all(!is.na(full_results))){
+        if("gene_data" %in% full_results$gene_data){
+            
         }
     }
-    #### Get specificity scores of the hit genes ####
-    hit.exp <- sct_data[[annotLevel]]$specificity[hits, ]
-    #### Create subdir ####
-    boot_dir <- file.path(savePath,"BootstrapPlots")
-    if (!file.exists(boot_dir)) {
-        dir.create(file.path(savePath, "BootstrapPlots"))
-    }
-    #### Iteratively create QQ plots ####
-    for (cc in signif_res) {
-        messager("Generating bootstrap plot:", cc, v = verbose)
-        bootstrap_plot(
-            exp_mats = exp_mats,
-            hit.exp = hit.exp,
-            cc = cc,
-            savePath = savePath,
-            listFileName = listFileName
-        )
-    }
-    #### return path to the saved directory in case tempdir() used ####
-    return(savePath)
+    exp_mats <- generate_bootstrap_plots_exp_mats(sct_data=sct_data,
+                                                  annotLevel=annotLevel, 
+                                                  reps=reps,
+                                                  combinedGenes=combinedGenes,
+                                                  hits=hits,
+                                                  verbose=verbose)
+    cgs <- compute_gene_scores(sct_data = sct_data, 
+                               annotLevel = annotLevel,  
+                               hits = hits, 
+                               reps = reps,
+                               combinedGenes = combinedGenes,
+                               exp_mats = exp_mats,
+                               return_hit_exp = TRUE,
+                               verbose = verbose)  
+    gene_data <- cgs$gene_data
+    
+    #### Iteratively create QQ plots #### 
+    messager("Generating bootstrap plot for",
+             length(signif_ct),"celltype(s).", v = verbose)
+    out <- bootstrap_plot(
+        gene_data = gene_data, 
+        exp_mats = exp_mats,
+        save_dir = save_dir,
+        listFileName = listFileName, 
+        facets = facets,
+        scales = scales,
+        show_plot = show_plot,
+        verbose = verbose
+    ) 
+    return(out)
 }

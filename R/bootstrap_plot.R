@@ -1,166 +1,183 @@
 #' Bootstrap plot
 #' 
 #' Plot bootstrap enrichment results. 
-#' Support function for \link[EWCE]{generate_bootstrap_plots}.
-#' 
-#' @param exp_mats Resampled specificty data for bootstrapping tests.
-#' @param hit.exp Specificity scores of the hit genes.
-#' @param cc Cell-types to plot.
-#' @param savePath Path to save plots to.
+#' Support function for \link[EWCE]{generate_bootstrap_plots}. 
+#' @param gene_data Output from \link[EWCE]{compute_gene_scores}. 
+#' @param save_dir Directory to save plots to.
 #' @param listFileName listFileName
+#' @param exp_mats Output of \code{generate_bootstrap_plots_exp_mats}.
 #' @param show_plot Print the plot.
-#' @return Null output.
+#' @inheritParams ggplot2::facet_grid
+#' @returns Null output.
 #' 
 #' @keywords internal 
-bootstrap_plot <- function(exp_mats,
-                           hit.exp,
-                           cc,
-                           savePath,
+#' @importFrom data.table .I
+bootstrap_plot <- function(gene_data,
+                           exp_mats=NULL,  
+                           save_dir = file.path(tempdir(),"BootstrapPlots"),
                            listFileName,
-                           show_plot = TRUE) {
-    requireNamespace("grDevices")
-    ### Setup theme ####
-    graph_theme <- get_graph_theme()
-    #### Create plotting data ####
-    mean_boot_exp <- apply(exp_mats[[cc]], 2, mean)
-    hit_exp <- sort(hit.exp[, cc])
-    hit_exp_names <- rownames(hit.exp)[order(hit.exp[, cc])]
-    dat <- data.frame(
-        boot = mean_boot_exp,
-        hit = hit_exp,
-        Gnames = hit_exp_names
+                           hit_thresh = 25,
+                           facets = "CellType",
+                           scales = "free_x",
+                           show_plot = TRUE,
+                           verbose = TRUE) {
+    requireNamespace("ggplot2")
+    requireNamespace("patchwork")
+    Pos <- Rep <- Exp <- p <- significant <- CellType <- NULL;
+    
+    exp_mats_msg <- paste(
+        "Cannot create bootstrap distribution plots",
+        "without exp_mats"
     )
-    dat$hit <- dat$hit * 100
-    dat$boot <- dat$boot * 100
-    maxHit <- max(dat$hit, na.rm = TRUE)
-    maxX <- max(dat$boot, na.rm = TRUE) + 0.1 * max(dat$boot, na.rm = TRUE)
-    # Plot several variants of the graph
-    basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
-        geom_point(size = 1) +
-        xlab("Mean Bootstrap Expression") +
-        ylab("Expression in cell type (%)\n") +
-        graph_theme +
-        geom_abline(intercept = 0, slope = 1, colour = "red")
-
-    # Plot without text
-    grDevices::pdf(sprintf(
-        "%s/BootstrapPlots/qqplot_noText____%s____%s.pdf", savePath,
-        listFileName, cc
-    ), width = 3.5, height = 3.5)
-    print(basic_graph)
-    grDevices::dev.off()
-
-    dat$symLab <- ifelse(dat$hit > 25, sprintf("  %s", dat$Gnames), "")
-
-    basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
-        geom_point(size = 2) +
-        xlab("Mean Bootstrap Expression") +
-        ylab("Expression in cell type (%)\n") +
-        graph_theme +
-        geom_abline(intercept = 0, slope = 1, colour = "red")
-
-    # Plot with gene names
-    pdf_path <- file.path(
-        savePath,"BootstrapPlots",
-        sprintf("qqplot_wtGSym____%s____%s.pdf", 
-                listFileName, cc
-    ))
-    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
-
-    print(basic_graph +
-        geom_text(aes_string(label = "symLab"),
-            hjust = 0, vjust = 0, size = 3
-        ) + xlim(c(0, maxX)))
-    grDevices::dev.off()
-
-    # Plot with bootstrap distribution
-    melt_boot <- reshape2::melt(exp_mats[[cc]])
-    colnames(melt_boot) <- c("Rep", "Pos", "Exp")
-    actVals <- data.frame(
-        pos = as.factor(seq_len(length(hit_exp))),
-        vals = hit_exp
-    )
-
-    pdf_path <- file.path(
-        savePath,"BootstrapPlots",
-        sprintf("bootDists____%s____%s.pdf",
-                listFileName, cc
-    ))
-    grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
-    melt_boot$Pos <- as.factor(melt_boot$Pos)
-
-    print(ggplot(melt_boot) +
-        geom_boxplot(aes_string(x = "Pos", y = "Exp"), outlier.size = 0) +
-        geom_point(aes_string(x = "pos", y = "vals"),
-            col = "red", data = actVals
-        ) +
-        ylab("Expression in cell type (%)\n") +
-        xlab("Least specific --> Most specific") +
-        scale_x_discrete(breaks = NULL) +
-        graph_theme)
-    grDevices::dev.off()
-
-    #### Plot with LOG bootstrap distribution ####
-    # - First get the ordered gene names
-    rownames(dat) <- dat$Gnames
-    datOrdered <- data.frame(
-        GSym = rownames(dat),
-        Pos = seq_len(dim(dat)[1])
-    )
-
-    # - Arrange the data frame for plotting
-    melt_boot <- reshape2::melt(exp_mats[[cc]])
-    colnames(melt_boot) <- c("Rep", "Pos", "Exp")
-    melt_boot$Exp <- melt_boot$Exp * 100
-    melt_boot <- merge(melt_boot, datOrdered, by = "Pos")
-    melt_boot$GSym <- factor(as.character(melt_boot$GSym),
-        levels = as.character(datOrdered$GSym)
-    )
-
-    #### - Prepare the values of the list genes to be plotted as red dots ####
-    actVals <- data.frame(
-        Pos = as.factor(seq_len(length(hit_exp))),
-        vals = hit_exp * 100
-    )
-    actVals <- merge(actVals, datOrdered, by = "Pos")
-    actVals$GSym <- factor(as.character(actVals$GSym),
-        levels = as.character(datOrdered$GSym)
-    )
-
-    # - Determine whether changes are significant
-    p <- rep(1, max(melt_boot$Pos))
-    for (i in seq_len(max(melt_boot$Pos, na.rm = TRUE))) {
-        p[i] <- sum(actVals[actVals$Pos == i, "vals"] <
-            melt_boot[melt_boot$Pos == i, "Exp"]) /
-            length(melt_boot[melt_boot$Pos == i, "Exp"])
+    plots <- list()
+    #### Set up save path ####
+    dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)  
+    gene_data$symLab <- ifelse(gene_data$hit > 25, 
+                               sprintf("  %s", gene_data$gene), NA) 
+    #### Prepare file paths ####
+    files <- file.path(save_dir,
+                       sprintf(c("qqplot_noText____%s.pdf",
+                                 "qqplot_wtgene____%s.pdf",
+                                 "bootDists____%s.pdf",
+                                 "bootDists_LOG____%s.pdf"),
+                               listFileName)
+              )
+    for(f in files){
+        dir.create(dirname(f), showWarnings = FALSE, recursive = TRUE)   
     }
-    ast <- rep("*", max(melt_boot$Pos, na.rm = TRUE))
-    ast[p > 0.05] <- ""
-    actVals <- cbind(actVals[order(actVals$Pos), ], ast)
-    # - Plot the graph!
-    wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
-    pdf_path <- file.path(
-        savePath,"BootstrapPlots",
-        sprintf("bootDists_LOG____%s____%s.pdf",
-                listFileName, cc
-        )
-    )
-    grDevices::pdf(pdf_path, width = wd, height = 4)
-    # melt_boot$Exp=melt_boot$Exp+0.00000001
-    melt_boot <- melt_boot[melt_boot$Exp != 0, ]
-    gg <- ggplot(melt_boot) +
-        geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +
-        graph_theme +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-        geom_point(aes_string(x = "GSym", y = "vals", fill = "vals"),
-            data = actVals
-        ) +
-        scale_fill_gradient(low = "blue", high = "red") +
-        geom_text(aes_string(x = "GSym", y = "log1p(vals)", label = "ast"),
-            colour = "black", data = actVals
-        ) +
+    ## Plot several variants of the graph ##
+    add_line <- function(){
+        geom_abline(intercept = 0, slope = 1, 
+                    linetype = "dashed",
+                    colour = ggplot2::alpha("red",.5)) 
+    }
+    
+    #### Plot 1: Plot without gene names  ####
+    g1 <- ggplot(gene_data,
+                          aes_string(x = "boot", y = "hit",  color="hit")) +
+        geom_point(size = 1,  alpha=.75) + 
+        xlab("Mean Bootstrap Expression") +
         ylab("Expression in cell type (%)\n") +
-        xlab("Least specific --> Most specific")
-    print(gg)
-    grDevices::dev.off()
+        scale_color_viridis_c() +
+        facet_grid(facets = facets, 
+                   scales = scales) + 
+        add_line() +
+        theme_graph() 
+    plots[["plot1"]] <- g1 
+    messager("Saving plot -->", files[[1]], v=verbose)
+    ggplot2::ggsave(filename = files[[1]], 
+                    plot = g1,
+                    width = 3.5, 
+                    height = 3.5) 
+    
+    #### Plot 2: Plot with gene names  ####
+    g2 <- g1 + 
+        geom_text(aes_string(label = "symLab"),
+                   # fill=ggplot2::alpha("black",.5),
+                   color=ggplot2::alpha("black",.75),
+                   na.rm = TRUE,
+                  hjust = 0, vjust = 0, size = 3
+        ) + 
+        scale_x_discrete(expand = expansion(mult = c(0,.15))) +
+        scale_y_discrete(expand = expansion(mult = c(0,.15))) 
+    plots[["plot2"]] <- g2 
+    messager("Saving plot -->", files[[2]], v=verbose)
+    ggplot2::ggsave(filename = files[[2]], 
+                    plot = g2,
+                    width = 3.5, 
+                    height = 3.5) 
+   
+ 
+    #### Plot 3 ####
+    if(is.null(exp_mats)){
+        messager(exp_mats_msg)
+        files <- files[seq_len(2)]
+    } else { 
+        melt_boot <- 
+            (
+                lapply(exp_mats, function(x){
+                    data.table::as.data.table(x)[,Rep:=paste0("rep",.I)]
+                }) |>
+                    data.table::rbindlist(use.names = TRUE, 
+                                          idcol = "CellType") |>
+                    data.table::melt(id=c("CellType","Rep"),
+                                     variable.name="Pos",
+                                     value.name = "Exp") 
+            )[,Pos:=factor(as.integer(gsub("V","",Pos)), 
+                              ordered=TRUE)]
+        levels(melt_boot$Pos) <- rev(levels(melt_boot$Pos) )
+        melt_boot[,Exp:=Exp*100]
+         
+        # actVals_ordered <- data.table::merge.data.table(gene_order, actVals)
+        # actVals_ordered[,pos:=factor(pos,levels = unique(sort(pos)), ordered = TRUE)]
+        # Plot with bootstrap distribution
+        g3 <- ggplot(melt_boot) +
+            geom_boxplot(aes_string(x = "Pos", y = "Exp"),
+                         outlier.size = 0) +
+            geom_point(aes_string(x = "rank", y = "hit"),
+                       color = ggplot2::alpha("red",.75), 
+                       data = gene_data
+            ) + 
+            ylab("Expression in cell type (%)\n") +
+            xlab(expression("Least specific" %->% "Most specific")) +
+            scale_x_discrete(breaks = NULL) +
+            theme_graph() +
+            facet_wrap(facets=facets)
+        plots[["plot3"]] <- g3
+        messager("Saving plot -->", files[[3]], v=verbose)
+        ggplot2::ggsave(filename = files[[3]], 
+                        plot = g3,
+                        width = 3.5, 
+                        height = 3.5) 
+        
+        
+        #### Plot 4: Plot with bootstrap distribution ####
+        melt_boot2 <- merge(melt_boot, gene_data, 
+                            by.x = c("CellType","Pos"),
+                            by.y = c("CellType","rank"))
+        data.table::setkeyv(melt_boot2,c("CellType","hit")) 
+        melt_boot2[,significant:=factor(p<0.05, levels = c(TRUE,FALSE), 
+                                        ordered = TRUE)] 
+        
+        plts <- lapply(unique(melt_boot2$CellType), function(cc){
+            dat <- melt_boot2[CellType==cc] 
+            dat$gene <- factor(dat$gene, unique(dat$gene), ordered=TRUE)
+            ggplot(dat) +
+                geom_boxplot(aes_string(x = "gene", y = "Exp", fill="significant", 
+                                        color="significant"),
+                             outlier.size = 0) +
+                scale_color_manual(values=c(ggplot2::alpha("blue",1),
+                                            "grey"), drop=FALSE) +
+                theme_graph() +
+                theme(axis.text.x = element_text(angle = 54, hjust = 1)) +
+                geom_point(aes_string(x = "gene", y = "hit"),
+                           color=ggplot2::alpha("red",.5)
+                ) +
+                scale_fill_manual(values=c(ggplot2::alpha("blue",.25),
+                                           ggplot2::alpha("white",.25)
+                                           ), 
+                                  drop=FALSE) +
+                ylab(NULL) +
+                xlab(NULL) +
+                ylim(c(0,100)) +
+                facet_wrap(facets = facets, 
+                           scales = scales)
+        })
+        g4 <- patchwork::wrap_plots(plts) + 
+            patchwork:: plot_layout(guides = 'collect') +
+            labs(x=expression("Least specific" %->% "Most specific"),
+                 y="Expression in cell type (%)\n") 
+        #### Save ####
+        wd <- 1 + length(unique(melt_boot[,4])) * 0.175 
+        plots[["plot4"]] <- g4
+        messager("Saving plot -->", files[[4]], v=verbose)
+        ggplot2::ggsave(filename = files[[4]], 
+                        plot = g4,
+                        width = wd, 
+                        height = 4) 
+    }
+   
+    if(isTRUE(show_plot)) methods::show(plots)
+    return(list(plots=plots,
+                paths=files))
 }

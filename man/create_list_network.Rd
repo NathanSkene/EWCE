@@ -4,7 +4,7 @@
 \alias{create_list_network}
 \title{\code{create_list_network}}
 \usage{
-create_list_network(data_byGene2, hitGenes_NEW, reps = 10000, no_cores = 1)
+create_list_network(data_byGene2, hits_NEW, reps = 10000, no_cores = 1)
 }
 \value{
 List network

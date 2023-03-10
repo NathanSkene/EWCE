@@ -3,7 +3,7 @@
 #' \code{check_ewce_genelist_inputs} Is used to check that hits and bg gene
 #' lists passed to EWCE are setup correctly. Checks they are the
 #' appropriate length.
-#' Checks all hits genes are in bg. Checks the species match and if not
+#' Checks all hits are in bg. Checks the species match and if not
 #' reduces to 1:1 orthologs.
 #' @param standardise If \code{input_species==output_species},
 #' should the genes be standardised using \link[orthogene]{map_genes}?

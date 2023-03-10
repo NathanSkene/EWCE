@@ -49,7 +49,8 @@ extract_matrix <- function(ctd,
             force_new_quantiles)) {
         ctd[[level]] <- bin_specificity_into_quantiles(
             ctdIN = ctd[[level]],
-            numberOfBins = numberOfBins
+            numberOfBins = numberOfBins,
+            verbose = verbose
         )
     }
     mat <- ctd[[level]][[metric]]

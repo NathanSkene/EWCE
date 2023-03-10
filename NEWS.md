@@ -5,11 +5,36 @@
 * `fix_celltype_names`
     - Add new arg `make_unique` to make this function easily usable for vectors
         where the same celltype appears multiple times.
+* `bootstrap_enrichment_test`
+    - Return gene-level scores based on adaptation of code from `generate_bootstrap_plots`.
+    now stored as a list element named `gene_data` in `data.table` format.
+* `generate_bootstrap_plots`
+    - Revamp wrap code into reusable subfunctions.
+    - Avoid resampling random genes when the gene data is stored in the bootstrap results as `gene_data`.
+    It will also tell you which of these options it's using.
+    - Save with `ggsave` instead if `grDevices`.
+    - Facet by celltype instead of generating tons of separate plots.
+    - Let users decide cutoff threshold with new arg `adj_pval_thresh`
+    - Now returns a named list with the plots themselves ("plot") and the paths to where they're saved ("paths") rather than just a higher-level directory path in which users had to search for the right files (and didn't ever have access to the ggplot2 objects).
+    - Show significance with barplot fill/color instead of asterices. Much easier to see now.
+    - Change `savePath` arg to the more accurate `save_dir`. Expose appending *BootstrapPlots* to the user within the argument.
+* `generate_bootstrap_plots_for_transcriptome`
+    - Change `savePath` arg to the more accurate `save_dir`. Expose appending *BootstrapPlots* to the user within the argument.
+* Standardise `hits` + `hitGenes` arg all to `hits`.
+* Update hex:
+    - Off load large source image from DALLE to Releases instead of including it within the package.
         
 ## Bug fixes
 
 * `drop_uninformative_genes` / `generate_celltype_data`
     - Pass `verbose` arg to matrix formatting functions.
+* `generate_controlled_bootstrap_geneset`
+    - Removed `combinedGenes` arg as it was not being used anywhere within.
+* `check_args_for_bootstrap_plot_generation`
+    - Removed unused args: `ttSpecies`, `sctSpecies`
+* *test-bootstrap_enrichment_test_2.R* 
+    - "monkey_ctd" tests seems to be running more smoothly than before (not just getting NAs). This might have to with `orthogene` databases improving.
+    - Reassuringly, "godzilla" tests still fail as expected :)
 
 # EWCE 1.7.1 
 

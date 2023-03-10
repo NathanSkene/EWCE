@@ -1,7 +1,7 @@
 test_that("check_percent_hits works", {
     if (!is_32bit()) {
         full_results <- EWCE::example_bootstrap_results()
-        testthat::expect_length(full_results, 3)
+        testthat::expect_true(length(full_results) %in% c(3,4) )
         testthat::expect_true(methods::is(full_results$results, "data.frame"))
 
         report <- EWCE::check_percent_hits(

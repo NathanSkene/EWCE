@@ -14,7 +14,7 @@
 #'
 #' @return A list containing three data frames:
 #' \itemize{
-#'   \item \code{hitGenes}: Array of HGNC symbols containing the hit genes.
+#'   \item \code{hits}: Array of HGNC symbols containing the hit genes.
 #'   May be slightly reduced if gene length / GC content could not be found
 #'   for all genes.
 #'   \item \code{list_network}: The control gene lists as a data frame of HGNC
@@ -156,9 +156,9 @@ prepare_genesize_control_network <- function(hits,
     data_byGene2 <- create_quadrants(data_byGene2 = data_byGene2)
     ## FOR EACH 'DISEASE LIST' GENERATE SET
     ## OF 10000 QUADRANT MATCHED GENE LISTS
-    ## -Get new set of sctSpecies hitGenes,
+    ## -Get new set of sctSpecies hits,
     ## containing only those within data_byGene2
-    hitGenes_NEW <- data_byGene2[
+    hits_NEW <- data_byGene2[
         data_byGene2$HGNC.symbol %in% hits,
         "HGNC.symbol"
     ]
@@ -167,13 +167,13 @@ prepare_genesize_control_network <- function(hits,
     ## as the gene list.
     list_network <- create_list_network(
         data_byGene2 = data_byGene2,
-        hitGenes_NEW = hitGenes_NEW,
+        hits_NEW = hits_NEW,
         reps = reps,
         no_cores = no_cores
     )
     messager("Controlled bootstrapping network generated.", v = verbose)
     return(list(
-        hitGenes = hitGenes_NEW,
+        hits = hits_NEW,
         list_network = list_network
     ))
 }

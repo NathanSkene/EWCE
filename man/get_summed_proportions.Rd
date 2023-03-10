@@ -5,7 +5,7 @@
 \title{Get summed proportions}
 \usage{
 get_summed_proportions(
-  hitGenes,
+  hits,
   sct_data,
   annotLevel,
   reps,
@@ -17,7 +17,7 @@ get_summed_proportions(
 )
 }
 \arguments{
-\item{hitGenes}{list of gene names. The target gene set.}
+\item{hits}{list of gene names. The target gene set.}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
@@ -45,10 +45,12 @@ then must provide the control network.}
 \item{verbose}{Print messages.}
 }
 \value{
-A list containing three data frames:
+A list containing three elements:
 \itemize{
   \item \code{hit.cells}: vector containing the summed proportion of
-  expression in each cell type for the target list
+  expression in each cell type for the target list.
+  \item \code{gene_data: } data.table showing the number of time each gene 
+   appeared in the bootstrap sample.
   \item \code{bootstrap_data}: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the
   random lists

@@ -14,9 +14,13 @@ generate_bootstrap_plots(
   method = "homologene",
   reps = 100,
   annotLevel = 1,
-  full_results = NA,
-  listFileName = "",
-  savePath = tempdir(),
+  full_results = NULL,
+  listFileName = paste0("_level", annotLevel),
+  adj_pval_thresh = 0.05,
+  facets = "CellType",
+  scales = "free_x",
+  save_dir = file.path(tempdir(), "BootstrapPlots"),
+  show_plot = TRUE,
   verbose = TRUE
 )
 }
@@ -64,15 +68,28 @@ analyse (\emph{Default: 1}).}
 \item{listFileName}{String used as the root for files saved using this
 function.}
 
-\item{savePath}{Directory where the BootstrapPlots folder should be saved,
+\item{adj_pval_thresh}{Adjusted p-value threshold of celltypes to include
+in plots.}
+
+\item{facets}{This argument is soft-deprecated, please use \code{rows}
+and \code{cols} instead.}
+
+\item{scales}{Are scales shared across all facets (the default,
+\code{"fixed"}), or do they vary across rows (\code{"free_x"}),
+columns (\code{"free_y"}), or both rows and columns (\code{"free"})?}
+
+\item{save_dir}{Directory where the BootstrapPlots folder should be saved,
 default is a temp directory.}
+
+\item{show_plot}{Print the plot.}
 
 \item{verbose}{Print messages.}
 }
 \value{
 Saves a set of pdf files containing graphs and returns the file where
-they are saved. These will be saved with the filename adjusted using the
-value of listFileName. The files are saved into the 'BootstrapPlot' folder.
+they are saved. These will be saved with the file name adjusted using the
+value of \code{listFileName}. The files are saved into the 
+'BootstrapPlot' folder.
 Files start with one of the following:
 \itemize{
   \item \code{qqplot_noText}: sorts the gene list according to how enriched
@@ -89,11 +106,11 @@ Files start with one of the following:
 \description{
 \code{generate_bootstrap_plots} takes a gene list and a single cell type
 transcriptome dataset and generates plots which show how the expression of
-the genes in the list compares to those in randomly generated gene lists
+the genes in the list compares to those in randomly generated gene lists.
 }
 \examples{
 ## Load the single cell data
-ctd <- ewceData::ctd()
+sct_data <- ewceData::ctd()
 
 ## Set the parameters for the analysis
 ## Use 5 bootstrap lists for speed, for publishable analysis use >10000
@@ -117,15 +134,13 @@ full_results <- EWCE::example_bootstrap_results()
 #    genelistSpecies = "human"
 # )
 
-plot_file_path <- EWCE::generate_bootstrap_plots(
-    sct_data = ctd,
+output <- EWCE::generate_bootstrap_plots(
+    sct_data = sct_data,
     hits = hits,
     reps = reps,
     full_results = full_results,
-    listFileName = "Example",
     sctSpecies = "mouse",
     genelistSpecies = "human",
-    annotLevel = 1,
-    savePath = tempdir()
+    annotLevel = 1
 )
 }

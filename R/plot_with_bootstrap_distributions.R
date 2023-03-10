@@ -11,7 +11,7 @@ plot_with_bootstrap_distributions <- function(exp_mats,
                                               tag,
                                               listFileName,
                                               graph_theme,
-                                              savePath) {
+                                              save_dir) {
     requireNamespace("grDevices")
     requireNamespace("ggplot2")
     requireNamespace("reshape2")
@@ -24,8 +24,8 @@ plot_with_bootstrap_distributions <- function(exp_mats,
     )
   
     pdf_path <- file.path(
-        savePath,
-        sprintf("BootstrapPlots/bootDists_%s___%s____%s.pdf",
+        save_dir,
+        sprintf("bootDists_%s___%s____%s.pdf",
                 tag, listFileName, cc
     ))
     grDevices::pdf(pdf_path, width = 3.5, height = 3.5)

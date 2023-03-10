@@ -8,7 +8,7 @@
 #' @importFrom  parallel mclapply
 #' @importFrom data.table data.table
 create_list_network <- function(data_byGene2,
-                                hitGenes_NEW,
+                                hits_NEW,
                                 reps = 10000,
                                 no_cores = 1) {
 
@@ -19,7 +19,7 @@ create_list_network <- function(data_byGene2,
             unique(data_byGene2[data_byGene2$uniq_quad == uq, "HGNC.symbol"])
     }
 
-    list_network <- parallel::mclapply(hitGenes_NEW, function(gene) {
+    list_network <- parallel::mclapply(hits_NEW, function(gene) {
         this_gene_quad <- data_byGene2[
             data_byGene2$HGNC.symbol == gene,
             "uniq_quad"

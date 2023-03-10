@@ -8,14 +8,13 @@
 #' @inheritParams get_summed_proportions
 #'
 #' @returns Matrix of genes
-#'  (such that \code{nrows=length(hitGenes)} and \code{ncols=reps}), where each
+#'  (such that \code{nrows=length(hits)} and \code{ncols=reps}), where each
 #' column is a gene list.
 #'
 #' @keywords internal
 #' @importFrom stats quantile
-generate_controlled_bootstrap_geneset <- function(hitGenes,
+generate_controlled_bootstrap_geneset <- function(hits,
                                                   sct_data,
-                                                  combinedGenes,
                                                   annotLevel,
                                                   reps,
                                                   controlledCT = FALSE,
@@ -26,10 +25,10 @@ generate_controlled_bootstrap_geneset <- function(hitGenes,
         controlledCT = controlledCT,
         annotLevel = annotLevel,
         sct_data = sct_data,
-        hitGenes = hitGenes
+        hits = hits
     )
     hit.cells <- cell_list_dist(
-        hitGenes = hitGenes,
+        hits = hits,
         sct_data = sct_data,
         annotLevel = annotLevel
     )
@@ -87,9 +86,9 @@ generate_controlled_bootstrap_geneset <- function(hitGenes,
     eachGeneBOX <- apply(eachGeneSP, 1, collapseEntries)
 
     boxes_present <- unique(eachGeneBOX)
-    boxes_present_inHits <- table(eachGeneBOX[hitGenes])
+    boxes_present_inHits <- table(eachGeneBOX[hits])
     # For each box, sample the number of genes as is present in
-    # hitGenes in that box
+    # hits in that box
     minCount <- 0
     for (i in seq_len(length(boxes_present_inHits))) {
         boxName <- names(boxes_present_inHits[i])

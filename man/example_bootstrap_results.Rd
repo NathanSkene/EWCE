@@ -52,5 +52,5 @@ Example cell type enrichment
 results produced by \link[EWCE]{bootstrap_enrichment_test}.
 }
 \examples{
-full_results <- EWCE::example_bootstrap_results()
+full_results <- example_bootstrap_results()
 }

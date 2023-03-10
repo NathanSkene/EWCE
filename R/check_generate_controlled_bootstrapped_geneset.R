@@ -10,7 +10,7 @@
 check_generate_controlled_bootstrap_geneset <- function(controlledCT,
                                                         annotLevel,
                                                         sct_data,
-                                                        hitGenes) {
+                                                        hits) {
     err_msg <- paste0(
         "ERROR: controlledCT cannot be NULL in",
         " generate_controlled_bootstrap_geneset"
@@ -35,12 +35,12 @@ check_generate_controlled_bootstrap_geneset <- function(controlledCT,
         stop(err_msg3)
     }
     err_msg4 <- paste0(
-        "ERROR: length(hitGenes)==0. Perhaps your gene list is",
+        "ERROR: length(hits)==0. Perhaps your gene list is",
         " from the wrong species? It should be converted to",
         " orthologs of the same species as the single cell",
         " dataset."
     )
-    if (length(hitGenes) == 0) {
+    if (length(hits) == 0) {
         stop(err_msg4)
     }
 }

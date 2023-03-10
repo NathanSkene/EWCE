@@ -9,7 +9,7 @@ check_controlled_args(
   sct_data,
   annotLevel,
   disease_genes,
-  hitGenes,
+  hits,
   functional_genes,
   funcGenes,
   combinedGenes
@@ -29,7 +29,7 @@ analyse (\emph{Default: 1}).}
 Does not have to be disease genes. Must be from same species as the single
 cell transcriptome dataset.}
 
-\item{hitGenes}{Hit genes.}
+\item{hits}{Hit genes.}
 
 \item{functional_genes}{Array of gene symbols containing the functional gene
 list. The enrichment of this gene set within the disease_genes is tested.

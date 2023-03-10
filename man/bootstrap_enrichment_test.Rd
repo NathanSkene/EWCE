@@ -87,16 +87,16 @@ have previously been downloaded. If offline, Please also see BiocManager
 vignette section on offline use to ensure proper functionality.}
 }
 \value{
-A list containing three data frames:
+A list containing three elements:
 \itemize{
-  \item \code{results}: dataframe in which each row gives the statistics
-  (p-value, fold change and number of standard deviations from the mean)
-  associated with the enrichment of the stated cell type in the gene list
   \item \code{hit.cells}: vector containing the summed proportion of
-  expression in each cell type for the target list
+  expression in each cell type for the target list.
+  \item \code{gene_data: } data.table showing the number of time each gene 
+   appeared in the bootstrap sample.
   \item \code{bootstrap_data}: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the
   random lists
+  \item \code{controlledCT}: the controlled cell type (if applicable)
 }
 }
 \description{
@@ -106,17 +106,17 @@ changes for each cell type.
 }
 \examples{
 # Load the single cell data
-ctd <- ewceData::ctd()
+sct_data <- ewceData::ctd()
 # Set the parameters for the analysis
 # Use 3 bootstrap lists for speed, for publishable analysis use >=10,000
 reps <- 3
 # Load gene list from Alzheimer's disease GWAS
-example_genelist <- ewceData::example_genelist()
+hits <- ewceData::example_genelist()
 
 # Bootstrap significance test, no control for transcript length or GC content
 full_results <- EWCE::bootstrap_enrichment_test(
-    sct_data = ctd,
-    hits = example_genelist,
+    sct_data = sct_data,
+    hits = hits,
     reps = reps,
     annotLevel = 1,
     sctSpecies = "mouse",

@@ -14,9 +14,7 @@ check_args_for_bootstrap_plot_generation <- function(sct_data,
                                                      reps,
                                                      full_results,
                                                      listFileName,
-                                                     showGNameThresh,
-                                                     ttSpecies, 
-                                                     sctSpecies,
+                                                     showGNameThresh, 
                                                      sortBy) {
     # Check the arguments
     if(all(is.na(full_results))) {
@@ -54,36 +52,5 @@ check_args_for_bootstrap_plot_generation <- function(sct_data,
     )
     if (dim(tt)[1] < (thresh * 2)) {
         stop(err_msg3)
-    }
-    
-    #### Handle species ####
-    # Check that the top table has correct columns
-    # err_msg4 <- paste0(
-    #     "ERROR: if ttSpecies==human then there must be an",
-    #     " HGNC.symbol column"
-    # )
-    # err_msg5 <- paste0(
-    #     "ERROR: if ttSpecies==human then there must be an",
-    #     " MGI.symbol column"
-    # )
-    # if (ttSpecies == "human" & !"HGNC.symbol" %in% colnames(tt)) {
-    #     stop(err_msg4)
-    # }
-    # if (ttSpecies == "mouse" & !"MGI.symbol" %in% colnames(tt)) {
-    #     stop(err_msg5)
-    # }
-# 
-#     if (ttSpecies == "human" & sctSpecies == "human") {
-#         tt$MGI.symbol <- tt$HGNC.symbol
-#     }
-    # mouse_to_human_homologs <- ewceData::mouse_to_human_homologs()
-    # m2h <- mouse_to_human_homologs[, c("MGI.symbol", "HGNC.symbol")]
-    # if (ttSpecies == "human" & sctSpecies == "mouse") {
-    #     tt <- merge(tt, m2h, by = "HGNC.symbol")
-    # }
-    # if (ttSpecies == "mouse" & sctSpecies == "human") {
-    #     tt <- merge(tt, m2h, by = "HGNC.symbol")
-    #     tt$MGI.symbol <- tt$HGNC.symbol
-    # }
-    # return(tt)
+    } 
 }

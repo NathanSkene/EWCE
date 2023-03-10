@@ -13,8 +13,6 @@ check_args_for_bootstrap_plot_generation(
   full_results,
   listFileName,
   showGNameThresh,
-  ttSpecies,
-  sctSpecies,
   sortBy
 )
 }
@@ -44,13 +42,6 @@ this function.}
 
 \item{showGNameThresh}{Integer. If a gene has over X percent of it's
 expression proportion in a cell type, then list the gene name.}
-
-\item{ttSpecies}{The species the differential expression table
-was generated from.}
-
-\item{sctSpecies}{Species that \code{sct_data} came from
-(no longer limited to just "mouse" and "human").
-See \link[EWCE]{list_species} for all available species.}
 
 \item{sortBy}{Column name of metric in \code{tt}
 which should be used to sort up- from down- regulated genes (Default: "t").}

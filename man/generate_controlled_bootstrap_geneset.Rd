@@ -5,9 +5,8 @@
 \title{generate_controlled_bootstrap_geneset}
 \usage{
 generate_controlled_bootstrap_geneset(
-  hitGenes,
+  hits,
   sct_data,
-  combinedGenes,
   annotLevel,
   reps,
   controlledCT = FALSE,
@@ -15,7 +14,9 @@ generate_controlled_bootstrap_geneset(
 )
 }
 \arguments{
-\item{hitGenes}{list of gene names. The target gene set.}
+\item{hits}{List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if \code{geneSizeControl=TRUE}.}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
@@ -33,7 +34,7 @@ cell type.}
 }
 \value{
 Matrix of genes
- (such that \code{nrows=length(hitGenes)} and \code{ncols=reps}), where each
+ (such that \code{nrows=length(hits)} and \code{ncols=reps}), where each
 column is a gene list.
 }
 \description{

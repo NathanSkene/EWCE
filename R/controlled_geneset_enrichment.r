@@ -121,7 +121,7 @@ controlled_geneset_enrichment <- function(disease_genes,
     #### Created combinedGenes list ####
     combinedGenes <- unname(rownames(sct_data[[annotLevel]]$mean_exp))
     combinedGenes <- combinedGenes[combinedGenes %in% bg]
-    hitGenes <- disease_genes[disease_genes %in% combinedGenes]
+    hits <- disease_genes[disease_genes %in% combinedGenes]
     funcGenes <- functional_genes[functional_genes %in% combinedGenes]
     #### Check args ####
     check_controlled_args(
@@ -129,7 +129,7 @@ controlled_geneset_enrichment <- function(disease_genes,
         sct_data = sct_data,
         annotLevel = annotLevel,
         disease_genes = disease_genes,
-        hitGenes = hitGenes,
+        hits = hits,
         functional_genes = functional_genes,
         funcGenes = funcGenes,
         combinedGenes = combinedGenes
@@ -145,9 +145,8 @@ controlled_geneset_enrichment <- function(disease_genes,
     #### Generate controlled bootstrap gene sets ####
     controlled_bootstrap_set <-
         generate_controlled_bootstrap_geneset(
-            hitGenes = hitGenes,
+            hits = hits,
             sct_data = sct_data_bgReduced,
-            combinedGenes = combinedGenes,
             annotLevel = annotLevel,
             reps = reps,
             controlledCT = controlledCT,
@@ -157,14 +156,14 @@ controlled_geneset_enrichment <- function(disease_genes,
         n = reps,
         expr = sample(
             combinedGenes,
-            length(hitGenes)
+            length(hits)
         )
     )
     #### Calculate uncontrolled enrichment ####
     numInList <- function(x) {
         return(sum(funcGenes %in% x))
     }
-    actual <- numInList(hitGenes)
+    actual <- numInList(hits)
     bootstrap_uncontrolled <- apply(uncontrolled_bootstrap_set, 2, numInList)
     p_uncontrolled <- sum(bootstrap_uncontrolled > actual) / reps
     z_uncontrolled <-

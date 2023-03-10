@@ -40,7 +40,7 @@ test_that("bootstrap enrichment runs as expected", {
         # Use 5 up/down regulated genes (thresh) for speed, default is 250
         thresh <- 5
         options(warn = -1) # turn off warnings for plot warning
-        boot_plot_dir1 <- EWCE::generate_bootstrap_plots(
+        boot_out1 <- generate_bootstrap_plots(
             sct_data = ctd,
             sctSpecies = "mouse",
             hits = example_genelist,
@@ -48,21 +48,22 @@ test_that("bootstrap enrichment runs as expected", {
             annotLevel = level,
             full_results = full_results,
             listFileName = "VignetteGraphs",
-            savePath = tempdir(),
             # Important! must match to reps used in bootstrap_enrichment_test
             reps = reps
         )
-        options(warn = 0)
-        # check the BootstrapPlots folder exists and is non-empty
-        boot_dir <- file.path(boot_plot_dir1,"BootstrapPlots") 
-        testthat::expect_true(
-            dir.exists(boot_dir)
-        )
-        testthat::expect_true(
-            length(list.files(boot_dir)) > 0
-        )
-
-
+        options(warn = 0) 
+        testthat::expect_length(boot_out1$paths,4)
+        for(f in boot_out1$paths){
+            testthat::expect_true(
+                file.exists(f)
+            ) 
+        }
+        testthat::expect_length(boot_out1$plots,4)
+        for(p in boot_out1$plots){
+            testthat::expect_true(
+                methods::is(p,"gg")
+            ) 
+        }  
         #### tt_results ####
         tt_results <- EWCE::ewce_expression_data(
             sct_data = ctd,
@@ -74,7 +75,7 @@ test_that("bootstrap enrichment runs as expected", {
             sctSpecies = "mouse"
         )
         options(warn = -1) # turn off plot warnings
-        boot_plot_dir2 <- EWCE::generate_bootstrap_plots_for_transcriptome(
+        boot_dir2 <- generate_bootstrap_plots_for_transcriptome(
             sct_data = ctd,
             tt = tt_alzh,
             annotLevel = level,
@@ -90,8 +91,7 @@ test_that("bootstrap enrichment runs as expected", {
             plot_types = "bootstrap"
         )
         options(warn = 0)
-        # check the BootstrapPlots folder exists and is non-empty
-        boot_dir2 <- file.path(boot_plot_dir2,"BootstrapPlots")
+        # check the BootstrapPlots folder exists and is non-empty 
         testthat::expect_true(
             dir.exists(boot_dir2)
         )

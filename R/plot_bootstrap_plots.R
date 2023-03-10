@@ -13,10 +13,10 @@ plot_bootstrap_plots <- function(dat,
                                  showGNameThresh,
                                  graph_theme,
                                  maxX,
-                                 savePath) {
+                                 save_dir) {
     requireNamespace("grDevices")
     requireNamespace("ggplot2")
-    messager(cc,": Saving bootstrap plot.")
+   
     basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
         geom_point(size = 1) +
         xlab("Mean Bootstrap Expression") +
@@ -24,12 +24,16 @@ plot_bootstrap_plots <- function(dat,
         graph_theme +
         geom_abline(intercept = 0, slope = 1, colour = "red")
     
+    
+    #### Make dir ####
+    dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)
     #### Plot without text #### 
     pdf_path <- file.path(
-        savePath,"BootstrapPlots",
+        save_dir,
         sprintf("qqplot_noText_%s___%s____%s.pdf",
                 tag, listFileName, cc
     ))
+    messager(cc,": Saving bootstrap plot -->",pdf_path) 
     grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     print(basic_graph + ggtitle(cc))
     grDevices::dev.off()
@@ -48,10 +52,11 @@ plot_bootstrap_plots <- function(dat,
 
     # Plot with gene names
     pdf_path <- file.path(
-        savePath,"BootstrapPlots",
+        save_dir,
         sprintf("qqplot_wtGSym_%s___%s____%s.pdf",
                 tag, listFileName, cc
     ))
+    messager(cc,": Saving bootstrap plot -->",pdf_path) 
     grDevices::pdf(pdf_path, width = 3.5, height = 3.5)
     print(basic_graph +
         geom_text(aes_string(label = "symLab"),
@@ -62,10 +67,11 @@ plot_bootstrap_plots <- function(dat,
 
     # Plot BIG with gene names
     pdf_path <- file.path(
-        savePath,"BootstrapPlots",
+        save_dir,
         sprintf("qqplot_wtGSymBIG_%s___%s____%s.pdf",
                 tag, listFileName, cc
     ))
+    messager(cc,": Saving bootstrap plot -->",pdf_path) 
     grDevices::pdf(pdf_path, width = 15, height = 15)
     print(basic_graph +
         geom_text(aes_string(label = "symLab"),

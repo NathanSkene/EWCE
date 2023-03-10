@@ -40,9 +40,10 @@
 #' @returns List with 3 items.
 #' @export
 #' @examples
-#' full_results <- EWCE::example_bootstrap_results()
-example_bootstrap_results <- function(verbose = TRUE,localHub = FALSE) {
-    fname <- system.file("extdata/bootstrap_results.rda",
+#' full_results <- example_bootstrap_results()
+example_bootstrap_results <- function(verbose = TRUE,
+                                      localHub = FALSE) {
+    fname <- system.file("extdata","bootstrap_results.rda",
         package = "EWCE"
     )
     if (file.exists(fname)) {

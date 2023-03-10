@@ -12,7 +12,7 @@ plot_log_bootstrap_distributions <- function(dat,
                                              tag,
                                              listFileName,
                                              graph_theme,
-                                             savePath) {
+                                             save_dir) {
     messager(cc,": Saving log bootstrap plot with distributions.")
     requireNamespace("grDevices")
     requireNamespace("ggplot2")
@@ -53,7 +53,7 @@ plot_log_bootstrap_distributions <- function(dat,
     # - Plot the graph!
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
     pdf_path <- file.path(
-        savePath,"BootstrapPlots",
+        save_dir,
         sprintf("bootDists_LOG_%s___%s____%s.pdf",
                  tag, listFileName, cc
     ))

@@ -3,7 +3,7 @@
 #' Check the input arguments of the 
 #' \link[EWCE]{controlled_geneset_enrichment}.
 #' 
-#' @param hitGenes Hit genes.
+#' @param hits Hit genes.
 #' @param funcGenes \code{functional_genes} that are within
 #'  \code{combinedGenes}.
 #' @param combinedGenes \code{sct_data} genes that are in the background 
@@ -16,7 +16,7 @@ check_controlled_args <- function(bg,
                                   sct_data,
                                   annotLevel,
                                   disease_genes,
-                                  hitGenes,
+                                  hits,
                                   functional_genes,
                                   funcGenes,
                                   combinedGenes) {
@@ -43,7 +43,7 @@ check_controlled_args <- function(bg,
         " least five that are present in the background",
         " gene set & single cell dataset"
     )
-    if (sum(hitGenes %in% combinedGenes, na.rm = TRUE) < 5) {
+    if (sum(hits %in% combinedGenes, na.rm = TRUE) < 5) {
         stop(err_msg3)
     }
     err_msg4 <- paste0(

@@ -12,7 +12,7 @@ plot_log_bootstrap_distributions(
   tag,
   listFileName,
   graph_theme,
-  savePath
+  save_dir
 )
 }
 \value{

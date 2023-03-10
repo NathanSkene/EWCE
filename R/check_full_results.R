@@ -11,10 +11,11 @@ check_full_results <- function(full_results,
                                sct_data) {
     if (!is.null(full_results)) {
         err_msg <- paste0(
-            "ERROR: full_results is not valid output from the",
-            " bootstrap_enrichment_test function"
+            "ERROR: full_results must be a list of length 3 or 4",
+            "(not",length(full_results),")", 
+            "to be considered a valid output from bootstrap_enrichment_test."
         )
-        if (length(full_results) != 3) {
+        if (!length(full_results) %in% c(3,4)) {
             stop(err_msg)
         }
         err_msg2 <- paste0(

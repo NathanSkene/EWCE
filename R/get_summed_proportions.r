@@ -6,15 +6,17 @@
 #'
 #' See \link[EWCE]{bootstrap_enrichment_test} for examples.
 #'
-#' @param hitGenes list of gene names. The target gene set.
+#' @param hits list of gene names. The target gene set.
 #' @param control_network If \code{geneSizeControl=TRUE},
 #' then must provide the control network.
 #' @inheritParams bootstrap_enrichment_test
 #'
-#' @returns A list containing three data frames:
+#' @returns A list containing three elements:
 #' \itemize{
 #'   \item \code{hit.cells}: vector containing the summed proportion of
-#'   expression in each cell type for the target list
+#'   expression in each cell type for the target list.
+#'   \item \code{gene_data: } data.table showing the number of time each gene 
+#'    appeared in the bootstrap sample.
 #'   \item \code{bootstrap_data}: matrix in which each row represents the
 #'   summed proportion of expression in each cell type for one of the
 #'   random lists
@@ -24,7 +26,7 @@
 #' @keywords internal
 #' @importFrom data.table data.table rbindlist
 #' @importFrom parallel mclapply
-get_summed_proportions <- function(hitGenes,
+get_summed_proportions <- function(hits,
                                    sct_data,
                                    annotLevel,
                                    reps,
@@ -33,24 +35,26 @@ get_summed_proportions <- function(hitGenes,
                                    controlledCT = NULL,
                                    control_network = NULL,
                                    verbose = TRUE) {
+    
     controlledCT <- fix_celltype_names(celltypes = controlledCT)
     combinedGenes <- rownames(sct_data[[annotLevel]]$mean_exp)
-    hitGenes <- hitGenes[hitGenes %in% combinedGenes]
+    hits <- hits[hits %in% combinedGenes]
+    #### cell_list_dist ####
+    # cell_list_dist gets the summed proportion of 'hits' across all
+    # cell types at annotLevel
     hit.cells <- cell_list_dist(
-        hitGenes = hitGenes,
+        hits = hits,
         sct_data = sct_data,
         annotLevel = annotLevel
-    )
-    # cell_list_dist gets the summed proportion of 'hitGenes' across all
-    # cell types at annotLevel
+    ) 
 
-    # Check control_network provided if geneSizeControl=TRUE
+    #### Check control_network provided if geneSizeControl=TRUE ####
     err_msg <- paste0(
         "ERROR: if geneSizeControl==TRUE then",
         " get_summed_proportions must be passed",
         " control_network as an argument"
     )
-    if (geneSizeControl == TRUE) {
+    if (isTRUE(geneSizeControl)) {
         if (is.null(control_network)) {
             stop(err_msg)
         }
@@ -60,7 +64,7 @@ get_summed_proportions <- function(hitGenes,
     if (!is.null(controlledCT)) {
         controlled_bootstrap_set <-
             generate_controlled_bootstrap_geneset(
-                hitGenes = hitGenes,
+                hits = hits,
                 sct_data = sct_data,
                 annotLevel = annotLevel,
                 reps = reps,
@@ -68,33 +72,32 @@ get_summed_proportions <- function(hitGenes,
             )
     }
     #### Parallelise bootstrapping ####
-    bootstrap_data <- parallel::mclapply(seq_len(reps), function(s) {
-        # Get 'bootstrap_set'...a list of genes of equivalent length as hitGenes
-        if (isTRUE(geneSizeControl)) {
-            bootstrap_set <- control_network[s, ]
-        } else {
-            if (is.null(controlledCT)) {
-                bootstrap_set <- sample(
-                    combinedGenes,
-                    length(hitGenes)
-                )
-            } else {
-                bootstrap_set <- controlled_bootstrap_set[, s]
-            }
-        }
-        # 'bootstrap_data' is a matrix of the summed proportions
-        bootstrap_res <- cell_list_dist(
-            hitGenes = bootstrap_set,
-            sct_data = sct_data,
-            annotLevel = annotLevel
-        )
-        return(data.table::data.table(t(bootstrap_res)))
-    }, mc.cores = no_cores) |>
-        data.table::rbindlist()
-    #### Conver to matrix format ####
-    bootstrap_data <- as.matrix(bootstrap_data)
+    bootstrap_list <- get_summed_proportions_iterate(
+        reps=reps,
+        geneSizeControl=geneSizeControl,
+        control_network=control_network,
+        controlledCT=controlledCT,
+        controlled_bootstrap_set=controlled_bootstrap_set,
+        combinedGenes=combinedGenes,
+        hits=hits,
+        sct_data=sct_data,
+        annotLevel=annotLevel,
+        no_cores=no_cores)
+    #### Get gene scores #####
+    gene_data <- compute_gene_scores(sct_data = sct_data, 
+                                     annotLevel = annotLevel, 
+                                     bootstrap_list = bootstrap_list, 
+                                     hits = hits, 
+                                     combinedGenes = combinedGenes,
+                                     verbose = verbose)
+    #### Get celltypes scores ####
+    bootstrap_data <- as.matrix(
+        lapply(bootstrap_list,function(x){x$celltypes}) |>
+            data.table::rbindlist(),
+        rownames = paste0("rep",seq_len(reps)))
     return(list(
         hit.cells = hit.cells,
+        gene_data = gene_data,
         bootstrap_data = bootstrap_data,
         controlledCT = controlledCT
     ))
