@@ -45,51 +45,33 @@ dir.create(dirname(filename), showWarnings = FALSE, recursive = TRUE)
 
 ## Subplot
 
-[ggimage](https://yulab-smu.top/pkgdocs/ggimage.html)
-
-```{r, eval=FALSE} 
-#### Create function to adjust image opacity ####
-alph <- function(img,a=.8) {
-  magick::image_fx(img, 
-                   expression = paste0(a,"*a"),
-                   channel = "alpha")
-}
-#### Create data to define images/position ####
-dat <- data.frame(x=rep(1,2), 
-                  y=rep(1,2), 
-                  image = c(here::here("inst/hex/cell2.png"),
-                            here::here("inst/hex/gene1.png")),
-                  size = c(1, .25),
-                  alpha = c(.5, 1))
-## Make sure the gene is placed behind the brain
-dat$image <- factor(x = dat$image, 
-                    labels = rev(unique(dat$image)), 
-                    ordered = TRUE)
-#### Create plot ####
-gp <-  ggplot(data=dat, 
-              aes(x=x, y=y)) +  
-  ggimage::geom_image(aes(image=image,
-                          size=I(size), alpha=I(alpha))) + 
-  theme_void() 
-print(gp)
+```{r}
+URL <- "https://github.com/NathanSkene/EWCE/releases/download/v1.1/DALL.E.2023-03-10.01.14.58.-.cell.type.specific.gene.enrichment.png"
+tmp <- tempfile(fileext = ".png")
+utils::download.file(URL, tmp)
 ```
+
 
 
 ## hexSticker 
 
 ```{r}    
-s_size = 1.5
+# pkg <- paste("E xpression","W eighted","C elltype","E nrichment", sep = "<br>")
+pkg <- "E   W   C   E"
+s_size = .51
 stick <- hexSticker::sticker( 
-  subplot = gp,
+  subplot = tmp,
   #### Package name ####
-  package = pkg, p_size=20, p_y = 1.5,
+  package = pkg,
+  p_size=20, p_y = 1, p_x=.83, p_color = ggplot2::alpha("white",.8),
   #### Subplot #####
-  s_x=1, s_y=1,  s_height = s_size, s_width = s_size,
+  s_x=1.1, s_y=1,  s_height = s_size, s_width = s_size*2.4,
   #### Fill & border ####
-  h_fill = "#0e326d", h_color = "#44c7fd",
+  h_fill = "#060b1a", h_color = "#e05701",
   #### Spotlight ####
-  spotlight = TRUE, l_alpha = .3, l_width = 10,
+  spotlight = TRUE, l_alpha = .3, l_width = 10, 
   #### File output ####
+  white_around_sticker = TRUE,
   filename = filename, dpi = 300)
 print(stick)
 ```
