@@ -14,9 +14,13 @@
 #' @param genelistSpecies Species that \code{hits} genes came from
 #' (no longer limited to just "mouse" and "human").
 #' See \link[EWCE]{list_species} for all available species.
-#' @param sctSpecies  Species that \code{sct_data} came from
+#' @param sctSpecies Species that \code{sct_data} is currently formatted as
 #' (no longer limited to just "mouse" and "human").
 #' See \link[EWCE]{list_species} for all available species.
+#' @param sctSpecies_origin Species that the \code{sct_data} 
+#' originally came from, regardless of its current gene format 
+#' (e.g. it was previously converted from mouse to human gene orthologs).
+#'  This is used for computing an appropriate backgrund.
 #' @param output_species Species to convert \code{sct_data} and \code{hits} to
 #' (Default: "human").
 #' See \link[EWCE]{list_species} for all available species.
@@ -37,6 +41,8 @@
 #'  smallest to largest p-values.
 #' @param mtc_method Multiple-testing correction method
 #' (passed to \link[stats]{p.adjust}).
+#' @param min_genes The minimum number of genes in \code{hits} that are 
+#' also in the single cell dataset & background gene set.
 #' @param verbose Print messages.
 #' @param localHub If working offline, add argument localHub=TRUE to work 
 #' with a local, non-updated hub; It will only have resources available that
@@ -82,7 +88,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       hits = NULL,
                                       bg = NULL,
                                       genelistSpecies = NULL,
-                                      sctSpecies = NULL,
+                                      sctSpecies = NULL, 
+                                      sctSpecies_origin = sctSpecies,
                                       output_species = "human",
                                       method = "homologene",
                                       reps = 100,
@@ -92,6 +99,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       controlledCT = NULL,
                                       mtc_method = "BH",
                                       sort_results = TRUE,
+                                      min_genes = 4,
                                       verbose = TRUE,
                                       localHub = FALSE) {
     # devoptera::args2vars(bootstrap_enrichment_test)
@@ -133,7 +141,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
       bg <- unique(bg)
     }
     #### Convert CTD to standardized human genes ####
-    messager("Standardising CellTypeDataset", v = verbose)
+    messager("Standardising CellTypeDataset", v = verbose) 
     sct_data <- standardise_ctd(
         ctd = sct_data,
         input_species = sctSpecies,
@@ -150,8 +158,10 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         bg = bg,
         genelistSpecies = genelistSpecies,
         sctSpecies = sctSpecies,
+        sctSpecies_origin = sctSpecies_origin,
         geneSizeControl = geneSizeControl,
         output_species = output_species,
+        min_genes = min_genes,
         verbose = verbose
     )
     #### check_ewce_genelist_inputs converts hits to "human" by default ####
@@ -204,7 +214,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     cells <- unique(colnames(sct_data[[annotLevel]]$specificity))
     # GENERATE hit.cells and bootstrap_data IN ONE GO
     messager(formatC(length(unique(hits)), big.mark = ","),
-        "hit genes remain after filtering.",
+        "hit gene(s) remain after filtering.",
         v = verbose
     )
     if (isFALSE(geneSizeControl)) control_network <- NULL

@@ -46,8 +46,7 @@ get_summed_proportions <- function(hits,
         hits = hits,
         sct_data = sct_data,
         annotLevel = annotLevel
-    ) 
-
+    )
     #### Check control_network provided if geneSizeControl=TRUE ####
     err_msg <- paste0(
         "ERROR: if geneSizeControl==TRUE then",

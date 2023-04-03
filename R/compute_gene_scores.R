@@ -35,7 +35,7 @@ compute_gene_scores <- function(sct_data,
                                                   hits=hits,
                                                   verbose=verbose)
     #### Get specificity scores of the hit genes ####
-    hit_exp <- sct_data[[annotLevel]]$specificity[hits, ]
+    hit_exp <- sct_data[[annotLevel]]$specificity[hits, , drop=FALSE]
     #### Create plotting data ####
     gene_data <- lapply(stats::setNames(names(exp_mats),
                                         names(exp_mats)),

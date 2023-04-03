@@ -10,10 +10,12 @@ check_ewce_genelist_inputs(
   bg = NULL,
   genelistSpecies = NULL,
   sctSpecies = NULL,
+  sctSpecies_origin = sctSpecies,
   output_species = "human",
   method = "homologene",
   geneSizeControl = FALSE,
   standardise = FALSE,
+  min_genes = 4,
   verbose = TRUE
 )
 }
@@ -32,9 +34,14 @@ if \code{geneSizeControl=TRUE}.}
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 
-\item{sctSpecies}{Species that \code{sct_data} came from
+\item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
+
+\item{sctSpecies_origin}{Species that the \code{sct_data} 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.}
 
 \item{output_species}{Species to convert \code{sct_data} and \code{hits} to
 (Default: "human").
@@ -56,6 +63,9 @@ If set to \code{TRUE}, then \code{hits} must be from humans.}
 
 \item{standardise}{If \code{input_species==output_species},
 should the genes be standardised using \link[orthogene]{map_genes}?}
+
+\item{min_genes}{The minimum number of genes in \code{hits} that are 
+also in the single cell dataset & background gene set.}
 
 \item{verbose}{Print messages.}
 }

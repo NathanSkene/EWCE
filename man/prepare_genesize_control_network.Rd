@@ -29,7 +29,7 @@ if \code{geneSizeControl=TRUE}.}
 \item{no_cores}{Number of cores to parallelise
 bootstrapping \code{reps} over.}
 
-\item{sctSpecies}{Species that \code{sct_data} came from
+\item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 

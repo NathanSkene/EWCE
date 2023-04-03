@@ -15,7 +15,7 @@ cell_list_dist <- function(hits,
         rownames(sct_data[[annotLevel]]$specificity)[
             rownames(sct_data[[annotLevel]]$specificity) %in% hits
         ]
-    temp <- sct_data[[annotLevel]]$specificity[ValidGenes, ]
+    temp <- sct_data[[annotLevel]]$specificity[ValidGenes, ,drop=FALSE]
 
     # If the function was based a single gene list... just return temp
     # if(is.null(dim(hits)[1])){

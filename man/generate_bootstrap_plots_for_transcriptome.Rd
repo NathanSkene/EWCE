@@ -62,7 +62,7 @@ expression proportion in a cell type, then list the gene name.}
 \item{ttSpecies}{The species the differential expression table
 was generated from.}
 
-\item{sctSpecies}{Species that \code{sct_data} came from
+\item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 

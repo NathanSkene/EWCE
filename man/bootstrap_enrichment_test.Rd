@@ -10,6 +10,7 @@ bootstrap_enrichment_test(
   bg = NULL,
   genelistSpecies = NULL,
   sctSpecies = NULL,
+  sctSpecies_origin = sctSpecies,
   output_species = "human",
   method = "homologene",
   reps = 100,
@@ -19,6 +20,7 @@ bootstrap_enrichment_test(
   controlledCT = NULL,
   mtc_method = "BH",
   sort_results = TRUE,
+  min_genes = 4,
   verbose = TRUE,
   localHub = FALSE
 )
@@ -38,9 +40,14 @@ if \code{geneSizeControl=TRUE}.}
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 
-\item{sctSpecies}{Species that \code{sct_data} came from
+\item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
+
+\item{sctSpecies_origin}{Species that the \code{sct_data} 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.}
 
 \item{output_species}{Species to convert \code{sct_data} and \code{hits} to
 (Default: "human").
@@ -78,6 +85,9 @@ cell type.}
 
 \item{sort_results}{Sort enrichment results from
 smallest to largest p-values.}
+
+\item{min_genes}{The minimum number of genes in \code{hits} that are 
+also in the single cell dataset & background gene set.}
 
 \item{verbose}{Print messages.}
 

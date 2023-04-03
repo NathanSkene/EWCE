@@ -36,10 +36,12 @@ check_ewce_genelist_inputs <- function(sct_data,
                                        bg = NULL,
                                        genelistSpecies = NULL,
                                        sctSpecies = NULL,
+                                       sctSpecies_origin = sctSpecies,
                                        output_species = "human",
                                        method = "homologene",
                                        geneSizeControl = FALSE,
                                        standardise = FALSE,
+                                       min_genes = 4,
                                        verbose = TRUE) {
     messager("Checking gene list inputs.", v = verbose)
     #### Check species ####
@@ -64,7 +66,7 @@ check_ewce_genelist_inputs <- function(sct_data,
     #### Create background if none provided ####
     # Keep internal bc it has a check_species beforehand
     bg <- orthogene::create_background(
-        species1 = sctSpecies,
+        species1 = sctSpecies_origin,
         species2 = genelistSpecies,
         output_species = output_species,
         bg = bg,
@@ -77,7 +79,7 @@ check_ewce_genelist_inputs <- function(sct_data,
     if (sctSpecies != output_species) {
         sct_data <- standardise_ctd(
             ctd = sct_data,
-            input_species = sctSpecies,
+            input_species = sctSpecies_origin,
             output_species = output_species,
             dataset = "sct_data",
             method = method,
@@ -118,11 +120,16 @@ check_ewce_genelist_inputs <- function(sct_data,
         stop("All hits must be in bg.")
     }
     #### Check that sufficient genes are still present in the target list ####
-    if (length(hits) < 4) {
+    if(min_genes<1){
+        messager("min_genes must be >0. Setting to 1.",v=verbose)
+        min_genes <- 1
+    }
+    if (length(hits) < min_genes) {
         err_msg5 <- paste0(
-            "At least four genes which are present in the",
+            "At least ",min_genes," genes which are present in the",
             " single cell dataset & background gene set are",
-            " required to test for enrichment."
+            " required to test for enrichment.",
+            " Only ",length(hits)," provided."
         )
         stop(err_msg5)
     }

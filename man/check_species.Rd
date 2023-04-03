@@ -11,7 +11,7 @@ check_species(genelistSpecies = NULL, sctSpecies = NULL, verbose = TRUE)
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 
-\item{sctSpecies}{Species that \code{sct_data} came from
+\item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
 

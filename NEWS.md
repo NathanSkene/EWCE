@@ -2,6 +2,12 @@
 
 ## New features
 
+* `check_ewce_genelist_inputs`/`bootstrap_enrichment_test`
+    - New arg: `min_genes` lets user determine the min required number of genes
+        before an error is produced. Automatically set to 1 if `min_genes<1`.
+    - New arg: `sctSpecies_origin` lets users clarify that their data originally came from mouse 
+    even when it is currently formatted as human orthologs. 
+    This is necessary for creating the appropriate background gene lists.
 * Remove `grDevices` as dep entirely.
 * `fix_celltype_names`
     - Add new arg `make_unique` to make this function easily usable for vectors
