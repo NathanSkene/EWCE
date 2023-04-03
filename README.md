@@ -3,7 +3,7 @@
 <img src='https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png' title='Hex sticker for EWCE' height='300'><br>
 [![](https://img.shields.io/badge/release%20version-1.6.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
 [![](https://img.shields.io/badge/download-112/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
-[![](https://img.shields.io/badge/download-3574/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-3669/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![download](http://www.bioconductor.org/shields/downloads/release/EWCE.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
@@ -20,7 +20,7 @@ status](https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg)](htt
 Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>  
 </h4>
 <h4>  
-README updated: <i>Mar-09-2023</i>  
+README updated: <i>Apr-03-2023</i>  
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->

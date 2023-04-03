@@ -23,10 +23,9 @@
 #' @inheritParams ewce_expression_data
 #' @inheritParams orthogene::convert_orthologs
 #'
-#' @return Saves a set of PDF files containing graphs and returns the file where
-#' they are saved. These will be saved with the filename adjusted using the
-#' value of \code{listFileName.} The files are saved into the
-#' \emph{BootstrapPlot} folder.
+#' @returns Saves a set of PDF files containing graphs. 
+#' Then returns a nested list with each \code{plot} and
+#'  the \code{path} where it was saved to.
 #' Files start with one of the following:
 #' \itemize{
 #'   \item \code{qqplot_noText}: sorts the gene list according to how enriched
@@ -98,9 +97,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
                    "log_bootstrap_distributions"),
     save_dir = file.path(tempdir(),"BootstrapPlots"),
     method = "homologene",
-    verbose = TRUE) {
-    
-    requireNamespace("grDevices") 
+    verbose = TRUE) { 
     #### Check inputs ####
     plot_types <- tolower(plot_types)
     #### Check species1 ###
@@ -219,6 +216,7 @@ generate_bootstrap_plots_for_transcriptome <- function(
         graph_theme <- theme_graph() 
         tag <- sprintf("thresh%s__dir%s", thresh, dirS)
         
+        plots <- list()
         #### Create QQ plots ####
         for (cc in signif_res) {
             mean_boot_exp <- apply(exp_mats[[cc]], 2, mean)
@@ -235,7 +233,8 @@ generate_bootstrap_plots_for_transcriptome <- function(
                 0.1 * max(dat$boot, na.rm = TRUE)
             #### Plot several variants of the graph #### 
             if("bootstrap" %in% plot_types){
-                plot_bootstrap_plots(
+                plots[[cc]][["bootstrap"]] <- 
+                    bootstrap_plots_for_transcriptome(
                     dat = dat,
                     tag = tag,
                     listFileName = listFileName,
@@ -245,11 +244,11 @@ generate_bootstrap_plots_for_transcriptome <- function(
                     maxX = maxX,
                     save_dir = save_dir
                 )
-            }
-            
+            } 
             #### Plot with bootstrap distribution ####
             if("bootstrap_distributions" %in% plot_types){
-                plot_with_bootstrap_distributions(
+                plots[[cc]][["bootstrap_distributions"]] <- 
+                    plot_with_bootstrap_distributions(
                     exp_mats = exp_mats,
                     cc = cc,
                     hit_exp = hit_exp,
@@ -261,7 +260,8 @@ generate_bootstrap_plots_for_transcriptome <- function(
             }
             #### Plot with LOG bootstrap distribution ####
             if("log_bootstrap_distributions" %in% plot_types){
-                plot_log_bootstrap_distributions(
+                plots[[cc]][["log_bootstrap_distributions"]] <- 
+                    plot_log_bootstrap_distributions(
                     dat = dat,
                     exp_mats = exp_mats,
                     cc = cc,
@@ -274,6 +274,6 @@ generate_bootstrap_plots_for_transcriptome <- function(
             }
         }
     }
-    #### return path to the saved directory in case tempdir() used ####
-    return(save_dir)
+    #### Return nested list of plots and paths ####
+    return(plots)
 }

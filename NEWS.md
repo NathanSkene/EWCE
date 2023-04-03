@@ -2,6 +2,7 @@
 
 ## New features
 
+* Remove `grDevices` as dep entirely.
 * `fix_celltype_names`
     - Add new arg `make_unique` to make this function easily usable for vectors
         where the same celltype appears multiple times.
@@ -20,6 +21,7 @@
     - Change `savePath` arg to the more accurate `save_dir`. Expose appending *BootstrapPlots* to the user within the argument.
 * `generate_bootstrap_plots_for_transcriptome`
     - Change `savePath` arg to the more accurate `save_dir`. Expose appending *BootstrapPlots* to the user within the argument.
+    - Save with `ggsave` instead if `grDevices`.
 * Standardise `hits` + `hitGenes` arg all to `hits`.
 * Update hex:
     - Off load large source image from DALLE to Releases instead of including it within the package.

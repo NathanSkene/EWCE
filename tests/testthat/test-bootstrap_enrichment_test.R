@@ -75,7 +75,7 @@ test_that("bootstrap enrichment runs as expected", {
             sctSpecies = "mouse"
         )
         options(warn = -1) # turn off plot warnings
-        boot_dir2 <- generate_bootstrap_plots_for_transcriptome(
+        boot_out2 <- generate_bootstrap_plots_for_transcriptome(
             sct_data = ctd,
             tt = tt_alzh,
             annotLevel = level,
@@ -92,11 +92,21 @@ test_that("bootstrap enrichment runs as expected", {
         )
         options(warn = 0)
         # check the BootstrapPlots folder exists and is non-empty 
-        testthat::expect_true(
-            dir.exists(boot_dir2)
+        testthat::expect_equal(
+            sort(fix_celltype_names(colnames(ctd[[1]]$mean_exp))), 
+            sort(names(boot_out2))
         )
-        testthat::expect_true(
-            length(list.files(boot_dir2)) > 0
-        )
+        for(cc in names(boot_out2)){
+            for(p in names(boot_out2[[cc]]$bootstrap$plots)){
+                testthat::expect_true(
+                    methods::is(boot_out2[[cc]]$bootstrap$plots[[p]],"gg")
+                )
+            } 
+            for(f in names(boot_out2[[cc]]$bootstrap$files)){
+                testthat::expect_true(
+                    file.exists(boot_out2[[cc]]$bootstrap$files[[f]])
+                )
+            }  
+        } 
     }
 })

@@ -12,7 +12,9 @@ plot_log_bootstrap_distributions(
   tag,
   listFileName,
   graph_theme,
-  save_dir
+  save_dir = file.path(tempdir(), paste0("BootstrapPlots", "_for_transcriptome")),
+  height = 3.5,
+  width = 3.5
 )
 }
 \value{

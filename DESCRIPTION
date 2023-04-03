@@ -63,7 +63,6 @@ Suggests:
     MAST,
     DelayedMatrixStats,
     ggdendro,
-    grDevices,
     scales,
     patchwork
 biocViews: GeneExpression, Transcription, DifferentialExpression,

@@ -100,10 +100,9 @@ Also gives consensus scores for each gene mapping based on a
 \item{verbose}{Print messages.}
 }
 \value{
-Saves a set of PDF files containing graphs and returns the file where
-they are saved. These will be saved with the filename adjusted using the
-value of \code{listFileName.} The files are saved into the
-\emph{BootstrapPlot} folder.
+Saves a set of PDF files containing graphs. 
+Then returns a nested list with each \code{plot} and
+ the \code{path} where it was saved to.
 Files start with one of the following:
 \itemize{
   \item \code{qqplot_noText}: sorts the gene list according to how enriched

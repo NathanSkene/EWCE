@@ -21,6 +21,7 @@ bootstrap_plot <- function(gene_data,
                            scales = "free_x",
                            show_plot = TRUE,
                            verbose = TRUE) {
+    
     requireNamespace("ggplot2")
     requireNamespace("patchwork")
     Pos <- Rep <- Exp <- p <- significant <- CellType <- NULL;
