@@ -41,8 +41,6 @@
 #'  smallest to largest p-values.
 #' @param mtc_method Multiple-testing correction method
 #' (passed to \link[stats]{p.adjust}).
-#' @param min_genes The minimum number of genes in \code{hits} that are 
-#' also in the single cell dataset & background gene set.
 #' @param verbose Print messages.
 #' @param localHub If working offline, add argument localHub=TRUE to work 
 #' with a local, non-updated hub; It will only have resources available that
@@ -99,11 +97,13 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       controlledCT = NULL,
                                       mtc_method = "BH",
                                       sort_results = TRUE,
-                                      min_genes = 4,
+                                      # min_genes = 4,
                                       verbose = TRUE,
                                       localHub = FALSE) {
     # devoptera::args2vars(bootstrap_enrichment_test)
-    
+    # #' @param min_genes The minimum number of genes in \code{hits} that are 
+    # #' also in the single cell dataset & background gene set.
+    min_genes <- 4
     core_allocation <- assign_cores(
         worker_cores = no_cores,
         verbose = verbose

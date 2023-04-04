@@ -64,9 +64,6 @@ If set to \code{TRUE}, then \code{hits} must be from humans.}
 \item{standardise}{If \code{input_species==output_species},
 should the genes be standardised using \link[orthogene]{map_genes}?}
 
-\item{min_genes}{The minimum number of genes in \code{hits} that are 
-also in the single cell dataset & background gene set.}
-
 \item{verbose}{Print messages.}
 }
 \value{

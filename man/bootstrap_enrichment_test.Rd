@@ -20,7 +20,6 @@ bootstrap_enrichment_test(
   controlledCT = NULL,
   mtc_method = "BH",
   sort_results = TRUE,
-  min_genes = 4,
   verbose = TRUE,
   localHub = FALSE
 )
@@ -85,9 +84,6 @@ cell type.}
 
 \item{sort_results}{Sort enrichment results from
 smallest to largest p-values.}
-
-\item{min_genes}{The minimum number of genes in \code{hits} that are 
-also in the single cell dataset & background gene set.}
 
 \item{verbose}{Print messages.}
 
