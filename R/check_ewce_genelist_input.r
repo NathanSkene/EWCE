@@ -48,10 +48,12 @@ check_ewce_genelist_inputs <- function(sct_data,
     species <- check_species(
         genelistSpecies = genelistSpecies,
         sctSpecies = sctSpecies,
+        sctSpecies_origin = sctSpecies_origin,
         verbose = verbose
     )
     genelistSpecies <- species$genelistSpecies
     sctSpecies <- species$sctSpecies
+    sctSpecies_origin <- species$sctSpecies_origin
     # geneSizeControl assumes the genesets are from human genetics...
     # so genelistSpecies must equal "human"
     if (isTRUE(geneSizeControl) &
@@ -65,18 +67,20 @@ check_ewce_genelist_inputs <- function(sct_data,
     }
     #### Create background if none provided ####
     # Keep internal bc it has a check_species beforehand
-    bg <- orthogene::create_background(
-        species1 = sctSpecies_origin,
-        species2 = genelistSpecies,
-        output_species = output_species,
-        bg = bg,
-        method = method,
-        verbose = verbose
-    )
+    if(is.null(bg)){
+        bg <- orthogene::create_background(
+            species1 = sctSpecies_origin,
+            species2 = genelistSpecies,
+            output_species = output_species,
+            bg = bg,
+            method = method,
+            verbose = verbose
+        )
+    }
     #### Convert CTD ####
     #### Standardise sct_data ####
-    messager("Standardising sct_data.", v = verbose)
     if (sctSpecies != output_species) {
+        messager("Standardising sct_data.", v = verbose)
         sct_data <- standardise_ctd(
             ctd = sct_data,
             input_species = sctSpecies_origin,
@@ -87,25 +91,31 @@ check_ewce_genelist_inputs <- function(sct_data,
         )
     }
     sct_genes <- unname(rownames(sct_data[[1]]$mean_exp))
-    ##### Convert hits to (human) ####
-    messager("Converting gene list input to standardised",
-        output_species, "genes.",
-        v = verbose
-    )
+    ##### Convert hits to (human) #### 
     hits <- unique(as.character(hits))
-    if (genelistSpecies == output_species && isTRUE(standardise)) {
-        hits <- orthogene::map_genes(
-            genes = hits,
-            species = genelistSpecies,
-            drop_na = TRUE,
-            verbose = FALSE
-        )$name
+    if (genelistSpecies == output_species) {
+        if(isTRUE(standardise)){
+            messager("Converting gene list input to standardised",
+                     output_species, "genes.",
+                     v = verbose
+            )
+            hits <- orthogene::map_genes(
+                genes = hits,
+                species = genelistSpecies,
+                drop_na = TRUE,
+                verbose = FALSE
+            )$name
+        } 
     } else {
+        messager("Converting gene list input to standardised",
+                 output_species, "genes.",
+                 v = verbose)
         hits <- orthogene::map_orthologs(
             genes = hits,
             input_species = genelistSpecies,
             output_species = output_species,
             method = method,
+            standardise_genes = standardise,
             verbose = FALSE
         )$ortholog_gene
     }

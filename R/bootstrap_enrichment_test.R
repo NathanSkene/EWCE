@@ -113,10 +113,12 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     #### Check species ####
     species <- check_species(
         genelistSpecies = genelistSpecies,
-        sctSpecies = sctSpecies
+        sctSpecies = sctSpecies,
+        sctSpecies_origin = sctSpecies_origin
     )
     genelistSpecies <- species$genelistSpecies
     sctSpecies <- species$sctSpecies
+    sctSpecies_origin <- species$sctSpecies_origin
     #### Check bootstrap args ####
     check_bootstrap_args(
         sct_data = sct_data,
@@ -128,9 +130,12 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     #### Create background if none provided ####
     #if statement added down to issue with orthogene:
     #https://github.com/neurogenomics/orthogene/issues/22
-    if(is.null(bg) | !all(list(sctSpecies,genelistSpecies)==output_species)){
+    if(is.null(bg) | 
+       !all(list(sctSpecies,
+                 genelistSpecies,
+                 sctSpecies_origin)==output_species)){
       bg <- orthogene::create_background(
-        species1 = sctSpecies,
+        species1 = sctSpecies_origin,
         species2 = genelistSpecies,
         output_species = output_species,
         method = method,
@@ -193,8 +198,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
             stop(err_msg2)
         }
     } else {
-        messager("Running without gene size control.", v = verbose)
-        hits <- hits # mouse.hits
+        messager("Running without gene size control.", v = verbose) 
         nonHits <- bg # mouse.bg
         combinedGenes <- c(hits, nonHits) # c(mouse.hits,mouse.bg)
     }

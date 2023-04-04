@@ -4,7 +4,12 @@
 \alias{check_species}
 \title{Check species}
 \usage{
-check_species(genelistSpecies = NULL, sctSpecies = NULL, verbose = TRUE)
+check_species(
+  genelistSpecies = NULL,
+  sctSpecies = NULL,
+  sctSpecies_origin = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{genelistSpecies}{Species that \code{hits} genes came from
@@ -14,6 +19,11 @@ See \link[EWCE]{list_species} for all available species.}
 \item{sctSpecies}{Species that \code{sct_data} is currently formatted as
 (no longer limited to just "mouse" and "human").
 See \link[EWCE]{list_species} for all available species.}
+
+\item{sctSpecies_origin}{Species that the \code{sct_data} 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.}
 
 \item{verbose}{Print messages.}
 }

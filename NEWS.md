@@ -41,8 +41,10 @@
 * `check_args_for_bootstrap_plot_generation`
     - Removed unused args: `ttSpecies`, `sctSpecies`
 * *test-bootstrap_enrichment_test_2.R* 
-    - "monkey_ctd" tests seems to be running more smoothly than before (not just getting NAs). This might have to with `orthogene` databases improving.
+    - "monkey_ctd" tests seems to be running more smoothly than before (not just getting NAs). 
+        This might have to with `orthogene` databases improving.
     - Reassuringly, "godzilla" tests still fail as expected :)
+* Add *tess/testthat/Rplots.pdf* to *.gitignore*. 
 
 # EWCE 1.7.1 
 

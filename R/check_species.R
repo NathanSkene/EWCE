@@ -8,6 +8,7 @@
 #' @keywords internal
 check_species <- function(genelistSpecies = NULL,
                           sctSpecies = NULL,
+                          sctSpecies_origin = NULL,
                           verbose = TRUE) {
     if (is.null(genelistSpecies)) {
         messager(
@@ -25,8 +26,17 @@ check_species <- function(genelistSpecies = NULL,
         )
         sctSpecies <- "mouse"
     }
+    if (is.null(sctSpecies_origin)) {
+        messager(
+            "Warning: sctSpecies_origin not provided.",
+            "Setting to 'mouse' by default.",
+            v = verbose
+        )
+        sctSpecies_origin <- "mouse"
+    }
     return(list(
         genelistSpecies = genelistSpecies,
-        sctSpecies = sctSpecies
+        sctSpecies = sctSpecies,
+        sctSpecies_origin = sctSpecies_origin
     ))
 }
