@@ -7,6 +7,7 @@
 #' reduces to 1:1 orthologs.
 #' @param standardise If \code{input_species==output_species},
 #' should the genes be standardised using \link[orthogene]{map_genes}?
+#' @param min_genes Minimum number of genes in a gene list to test
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams orthogene::convert_orthologs
 #'
