@@ -103,7 +103,10 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     # devoptera::args2vars(bootstrap_enrichment_test)
     # #' @param min_genes The minimum number of genes in \code{hits} that are 
     # #' also in the single cell dataset & background gene set.
-    min_genes <- 4
+    #### Set min_genes ####
+    min_genes <- Sys.getenv("min_genes")
+    min_genes <- if(min_genes=="") 4 else as.numeric(min_genes) 
+    #### Set cores ####
     core_allocation <- assign_cores(
         worker_cores = no_cores,
         verbose = verbose
