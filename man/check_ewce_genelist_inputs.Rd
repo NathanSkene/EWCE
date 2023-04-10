@@ -64,7 +64,7 @@ If set to \code{TRUE}, then \code{hits} must be from humans.}
 \item{standardise}{If \code{input_species==output_species},
 should the genes be standardised using \link[orthogene]{map_genes}?}
 
-\item{min_genes}{Minimum number of genes in a gene list to test}
+\item{min_genes}{Minimum number of genes in a gene list to test.}
 
 \item{verbose}{Print messages.}
 }
