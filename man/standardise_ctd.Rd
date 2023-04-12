@@ -9,6 +9,7 @@ standardise_ctd(
   dataset,
   input_species = NULL,
   output_species = "human",
+  sctSpecies_origin = input_species,
   non121_strategy = "drop_both_species",
   method = "homologene",
   force_new_quantiles = TRUE,
@@ -35,6 +36,11 @@ See \link[EWCE]{list_species} for all available species.}
 
 \item{output_species}{Which species' genes names to convert \code{exp} to.
 See \link[EWCE]{list_species} for all available species.}
+
+\item{sctSpecies_origin}{Species that the \code{sct_data} 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.}
 
 \item{non121_strategy}{How to handle genes that don't have
 1:1 mappings between \code{input_species}:\code{output_species}.

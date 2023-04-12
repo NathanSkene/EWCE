@@ -1,3 +1,18 @@
+# EWCE 1.7.4
+
+## New features
+
+* `check_species`: 
+    - Added new arg `sctSpecies_origin_default`
+* `standardise_ctd`:
+    - Can now specify `sctSpecies_origin`, which will be added to the metadata.
+
+## Bug fixes
+
+* `standardise_ctd`:
+    - When "annot" slot is not provided in the original CTD,
+    a new one will be created from matrix columns names instead of assigning `NULL`.
+
 # EWCE 1.7.3
 
 ## New features

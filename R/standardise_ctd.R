@@ -24,6 +24,7 @@
 #'  from internal functions as well.
 #' @inheritParams extract_matrix
 #' @inheritParams drop_uninformative_genes
+#' @inheritParams bootstrap_enrichment_test
 #' @inheritParams orthogene::convert_orthologs
 #' @inheritDotParams orthogene::convert_orthologs
 #'
@@ -42,6 +43,7 @@ standardise_ctd <- function(ctd,
                             dataset,
                             input_species = NULL,
                             output_species = "human",
+                            sctSpecies_origin = input_species,
                             non121_strategy = "drop_both_species",
                             method = "homologene",
                             force_new_quantiles = TRUE,
@@ -63,7 +65,8 @@ standardise_ctd <- function(ctd,
     } else {
         verbose2 <- FALSE
     }
-    if (is_ctd_standardised(ctd = ctd) && (force_standardise == FALSE)) {
+    if (is_ctd_standardised(ctd = ctd) && 
+        isFALSE(force_standardise)) {
         messager("ctd is already standardised. Returning original ctd.\n",
             "Set force_standardise=TRUE to re-standardise.",
             v = verbose
@@ -74,10 +77,13 @@ standardise_ctd <- function(ctd,
     species <- check_species(
         genelistSpecies = input_species,
         sctSpecies = output_species,
+        sctSpecies_origin = sctSpecies_origin,
+        sctSpecies_origin_default = NULL,
         verbose = verbose
     )
     input_species <- species$genelistSpecies
     output_species <- species$sctSpecies 
+    sctSpecies_origin <- species$sctSpecies_origin 
     messager("Standardising CellTypeDataset", v = verbose)
     #### Check existing matrices ####
     matrices <- get_ctd_matrix_names(ctd = ctd,
@@ -115,7 +121,9 @@ standardise_ctd <- function(ctd,
             if ("annot" %in% names(ctd[[lvl]]) & keep_annot) {
             ctd[[lvl]]$annot
         } else {
-            NULL
+            ctd[[lvl]]$annot <- data.frame(
+                annot=colnames(ctd[[lvl]]$mean_exp)
+            )
         }
         return_list[["plotting"]] <- 
             if ("plotting" %in% names(ctd[[lvl]]) & keep_plots) {
@@ -124,8 +132,10 @@ standardise_ctd <- function(ctd,
             NULL
         }
         return_list[["standardised"]] <- TRUE
-        return_list[["species"]] <- list("input_species" = input_species,
-                                         "output_species" = output_species)
+        return_list[["species"]] <- list(
+            "input_species" = input_species,
+            "output_species" = output_species,
+            "sctSpecies_origin" = sctSpecies_origin)
         return_list[["versions"]] <- list(
             "EWCE" = utils::packageVersion("EWCE"),
             "orthogene" = utils::packageVersion("orthogene"),

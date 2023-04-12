@@ -8,6 +8,7 @@ check_species(
   genelistSpecies = NULL,
   sctSpecies = NULL,
   sctSpecies_origin = NULL,
+  sctSpecies_origin_default = "mouse",
   verbose = TRUE
 )
 }
@@ -24,6 +25,8 @@ See \link[EWCE]{list_species} for all available species.}
 originally came from, regardless of its current gene format 
 (e.g. it was previously converted from mouse to human gene orthologs).
  This is used for computing an appropriate backgrund.}
+
+\item{sctSpecies_origin_default}{Default value for \code{sctSpecies_origin}.}
 
 \item{verbose}{Print messages.}
 }
