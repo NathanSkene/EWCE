@@ -14,7 +14,8 @@ report_dge(exp, keep_genes, adj_pval_thresh = 0.05, verbose = TRUE)
 \item{adj_pval_thresh}{Minimum differential expression significance
 that a gene must demonstrate across \code{level2annot} (i.e. cell types).}
 
-\item{verbose}{Print messages.}
+\item{verbose}{Print messages.
+#' @inheritParams orthogene::convert_orthologs}
 }
 \value{
 Null output.

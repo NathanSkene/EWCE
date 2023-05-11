@@ -15,7 +15,8 @@ a column in the expression matrix.}
 \item{mtc_method}{Multiple-testing correction method used by DGE step.
 See \link[stats]{p.adjust} for more details.}
 
-\item{verbose}{Print messages.}
+\item{verbose}{Print messages.
+#' @inheritParams orthogene::convert_orthologs}
 
 \item{...}{Additional arguments to be passed to
 \link[gprofiler2]{gorth} or \link[homologene]{homologene}.\cr\cr

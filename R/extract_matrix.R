@@ -41,7 +41,8 @@ extract_matrix <- function(ctd,
     ### Avoid confusing Biocheck
     Gene <- max_exp <- NULL
 
-    messager("Extracting ", metric, v = verbose)
+    
+    messager("Extracting ", metric, v = verbose>=2)
     ##### Check quantiles ####
     # Check if specificity quantiles are present, and if not compute them.
     if ((metric == "specificity_quantiles") &&
@@ -50,13 +51,13 @@ extract_matrix <- function(ctd,
         ctd[[level]] <- bin_specificity_into_quantiles(
             ctdIN = ctd[[level]],
             numberOfBins = numberOfBins,
-            verbose = verbose
+            verbose = verbose>=2
         )
     }
     mat <- ctd[[level]][[metric]]
     #### Remove unlabeled clusters ####
     if (remove_unlabeled_clusters) {
-        messager("+ Removing unlabeled cell types.", v = verbose)
+        messager("+ Removing unlabeled cell types.", v = verbose>=2)
         labeled_cols <-
             is.na(
                 as.numeric(
@@ -74,12 +75,12 @@ extract_matrix <- function(ctd,
     ## If most of the genes start with an ensembl-style name...
     if (sum(startsWith(rownames(mat)[seq(1, 100)], "ENS")) > 50) {
         messager("ENSEMBL IDs detected. Converting to HGNC.",
-            v = verbose
+            v = verbose>=2
         )
         mat <- orthogene::aggregate_mapped_genes(
             gene_df = mat,
             input_species = input_species, 
-            verbose = verbose
+            verbose = verbose>=2
         )
     }
     #### Convert orthologs ####
@@ -91,7 +92,7 @@ extract_matrix <- function(ctd,
             output_species = output_species,
             non121_strategy = non121_strategy,
             method = method,
-            verbose = FALSE,
+            verbose = verbose>=3,
             ...
         )
     }
@@ -110,19 +111,19 @@ extract_matrix <- function(ctd,
     mat <- to_sparse_matrix(
         exp = mat,
         as_sparse = as_sparse,
-        verbose = verbose
+        verbose = verbose>=2
     )
     #### Convert to DelayedArray ####
     mat <- to_delayed_array(
         exp = mat,
         as_DelayedArray = as_DelayedArray,
-        verbose = verbose
+        verbose = verbose>=2
     )
     #### Report ####
     messager(
         "Matrix dimensions:",
         paste(dim(mat), collapse = " x "),
-        v = verbose
+        v = verbose>=2
     )
     return(mat)
 }

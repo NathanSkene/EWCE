@@ -1,3 +1,10 @@
+# EWCE 1.9.1
+
+## Bug fixes
+
+* `drop_uninformative_genes`
+    - Hash out DGE options. Somehow these got re-exposed to users in Bioc>=3.16.
+
 # EWCE 1.7.4
 
 ## New features

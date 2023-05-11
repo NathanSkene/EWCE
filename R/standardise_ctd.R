@@ -58,13 +58,7 @@ standardise_ctd <- function(ctd,
                             make_columns_unique = FALSE,
                             verbose = TRUE,
                             ...) {
-    #### Handle verbosity at different levels ####
-    if (verbose == 2) {
-        verbose <- TRUE
-        verbose2 <- TRUE
-    } else {
-        verbose2 <- FALSE
-    }
+
     if (is_ctd_standardised(ctd = ctd) && 
         isFALSE(force_standardise)) {
         messager("ctd is already standardised. Returning original ctd.\n",
@@ -112,7 +106,7 @@ standardise_ctd <- function(ctd,
                 as_DelayedArray = as_DelayedArray,
                 rename_columns = rename_columns,
                 make_columns_unique = make_columns_unique,
-                verbose = verbose2,
+                verbose = verbose,
                 ...
             )
         }     
@@ -122,7 +116,7 @@ standardise_ctd <- function(ctd,
             ctd[[lvl]]$annot
         } else {
             ctd[[lvl]]$annot <- data.frame(
-                annot=colnames(ctd[[lvl]]$mean_exp)
+                annot=fix_celltype_names(colnames(ctd[[lvl]]$mean_exp))
             )
         }
         return_list[["plotting"]] <- 

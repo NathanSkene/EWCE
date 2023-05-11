@@ -20,7 +20,8 @@ full and reduced model formula (defined by \code{\link[DESeq2]{nbinomLRT}})}
 \item{no_cores}{Number of cores to parallelise across.
 Set to \code{NULL} to automatically optimise.}
 
-\item{verbose}{Print messages.}
+\item{verbose}{Print messages.
+#' @inheritParams orthogene::convert_orthologs}
 
 \item{...}{Additional arguments to be passed to
 \link[gprofiler2]{gorth} or \link[homologene]{homologene}.\cr\cr
