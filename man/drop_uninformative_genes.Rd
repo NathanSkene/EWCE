@@ -152,31 +152,6 @@ Passed to \link[gprofiler2]{gorth}.
 Only used when \code{method="gprofiler"} (\emph{DEFAULT : }\code{Inf}).}
     \item{\code{sort_rows}}{Sort \code{gene_df} rows alphanumerically.}
   }}
-
-\item{dge_method}{Which method to use for the Differential Gene Expression
-(DGE) step.\cr
-Options:
-\itemize{
-\item{"limma": }{Uses
-\href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
-limma}.}
-\item{"deseq2": }{Uses
- \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
-DESeq2}.}
-\item{"mast": }{Uses
-\href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
-MAST}.}
-}}
-
-\item{dge_test}{\code{test} argument passed to DGE function.
-Only used when \code{dge_method="deqseq2"}.}
-
-\item{min_variance_decile}{If \code{min_variance_decile!=NULL},
- calculates the variance of the mean gene expression
-  across `level2annot` (i.e. cell types),
-and then removes any genes that are below \code{min_variance_decile}
- (on a 0-1 scale).
-#' @inheritParams orthogene::convert_orthologs}
 }
 \value{
 exp Expression matrix with gene names as row names.

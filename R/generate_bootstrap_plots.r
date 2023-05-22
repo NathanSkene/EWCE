@@ -81,6 +81,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      method = "homologene",
                                      reps = 100,
                                      annotLevel = 1,
+                                     geneSizeControl = FALSE,
                                      full_results = NULL,
                                      listFileName = paste0("_level",
                                                            annotLevel),
@@ -90,108 +91,130 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      save_dir = file.path(tempdir(),
                                                           "BootstrapPlots"),  
                                      show_plot = TRUE,
+                                     # min_genes = 4,
                                      verbose = TRUE) {
-    # devoptera::args2vars(generate_bootstrap_plots)
-    
-    #### Check species ####
-    species <- check_species(
-        genelistSpecies = genelistSpecies,
-        sctSpecies = sctSpecies
-    )
-    genelistSpecies <- species$genelistSpecies
-    sctSpecies <- species$sctSpecies
-    #### Check bootstrap args ####
-    check_bootstrap_args(
-        sct_data = sct_data,
-        hits = hits,
-        annotLevel = annotLevel,
-        reps = reps,
-        fix_celltypes = TRUE
-    )
-    #### Create background if none provided ####
+  # devoptera::args2vars(generate_bootstrap_plots)
+  # #' @param min_genes The minimum number of genes in \code{hits} that are 
+  # #' also in the single cell dataset & background gene set.
+  #### Set min_genes ####
+  min_genes <- Sys.getenv("min_genes")
+  min_genes <- if(min_genes=="") 4 else as.numeric(min_genes) 
+  
+  #### Check species ####
+  species <- check_species(
+    genelistSpecies = genelistSpecies,
+    sctSpecies = sctSpecies
+  )
+  genelistSpecies <- species$genelistSpecies
+  sctSpecies <- species$sctSpecies
+  sctSpecies_origin <- species$sctSpecies_origin
+  #### Check bootstrap args ####
+  check_bootstrap_args(
+    sct_data = sct_data,
+    hits = hits,
+    annotLevel = annotLevel,
+    reps = reps,
+    fix_celltypes = TRUE
+  )
+  
+  #### Create background if none provided ####
+  #if statement added down to issue with orthogene:
+  #https://github.com/neurogenomics/orthogene/issues/22
+  if(is.null(bg) | 
+     !all(list(sctSpecies,
+               genelistSpecies,
+               sctSpecies_origin)==output_species)){
     bg <- orthogene::create_background(
-        species1 = sctSpecies,
-        species2 = genelistSpecies,
-        output_species = output_species,
-        bg = bg,
-        verbose = verbose
+      species1 = sctSpecies_origin,
+      species2 = genelistSpecies,
+      output_species = output_species,
+      method = method,
+      bg = bg,
+      verbose = verbose
     )
-    #### Standardise CTD ####
-    messager("Standardising sct_data.", v = verbose)
-    sct_data <- standardise_ctd(
-        ctd = sct_data,
-        input_species = sctSpecies,
-        output_species = output_species,
-        dataset = "sct_data",
-        method = method,
-        verbose = FALSE
-    )
-    sctSpecies <- output_species
-    #### Check full results AFTER ctd has been standardised ####
-    full_results <- fix_celltype_names_full_results(
-        full_results = full_results,
-        verbose = verbose
-    )
-    check_full_results(
-        full_results = full_results,
-        sct_data = sct_data
-    ) 
-    results <- full_results$results
-    #### Check gene lists ####
-    checkedLists <- check_ewce_genelist_inputs(
-        sct_data = sct_data,
-        hits = hits,
-        bg = bg,
-        sctSpecies = sctSpecies,
-        genelistSpecies = genelistSpecies,
-        verbose = FALSE
-    )
-    hits <- checkedLists$hits
-    bg <- checkedLists$bg
-    combinedGenes <- unique(c(hits, bg))
-    #### Check significant results #### 
-    signif_ct <- rownames(results)[results$q < adj_pval_thresh]
-    if(length(signif_ct)==0){
-        stp <- "Must have >0 significant celltypes."
-        stop(stp)
-    } else {
-        messager(length(signif_ct),"celltype(s) remain @ <=",adj_pval_thresh,
-                 v=verbose)  
-    } 
-    #### Get specificity data of bootstrapped genes ####
-    if(!is.null(full_results) && all(!is.na(full_results))){
-        if("gene_data" %in% full_results$gene_data){
-            
-        }
+  }else{
+    bg <- unique(bg)
+  }
+  #### Standardise CTD ####
+  messager("Standardising sct_data.", v = verbose)
+  sct_data <- standardise_ctd(
+    ctd = sct_data,
+    input_species = sctSpecies,
+    output_species = output_species,
+    dataset = "sct_data",
+    method = method,
+    verbose = FALSE
+  )
+  sctSpecies <- output_species
+  #### Check full results AFTER ctd has been standardised ####
+  full_results <- fix_celltype_names_full_results(
+    full_results = full_results,
+    verbose = verbose
+  )
+  check_full_results(
+    full_results = full_results,
+    sct_data = sct_data
+  ) 
+  results <- full_results$results
+  #### Check gene lists ####
+  checkedLists <- check_ewce_genelist_inputs(
+    sct_data = sct_data,
+    hits = hits,
+    bg = bg,
+    sctSpecies = sctSpecies,
+    genelistSpecies = genelistSpecies,
+    sctSpecies_origin = sctSpecies_origin,
+    geneSizeControl = geneSizeControl,
+    output_species = output_species,
+    min_genes = min_genes,
+    verbose = verbose
+  )
+  hits <- checkedLists$hits
+  bg <- checkedLists$bg
+  combinedGenes <- unique(c(hits, bg))
+  #### Check significant results #### 
+  signif_ct <- rownames(results)[results$q < adj_pval_thresh]
+  if(length(signif_ct)==0){
+    stp <- "Must have >0 significant celltypes."
+    stop(stp)
+  } else {
+    messager(length(signif_ct),"celltype(s) remain @ <=",adj_pval_thresh,
+             v=verbose)  
+  } 
+  #### Get specificity data of bootstrapped genes ####
+  if(!is.null(full_results) && all(!is.na(full_results))){
+    if("gene_data" %in% full_results$gene_data){
+      
     }
-    exp_mats <- generate_bootstrap_plots_exp_mats(sct_data=sct_data,
-                                                  annotLevel=annotLevel, 
-                                                  reps=reps,
-                                                  combinedGenes=combinedGenes,
-                                                  hits=hits,
-                                                  verbose=verbose)
-    cgs <- compute_gene_scores(sct_data = sct_data, 
-                               annotLevel = annotLevel,  
-                               hits = hits, 
-                               reps = reps,
-                               combinedGenes = combinedGenes,
-                               exp_mats = exp_mats,
-                               return_hit_exp = TRUE,
-                               verbose = verbose)  
-    gene_data <- cgs$gene_data
-    
-    #### Iteratively create QQ plots #### 
-    messager("Generating bootstrap plot for",
-             length(signif_ct),"celltype(s).", v = verbose)
-    out <- bootstrap_plot(
-        gene_data = gene_data, 
-        exp_mats = exp_mats,
-        save_dir = save_dir,
-        listFileName = listFileName, 
-        facets = facets,
-        scales = scales,
-        show_plot = show_plot,
-        verbose = verbose
-    ) 
-    return(out)
+  }
+  exp_mats <- generate_bootstrap_plots_exp_mats(sct_data=sct_data,
+                                                annotLevel=annotLevel, 
+                                                reps=reps,
+                                                combinedGenes=combinedGenes,
+                                                hits=hits,
+                                                verbose=verbose)
+  cgs <- compute_gene_scores(sct_data = sct_data, 
+                             annotLevel = annotLevel,  
+                             hits = hits, 
+                             reps = reps,
+                             combinedGenes = combinedGenes,
+                             exp_mats = exp_mats,
+                             return_hit_exp = TRUE,
+                             verbose = verbose)  
+  gene_data <- cgs$gene_data
+  
+  #### Iteratively create QQ plots #### 
+  messager("Generating bootstrap plot for",
+           length(signif_ct),"celltype(s).", v = verbose)
+  out <- bootstrap_plot(
+    gene_data = gene_data, 
+    exp_mats = exp_mats,
+    save_dir = save_dir,
+    listFileName = listFileName, 
+    facets = facets,
+    scales = scales,
+    show_plot = show_plot,
+    verbose = verbose
+  ) 
+  return(out)
 }

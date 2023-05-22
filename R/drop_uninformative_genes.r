@@ -77,27 +77,27 @@ drop_uninformative_genes <- function(exp,
                                      ...) {
     
     ##### Extra arguments to be implemented after benchmarking is done #### 
-  #' @param dge_method Which method to use for the Differential Gene Expression
-  #' (DGE) step.\cr
-  #' Options:
-  #' \itemize{
-  #' \item{"limma": }{Uses
-  #' \href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
-  #' limma}.}
-  #' \item{"deseq2": }{Uses
-  #'  \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
-  #' DESeq2}.}
-  #' \item{"mast": }{Uses
-  #' \href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
-  #' MAST}.}
-  #' }
-  #' @param dge_test \code{test} argument passed to DGE function.
-  #' Only used when \code{dge_method="deqseq2"}.
-  #' @param min_variance_decile If \code{min_variance_decile!=NULL},
-  #'  calculates the variance of the mean gene expression
-  #'   across `level2annot` (i.e. cell types),
-  #' and then removes any genes that are below \code{min_variance_decile}
-  #'  (on a 0-1 scale).
+  # @param dge_method Which method to use for the Differential Gene Expression
+  # (DGE) step.\cr
+  # Options:
+  # \itemize{
+  # \item{"limma": }{Uses
+  # \href{https://bioconductor.org/packages/release/bioc/html/limma.html}{
+  # limma}.}
+  # \item{"deseq2": }{Uses
+  #  \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{
+  # DESeq2}.}
+  # \item{"mast": }{Uses
+  # \href{https://www.bioconductor.org/packages/release/bioc/html/MAST.html}{
+  # MAST}.}
+  # }
+  # @param dge_test \code{test} argument passed to DGE function.
+  # Only used when \code{dge_method="deqseq2"}.
+  # @param min_variance_decile If \code{min_variance_decile!=NULL},
+  #  calculates the variance of the mean gene expression
+  #   across `level2annot` (i.e. cell types),
+  # and then removes any genes that are below \code{min_variance_decile}
+  #  (on a 0-1 scale).
     dge_method = "limma"
     dge_test = "LRT"
     min_variance_decile = NULL

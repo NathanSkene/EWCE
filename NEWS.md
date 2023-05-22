@@ -1,3 +1,10 @@
+# EWCE 1.8.2
+
+## Bug fixes
+
+* `generate_bootstrap_plots`
+    - Missing available parameters for `check_ewce_genelist_inputs()` call.
+
 # EWCE 1.8.1
 
 ## Bug fixes
