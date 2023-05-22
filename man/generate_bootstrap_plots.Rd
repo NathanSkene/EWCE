@@ -14,6 +14,7 @@ generate_bootstrap_plots(
   method = "homologene",
   reps = 100,
   annotLevel = 1,
+  geneSizeControl = FALSE,
   full_results = NULL,
   listFileName = paste0("_level", annotLevel),
   adj_pval_thresh = 0.05,
@@ -61,6 +62,11 @@ but should be >=10,000 for publication-quality results).}
 
 \item{annotLevel}{An integer indicating which level of \code{sct_data} to
 analyse (\emph{Default: 1}).}
+
+\item{geneSizeControl}{Whether you want to control for
+GC content and transcript length. Recommended if the gene list originates
+from genetic studies (\emph{Default: FALSE}).
+If set to \code{TRUE}, then \code{hits} must be from humans.}
 
 \item{full_results}{The full output of
 \link[EWCE]{bootstrap_enrichment_test} for the same gene list.}

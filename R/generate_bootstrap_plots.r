@@ -81,6 +81,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      method = "homologene",
                                      reps = 100,
                                      annotLevel = 1,
+                                     geneSizeControl = FALSE,
                                      full_results = NULL,
                                      listFileName = paste0("_level",
                                                            annotLevel),
@@ -90,8 +91,14 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                      save_dir = file.path(tempdir(),
                                                           "BootstrapPlots"),  
                                      show_plot = TRUE,
+                                     # min_genes = 4,
                                      verbose = TRUE) {
     # devoptera::args2vars(generate_bootstrap_plots)
+    # #' @param min_genes The minimum number of genes in \code{hits} that are 
+    # #' also in the single cell dataset & background gene set.
+    #### Set min_genes ####
+    min_genes <- Sys.getenv("min_genes")
+    min_genes <- if(min_genes=="") 4 else as.numeric(min_genes) 
     
     #### Check species ####
     species <- check_species(
@@ -100,6 +107,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     )
     genelistSpecies <- species$genelistSpecies
     sctSpecies <- species$sctSpecies
+    sctSpecies_origin <- species$sctSpecies_origin
     #### Check bootstrap args ####
     check_bootstrap_args(
         sct_data = sct_data,
@@ -108,14 +116,25 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         reps = reps,
         fix_celltypes = TRUE
     )
+    
     #### Create background if none provided ####
-    bg <- orthogene::create_background(
-        species1 = sctSpecies,
+    #if statement added down to issue with orthogene:
+    #https://github.com/neurogenomics/orthogene/issues/22
+    if(is.null(bg) | 
+       !all(list(sctSpecies,
+                 genelistSpecies,
+                 sctSpecies_origin)==output_species)){
+      bg <- orthogene::create_background(
+        species1 = sctSpecies_origin,
         species2 = genelistSpecies,
         output_species = output_species,
+        method = method,
         bg = bg,
         verbose = verbose
-    )
+      )
+    }else{
+      bg <- unique(bg)
+    }
     #### Standardise CTD ####
     messager("Standardising sct_data.", v = verbose)
     sct_data <- standardise_ctd(
@@ -144,7 +163,11 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         bg = bg,
         sctSpecies = sctSpecies,
         genelistSpecies = genelistSpecies,
-        verbose = FALSE
+        sctSpecies_origin = sctSpecies_origin,
+        geneSizeControl = geneSizeControl,
+        output_species = output_species,
+        min_genes = min_genes,
+        verbose = verbose
     )
     hits <- checkedLists$hits
     bg <- checkedLists$bg
