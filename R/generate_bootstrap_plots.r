@@ -190,7 +190,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                                                   combinedGenes=combinedGenes,
                                                   hits=hits,
                                                   verbose=verbose)
-    #### Use precomputed gene_data if available ####
+    #### Use precomputed gene_data if available #####
     if(!is.null(full_results) &&
        all(!is.na(full_results)) &&
        !is.null(full_results$gene_data)){
@@ -213,6 +213,7 @@ generate_bootstrap_plots <- function(sct_data = NULL,
         gene_data = gene_data, 
         exp_mats = exp_mats,
         save_dir = save_dir,
+        signif_ct = signif_ct,
         listFileName = listFileName, 
         facets = facets,
         scales = scales,

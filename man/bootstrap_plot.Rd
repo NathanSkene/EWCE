@@ -9,6 +9,7 @@ bootstrap_plot(
   exp_mats = NULL,
   save_dir = file.path(tempdir(), "BootstrapPlots"),
   listFileName,
+  signif_ct = NULL,
   hit_thresh = 25,
   facets = "CellType",
   scales = "free_x",
@@ -24,6 +25,8 @@ bootstrap_plot(
 \item{save_dir}{Directory to save plots to.}
 
 \item{listFileName}{listFileName}
+
+\item{signif_ct}{Significant celltypes to include the plots.}
 
 \item{facets}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{rows}
 and \code{cols} instead.}

@@ -7,6 +7,7 @@
 #' @param listFileName listFileName
 #' @param exp_mats Output of \code{generate_bootstrap_plots_exp_mats}.
 #' @param show_plot Print the plot.
+#' @param signif_ct Significant celltypes to include the plots.
 #' @inheritParams ggplot2::facet_grid
 #' @returns Null output.
 #' 
@@ -16,6 +17,7 @@ bootstrap_plot <- function(gene_data,
                            exp_mats=NULL,  
                            save_dir = file.path(tempdir(),"BootstrapPlots"),
                            listFileName,
+                           signif_ct=NULL,
                            hit_thresh = 25,
                            facets = "CellType",
                            scales = "free_x",
@@ -36,6 +38,11 @@ bootstrap_plot <- function(gene_data,
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)  
     gene_data$symLab <- ifelse(gene_data$hit > 25, 
                                sprintf("  %s", gene_data$gene), NA) 
+    
+    #### Filter gene_data ####
+    if(!is.null(signif_ct)){
+        gene_data <- gene_data[CellType %in% signif_ct,]
+    }
     #### Prepare file paths ####
     files <- file.path(save_dir,
                        sprintf(c("qqplot_noText____%s.pdf",
@@ -108,7 +115,10 @@ bootstrap_plot <- function(gene_data,
                               ordered=TRUE)]
         levels(melt_boot$Pos) <- rev(levels(melt_boot$Pos) )
         melt_boot[,Exp:=Exp*100]
-         
+        #### Filter celltypes ####
+        if(!is.null(signif_ct)){
+            melt_boot <- melt_boot[CellType %in% signif_ct,]
+        }
         # actVals_ordered <- data.table::merge.data.table(gene_order, actVals)
         # actVals_ordered[,pos:=factor(pos,levels = unique(sort(pos)), ordered = TRUE)]
         # Plot with bootstrap distribution
@@ -139,7 +149,10 @@ bootstrap_plot <- function(gene_data,
         data.table::setkeyv(melt_boot2,c("CellType","hit")) 
         melt_boot2[,significant:=factor(p<0.05, levels = c(TRUE,FALSE), 
                                         ordered = TRUE)] 
-        
+        #### Filter celltypes ####
+        if(!is.null(signif_ct)){
+            melt_boot2 <- melt_boot2[CellType %in% signif_ct,]
+        }
         plts <- lapply(unique(melt_boot2$CellType), function(cc){
             dat <- melt_boot2[CellType==cc] 
             dat$gene <- factor(dat$gene, unique(dat$gene), ordered=TRUE)
