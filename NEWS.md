@@ -1,3 +1,10 @@
+# EWCE 1.9.4
+
+## Bug fixes
+
+* `generate_bootstrap_plots`
+    - Use stored `gene_data` object whenever possible.
+
 # EWCE 1.9.2
 
 ## Bug fixes

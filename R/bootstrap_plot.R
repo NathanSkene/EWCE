@@ -21,6 +21,7 @@ bootstrap_plot <- function(gene_data,
                            scales = "free_x",
                            show_plot = TRUE,
                            verbose = TRUE) {
+    # devoptera::args2vars(bootstrap_plot)
     
     requireNamespace("ggplot2")
     requireNamespace("patchwork")
@@ -51,8 +52,7 @@ bootstrap_plot <- function(gene_data,
         geom_abline(intercept = 0, slope = 1, 
                     linetype = "dashed",
                     colour = ggplot2::alpha("red",.5)) 
-    }
-    
+    } 
     #### Plot 1: Plot without gene names  ####
     g1 <- ggplot(gene_data,
                           aes_string(x = "boot", y = "hit",  color="hit")) +

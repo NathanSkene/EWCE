@@ -77,7 +77,7 @@ function.}
 \item{adj_pval_thresh}{Adjusted p-value threshold of celltypes to include
 in plots.}
 
-\item{facets}{This argument is soft-deprecated, please use \code{rows}
+\item{facets}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{rows}
 and \code{cols} instead.}
 
 \item{scales}{Are scales shared across all facets (the default,
@@ -123,7 +123,7 @@ sct_data <- ewceData::ctd()
 reps <- 5
 
 ## Load the gene list and get human orthologs
-hits <- ewceData::example_genelist()[1:100]
+hits <- ewceData::example_genelist()
 
 ## Bootstrap significance test,
 ##  no control for transcript length or GC content
@@ -132,7 +132,7 @@ full_results <- EWCE::example_bootstrap_results()
 
 ### Skip this for example purposes
 # full_results <- EWCE::bootstrap_enrichment_test(
-#    sct_data = ctd,
+#    sct_data = sct_data,
 #    hits = hits,
 #    reps = reps,
 #    annotLevel = 1,

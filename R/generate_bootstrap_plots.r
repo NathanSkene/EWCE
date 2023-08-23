@@ -46,7 +46,7 @@
 #' reps <- 5
 #'
 #' ## Load the gene list and get human orthologs
-#' hits <- ewceData::example_genelist()[1:100]
+#' hits <- ewceData::example_genelist()
 #'
 #' ## Bootstrap significance test,
 #' ##  no control for transcript length or GC content
@@ -55,7 +55,7 @@
 #'
 #' ### Skip this for example purposes
 #' # full_results <- EWCE::bootstrap_enrichment_test(
-#' #    sct_data = ctd,
+#' #    sct_data = sct_data,
 #' #    hits = hits,
 #' #    reps = reps,
 #' #    annotLevel = 1,
@@ -182,27 +182,30 @@ generate_bootstrap_plots <- function(sct_data = NULL,
                  v=verbose)  
     } 
     #### Get specificity data of bootstrapped genes ####
-    if(!is.null(full_results) && all(!is.na(full_results))){
-        if("gene_data" %in% full_results$gene_data){
-            
-        }
-    }
+    ## Still need to regenerate these exp_mats for fig4, 
+    ## since this info is not stored in the full_results.
     exp_mats <- generate_bootstrap_plots_exp_mats(sct_data=sct_data,
                                                   annotLevel=annotLevel, 
                                                   reps=reps,
                                                   combinedGenes=combinedGenes,
                                                   hits=hits,
                                                   verbose=verbose)
-    cgs <- compute_gene_scores(sct_data = sct_data, 
-                               annotLevel = annotLevel,  
-                               hits = hits, 
-                               reps = reps,
-                               combinedGenes = combinedGenes,
-                               exp_mats = exp_mats,
-                               return_hit_exp = TRUE,
-                               verbose = verbose)  
-    gene_data <- cgs$gene_data
-    
+    #### Use precomputed gene_data if available ####
+    if(!is.null(full_results) &&
+       all(!is.na(full_results)) &&
+       !is.null(full_results$gene_data)){
+        gene_data <- full_results$gene_data
+    } else { 
+        cgs <- compute_gene_scores(sct_data = sct_data, 
+                                   annotLevel = annotLevel,  
+                                   hits = hits, 
+                                   reps = reps,
+                                   combinedGenes = combinedGenes,
+                                   exp_mats = exp_mats,
+                                   return_hit_exp = TRUE,
+                                   verbose = verbose)  
+        gene_data <- cgs$gene_data
+    } 
     #### Iteratively create QQ plots #### 
     messager("Generating bootstrap plot for",
              length(signif_ct),"celltype(s).", v = verbose)
