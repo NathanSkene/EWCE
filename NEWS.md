@@ -1,4 +1,4 @@
-# EWCE 1.9.4
+# EWCE 1.9.3
 
 ## Bug fixes
 
