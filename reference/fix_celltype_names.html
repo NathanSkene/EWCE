@@ -21,7 +21,7 @@ in later steps."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -74,7 +74,11 @@ in later steps.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fix_celltype_names</span><span class="op">(</span><span class="va">celltypes</span>, replace_chars <span class="op">=</span> <span class="st">"[-]|[.]|[ ]|[//]|[\\/]"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fix_celltype_names</span><span class="op">(</span></span>
+<span>  <span class="va">celltypes</span>,</span>
+<span>  replace_chars <span class="op">=</span> <span class="st">"[-]|[.]|[ ]|[//]|[\\/]"</span>,</span>
+<span>  make_unique <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,6 +90,10 @@ in later steps.</p>
 <dt>replace_chars</dt>
 <dd><p>Regex string of characters to replace
 with "_" when renaming columns.</p></dd>
+
+
+<dt>make_unique</dt>
+<dd><p>Make all entries unique.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -113,7 +121,7 @@ with "_" when renaming columns.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

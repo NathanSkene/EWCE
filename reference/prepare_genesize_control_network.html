@@ -19,7 +19,7 @@ GC content."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -77,7 +77,8 @@ GC content.</p>
 <span>  no_cores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  localHub <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,7 +106,7 @@ bootstrapping <code>reps</code> over.</p></dd>
 
 
 <dt>sctSpecies</dt>
-<dd><p>Species that <code>sct_data</code> came from
+<dd><p>Species that <code>sct_data</code> is currently formatted as
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
 
@@ -119,12 +120,19 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 
+
+<dt>localHub</dt>
+<dd><p>If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A list containing three data frames:</p><ul><li><p><code>hitGenes</code>: Array of HGNC symbols containing the hit genes.
+<p>A list containing three data frames:</p><ul><li><p><code>hits</code>: Array of HGNC symbols containing the hit genes.
   May be slightly reduced if gene length / GC content could not be found
   for all genes.</p></li>
 <li><p><code>list_network</code>: The control gene lists as a data frame of HGNC
@@ -143,7 +151,7 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

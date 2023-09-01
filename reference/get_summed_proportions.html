@@ -19,7 +19,7 @@ obtain the mean specificity in each sampled list (and the target list)."><!-- ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ obtain the mean specificity in each sampled list (and the target list).</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_summed_proportions</span><span class="op">(</span></span>
-<span>  <span class="va">hitGenes</span>,</span>
+<span>  <span class="va">hits</span>,</span>
 <span>  <span class="va">sct_data</span>,</span>
 <span>  <span class="va">annotLevel</span>,</span>
 <span>  <span class="va">reps</span>,</span>
@@ -85,7 +85,7 @@ obtain the mean specificity in each sampled list (and the target list).</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>hitGenes</dt>
+    <dl><dt>hits</dt>
 <dd><p>list of gene names. The target gene set.</p></dd>
 
 
@@ -134,8 +134,10 @@ then must provide the control network.</p></dd>
     <h2>Value</h2>
     
 
-<p>A list containing three data frames:</p><ul><li><p><code>hit.cells</code>: vector containing the summed proportion of
-  expression in each cell type for the target list</p></li>
+<p>A list containing three elements:</p><ul><li><p><code>hit.cells</code>: vector containing the summed proportion of
+  expression in each cell type for the target list.</p></li>
+<li><p><code>gene_data: </code> data.table showing the number of time each gene 
+   appeared in the bootstrap sample.</p></li>
 <li><p><code>bootstrap_data</code>: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the
   random lists</p></li>
@@ -158,7 +160,7 @@ then must provide the control network.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

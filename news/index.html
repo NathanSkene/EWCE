@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -60,6 +60,169 @@
       <small>Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.9.3" id="ewce-193">EWCE 1.9.3<a class="anchor" aria-label="anchor" href="#ewce-193"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-9-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-9-3"></a></h3>
+<ul><li>
+<code>generate_bootstrap_plots</code>
+<ul><li>Use stored <code>gene_data</code> object whenever possible.</li>
+<li>Only show filtered celltypes.</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.9.2" id="ewce-192">EWCE 1.9.2<a class="anchor" aria-label="anchor" href="#ewce-192"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-9-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-9-2"></a></h3>
+<ul><li>
+<code>generate_bootstrap_plots</code>
+<ul><li>Missing available parameters for <code><a href="../reference/check_ewce_genelist_inputs.html">check_ewce_genelist_inputs()</a></code> call.</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.9.1" id="ewce-191">EWCE 1.9.1<a class="anchor" aria-label="anchor" href="#ewce-191"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-9-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-9-1"></a></h3>
+<ul><li>
+<code>drop_uninformative_genes</code>
+<ul><li>Hash out DGE options. Somehow these got re-exposed to users in Bioc&gt;=3.16.</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.7.4" id="ewce-174">EWCE 1.7.4<a class="anchor" aria-label="anchor" href="#ewce-174"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-7-4">New features<a class="anchor" aria-label="anchor" href="#new-features-1-7-4"></a></h3>
+<ul><li>
+<code>check_species</code>:
+<ul><li>Added new arg <code>sctSpecies_origin_default</code>
+</li>
+</ul></li>
+<li>
+<code>standardise_ctd</code>:
+<ul><li>Can now specify <code>sctSpecies_origin</code>, which will be added to the metadata.</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-7-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-7-4"></a></h3>
+<ul><li>
+<code>standardise_ctd</code>:
+<ul><li>When “annot” slot is not provided in the original CTD, a new one will be created from matrix columns names instead of assigning <code>NULL</code>.</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.7.3" id="ewce-173">EWCE 1.7.3<a class="anchor" aria-label="anchor" href="#ewce-173"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-7-3">New features<a class="anchor" aria-label="anchor" href="#new-features-1-7-3"></a></h3>
+<ul><li>
+<code>check_ewce_genelist_inputs</code>/<code>bootstrap_enrichment_test</code>
+<ul><li>New arg: <code>sctSpecies_origin</code> lets users clarify that their data originally came from mouse even when it is currently formatted as human orthologs. This is necessary for creating the appropriate background gene lists.</li>
+</ul></li>
+<li>Remove <code>grDevices</code> as dep entirely.</li>
+<li>
+<code>fix_celltype_names</code>
+<ul><li>Add new arg <code>make_unique</code> to make this function easily usable for vectors where the same celltype appears multiple times.</li>
+</ul></li>
+<li>
+<code>bootstrap_enrichment_test</code>
+<ul><li>Return gene-level scores based on adaptation of code from <code>generate_bootstrap_plots</code>. now stored as a list element named <code>gene_data</code> in <code>data.table</code> format.</li>
+</ul></li>
+<li>
+<code>generate_bootstrap_plots</code>
+<ul><li>Revamp wrap code into reusable subfunctions.</li>
+<li>Avoid resampling random genes when the gene data is stored in the bootstrap results as <code>gene_data</code>. It will also tell you which of these options it’s using.</li>
+<li>Save with <code>ggsave</code> instead if <code>grDevices</code>.</li>
+<li>Facet by celltype instead of generating tons of separate plots.</li>
+<li>Let users decide cutoff threshold with new arg <code>adj_pval_thresh</code>
+</li>
+<li>Now returns a named list with the plots themselves (“plot”) and the paths to where they’re saved (“paths”) rather than just a higher-level directory path in which users had to search for the right files (and didn’t ever have access to the ggplot2 objects).</li>
+<li>Show significance with barplot fill/color instead of asterices. Much easier to see now.</li>
+<li>Change <code>savePath</code> arg to the more accurate <code>save_dir</code>. Expose appending <em>BootstrapPlots</em> to the user within the argument.</li>
+</ul></li>
+<li>
+<code>generate_bootstrap_plots_for_transcriptome</code>
+<ul><li>Change <code>savePath</code> arg to the more accurate <code>save_dir</code>. Expose appending <em>BootstrapPlots</em> to the user within the argument.</li>
+<li>Save with <code>ggsave</code> instead if <code>grDevices</code>.</li>
+</ul></li>
+<li>Standardise <code>hits</code> + <code>hitGenes</code> arg all to <code>hits</code>.</li>
+<li>Update hex:
+<ul><li>Off load large source image from DALLE to Releases instead of including it within the package.</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-7-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-7-3"></a></h3>
+<ul><li>
+<code>drop_uninformative_genes</code> / <code>generate_celltype_data</code>
+<ul><li>Pass <code>verbose</code> arg to matrix formatting functions.</li>
+</ul></li>
+<li>
+<code>generate_controlled_bootstrap_geneset</code>
+<ul><li>Removed <code>combinedGenes</code> arg as it was not being used anywhere within.</li>
+</ul></li>
+<li>
+<code>check_args_for_bootstrap_plot_generation</code>
+<ul><li>Removed unused args: <code>ttSpecies</code>, <code>sctSpecies</code>
+</li>
+</ul></li>
+<li>
+<em>test-bootstrap_enrichment_test_2.R</em>
+<ul><li>“monkey_ctd” tests seems to be running more smoothly than before (not just getting NAs). This might have to with <code>orthogene</code> databases improving.</li>
+<li>Reassuringly, “godzilla” tests still fail as expected :)</li>
+</ul></li>
+<li>Add <em>tess/testthat/Rplots.pdf</em> to <em>.gitignore</em>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.7.1" id="ewce-171">EWCE 1.7.1<a class="anchor" aria-label="anchor" href="#ewce-171"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-7-1">New features<a class="anchor" aria-label="anchor" href="#new-features-1-7-1"></a></h3>
+<ul><li>Use <code>rworkflows</code> GHA.
+<ul><li>Add <code><a href="https://rdrr.io/pkg/rworkflows/man/use_badges.html" class="external-link">rworkflows::use_badges</a></code> to <em>README.Rmd</em>.</li>
+<li>Remove <em>Dockerfile</em> (no longer necessary).</li>
+<li>Make all 3 platforms (Linux, Mac, Windows) use Bioc dev, as <code>ewceData (&gt;=1.7.1)</code> is now required, due to a fix made only in the development version of <code>rtracklayer</code>.</li>
+</ul></li>
+<li>Remove <code>cowplot</code> dependency.</li>
+<li>Replace all <code>%&gt;%</code> with <code>|&gt;</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-7-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-7-1"></a></h3>
+<ul><li>
+<code>calc_quantiles</code>:
+<ul><li>This function was only used in <code>filter_variance_quantiles</code>
+</li>
+<li>Compare <code><a href="https://rdrr.io/r/stats/ecdf.html" class="external-link">stats::ecdf</a></code> vs. <code><a href="https://dplyr.tidyverse.org/reference/ntile.html" class="external-link">dplyr::ntile</a></code> methods.</li>
+<li>Remove from <code>EWCE</code> as it’s not longer used anywhere.</li>
+</ul></li>
+<li>
+<code>bin_columns_into_quantiles</code>:
+<ul><li>Rename arg <code>matrixIn</code> –&gt; <code>vec</code> to reflect what the function actually does.</li>
+</ul></li>
+<li>
+<code>filter_variance_quantiles</code>:
+<ul><li>Change to use <code>bin_columns_into_quantiles</code> instead of <code>calc_quantiles</code> to be consistent with how quantiles are handled in the rest of <code>EWCE</code>.</li>
+<li>Updated tests in <em>test-get_celltype_table.r</em> to reflect that the number of genes filtered is unaffected by the normalization procedure (when quantiles are computed with <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile</a></code>).</li>
+</ul></li>
+<li>
+<code>ewce_plot</code>:
+<ul><li>Celltypes were producing NAs because the names in the results were not always standardized in the same way as the CTD. Now this is done internally.</li>
+<li>Celltypes were not ordered factors, meaning the dendrogram didn’t line up correctly.</li>
+<li>Switched from <code>gridArrange</code>/<code>cowplot</code> to <code>patchwork</code>.</li>
+<li>Added dedicated unit tests file: <em>test-ewce_plot.r</em>
+</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.7.1" id="ewce-171-1">EWCE 1.7.1<a class="anchor" aria-label="anchor" href="#ewce-171-1"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-7-1-1">New features<a class="anchor" aria-label="anchor" href="#new-features-1-7-1-1"></a></h3>
+<ul><li>Offline runs enabled with functions using reference datasets (from <code>ewceData</code>). These functions have the parameter <code>localhub</code> added to control this.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5.8" id="ewce-158">EWCE 1.5.8<a class="anchor" aria-label="anchor" href="#ewce-158"></a></h2>
 <div class="section level3">
@@ -308,7 +471,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

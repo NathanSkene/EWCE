@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -69,10 +69,12 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewce_plot</span><span class="op">(</span></span>
 <span>  <span class="va">total_res</span>,</span>
 <span>  mtc_method <span class="op">=</span> <span class="st">"bonferroni"</span>,</span>
+<span>  q_threshold <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  ctd <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  align <span class="op">=</span> <span class="st">"v"</span>,</span>
-<span>  rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  axis <span class="op">=</span> <span class="st">"lr"</span></span>
+<span>  annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  make_dendro <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -93,33 +95,43 @@ Multiple testing correction is then applied across all merged results.</p></dd>
 Argument is passed to <a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a> (DEFAULT: "bonferroni).</p></dd>
 
 
+<dt>q_threshold</dt>
+<dd><p>Corrected significance threshold.</p></dd>
+
+
 <dt>ctd</dt>
 <dd><p>CellTypeDataset object.
 Should be provided so that the dendrogram can be taken from it
-and added to plots</p></dd>
+and added to plots.</p></dd>
 
 
-<dt>align</dt>
-<dd><p>(optional) Specifies whether graphs in the grid should be horizontally ("h") or
-vertically ("v") aligned. Options are "none" (default), "hv" (align in both directions), "h", and "v".</p></dd>
+<dt>annotLevel</dt>
+<dd><p>An integer indicating which level of <code>ctd</code> to
+analyse (<em>Default: 1</em>).</p></dd>
 
 
-<dt>rel_heights</dt>
-<dd><p>(optional) Numerical vector of relative rows heights. Works just as
-<code>rel_widths</code> does, but for rows rather than columns.</p></dd>
+<dt>heights</dt>
+<dd><p>The relative heights row in the grid. 
+Will get repeated to match the dimensions of the grid.
+Passed to <a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a>.</p></dd>
 
 
-<dt>axis</dt>
-<dd><p>(optional) Specifies whether graphs should be aligned by the left ("l"), right ("r"), top ("t"), or bottom ("b")
-margins. Options are "none" (default), or a string of any combination of l, r, t, and b in any order (e.g. "tblr" or "rlbt" for aligning all margins).
-Must be specified if any of the graphs are complex (e.g. faceted) and alignment is specified and desired. See <code><a href="https://wilkelab.org/cowplot/reference/align_plots.html" class="external-link">align_plots()</a></code> for details.</p></dd>
+<dt>make_dendro</dt>
+<dd><p>Add a dendrogram (requires <code>ctd</code>).</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>Print messages.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A ggplot containing the plot</p>
+<p>A named list containing versions of the <a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></p>
+
+
+<p>with and without the dendrogram.</p>
     </div>
 
     <div id="ref-examples">
@@ -127,19 +139,9 @@ Must be specified if any of the graphs are complex (e.g. faceted) and alignment 
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Bootstrap significance test,</span></span></span>
 <span class="r-in"><span><span class="co">##  no control for transcript length or GC content</span></span></span>
 <span class="r-in"><span><span class="co">## Use pre-computed results to speed up example</span></span></span>
-<span class="r-in"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">total_res</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="example_bootstrap_results.html">example_bootstrap_results</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">results</span> </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading precomputed example bootstrap results.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Generate the plot</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">EWCE</span><span class="fu">::</span><span class="fu">ewce_plot</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,</span></span>
-<span class="r-in"><span>    mtc_method <span class="op">=</span> <span class="st">"BH"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: cowplot</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: gridExtra</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $plain</span>
-<span class="r-plt img"><img src="ewce_plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">ewce_plot</span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">total_res</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -154,7 +156,7 @@ Must be specified if any of the graphs are complex (e.g. faceted) and alignment 
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

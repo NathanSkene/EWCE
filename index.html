@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -88,13 +88,12 @@
 <div class="page-header"><h1 id="ewce-expression-weighted-celltype-enrichment">
 <code>EWCE</code>: <code>E</code>xpression <code>W</code>eighted <code>C</code>elltype <code>E</code>nrichment<a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment"></a>
 </h1></div>
-<img height="200" src="https://github.com/NathanSkene/EWCE/blob/bschilder_dev/inst/hex/hex.png?raw=true"><br><br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.5.8-black.svg"></a> <a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.5.7-green.svg"></a> <a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/R-CMD-check-bioc/badge.svg" alt="R build status"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a> <a href="https://app.codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://app.codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-3078/total-green.svg"></a> <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a> ¶
-<h4 id="ewce-expression-weighted-celltype-enrichment-1">
-¶ Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i> ¶
+<img src="https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png" title="Hex sticker for EWCE" height="300"><br><a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.9.3-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-175/month-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-4354/total-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="http://www.bioconductor.org/shields/downloads/release/EWCE.svg" alt="download"></a> <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a> <br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.9.3-black.svg"></a> <a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a> <br><a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg" alt="R build status"></a> <a href="https://app.codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a> <br><a href="https://app.codecov.io/gh/NathanSkene/EWCE/tree/master" target="_blank" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg" title="Codecov icicle graph" width="200" height="50" style="vertical-align: top;"></a><br><h4 id="ewce-expression-weighted-celltype-enrichment-1">
+Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-1"></a>
 </h4>
 <h4 id="ewce-expression-weighted-celltype-enrichment-2">
-¶ README updated: <i>Oct-28-2022</i> ¶
+README updated: <i>Sep-01-2023</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-2"></a>
 </h4>
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -114,22 +113,22 @@
 </h2>
 <p><em>EWCE</em> requires <a href="https://www.r-project.org/" class="external-link"><code>R&gt;=4.1</code></a> and <code>Bioconductor&gt;=3.14</code>. To install <em>EWCE</em> on Bioconductor run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span><span class="op">}</span></span>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"EWCE"</span><span class="op">)</span> </span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"EWCE"</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <div class="section level3">
 <h3 id="website">
-<a href="https://nathanskene.github.io/EWCE/" class="external-link">Website</a><a class="anchor" aria-label="anchor" href="#website"></a>
+<a href="https://NathanSkene.github.io/EWCE/" class="external-link">Website</a><a class="anchor" aria-label="anchor" href="#website"></a>
 </h3>
 <p><strong>NOTE</strong>: This documentation is for the development version of <code>EWCE</code>. See <a href="https://bioconductor.org/packages/release/bioc/html/EWCE.html" class="external-link">Bioconductor</a> for documentation on the current release version.</p>
 </div>
 <div class="section level3">
 <h3 id="getting-started">
-<a href="https://nathanskene.github.io/EWCE/articles/EWCE" class="external-link">Getting started</a><a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<a href="https://NathanSkene.github.io/EWCE/articles/EWCE" class="external-link">Getting started</a><a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h3>
 <p>Includes:</p>
 <ul>
@@ -139,7 +138,7 @@
 </div>
 <div class="section level3">
 <h3 id="extended-examples">
-<a href="https://nathanskene.github.io/EWCE/articles/extended.html" class="external-link">Extended examples</a><a class="anchor" aria-label="anchor" href="#extended-examples"></a>
+<a href="https://NathanSkene.github.io/EWCE/articles/extended.html" class="external-link">Extended examples</a><a class="anchor" aria-label="anchor" href="#extended-examples"></a>
 </h3>
 <p>Additional tutorials of various <em>EWCE</em> features, including how to:</p>
 <ul>
@@ -248,7 +247,7 @@ Imperial College London<br><a href="https://github.com/neurogenomics" class="ext
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -29,7 +29,7 @@ gene names.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -90,7 +90,8 @@ gene names.</p>
 <span>  mrk_file_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  printAllBadSymbols <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  as_sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  localHub <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -117,6 +118,13 @@ from www.informatics.jax.org/downloads/reports/index.html</p></dd>
 
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
+
+
+<dt>localHub</dt>
+<dd><p>If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -164,7 +172,7 @@ returned with the corrected expression matrix under counts.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

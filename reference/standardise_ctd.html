@@ -22,7 +22,7 @@ and convert all matrices to sparse matrices and/or DelayedArray.'><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -81,6 +81,7 @@ and convert all matrices to sparse matrices and/or <code>DelayedArray</code>.</p
 <span>  <span class="va">dataset</span>,</span>
 <span>  input_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  sctSpecies_origin <span class="op">=</span> <span class="va">input_species</span>,</span>
 <span>  non121_strategy <span class="op">=</span> <span class="st">"drop_both_species"</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
 <span>  force_new_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -116,6 +117,13 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 <dt>output_species</dt>
 <dd><p>Which species' genes names to convert <code>exp</code> to.
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
+<dt>sctSpecies_origin</dt>
+<dd><p>Species that the <code>sct_data</code> 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.</p></dd>
 
 
 <dt>non121_strategy</dt>
@@ -291,9 +299,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found 5 matrix types across 2 CTD levels.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing level: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing level: 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 </code></pre></div>
     </div>
   </div>
@@ -308,7 +314,7 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

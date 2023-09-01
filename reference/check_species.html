@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -66,7 +66,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_species</span><span class="op">(</span>genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>, sctSpecies <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_species</span><span class="op">(</span></span>
+<span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies_origin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies_origin_default <span class="op">=</span> <span class="st">"mouse"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,9 +84,20 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 
 
 <dt>sctSpecies</dt>
-<dd><p>Species that <code>sct_data</code> came from
+<dd><p>Species that <code>sct_data</code> is currently formatted as
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
+<dt>sctSpecies_origin</dt>
+<dd><p>Species that the <code>sct_data</code> 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.</p></dd>
+
+
+<dt>sctSpecies_origin_default</dt>
+<dd><p>Default value for <code>sctSpecies_origin</code>.</p></dd>
 
 
 <dt>verbose</dt>
@@ -106,7 +123,7 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

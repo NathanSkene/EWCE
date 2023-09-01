@@ -18,7 +18,7 @@ results produced by ewce_expression_data."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ results produced by <a href="ewce_expression_data.html">ewce_expression_data</a>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">example_transcriptome_results</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">example_transcriptome_results</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>, localHub <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="source">
@@ -99,6 +99,13 @@ results produced by <a href="ewce_expression_data.html">ewce_expression_data</a>
     <dl><dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 
+
+<dt>localHub</dt>
+<dd><p>If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -125,7 +132,7 @@ results produced by <a href="ewce_expression_data.html">ewce_expression_data</a>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

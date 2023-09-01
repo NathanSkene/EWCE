@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -67,9 +67,8 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_controlled_bootstrap_geneset</span><span class="op">(</span></span>
-<span>  <span class="va">hitGenes</span>,</span>
+<span>  <span class="va">hits</span>,</span>
 <span>  <span class="va">sct_data</span>,</span>
-<span>  <span class="va">combinedGenes</span>,</span>
 <span>  <span class="va">annotLevel</span>,</span>
 <span>  <span class="va">reps</span>,</span>
 <span>  controlledCT <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -79,8 +78,10 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>hitGenes</dt>
-<dd><p>list of gene names. The target gene set.</p></dd>
+    <dl><dt>hits</dt>
+<dd><p>List of gene symbols containing the target gene list.
+Will automatically be converted to human gene symbols
+if <code>geneSizeControl=TRUE</code>.</p></dd>
 
 
 <dt>sct_data</dt>
@@ -112,7 +113,7 @@ cell type.</p></dd>
     
 
 <p>Matrix of genes
- (such that <code>nrows=length(hitGenes)</code> and <code>ncols=reps</code>), where each
+ (such that <code>nrows=length(hits)</code> and <code>ncols=reps</code>), where each
 column is a gene list.</p>
     </div>
     <div id="details">
@@ -132,7 +133,7 @@ column is a gene list.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

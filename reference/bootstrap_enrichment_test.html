@@ -19,7 +19,7 @@ changes for each cell type."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -76,6 +76,7 @@ changes for each cell type.</p>
 <span>  bg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  genelistSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sctSpecies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sctSpecies_origin <span class="op">=</span> <span class="va">sctSpecies</span>,</span>
 <span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
 <span>  reps <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -85,7 +86,8 @@ changes for each cell type.</p>
 <span>  controlledCT <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>  sort_results <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  localHub <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -114,9 +116,16 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 
 
 <dt>sctSpecies</dt>
-<dd><p>Species that <code>sct_data</code> came from
+<dd><p>Species that <code>sct_data</code> is currently formatted as
 (no longer limited to just "mouse" and "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
+
+
+<dt>sctSpecies_origin</dt>
+<dd><p>Species that the <code>sct_data</code> 
+originally came from, regardless of its current gene format 
+(e.g. it was previously converted from mouse to human gene orthologs).
+ This is used for computing an appropriate backgrund.</p></dd>
 
 
 <dt>output_species</dt>
@@ -175,46 +184,60 @@ smallest to largest p-values.</p></dd>
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 
+
+<dt>localHub</dt>
+<dd><p>If working offline, add argument localHub=TRUE to work 
+with a local, non-updated hub; It will only have resources available that
+have previously been downloaded. If offline, Please also see BiocManager
+vignette section on offline use to ensure proper functionality.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A list containing three data frames:</p><ul><li><p><code>results</code>: dataframe in which each row gives the statistics
-  (p-value, fold change and number of standard deviations from the mean)
-  associated with the enrichment of the stated cell type in the gene list</p></li>
-<li><p><code>hit.cells</code>: vector containing the summed proportion of
-  expression in each cell type for the target list</p></li>
+<p>A list containing three elements:</p><ul><li><p><code>hit.cells</code>: vector containing the summed proportion of
+  expression in each cell type for the target list.</p></li>
+<li><p><code>gene_data: </code> data.table showing the number of time each gene 
+   appeared in the bootstrap sample.</p></li>
 <li><p><code>bootstrap_data</code>: matrix in which each row represents the
   summed proportion of expression in each cell type for one of the
   random lists</p></li>
+<li><p><code>controlledCT</code>: the controlled cell type (if applicable)</p></li>
 </ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the single cell data</span></span></span>
-<span class="r-in"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sct_data</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="co"># Set the parameters for the analysis</span></span></span>
 <span class="r-in"><span><span class="co"># Use 3 bootstrap lists for speed, for publishable analysis use &gt;=10,000</span></span></span>
 <span class="r-in"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
 <span class="r-in"><span><span class="co"># Load gene list from Alzheimer's disease GWAS</span></span></span>
-<span class="r-in"><span><span class="va">example_genelist</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?ewceData and browseVignettes('ewceData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Bootstrap significance test, no control for transcript length or GC content</span></span></span>
 <span class="r-in"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu">bootstrap_enrichment_test</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">ctd</span>,</span></span>
-<span class="r-in"><span>    hits <span class="op">=</span> <span class="va">example_genelist</span>,</span></span>
+<span class="r-in"><span>    sct_data <span class="op">=</span> <span class="va">sct_data</span>,</span></span>
+<span class="r-in"><span>    hits <span class="op">=</span> <span class="va">hits</span>,</span></span>
 <span class="r-in"><span>    reps <span class="op">=</span> <span class="va">reps</span>,</span></span>
 <span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
-<span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Gathering ortholog reports.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: mouse</span>
@@ -223,13 +246,6 @@ smallest to largest p-values.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 21,207 rows retrieved.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 21,207 genes from mouse.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> --</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> --</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing gene_df.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> data.frame format detected.</span>
@@ -266,6 +282,14 @@ smallest to largest p-values.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =========== REPORT SUMMARY ===========</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 16,482 / 21,207 (77.72%) target_species genes remain after ortholog conversion.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 16,482 / 19,129 (86.16%) reference_species genes remain after ortholog conversion.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Gathering ortholog reports.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Common name mapping found for human</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: 9606</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Gene table with 19,129 rows retrieved.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning all 19,129 genes from human.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all organisms available in homologene.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping species name: human</span>
@@ -280,21 +304,19 @@ smallest to largest p-values.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 19,129 / 19,129 (100%) reference_species genes remain after ortholog conversion.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 16,482 intersect background genes used.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising CellTypeDataset</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking gene list inputs.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning 16,482 unique genes from the user-supplied bg.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Standardising sct_data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting gene list input to standardised human genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running without gene size control.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 17 hit genes remain after filtering.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 17 hit gene(s) remain after filtering.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing gene scores.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using previously sampled genes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing gene counts.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1            microglia          1 0    2.655462     5.439669 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 astrocytes_ependymal          1 0    1.490430     2.400616 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1            microglia          1 0    1.798464     2.322962 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 astrocytes_ependymal          1 0    1.377450     1.509541 0</span>
 </code></pre></div>
     </div>
   </div>
@@ -309,7 +331,7 @@ smallest to largest p-values.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ Support function for generate_bootstrap_plots."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.3</span>
       </span>
     </div>
 
@@ -68,29 +68,51 @@ Support function for <a href="generate_bootstrap_plots.html">generate_bootstrap_
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootstrap_plot</span><span class="op">(</span><span class="va">exp_mats</span>, <span class="va">hit.exp</span>, <span class="va">cc</span>, <span class="va">savePath</span>, <span class="va">listFileName</span>, show_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootstrap_plot</span><span class="op">(</span></span>
+<span>  <span class="va">gene_data</span>,</span>
+<span>  exp_mats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  save_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"BootstrapPlots"</span><span class="op">)</span>,</span>
+<span>  <span class="va">listFileName</span>,</span>
+<span>  signif_ct <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hit_thresh <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  facets <span class="op">=</span> <span class="st">"CellType"</span>,</span>
+<span>  scales <span class="op">=</span> <span class="st">"free_x"</span>,</span>
+<span>  show_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>exp_mats</dt>
-<dd><p>Resampled specificty data for bootstrapping tests.</p></dd>
+    <dl><dt>gene_data</dt>
+<dd><p>Output from <a href="compute_gene_scores.html">compute_gene_scores</a>.</p></dd>
 
 
-<dt>hit.exp</dt>
-<dd><p>Specificity scores of the hit genes.</p></dd>
+<dt>exp_mats</dt>
+<dd><p>Output of <code>generate_bootstrap_plots_exp_mats</code>.</p></dd>
 
 
-<dt>cc</dt>
-<dd><p>Cell-types to plot.</p></dd>
-
-
-<dt>savePath</dt>
-<dd><p>Path to save plots to.</p></dd>
+<dt>save_dir</dt>
+<dd><p>Directory to save plots to.</p></dd>
 
 
 <dt>listFileName</dt>
 <dd><p>listFileName</p></dd>
+
+
+<dt>signif_ct</dt>
+<dd><p>Significant celltypes to include the plots.</p></dd>
+
+
+<dt>facets</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please use <code>rows</code>
+and <code>cols</code> instead.</p></dd>
+
+
+<dt>scales</dt>
+<dd><p>Are scales shared across all facets (the default,
+<code>"fixed"</code>), or do they vary across rows (<code>"free_x"</code>),
+columns (<code>"free_y"</code>), or both rows and columns (<code>"free"</code>)?</p></dd>
 
 
 <dt>show_plot</dt>
@@ -116,7 +138,7 @@ Support function for <a href="generate_bootstrap_plots.html">generate_bootstrap_
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -43,7 +43,7 @@
     <loc>/reference/bootstrap_plot.html</loc>
   </url>
   <url>
-    <loc>/reference/calc_quantiles.html</loc>
+    <loc>/reference/bootstrap_plots_for_transcriptome.html</loc>
   </url>
   <url>
     <loc>/reference/calculate_meanexp_for_level.html</loc>
@@ -95,6 +95,12 @@
   </url>
   <url>
     <loc>/reference/check_species.html</loc>
+  </url>
+  <url>
+    <loc>/reference/compute_gene_counts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/compute_gene_scores.html</loc>
   </url>
   <url>
     <loc>/reference/controlled_geneset_enrichment.html</loc>
@@ -193,9 +199,6 @@
     <loc>/reference/get_exp_data_for_bootstrapped_genes.html</loc>
   </url>
   <url>
-    <loc>/reference/get_graph_theme.html</loc>
-  </url>
-  <url>
     <loc>/reference/get_sig_results.html</loc>
   </url>
   <url>
@@ -256,9 +259,6 @@
     <loc>/reference/myScalesComma.html</loc>
   </url>
   <url>
-    <loc>/reference/plot_bootstrap_plots.html</loc>
-  </url>
-  <url>
     <loc>/reference/plot_ctd.html</loc>
   </url>
   <url>
@@ -305,6 +305,9 @@
   </url>
   <url>
     <loc>/reference/standardise_ctd.html</loc>
+  </url>
+  <url>
+    <loc>/reference/theme_graph.html</loc>
   </url>
   <url>
     <loc>/reference/to_dataframe.html</loc>
