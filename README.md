@@ -23,8 +23,6 @@ Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
 README updated: <i>Apr-03-2023</i>  
 </h4>
 
-THIS VERSION OF THE PACKAGE IS DEPRECIATED!!! PLEASE USE [neurogenomics/EWCE](https://github.com/neurogenomics/EWCE)
-
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
 
 ## Introduction
