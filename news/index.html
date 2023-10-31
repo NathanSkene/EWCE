@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.1</span>
       </span>
     </div>
 
@@ -60,6 +60,20 @@
       <small>Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.11.1" id="ewce-1111">EWCE 1.11.1<a class="anchor" aria-label="anchor" href="#ewce-1111"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-11-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-11-1"></a></h3>
+<ul><li>
+<code><a href="../reference/ewce_plot.html">ewce_plot()</a></code> - Dendrogram not reordering cell types in plot
+<ul><li>see <a href="https://github.com/NathanSkene/EWCE/issues/88" class="external-link">issue</a>
+</li>
+<li>Occurs when ctd does not contain the plotting info</li>
+<li>Fixed now and unit test added.</li>
+<li>Note that cell type order on the x-axis is based on hierarchical clustering for both plots if <code>make_dendro = TRUE</code> for <code><a href="../reference/ewce_plot.html">ewce_plot()</a></code>.</li>
+</ul></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.9.3" id="ewce-193">EWCE 1.9.3<a class="anchor" aria-label="anchor" href="#ewce-193"></a></h2>
 <div class="section level3">
