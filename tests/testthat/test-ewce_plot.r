@@ -17,7 +17,7 @@ test_that("ewce_plot works", {
   #### ewce_plot ####
   ewce_plot_res_basic <- ewce_plot(
     total_res = full_results$results, 
-    ctd = ctd, 
+    ctd = ctd_basic, 
     make_dendro = TRUE
   )
   #so order of 4 plots should be the same
