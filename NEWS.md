@@ -1,3 +1,14 @@
+# EWCE 1.11.1
+
+## Bug fixes
+
+* `ewce_plot()` - Dendrogram not reordering cell types in plot
+    - see [issue](https://github.com/NathanSkene/EWCE/issues/88)
+    - Occurs when ctd does not contain the plotting info
+    - Fixed now and unit test added. 
+    - Note that cell type order on the x-axis is based on hierarchical 
+      clustering for both plots if `make_dendro = TRUE` for `ewce_plot()`.  
+
 # EWCE 1.9.3
 
 ## Bug fixes

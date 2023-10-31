@@ -46,7 +46,8 @@ Passed to \link[patchwork]{wrap_plots}.}
 }
 \value{
 A named list containing versions of the \link[ggplot2]{ggplot}
- with and without the dendrogram.
+ with and without the dendrogram. Note that cell type order on the x-axis is
+ based on hierarchical clustering for both plots if make_dendro = TRUE.
 }
 \description{
 \code{ewce_plot} generates plots of EWCE enrichment results

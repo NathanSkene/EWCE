@@ -11,7 +11,6 @@
 #' @importFrom Matrix t
 prep_dendro <- function(ctdIN, 
                         expand=c(0, 0.66)) {
-    
     requireNamespace("ggplot2")
     requireNamespace("ggdendro")
     # euclidean distances between the rows

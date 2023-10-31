@@ -23,7 +23,8 @@
 #' @inheritParams check_percent_hits 
 #'
 #' @returns A named list containing versions of the \link[ggplot2]{ggplot}
-#'  with and without the dendrogram. 
+#'  with and without the dendrogram. Note that cell type order on the x-axis is
+#'  based on hierarchical clustering for both plots if make_dendro = TRUE.   
 #'
 #' @export
 #' @import ggplot2
@@ -76,17 +77,21 @@ ewce_plot <- function(total_res,
                 if (length(annotLevel) == 0) {
                     stop(err_msg2)
                 }
+                cell_ordr <- ctd[[annotLevel]]$plotting$cell_ordering
+            }else{
+              #generate dendrogram - gives ordering
+              ctdIN <- prep_dendro(ctdIN = ctd[[annotLevel]], 
+                                   expand = c(0, .66))  
+              cell_ordr <- ctdIN$plotting$cell_ordering
             }
             #### Set order of cells ####
-            if (length(ctd[[annotLevel]]$plotting) > 0) {
-                total_res$CellType <-
-                    factor(x = fix_celltype_names(total_res$CellType),
-                           levels = fix_celltype_names(
-                               ctd[[annotLevel]]$plotting$cell_ordering
-                           ), 
-                           ordered = TRUE
-                    )
-            }
+            total_res$CellType <-
+                factor(x = fix_celltype_names(total_res$CellType),
+                       levels = fix_celltype_names(
+                           cell_ordr
+                       ), 
+                       ordered = TRUE
+                )
         } 
     }
     #### Multiple testing correction across all rows ####
@@ -166,8 +171,12 @@ ewce_plot <- function(total_res,
     output <- list()
     output$plain <- the_plot 
     if (isTRUE(make_dendro)) {
-        ctdIN <- prep_dendro(ctdIN = ctd[[annotLevel]], 
-                             expand = c(0, .66))  
+        #ctdIN wion't exist if plotting found earlier
+        if(length(ctd[[annotLevel]]$plotting) > 0){
+          ctdIN <- prep_dendro(ctdIN = ctd[[annotLevel]], 
+                               expand = c(0, .66))  
+        }  
+        #update plot ordering by dendrogram
         output$withDendro <- patchwork::wrap_plots(
             ctdIN$plotting$ggdendro_horizontal,
             the_plot, 
