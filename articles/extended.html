@@ -306,7 +306,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <span>                                                hits <span class="op">=</span> <span class="va">hits</span>, </span>
 <span>                                                reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>                                                annotLevel <span class="op">=</span> <span class="va">annotLevel</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -582,7 +582,7 @@ be passed the gene lists as HGNC symbols rather than MGI.</p>
 <span>  reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>  annotLevel <span class="op">=</span> <span class="va">annotLevel</span>,</span>
 <span>  geneSizeControl <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -714,7 +714,7 @@ one of the arguments.</p>
 <span>                                                reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>                                                annotLevel <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                                                geneSizeControl <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -858,7 +858,7 @@ it.</p>
 <span>                                                  hits <span class="op">=</span> <span class="va">gene.list.2</span>, </span>
 <span>                                                  reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>                                                  annotLevel <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: genelistSpecies not provided. Setting to 'human' by default.</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
@@ -1165,13 +1165,13 @@ default).</p>
 <span>  level2annot <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## Check 1000Check 3005</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: sctSpecies_origin not provided. Setting to 'mouse' by default.</span></span></code></pre>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for non-expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for cells with no expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## DGE:: Limma...</span></span></code></pre>
 <pre><code><span><span class="co">## 219 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></span></code></pre>
-<pre><code><span><span class="co">## Time difference of 0.1964469 secs</span></span></code></pre>
+<pre><code><span><span class="co">## Time difference of 0.30847 secs</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1196,7 +1196,7 @@ parallelising across multiple cores with the parameter
 <span>  exp <span class="op">=</span> <span class="va">exp_CortexOnly_DROPPED</span>,</span>
 <span>  annotLevels <span class="op">=</span> <span class="va">annotLevels</span>,</span>
 <span>  groupName <span class="op">=</span> <span class="st">"kiCortexOnly"</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## + Calculating normalized mean expression.</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span>
@@ -1207,7 +1207,7 @@ parallelising across multiple cores with the parameter
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required namespace: ggdendro</span></span></code></pre>
-<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmpnKYr2U/ctd_kiCortexOnly.rda</span></span></code></pre>
+<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmplHbIPN/ctd_kiCortexOnly.rda</span></span></code></pre>
 <div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd_CortexOnly</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_CortexOnly</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -1326,13 +1326,13 @@ objects as input.</p>
 <span>  level2annot <span class="op">=</span> <span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Check 1000Check 3777</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: sctSpecies_origin not provided. Setting to 'mouse' by default.</span></span></code></pre>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for non-expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for cells with no expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## DGE:: Limma...</span></span></code></pre>
 <pre><code><span><span class="co">## 1 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></span></code></pre>
-<pre><code><span><span class="co">## Time difference of 0.4385421 secs</span></span></code></pre>
+<pre><code><span><span class="co">## Time difference of 0.8666937 secs</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="generate-celltypedataset-1">Generate CellTypeDataset<a class="anchor" aria-label="anchor" href="#generate-celltypedataset-1"></a>
@@ -1346,7 +1346,7 @@ objects as input.</p>
 <span>                                                annotLevels <span class="op">=</span> <span class="va">annotLevels</span>,</span>
 <span>                                                groupName <span class="op">=</span> <span class="st">"MergedKI"</span>,</span>
 <span>                                                savePath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## + Calculating normalized mean expression.</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span>
@@ -1356,7 +1356,7 @@ objects as input.</p>
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
-<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmpnKYr2U/ctd_MergedKI.rda</span></span></code></pre>
+<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmplHbIPN/ctd_MergedKI.rda</span></span></code></pre>
 <div class="sourceCode" id="cb497"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd_MergedKI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_MergedKI</span><span class="op">)</span> </span></code></pre></div>
 </div>
@@ -1482,7 +1482,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <span>  genelistSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
 <span>  reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>  annotLevel <span class="op">=</span> <span class="va">annotLevel</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -1579,7 +1579,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <span>  reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>  annotLevel <span class="op">=</span> <span class="va">annotLevel</span>,</span>
 <span>  controlledCT <span class="op">=</span> <span class="st">"microglia"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -1677,7 +1677,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <span>  reps <span class="op">=</span> <span class="va">reps</span>,</span>
 <span>  annotLevel <span class="op">=</span> <span class="va">annotLevel</span>,</span>
 <span>  controlledCT <span class="op">=</span> <span class="st">"astrocytes_ependymal"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Generating gene background for mouse x human ==&gt; human</span></span></code></pre>
 <pre><code><span><span class="co">## Gathering ortholog reports.</span></span></code></pre>
 <pre><code><span><span class="co">## Retrieving all genes using: homologene.</span></span></code></pre>
@@ -2068,7 +2068,7 @@ used to sort the table.</p>
 <pre><code><span><span class="co">## Using intersect between background gene lists: 16,482 genes.</span></span></code></pre>
 <pre><code><span><span class="co">## Standardising sct_data.</span></span></code></pre>
 <pre><code><span><span class="co">## Using 1st column of tt as gene column: HGNC.symbol</span></span></code></pre>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Standardising CellTypeDataset</span></span></code></pre>
 <pre><code><span><span class="co">## Checking gene list inputs.</span></span></code></pre>
 <pre><code><span><span class="co">## Running without gene size control.</span></span></code></pre>
@@ -2084,7 +2084,7 @@ used to sort the table.</p>
 <span><span class="co">## 1    endothelial_mural          1 0.00    1.246976     4.548717 0.00000000</span></span>
 <span><span class="co">## 2 astrocytes_ependymal          1 0.00    1.210210     3.535254 0.00000000</span></span>
 <span><span class="co">## 3            microglia          1 0.01    1.210084     2.813829 0.02333333</span></span></code></pre>
-<pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
+<pre><code><span><span class="co">## 1 core(s) assigned as workers (1 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Standardising CellTypeDataset</span></span></code></pre>
 <pre><code><span><span class="co">## Checking gene list inputs.</span></span></code></pre>
 <pre><code><span><span class="co">## Running without gene size control.</span></span></code></pre>
@@ -2232,7 +2232,7 @@ to be remarkably similar, as was reported in our paper.</p>
 <span><span class="co">##   [7] zlibbioc_1.48.0               ragg_1.2.6                   </span></span>
 <span><span class="co">##   [9] vctrs_0.6.4                   memoise_2.0.1                </span></span>
 <span><span class="co">##  [11] RCurl_1.98-1.13               ggtree_3.10.0                </span></span>
-<span><span class="co">##  [13] rstatix_0.7.2                 htmltools_0.5.6.1            </span></span>
+<span><span class="co">##  [13] rstatix_0.7.2                 htmltools_0.5.7              </span></span>
 <span><span class="co">##  [15] S4Arrays_1.2.0                curl_5.1.0                   </span></span>
 <span><span class="co">##  [17] broom_1.0.5                   SparseArray_1.2.0            </span></span>
 <span><span class="co">##  [19] gridGraphics_0.5-1            sass_0.4.7                   </span></span>
