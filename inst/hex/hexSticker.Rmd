@@ -46,9 +46,11 @@ dir.create(dirname(filename), showWarnings = FALSE, recursive = TRUE)
 ## Subplot
 
 ```{r}
-URL <- "https://github.com/NathanSkene/EWCE/releases/download/v1.1/DALL.E.2023-03-10.01.14.58.-.cell.type.specific.gene.enrichment.png"
-tmp <- tempfile(fileext = ".png")
-utils::download.file(URL, tmp)
+# URL <- "https://github.com/NathanSkene/EWCE/releases/download/v1.1/DALL.E.2023-03-10.01.14.58.-.cell.type.specific.gene.enrichment.png"
+# tmp <- tempfile(fileext = ".png")
+# utils::download.file(URL, tmp)
+
+tmp <- here::here("inst/hex/2BIgqrmzc0GSaaAGOqSeAu.jpg")
 ```
 
 
@@ -57,19 +59,19 @@ utils::download.file(URL, tmp)
 
 ```{r}    
 # pkg <- paste("E xpression","W eighted","C elltype","E nrichment", sep = "<br>")
-pkg <- "E   W   C   E"
-s_size = .51
+
+s_size = .35
 stick <- hexSticker::sticker( 
   subplot = tmp,
   #### Package name ####
-  package = pkg,
-  p_size=20, p_y = 1, p_x=.83, p_color = ggplot2::alpha("white",.8),
+  package = paste0(strsplit(pkg, " ")[[1]],collapse = " "),
+  p_size=20, p_y = 1.5,  p_color = ggplot2::alpha("white",.95),
   #### Subplot #####
-  s_x=1.1, s_y=1,  s_height = s_size, s_width = s_size*2.4,
+  s_x=1, s_y=1,  s_height = s_size, s_width = s_size*2.4,
   #### Fill & border ####
-  h_fill = "#060b1a", h_color = "#e05701",
+  h_fill = "#060b1a", h_color =ggplot2::alpha("white",.5),h_size = 2,
   #### Spotlight ####
-  spotlight = TRUE, l_alpha = .3, l_width = 10, 
+  spotlight = TRUE, l_alpha = .2, l_width = 5, l_x = .5,
   #### File output ####
   white_around_sticker = TRUE,
   filename = filename, dpi = 300)
