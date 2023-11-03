@@ -12,8 +12,7 @@ name: rworkflows
     - RELEASE_**
 jobs:
   rworkflows:
-    permissions:
-      contents: write
+    permissions: write-all
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     container: ${{ matrix.config.cont }}
@@ -24,8 +23,7 @@ jobs:
         - os: ubuntu-latest
           bioc: devel
           r: auto
-          cont: bioconductor/bioconductor_docker:devel
-          rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
+          cont: bioconductor/bioconductor_docker:devel 
         - os: macOS-latest
           bioc: devel
           r: auto
@@ -50,6 +48,7 @@ jobs:
         has_latex: ${{ false }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run_docker: ${{ true }}
+        docker_registry: docker.io
         docker_user: bschilder
         docker_org: neurogenomicslab
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
