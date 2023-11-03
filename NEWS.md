@@ -15,7 +15,7 @@
 
 * `generate_bootstrap_plots`
     - Use stored `gene_data` object whenever possible.
-    - Only show filtered celltypes.
+    - Only show filtered celltypes. 
 
 # EWCE 1.9.2
 
