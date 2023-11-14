@@ -132,7 +132,8 @@ test_that("bootstrap enrichment function error handling and geneSizeControl runs
             annotLevel = level,
             sctSpecies = "monkey",
             genelistSpecies = "mouse",
-            output_species = "human"
+            output_species = "human",
+            store_gene_data = FALSE
         )
         top_res_monkey <- monkey_res$results$CellType[1]
 

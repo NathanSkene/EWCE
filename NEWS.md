@@ -1,3 +1,14 @@
+# EWCE 1.11.2
+
+## New features
+
+* `bootstrap_enrichment_test`:
+  - New args: `standardise_sct_data=`, `standardise_hits=`:
+  let users have more control over data standardisation steps.
+  - `check_ewce_genelist_inputs`: updated accordingly.
+  - New arg: `store_gene_data` to avoid hitting memory limits.
+  - Modify *test-bootstrap_enrichment_test_2.R* to use test new args.
+
 # EWCE 1.11.1
 
 ## Bug fixes

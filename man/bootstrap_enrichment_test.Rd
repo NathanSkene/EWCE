@@ -20,8 +20,11 @@ bootstrap_enrichment_test(
   controlledCT = NULL,
   mtc_method = "BH",
   sort_results = TRUE,
+  standardise_sct_data = TRUE,
+  standardise_hits = FALSE,
   verbose = TRUE,
-  localHub = FALSE
+  localHub = FALSE,
+  store_gene_data = TRUE
 )
 }
 \arguments{
@@ -85,12 +88,47 @@ cell type.}
 \item{sort_results}{Sort enrichment results from
 smallest to largest p-values.}
 
+\item{standardise_sct_data}{Should \code{sct_data} be standardised? 
+if \code{TRUE}:
+\itemize{
+\item{When \code{sctSpecies!=output_species}
+ the \code{sct_data} will be checked for object formatting and 
+ the genes will be converted to the orthologs of the \code{output_species} 
+ with \link[EWCE]{standardise_ctd}
+  (which calls \link[orthogene]{map_genes} internally).
+}
+\item{When \code{sctSpecies==output_species},
+ the \code{sct_data} will be checked for object formatting 
+ with  \link[EWCE]{standardise_ctd}, but the gene names 
+ will remain untouched.
+ }
+}}
+
+\item{standardise_hits}{Should \code{hits} be standardised? 
+If \code{TRUE}:
+\itemize{
+\item{When \code{genelistSpecies!=output_species}, 
+ the genes will be converted to the orthologs of the \code{output_species}
+ with \link[orthogene]{convert_orthologs}.
+ }
+\item{When \code{genelistSpecies==output_species}, 
+ the genes will be standardised with \link[orthogene]{map_genes}.
+ }
+} 
+If \code{FALSE}, \code{hits} will be passed on to subsequent steps as-is.}
+
 \item{verbose}{Print messages.}
 
 \item{localHub}{If working offline, add argument localHub=TRUE to work 
 with a local, non-updated hub; It will only have resources available that
 have previously been downloaded. If offline, Please also see BiocManager
 vignette section on offline use to ensure proper functionality.}
+
+\item{store_gene_data}{Store sampled gene data for every bootstrap iteration.
+When the number of bootstrap \code{reps} is very high (>=100k) and/or
+ the number of genes in \code{hits} is very high, you may want
+ to set \code{store_gene_data=FALSE} to avoid using excessive amounts of 
+ CPU memory.}
 }
 \value{
 A list containing three elements:

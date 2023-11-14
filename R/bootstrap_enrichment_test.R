@@ -46,6 +46,38 @@
 #' with a local, non-updated hub; It will only have resources available that
 #' have previously been downloaded. If offline, Please also see BiocManager
 #' vignette section on offline use to ensure proper functionality. 
+#' @param standardise_hits Should \code{hits} be standardised? 
+#' If \code{TRUE}:
+#' \itemize{
+#' \item{When \code{genelistSpecies!=output_species}, 
+#'  the genes will be converted to the orthologs of the \code{output_species}
+#'  with \link[orthogene]{convert_orthologs}.
+#'  }
+#' \item{When \code{genelistSpecies==output_species}, 
+#'  the genes will be standardised with \link[orthogene]{map_genes}.
+#'  }
+#' } 
+#' If \code{FALSE}, \code{hits} will be passed on to subsequent steps as-is.
+#' @param standardise_sct_data Should \code{sct_data} be standardised? 
+#' if \code{TRUE}:
+#' \itemize{
+#' \item{When \code{sctSpecies!=output_species}
+#'  the \code{sct_data} will be checked for object formatting and 
+#'  the genes will be converted to the orthologs of the \code{output_species} 
+#'  with \link[EWCE]{standardise_ctd}
+#'   (which calls \link[orthogene]{map_genes} internally).
+#' }
+#' \item{When \code{sctSpecies==output_species},
+#'  the \code{sct_data} will be checked for object formatting 
+#'  with  \link[EWCE]{standardise_ctd}, but the gene names 
+#'  will remain untouched.
+#'  }
+#' }
+#' @param store_gene_data Store sampled gene data for every bootstrap iteration.
+#' When the number of bootstrap \code{reps} is very high (>=100k) and/or
+#'  the number of genes in \code{hits} is very high, you may want
+#'  to set \code{store_gene_data=FALSE} to avoid using excessive amounts of 
+#'  CPU memory.
 #' @inheritParams orthogene::convert_orthologs
 #'
 #' @returns A list containing three elements:
@@ -59,7 +91,6 @@
 #'   random lists
 #'   \item \code{controlledCT}: the controlled cell type (if applicable)
 #' }
-#'
 #'
 #' @examples
 #' # Load the single cell data
@@ -97,9 +128,12 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
                                       controlledCT = NULL,
                                       mtc_method = "BH",
                                       sort_results = TRUE,
+                                      standardise_sct_data = TRUE,
+                                      standardise_hits = FALSE,
                                       # min_genes = 4,
                                       verbose = TRUE,
-                                      localHub = FALSE) {
+                                      localHub = FALSE,
+                                      store_gene_data = TRUE) {
     # devoptera::args2vars(bootstrap_enrichment_test)
     # #' @param min_genes The minimum number of genes in \code{hits} that are 
     # #' also in the single cell dataset & background gene set.
@@ -150,15 +184,18 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     }
     #### Convert CTD to standardized human genes ####
     messager("Standardising CellTypeDataset", v = verbose) 
-    sct_data <- standardise_ctd(
+    if(isTRUE(standardise_sct_data)){
+      sct_data <- standardise_ctd(
         ctd = sct_data,
         input_species = sctSpecies,
         output_species = output_species,
         dataset = "sct_data",
         method = method,
         verbose = FALSE
-    )
-    sctSpecies <- output_species
+      )
+      sctSpecies <- output_species
+      standardise_sct_data <- FALSE ## Make sure not to standardise twice
+    } 
     #### Convert gene list inputs to standardized human genes ####
     checkedLists <- check_ewce_genelist_inputs(
         sct_data = sct_data,
@@ -170,6 +207,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         geneSizeControl = geneSizeControl,
         output_species = output_species,
         min_genes = min_genes,
+        standardise_sct_data = standardise_sct_data,
+        standardise_hits = standardise_hits,
         verbose = verbose
     )
     #### check_ewce_genelist_inputs converts hits to "human" by default ####
@@ -302,6 +341,8 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         results = results,
         verbose = verbose
     )
+    #### Omit gene_data to save memory ####
+    if(isFALSE(store_gene_data)) gene_data <- NULL 
     #### Return results list ####
     full_results <- list(
         results = results,

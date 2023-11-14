@@ -14,7 +14,8 @@ check_ewce_genelist_inputs(
   output_species = "human",
   method = "homologene",
   geneSizeControl = FALSE,
-  standardise = FALSE,
+  standardise_sct_data = TRUE,
+  standardise_hits = FALSE,
   min_genes = 4,
   verbose = TRUE
 )
@@ -61,8 +62,34 @@ GC content and transcript length. Recommended if the gene list originates
 from genetic studies (\emph{Default: FALSE}).
 If set to \code{TRUE}, then \code{hits} must be from humans.}
 
-\item{standardise}{If \code{input_species==output_species},
-should the genes be standardised using \link[orthogene]{map_genes}?}
+\item{standardise_sct_data}{Should \code{sct_data} be standardised? 
+if \code{TRUE}:
+\itemize{
+\item{When \code{sctSpecies!=output_species}
+ the \code{sct_data} will be checked for object formatting and 
+ the genes will be converted to the orthologs of the \code{output_species} 
+ with \link[EWCE]{standardise_ctd}
+  (which calls \link[orthogene]{map_genes} internally).
+}
+\item{When \code{sctSpecies==output_species},
+ the \code{sct_data} will be checked for object formatting 
+ with  \link[EWCE]{standardise_ctd}, but the gene names 
+ will remain untouched.
+ }
+}}
+
+\item{standardise_hits}{Should \code{hits} be standardised? 
+If \code{TRUE}:
+\itemize{
+\item{When \code{genelistSpecies!=output_species}, 
+ the genes will be converted to the orthologs of the \code{output_species}
+ with \link[orthogene]{convert_orthologs}.
+ }
+\item{When \code{genelistSpecies==output_species}, 
+ the genes will be standardised with \link[orthogene]{map_genes}.
+ }
+} 
+If \code{FALSE}, \code{hits} will be passed on to subsequent steps as-is.}
 
 \item{min_genes}{Minimum number of genes in a gene list to test.}
 

@@ -5,8 +5,6 @@
 #' appropriate length.
 #' Checks all hits are in bg. Checks the species match and if not
 #' reduces to 1:1 orthologs.
-#' @param standardise If \code{input_species==output_species},
-#' should the genes be standardised using \link[orthogene]{map_genes}?
 #' @param min_genes Minimum number of genes in a gene list to test.
 #' @inheritParams bootstrap_enrichment_test
 #' @inheritParams orthogene::convert_orthologs
@@ -41,7 +39,8 @@ check_ewce_genelist_inputs <- function(sct_data,
                                        output_species = "human",
                                        method = "homologene",
                                        geneSizeControl = FALSE,
-                                       standardise = FALSE,
+                                       standardise_sct_data = TRUE,
+                                       standardise_hits = FALSE,
                                        min_genes = 4,
                                        verbose = TRUE) {
     messager("Checking gene list inputs.", v = verbose)
@@ -80,7 +79,8 @@ check_ewce_genelist_inputs <- function(sct_data,
     }
     #### Convert CTD ####
     #### Standardise sct_data ####
-    if (sctSpecies != output_species) {
+    if ((sctSpecies != output_species) &&
+        isTRUE(standardise_sct_data)) {
         messager("Standardising sct_data.", v = verbose)
         sct_data <- standardise_ctd(
             ctd = sct_data,
@@ -92,10 +92,11 @@ check_ewce_genelist_inputs <- function(sct_data,
         )
     }
     sct_genes <- unname(rownames(sct_data[[1]]$mean_exp))
-    ##### Convert hits to (human) #### 
+    ##### Standardise hits #### 
     hits <- unique(as.character(hits))
+    ## Within-species
     if (genelistSpecies == output_species) {
-        if(isTRUE(standardise)){
+        if(isTRUE(standardise_hits)){
             messager("Converting gene list input to standardised",
                      output_species, "genes.",
                      v = verbose
@@ -108,6 +109,7 @@ check_ewce_genelist_inputs <- function(sct_data,
             )$name
         } 
     } else {
+    ## Across-species
         messager("Converting gene list input to standardised",
                  output_species, "genes.",
                  v = verbose)
@@ -116,7 +118,7 @@ check_ewce_genelist_inputs <- function(sct_data,
             input_species = genelistSpecies,
             output_species = output_species,
             method = method,
-            standardise_genes = standardise,
+            standardise_genes = standardise_hits,
             verbose = FALSE
         )$ortholog_gene
     }
@@ -128,7 +130,7 @@ check_ewce_genelist_inputs <- function(sct_data,
     #### Check that all 'sct_genes' are in 'bg' ####
     sct_genes <- sct_genes[sct_genes %in% bg]
     if (sum(!sct_genes %in% bg, na.rm = TRUE) > 0) {
-        stop("All hits must be in bg.")
+        stop("All sct_data genes must be in bg.")
     }
     #### Check that sufficient genes are still present in the target list ####
     if(min_genes<1){
