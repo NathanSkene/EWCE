@@ -79,6 +79,7 @@ obtain the mean specificity in each sampled list (and the target list).</p>
 <span>  <span class="va">geneSizeControl</span>,</span>
 <span>  controlledCT <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  control_network <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  store_gene_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -124,6 +125,14 @@ cell type.</p></dd>
 <dt>control_network</dt>
 <dd><p>If <code>geneSizeControl=TRUE</code>,
 then must provide the control network.</p></dd>
+
+
+<dt>store_gene_data</dt>
+<dd><p>Store sampled gene data for every bootstrap iteration.
+When the number of bootstrap <code>reps</code> is very high (&gt;=100k) and/or
+ the number of genes in <code>hits</code> is very high, you may want
+ to set <code>store_gene_data=FALSE</code> to avoid using excessive amounts of 
+ CPU memory.</p></dd>
 
 
 <dt>verbose</dt>

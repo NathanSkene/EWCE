@@ -86,8 +86,11 @@ changes for each cell type.</p>
 <span>  controlledCT <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  mtc_method <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>  sort_results <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardise_sct_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardise_hits <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  localHub <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  localHub <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  store_gene_data <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -181,6 +184,30 @@ cell type.</p></dd>
 smallest to largest p-values.</p></dd>
 
 
+<dt>standardise_sct_data</dt>
+<dd><p>Should <code>sct_data</code> be standardised? 
+if <code>TRUE</code>:</p><ul><li><p>When <code>sctSpecies!=output_species</code>
+ the <code>sct_data</code> will be checked for object formatting and 
+ the genes will be converted to the orthologs of the <code>output_species</code> 
+ with <a href="standardise_ctd.html">standardise_ctd</a>
+  (which calls <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a> internally).</p></li>
+<li><p>When <code>sctSpecies==output_species</code>,
+ the <code>sct_data</code> will be checked for object formatting 
+ with  <a href="standardise_ctd.html">standardise_ctd</a>, but the gene names 
+ will remain untouched.</p></li>
+</ul></dd>
+
+
+<dt>standardise_hits</dt>
+<dd><p>Should <code>hits</code> be standardised? 
+If <code>TRUE</code>:</p><ul><li><p>When <code>genelistSpecies!=output_species</code>, 
+ the genes will be converted to the orthologs of the <code>output_species</code>
+ with <a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">convert_orthologs</a>.</p></li>
+<li><p>When <code>genelistSpecies==output_species</code>, 
+ the genes will be standardised with <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a>.</p></li>
+</ul><p>If <code>FALSE</code>, <code>hits</code> will be passed on to subsequent steps as-is.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Print messages.</p></dd>
 
@@ -190,6 +217,14 @@ smallest to largest p-values.</p></dd>
 with a local, non-updated hub; It will only have resources available that
 have previously been downloaded. If offline, Please also see BiocManager
 vignette section on offline use to ensure proper functionality.</p></dd>
+
+
+<dt>store_gene_data</dt>
+<dd><p>Store sampled gene data for every bootstrap iteration.
+When the number of bootstrap <code>reps</code> is very high (&gt;=100k) and/or
+ the number of genes in <code>hits</code> is very high, you may want
+ to set <code>store_gene_data=FALSE</code> to avoid using excessive amounts of 
+ CPU memory.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -228,7 +263,7 @@ vignette section on offline use to ensure proper functionality.</p></dd>
 <span class="r-in"><span>    annotLevel <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>    sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span></span>
 <span class="r-in"><span>    genelistSpecies <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (1 reserved).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 core(s) assigned as workers (3 reserved).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating gene background for mouse x human ==&gt; human</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gathering ortholog reports.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving all genes using: homologene.</span>
@@ -313,9 +348,10 @@ vignette section on offline use to ensure proper functionality.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Testing for enrichment in 7 cell types...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sorting results by p-value.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing BH-corrected q-values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 significant cell type enrichment results @ q&lt;0.05 : </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    CellType annotLevel p fold_change sd_from_mean q</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 microglia          1 0    2.293289     4.325423 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 significant cell type enrichment results @ q&lt;0.05 : </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>               CellType annotLevel p fold_change sd_from_mean q</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 astrocytes_ependymal          1 0    1.524508     5.116591 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2            microglia          1 0    1.877526     1.606409 0</span>
 </code></pre></div>
     </div>
   </div>

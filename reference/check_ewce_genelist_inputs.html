@@ -84,7 +84,8 @@ reduces to 1:1 orthologs.</p>
 <span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"homologene"</span>,</span>
 <span>  geneSizeControl <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  standardise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  standardise_sct_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardise_hits <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  min_genes <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -149,9 +150,28 @@ from genetic studies (<em>Default: FALSE</em>).
 If set to <code>TRUE</code>, then <code>hits</code> must be from humans.</p></dd>
 
 
-<dt>standardise</dt>
-<dd><p>If <code>input_species==output_species</code>,
-should the genes be standardised using <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a>?</p></dd>
+<dt>standardise_sct_data</dt>
+<dd><p>Should <code>sct_data</code> be standardised? 
+if <code>TRUE</code>:</p><ul><li><p>When <code>sctSpecies!=output_species</code>
+ the <code>sct_data</code> will be checked for object formatting and 
+ the genes will be converted to the orthologs of the <code>output_species</code> 
+ with <a href="standardise_ctd.html">standardise_ctd</a>
+  (which calls <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a> internally).</p></li>
+<li><p>When <code>sctSpecies==output_species</code>,
+ the <code>sct_data</code> will be checked for object formatting 
+ with  <a href="standardise_ctd.html">standardise_ctd</a>, but the gene names 
+ will remain untouched.</p></li>
+</ul></dd>
+
+
+<dt>standardise_hits</dt>
+<dd><p>Should <code>hits</code> be standardised? 
+If <code>TRUE</code>:</p><ul><li><p>When <code>genelistSpecies!=output_species</code>, 
+ the genes will be converted to the orthologs of the <code>output_species</code>
+ with <a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">convert_orthologs</a>.</p></li>
+<li><p>When <code>genelistSpecies==output_species</code>, 
+ the genes will be standardised with <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a>.</p></li>
+</ul><p>If <code>FALSE</code>, <code>hits</code> will be passed on to subsequent steps as-is.</p></dd>
 
 
 <dt>min_genes</dt>
