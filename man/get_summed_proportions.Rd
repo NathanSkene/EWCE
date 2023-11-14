@@ -13,6 +13,7 @@ get_summed_proportions(
   geneSizeControl,
   controlledCT = NULL,
   control_network = NULL,
+  store_gene_data = TRUE,
   verbose = TRUE
 )
 }
@@ -41,6 +42,12 @@ cell type.}
 
 \item{control_network}{If \code{geneSizeControl=TRUE},
 then must provide the control network.}
+
+\item{store_gene_data}{Store sampled gene data for every bootstrap iteration.
+When the number of bootstrap \code{reps} is very high (>=100k) and/or
+ the number of genes in \code{hits} is very high, you may want
+ to set \code{store_gene_data=FALSE} to avoid using excessive amounts of 
+ CPU memory.}
 
 \item{verbose}{Print messages.}
 }

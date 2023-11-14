@@ -274,6 +274,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
         geneSizeControl = geneSizeControl,
         controlledCT = controlledCT,
         control_network = control_network,
+        store_gene_data = store_gene_data,
         verbose = verbose
     )
     hit.cells <- sumProp$hit.cells
@@ -340,9 +341,7 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     report_results(
         results = results,
         verbose = verbose
-    )
-    #### Omit gene_data to save memory ####
-    if(isFALSE(store_gene_data)) gene_data <- NULL 
+    ) 
     #### Return results list ####
     full_results <- list(
         results = results,

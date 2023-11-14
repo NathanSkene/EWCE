@@ -34,6 +34,7 @@ get_summed_proportions <- function(hits,
                                    geneSizeControl,
                                    controlledCT = NULL,
                                    control_network = NULL,
+                                   store_gene_data = TRUE,
                                    verbose = TRUE) {
     
     controlledCT <- fix_celltype_names(celltypes = controlledCT)
@@ -83,12 +84,16 @@ get_summed_proportions <- function(hits,
         annotLevel=annotLevel,
         no_cores=no_cores)
     #### Get gene scores #####
-    gene_data <- compute_gene_scores(sct_data = sct_data, 
-                                     annotLevel = annotLevel, 
-                                     bootstrap_list = bootstrap_list, 
-                                     hits = hits, 
-                                     combinedGenes = combinedGenes,
-                                     verbose = verbose)
+    if(isTRUE(store_gene_data)){
+      gene_data <- compute_gene_scores(sct_data = sct_data, 
+                                       annotLevel = annotLevel, 
+                                       bootstrap_list = bootstrap_list, 
+                                       hits = hits, 
+                                       combinedGenes = combinedGenes,
+                                       verbose = verbose)
+    } else {
+      gene_data <- NULL
+    } 
     #### Get celltypes scores ####
     bootstrap_data <- as.matrix(
         lapply(bootstrap_list,function(x){x$celltypes}) |>
