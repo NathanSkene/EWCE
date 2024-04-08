@@ -11,6 +11,6 @@ List of extracted SCE components.
 }
 \description{
 Check whether \code{exp} is a SingleCellExperiment (SCE) object and extract
-the releveant components.
+the relevant components.
 }
 \keyword{internal}

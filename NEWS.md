@@ -1,3 +1,14 @@
+# EWCE 1.11.4
+
+## Bug fixes
+
+* `drop_uninformative_genes`:
+  - Will now catch cases where expression matrix is a dataframe and convert to a 
+  matrix
+  - This was causing weird errors, see issue 92: 
+  https://github.com/NathanSkene/EWCE/issues/92
+  - Fix made in `check_sce()` function.
+
 # EWCE 1.11.2
 
 ## New features

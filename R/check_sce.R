@@ -1,7 +1,7 @@
 #' Check SingleCellExperiment
 #'
 #' Check whether \code{exp} is a SingleCellExperiment (SCE) object and extract
-#' the releveant components.
+#' the relevant components.
 #'
 #' @return List of extracted SCE components.
 #'
@@ -38,6 +38,14 @@ check_sce <- function(exp,
         SE_obj <- FALSE
         metadata <- NULL
     }
+    #also check exp is a matrix not a DF as this will cause a strange error, see
+    # https://github.com/NathanSkene/EWCE/issues/92
+    # test if a DF rather than not a matrix to include all types of matrix as
+    # sparse matricies won't return TRUE with is.matrix() but this will catch
+    # DT's/DF's/Tibbles
+    if (is.data.frame(exp)){
+      exp <- as.matrix(exp)
+    }  
     return(list(
         exp = exp,
         metadata = metadata,
