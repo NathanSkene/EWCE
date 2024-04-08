@@ -1,3 +1,11 @@
+# EWCE 1.11.5
+
+## Bug fixes
+
+* `check_bootstrap_args`:
+  - annotation level for checking cell type names was previous hardcoded to 
+  level 1, now updated to match user input for annotation level.
+
 # EWCE 1.11.4
 
 ## Bug fixes

@@ -34,7 +34,7 @@ check_bootstrap_args <- function(sct_data,
     }
     #### Check if controlling for another celltype ###
     if (!is.null(controlledCT)) {
-        ct_names <- colnames(sct_data[[1]]$specificity)
+        ct_names <- colnames(sct_data[[annotLevel]]$specificity)
         if(fix_celltypes){
             ct_names <- fix_celltype_names(ct_names)
         } 
