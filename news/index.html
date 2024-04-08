@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.4</span>
       </span>
     </div>
 
@@ -60,6 +60,19 @@
       <small>Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.11.4" id="ewce-1114">EWCE 1.11.4<a class="anchor" aria-label="anchor" href="#ewce-1114"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-11-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-11-4"></a></h3>
+<ul><li>
+<code>drop_uninformative_genes</code>:
+<ul><li>Will now catch cases where expression matrix is a dataframe and convert to a matrix</li>
+<li>This was causing weird errors, see issue 92: <a href="https://github.com/NathanSkene/EWCE/issues/92" class="external-link uri">https://github.com/NathanSkene/EWCE/issues/92</a>
+</li>
+<li>Fix made in <code><a href="../reference/check_sce.html">check_sce()</a></code> function.</li>
+</ul></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.11.2" id="ewce-1112">EWCE 1.11.2<a class="anchor" aria-label="anchor" href="#ewce-1112"></a></h2>
 <div class="section level3">
