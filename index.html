@@ -6,17 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Expression Weighted Celltype Enrichment • EWCE</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Expression Weighted Celltype Enrichment">
-<meta property="og:description" content="Used to determine which cell types are enriched within gene lists. The package
-        provides tools for testing enrichments within simple gene lists (such as human disease
-        associated genes) and those resulting from differential expression studies. The package does
-        not depend upon any particular Single Cell Transcriptome dataset and user defined datasets
-        can be loaded in and used in the analyses.">
+<meta property="og:description" content="Used to determine which cell types are enriched within gene lists. The package provides tools for testing enrichments within simple gene lists (such as human disease associated genes) and those resulting from differential expression studies. The package does not depend upon any particular Single Cell Transcriptome dataset and user defined datasets can be loaded in and used in the analyses.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -37,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.13.0</span>
       </span>
     </div>
 
@@ -88,12 +84,12 @@
 <div class="page-header"><h1 id="ewce-expression-weighted-celltype-enrichment">
 <code>EWCE</code>: <code>E</code>xpression <code>W</code>eighted <code>C</code>elltype <code>E</code>nrichment<a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment"></a>
 </h1></div>
-<img src="https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png" title="Hex sticker for EWCE" height="300"><br><a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.11.3-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-109/month-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-5275/total-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="http://www.bioconductor.org/shields/downloads/release/EWCE.svg" alt="download"></a> <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a> <br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.11.5-black.svg"></a> <a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a> <br><a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg" alt="R build status"></a> <a href="https://app.codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a> <br><a href="https://app.codecov.io/gh/NathanSkene/EWCE/tree/master" target="_blank" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg" title="Codecov icicle graph" width="200" height="50" style="vertical-align: top;"></a><br><h4 id="ewce-expression-weighted-celltype-enrichment-1">
+<img src="https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png" title="Hex sticker for EWCE" height="300"><br><a href="https://www.bioconductor.org/packages/EWCE" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.11.5-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-172/month-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="https://img.shields.io/badge/download-5409/total-green.svg"></a> <a href="https://bioconductor.org/packages/stats/bioc/EWCE" class="external-link"><img src="http://www.bioconductor.org/shields/downloads/release/EWCE.svg" alt="download"></a> <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="License: GPL-3"></a> <br><a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.13.0-black.svg"></a> <a href="https://github.com/NathanSkene/EWCE" class="external-link"><img src="https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg"></a> <a href="https://github.com/NathanSkene/EWCE/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg"></a> <br><a href="https://github.com/NathanSkene/EWCE/actions" class="external-link"><img src="https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg" alt="R build status"></a> <a href="https://app.codecov.io/gh/NathanSkene/EWCE" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg"></a> <br><a href="https://app.codecov.io/gh/NathanSkene/EWCE/tree/master" target="_blank" class="external-link"><img src="https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg" title="Codecov icicle graph" width="200" height="50" style="vertical-align: top;"></a><br><h4 id="ewce-expression-weighted-celltype-enrichment-1">
 Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-1"></a>
 </h4>
 <h4 id="ewce-expression-weighted-celltype-enrichment-2">
-README updated: <i>Apr-08-2024</i>
+README updated: <i>Apr-30-2024</i>
 <a class="anchor" aria-label="anchor" href="#ewce-expression-weighted-celltype-enrichment-2"></a>
 </h4>
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -247,7 +243,7 @@ Imperial College London<br><a href="https://github.com/neurogenomics" class="ext
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
