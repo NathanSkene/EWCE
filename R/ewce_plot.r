@@ -55,12 +55,17 @@ ewce_plot <- function(total_res,
     if(isTRUE(make_dendro)){
         #### Check if ctd is provided ####
         if(is.null(ctd)){
-            messager(
-                "Warning: Can only add the dendrogram when ctd is provided.",
-                "Setting make_dendro=FALSE.",
-                v=verbose)
-            make_dendro <- FALSE
-        } else {
+            no_ctd_msg <- paste0(
+              "Error: Can only add the dendrogram when ctd is provided.",
+              "Please either input CTD or set make_dendro=FALSE.")
+            stop(no_ctd_msg)
+            
+        } else if(!requireNamespace("ggdendro",quietly = TRUE)){
+          no_ddg_msg <- paste0(
+            "Error: Can only add the dendrogram when ggdendro is installed.",
+            "Please either install ggdendro or set make_dendro=FALSE.")
+          stop(no_ddg_msg)
+        }else {
             # Find the relevant level of the CTD annotation 
             if (length(ctd[[annotLevel]]$plotting) > 0) {
                 annotLevel <-

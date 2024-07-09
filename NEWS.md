@@ -1,3 +1,11 @@
+# EWCE 1.13.1
+
+## Bug fixes
+
+* Making `ewce_plot` functionality more clear - will no fail if 
+`make_dendro=TRUE` and `ggdendro` is not installed or `CTD` is not provided 
+rather than issuing a warning.
+
 # EWCE 1.11.5
 
 ## Bug fixes
