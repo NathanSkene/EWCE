@@ -1,8 +1,7 @@
-pandoc: 3.1.1
-pkgdown: 2.0.9
+pandoc: '3.2'
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   EWCE: EWCE.html
   extended: extended.html
-last_built: 2024-04-30T18:20Z
-
+last_built: 2024-07-09T10:51Z

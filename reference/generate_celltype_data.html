@@ -5,7 +5,7 @@ contain matrices of mean expression and specificity per cell type."><!-- mathjax
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -19,7 +19,7 @@ contain matrices of mean expression and specificity per cell type."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.13.1</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ contain matrices of mean expression and specificity per cell type."><!-- mathjax
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -46,20 +46,20 @@ contain matrices of mean expression and specificity per cell type."><!-- mathjax
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/NathanSkene/EWCE/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate CellTypeData (CTD) file</h1>
-    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/HEAD/R/generate_celltype_data.r" class="external-link"><code>R/generate_celltype_data.r</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/R/generate_celltype_data.r" class="external-link"><code>R/generate_celltype_data.r</code></a></small>
     <div class="hidden name"><code>generate_celltype_data.Rd</code></div>
     </div>
 
@@ -97,69 +97,71 @@ contain matrices of mean expression and specificity per cell type.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>exp</dt>
+
+
+<dl><dt id="arg-exp">exp<a class="anchor" aria-label="anchor" href="#arg-exp"></a></dt>
 <dd><p>Numerical matrix with row for each gene and column for each cell.
 Row names are gene symbols. Column names are cell IDs which can be
 cross referenced against the annot data frame.</p></dd>
 
 
-<dt>annotLevels</dt>
+<dt id="arg-annotlevels">annotLevels<a class="anchor" aria-label="anchor" href="#arg-annotlevels"></a></dt>
 <dd><p>List with arrays of strings containing the cell type
 names associated with each column in <code>exp</code>.</p></dd>
 
 
-<dt>groupName</dt>
+<dt id="arg-groupname">groupName<a class="anchor" aria-label="anchor" href="#arg-groupname"></a></dt>
 <dd><p>A human readable name for referring to the dataset
 being used.</p></dd>
 
 
-<dt>no_cores</dt>
+<dt id="arg-no-cores">no_cores<a class="anchor" aria-label="anchor" href="#arg-no-cores"></a></dt>
 <dd><p>Number of cores that should be used to speedup the
 computation.
 <em>NOTE</em>: Use <code>no_cores=1</code> when using this package in windows system.</p></dd>
 
 
-<dt>savePath</dt>
+<dt id="arg-savepath">savePath<a class="anchor" aria-label="anchor" href="#arg-savepath"></a></dt>
 <dd><p>Directory where the CTD file should be saved.</p></dd>
 
 
-<dt>file_prefix</dt>
+<dt id="arg-file-prefix">file_prefix<a class="anchor" aria-label="anchor" href="#arg-file-prefix"></a></dt>
 <dd><p>Prefix to add to saved CTD file name.</p></dd>
 
 
-<dt>as_sparse</dt>
+<dt id="arg-as-sparse">as_sparse<a class="anchor" aria-label="anchor" href="#arg-as-sparse"></a></dt>
 <dd><p>Convert <code>exp</code> to a sparse <code>Matrix</code>.</p></dd>
 
 
-<dt>as_DelayedArray</dt>
+<dt id="arg-as-delayedarray">as_DelayedArray<a class="anchor" aria-label="anchor" href="#arg-as-delayedarray"></a></dt>
 <dd><p>Convert <code>exp</code> to <code>DelayedArray</code>.</p></dd>
 
 
-<dt>normSpec</dt>
+<dt id="arg-normspec">normSpec<a class="anchor" aria-label="anchor" href="#arg-normspec"></a></dt>
 <dd><p>Boolean indicating whether specificity data should be
 transformed to a normal distribution by cell type, giving equivalent scores
 across all cell types.</p></dd>
 
 
-<dt>convert_orths</dt>
+<dt id="arg-convert-orths">convert_orths<a class="anchor" aria-label="anchor" href="#arg-convert-orths"></a></dt>
 <dd><p>If <code>input_species!=output_species</code> and
 <code>convert_orths=TRUE</code>, will drop genes without
 1:1 <code>output_species</code> orthologs and then convert <code>exp</code> gene names
 to those of <code>output_species</code>.</p></dd>
 
 
-<dt>input_species</dt>
+<dt id="arg-input-species">input_species<a class="anchor" aria-label="anchor" href="#arg-input-species"></a></dt>
 <dd><p>The species that the <code>exp</code> dataset comes from.
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
 
 
-<dt>output_species</dt>
+<dt id="arg-output-species">output_species<a class="anchor" aria-label="anchor" href="#arg-output-species"></a></dt>
 <dd><p>Species to convert <code>exp</code> to
 (Default: "human").
 See <a href="list_species.html">list_species</a> for all available species.</p></dd>
 
 
-<dt>non121_strategy</dt>
+<dt id="arg-non-strategy">non121_strategy<a class="anchor" aria-label="anchor" href="#arg-non-strategy"></a></dt>
 <dd><p>How to handle genes that don't have
 1:1 mappings between <code>input_species</code>:<code>output_species</code>.
 Options include:<br></p><ul><li><p><code>"drop_both_species" or "dbs" or 1</code> : <br>
@@ -187,7 +189,7 @@ Return only the most "popular" interspecies ortholog mappings.
 </ul></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
 <li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
 <li><p><code>"babelgene"</code> : Faster but fewer species and genes.
@@ -196,34 +198,34 @@ Also gives consensus scores for each gene mapping based on a
 </ul></dd>
 
 
-<dt>force_new_file</dt>
+<dt id="arg-force-new-file">force_new_file<a class="anchor" aria-label="anchor" href="#arg-force-new-file"></a></dt>
 <dd><p>If a file of the same name as the one
 being created already exists, overwrite it.</p></dd>
 
 
-<dt>specificity_quantiles</dt>
+<dt id="arg-specificity-quantiles">specificity_quantiles<a class="anchor" aria-label="anchor" href="#arg-specificity-quantiles"></a></dt>
 <dd><p>Compute specificity quantiles.
 Recommended to set to <code>TRUE</code>.</p></dd>
 
 
-<dt>numberOfBins</dt>
+<dt id="arg-numberofbins">numberOfBins<a class="anchor" aria-label="anchor" href="#arg-numberofbins"></a></dt>
 <dd><p>Number of quantile 'bins' to use (40 is recommended).</p></dd>
 
 
-<dt>dendrograms</dt>
+<dt id="arg-dendrograms">dendrograms<a class="anchor" aria-label="anchor" href="#arg-dendrograms"></a></dt>
 <dd><p>Add dendrogram plots</p></dd>
 
 
-<dt>return_ctd</dt>
+<dt id="arg-return-ctd">return_ctd<a class="anchor" aria-label="anchor" href="#arg-return-ctd"></a></dt>
 <dd><p>Return the CTD object in a list along with the file name,
 instead of just the file name.</p></dd>
 
 
-<dt>verbose</dt>
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Print messages.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/orthogene/man/convert_orthologs.html" class="external-link">orthogene::convert_orthologs</a></code></p><dl><dt><code>gene_df</code></dt>
 <dd><p>Data object containing the genes
 (see <code>gene_input</code> for options on how
@@ -272,8 +274,8 @@ identified by <a href="https://rdrr.io/pkg/gprofiler2/man/gorth.html" class="ext
 in the <code>output_species</code>.</p></dd>
 
     <dt><code>agg_fun</code></dt>
-<dd><p>Aggregation function passed to 
- <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>. 
+<dd><p>Aggregation function passed to
+ <a href="https://rdrr.io/pkg/orthogene/man/aggregate_mapped_genes.html" class="external-link">aggregate_mapped_genes</a>.
 Set to <code>NULL</code> to skip aggregation step (default).</p></dd>
 
     <dt><code>mthreshold</code></dt>
@@ -286,38 +288,36 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
 
     <dt><code>gene_map</code></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> that maps the current gene names
-to new gene names. 
+to new gene names.
 This function's behaviour will adapt to different situations as follows:</p><ul><li><p><code>gene_map=&lt;data.frame&gt;</code> :<br> When a data.frame containing the
-gene key:value columns 
+gene key:value columns
 (specified by <code>input_col</code> and <code>output_col</code>, respectively)
 is provided, this will be used to perform aggregation/expansion.</p></li>
 <li><p><code>gene_map=NULL</code> and <code>input_species!=output_species</code> :<br>
 A <code>gene_map</code> is automatically generated by
- <a href="https://rdrr.io/pkg/orthogene/man/map_orthologs.html" class="external-link">map_orthologs</a> to perform inter-species 
+ <a href="https://rdrr.io/pkg/orthogene/man/map_orthologs.html" class="external-link">map_orthologs</a> to perform inter-species
  gene aggregation/expansion.</p></li>
 <li><p><code>gene_map=NULL</code> and <code>input_species==output_species</code> :<br>
 A <code>gene_map</code> is automatically generated by
- <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a> to perform within-species 
+ <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a> to perform within-species
  gene gene symbol standardization and aggregation/expansion.</p></li>
 </ul></dd>
 
     <dt><code>input_col</code></dt>
-<dd><p>Column name within <code>gene_map</code> with gene names matching 
+<dd><p>Column name within <code>gene_map</code> with gene names matching
 the row names of <code>X</code>.</p></dd>
 
     <dt><code>output_col</code></dt>
 <dd><p>Column name within <code>gene_map</code> with gene names
 that you wish you map the row names of <code>X</code> onto.</p></dd>
 
-  
+
 </dl></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>File names for the saved CellTypeData (CTD) files.</p>
+    <p>File names for the saved CellTypeData (CTD) files.</p>
     </div>
 
     <div id="ref-examples">
@@ -347,7 +347,7 @@ that you wish you map the row names of <code>X</code> onto.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting to sparse matrix.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ggdendro</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmpeFfPF3/ctd_allKImouse.rda</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Saving results ==&gt;  /tmp/RtmppP7QfQ/ctd_allKImouse.rda</span>
 </code></pre></div>
     </div>
   </div>
@@ -362,15 +362,15 @@ that you wish you map the row names of <code>X</code> onto.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
