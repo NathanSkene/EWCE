@@ -110,7 +110,6 @@ drop_uninformative_genes <- function(exp,
     exp <- res_sce$exp
     SE_obj <- res_sce$SE_obj
     metadata <- res_sce$metadata
-    messager("Check", dim(exp), v = verbose)
     #### Check species ####
     input_species <- check_species(
         genelistSpecies = "NULL",

@@ -40,7 +40,6 @@ merge_sce_list <- function(SCE_lists = NULL,
         #### Import files ####
         SCE_lists <- lapply(sce_files, function(x) {
             dataset <- gsub(pattern, "", basename(x))
-            print(dataset)
             sce <- readRDS(x)
             return(sce)
         }) |> `names<-`(gsub(pattern, "", basename(sce_files)))

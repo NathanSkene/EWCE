@@ -1,3 +1,9 @@
+# EWCE 1.15.1
+
+## Bug fixes
+
+* Remove print statements, clean up CTD creation steps.
+
 # EWCE 1.13.1
 
 ## Bug fixes
