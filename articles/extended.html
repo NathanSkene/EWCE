@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ Authors: Alan Murphy, Brian Schilder, and Nathan Skene<br>
             
             <h4 data-toc-skip class="date"><h4>
 <br>
-Updated: Oct-30-2024<br>
+Updated: Feb-14-2025<br>
 </h4></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/vignettes/extended.Rmd" class="external-link"><code>vignettes/extended.Rmd</code></a></small>
@@ -666,9 +666,9 @@ be passed the gene lists as HGNC symbols rather than MGI.</p>
 <pre><code><span><span class="co">## Mapping species name: human</span></span></code></pre>
 <pre><code><span><span class="co">## Common name mapping found for human</span></span></code></pre>
 <pre><code><span><span class="co">## 1 organism identified from search: hsapiens</span></span></code></pre>
-<pre><code><span><span class="co">## Gene table with 63,150 rows retrieved.</span></span></code></pre>
-<pre><code><span><span class="co">## Returning all 63,150 genes from human.</span></span></code></pre>
-<pre><code><span><span class="co">## 63,150 human Ensembl IDs and 40,977 human Gene Symbols imported.</span></span></code></pre>
+<pre><code><span><span class="co">## Gene table with 63,049 rows retrieved.</span></span></code></pre>
+<pre><code><span><span class="co">## Returning all 63,049 genes from human.</span></span></code></pre>
+<pre><code><span><span class="co">## 63,049 human Ensembl IDs and 41,001 human Gene Symbols imported.</span></span></code></pre>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
 <pre><code><span><span class="co">## Controlled bootstrapping network generated.</span></span></code></pre>
@@ -679,12 +679,14 @@ be passed the gene lists as HGNC symbols rather than MGI.</p>
 <pre><code><span><span class="co">## Testing for enrichment in 7 cell types...</span></span></code></pre>
 <pre><code><span><span class="co">## Sorting results by p-value.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
-<pre><code><span><span class="co">## 0 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
+<pre><code><span><span class="co">## 1 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
+<pre><code><span><span class="co">##    CellType annotLevel p fold_change sd_from_mean q</span></span>
+<span><span class="co">## 1 microglia          1 0    1.961521     3.748282 0</span></span></code></pre>
 <div class="section level5">
 <h5 id="plot-results-1">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-1"></a>
 </h5>
 <p>We plot these results using <code>ewce_plot</code>:</p>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,</span>
 <span>                             mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span>
@@ -701,7 +703,7 @@ generally comparable to the standard method.</p>
 <p>Both the analyses shown above were run on level 1 annotations. It is
 possible to test on the level 2 cell type level annotations by changing
 one of the arguments.</p>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Bootstrap significance test controlling for transcript length and GC content</span></span>
 <span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">cont_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
@@ -796,9 +798,9 @@ one of the arguments.</p>
 <pre><code><span><span class="co">## Mapping species name: human</span></span></code></pre>
 <pre><code><span><span class="co">## Common name mapping found for human</span></span></code></pre>
 <pre><code><span><span class="co">## 1 organism identified from search: hsapiens</span></span></code></pre>
-<pre><code><span><span class="co">## Gene table with 63,150 rows retrieved.</span></span></code></pre>
-<pre><code><span><span class="co">## Returning all 63,150 genes from human.</span></span></code></pre>
-<pre><code><span><span class="co">## 63,150 human Ensembl IDs and 40,977 human Gene Symbols imported.</span></span></code></pre>
+<pre><code><span><span class="co">## Gene table with 63,049 rows retrieved.</span></span></code></pre>
+<pre><code><span><span class="co">## Returning all 63,049 genes from human.</span></span></code></pre>
+<pre><code><span><span class="co">## 63,049 human Ensembl IDs and 41,001 human Gene Symbols imported.</span></span></code></pre>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
 <pre><code><span><span class="co">## Controlled bootstrapping network generated.</span></span></code></pre>
@@ -813,7 +815,7 @@ one of the arguments.</p>
 <div class="section level5">
 <h5 id="plot-results-2">Plot results<a class="anchor" aria-label="anchor" href="#plot-results-2"></a>
 </h5>
-<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">cont_results</span><span class="op">$</span><span class="va">results</span>,</span>
 <span>                             mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span>
@@ -837,13 +839,13 @@ to.</p>
 <p>To demonstrate this we need to first generate a second analysis so
 let us sample thirty random genes, and run the bootstrapping analysis on
 it.</p>
-<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#### Generate random gene list ####</span></span>
 <span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">human.bg</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/mouse_to_human_homologs.html" class="external-link">mouse_to_human_homologs</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">HGNC.symbol</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gene.list.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">human.bg</span>,size <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#if running offline pass localhub = TRUE</span></span>
@@ -931,7 +933,7 @@ it.</p>
 <pre><code><span><span class="co">## Standardising CellTypeDataset</span></span></code></pre>
 <pre><code><span><span class="co">## Checking gene list inputs.</span></span></code></pre>
 <pre><code><span><span class="co">## Running without gene size control.</span></span></code></pre>
-<pre><code><span><span class="co">## 16 hit gene(s) remain after filtering.</span></span></code></pre>
+<pre><code><span><span class="co">## 22 hit gene(s) remain after filtering.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing gene scores.</span></span></code></pre>
 <pre><code><span><span class="co">## Using previously sampled genes.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing gene counts.</span></span></code></pre>
@@ -939,7 +941,7 @@ it.</p>
 <pre><code><span><span class="co">## Sorting results by p-value.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
 <pre><code><span><span class="co">## 0 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
-<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">full_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,</span>
 <span>                       list<span class="op">=</span><span class="st">"Alzheimers"</span><span class="op">)</span></span>
 <span><span class="va">rando_res2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">second_results</span><span class="op">$</span><span class="va">results</span>,</span>
@@ -950,7 +952,7 @@ it.</p>
 </h5>
 <p>Here we apply multiple-testing correction (BH = Benjamini-Hochberg)
 to guard against positive results due to chance.</p>
-<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">merged_results</span>,</span>
 <span>                             mtc_method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span>
@@ -1010,13 +1012,13 @@ data.frame, or DelayedArray).<br>
 <code>SummarizedExperiment</code> object.</p>
 <p>To check the data, we can quickly plot the distribution of expression
 of a given gene across all the cell types.</p>
-<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># example datasets held in ewceData package</span></span>
 <span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">cortex_mrna</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/cortex_mrna.html" class="external-link">cortex_mrna</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gene</span> <span class="op">&lt;-</span> <span class="st">"Necab1"</span></span>
 <span><span class="va">cellExpDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Expression<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="va">gene</span>,<span class="op">]</span>,</span>
 <span>                          Celltype<span class="op">=</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">[</span></span>
@@ -1039,7 +1041,7 @@ if there is any difference.</p>
 instead, we can convert <code>cortex_mrna</code> with the package <a href="https://github.com/neurogenomics/scKirby" class="external-link"><code>scKirby</code></a>.
 <code>scKirby</code> automatically infers the input file type and
 converts it to SCE format by default.</p>
-<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"SingleCellExperiment"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SingleCellExperiment"</span><span class="op">)</span><span class="op">}</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span> </span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"scKirby"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bschilder/scKirby"</span><span class="op">)</span><span class="op">}</span></span>
@@ -1074,7 +1076,7 @@ file</a> from MGI which lists known synonyms for MGI gene symbols. If no
 file path is passed, there is a loaded reference dataset of the
 MRK_List2 which will be used: <code><a href="https://rdrr.io/pkg/ewceData/man/mgi_synonym_data.html" class="external-link">ewceData::mgi_synonym_data()</a></code>.
 We recommend running this function on all input datasets.</p>
-<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">=</span> <span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Note</strong> - You can run
@@ -1082,7 +1084,7 @@ We recommend running this function on all input datasets.</p>
 <code>localhub = TRUE</code>. This will work off a previously cached
 version of the reference dataset from <code>ExperimentHub</code>.</p>
 <p>For the SCE version, pass the whole SCE object:</p>
-<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Note that data in SCE object must be in 'counts' assay</span></span>
 <span><span class="co">#The fix_bad_hgnc_symbols function can similarly take an SCE object as an input</span></span>
 <span><span class="va">cortex_mrna_sce</span> <span class="op">=</span> <span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span></span></code></pre></div>
@@ -1096,14 +1098,14 @@ version of the reference dataset from <code>ExperimentHub</code>.</p>
 </h3>
 <p>The vignette takes a while to go through if you use all genes. So
 let’s restrict to 1000 random genes.</p>
-<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nKeep</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
 <span><span class="va">must_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span> </span>
 <span><span class="va">keep_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">must_keep</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span>,<span class="fl">997</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">[</span><span class="va">keep_genes</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1000 3005</span></span></code></pre>
-<div class="sourceCode" id="cb419"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#### SCE ####</span></span>
 <span><span class="va">nKeep</span> <span class="op">=</span> <span class="fl">1000</span></span>
 <span><span class="va">must_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span> </span>
@@ -1117,12 +1119,12 @@ let’s restrict to 1000 random genes.</p>
 using <a href="https://github.com/satijalab/sctransform" class="external-link"><code>scTransform</code></a>
 to normalise for differences due to cell size, then linearly scale. Note
 that this might be slow.</p>
-<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp_scT_normed</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/sct_normalize.html">sct_normalize</a></span><span class="op">(</span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span> </span></code></pre></div>
 <div class="section level4">
 <h4 id="singlecellexperiment">SingleCellExperiment<a class="anchor" aria-label="anchor" href="#singlecellexperiment"></a>
 </h4>
-<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#### SCE ####</span></span>
 <span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assays</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span><span class="op">$</span><span class="va">normcounts</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/sct_normalize.html">sct_normalize</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assays</a></span><span class="op">(</span><span class="va">cortex_mrna_sce</span><span class="op">)</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span></span></code></pre></div>
 <p>Note that this is optional (and was not used in the original EWCE
@@ -1150,22 +1152,21 @@ Multiple DEG methods are currently available (see
 <p>You can now speed up the DGE process by parallelising across multiple
 cores with the parameter <code>no_cores</code> (<code>=1</code> by
 default).</p>
-<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb423"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate cell type data for just the cortex/hippocampus data  </span></span>
 <span><span class="va">exp_CortexOnly_DROPPED</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes</a></span><span class="op">(</span></span>
 <span>  exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>, </span>
 <span>  input_species <span class="op">=</span> <span class="st">"mouse"</span>,</span>
 <span>  output_species <span class="op">=</span> <span class="st">"human"</span>,</span>
 <span>  level2annot <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## Check 1000Check 3005</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: sctSpecies_origin not provided. Setting to 'mouse' by default.</span></span></code></pre>
 <pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for non-expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## Checking for cells with no expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## DGE:: Limma...</span></span></code></pre>
-<pre><code><span><span class="co">## 233 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></span></code></pre>
-<pre><code><span><span class="co">## Time difference of 0.2160637 secs</span></span></code></pre>
+<pre><code><span><span class="co">## 227 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></span></code></pre>
+<pre><code><span><span class="co">## Time difference of 0.2008762 secs</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1201,7 +1202,7 @@ parallelising across multiple cores with the parameter
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required namespace: ggdendro</span></span></code></pre>
-<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmpVS2cmY/ctd_kiCortexOnly.rda</span></span></code></pre>
+<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/Rtmp47iiMF/ctd_kiCortexOnly.rda</span></span></code></pre>
 <div class="sourceCode" id="cb441"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd_CortexOnly</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_CortexOnly</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -1277,24 +1278,22 @@ then calculate specificity:</p>
 <code class="sourceCode R"><span><span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/fix_bad_mgi_symbols.html">fix_bad_mgi_symbols</a></span><span class="op">(</span>exp <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<pre><code><span><span class="co">## 95 rows do not have proper MGI symbols</span></span></code></pre>
-<pre><code><span><span class="co">## Wdr20a, Fam101a, Gm14436, 9430023L20Rik, Ccdc64, D630032N06Rik, Epb4.2, Gm1604b_loc2, A430107P09Rik, Dhrsx, 2310003H01Rik, Gm10377_loc1, BB283400, 4933426M11Rik, Gm19897, A630066F11Rik, Gm13298_loc3, Rhox4a_loc2, D4Wsu53e, 1700047I17Rik2_loc2</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in EWCE::fix_bad_mgi_symbols(exp = cortex_mrna$exp): Possible presence</span></span>
-<span><span class="co">## of excel corrupted date-like genes: Sepp1</span></span></code></pre>
+<pre><code><span><span class="co">## 69 rows do not have proper MGI symbols</span></span></code></pre>
+<pre><code><span><span class="co">## 4930542D17Rik, A230070E04Rik, 4922505E12Rik, Agpat6, A730085A09Rik, 3110007F17Rik, AA387883, Azi1, Gm11237_loc2, Gm10778_loc1, Gm21950, LOC106740, Gm6194, Stxbp3a, Gm5820, Siglec5, A430092G05Rik, I730030J21Rik, Mir684-1_loc1, Gm10007</span></span></code></pre>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
 <pre><code><span><span class="co">## 0 poorly annotated genes are replicates of existing genes. These are:</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
-<pre><code><span><span class="co">## 41 rows should have been corrected by checking synonyms.</span></span></code></pre>
-<pre><code><span><span class="co">## 54 rows STILL do not have proper MGI symbols.</span></span></code></pre>
+<pre><code><span><span class="co">## 29 rows should have been corrected by checking synonyms.</span></span></code></pre>
+<pre><code><span><span class="co">## 40 rows STILL do not have proper MGI symbols.</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="merge-ctd">Merge CTD<a class="anchor" aria-label="anchor" href="#merge-ctd"></a>
 </h3>
 <p>Merge the CTDs - again this can be run with SCE or other ranged SE
 objects as input.</p>
-<div class="sourceCode" id="cb471"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">merged_KI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/merge_two_expfiles.html">merge_two_expfiles</a></span><span class="op">(</span>exp1 <span class="op">=</span> <span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">exp</span>, </span>
 <span>                                      exp2 <span class="op">=</span> <span class="va">cortex_mrna</span><span class="op">$</span><span class="va">exp</span>,</span>
 <span>                                      annot1 <span class="op">=</span> <span class="va">hypothalamus_mrna</span><span class="op">$</span><span class="va">annot</span>, </span>
@@ -1312,13 +1311,12 @@ objects as input.</p>
 <h3 id="drop-uninformative-genes">Drop uninformative genes<a class="anchor" aria-label="anchor" href="#drop-uninformative-genes"></a>
 </h3>
 <p>Drop genes which don’t vary significantly between cell types.</p>
-<div class="sourceCode" id="cb477"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb476"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exp_merged_DROPPED</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_uninformative_genes.html">drop_uninformative_genes</a></span><span class="op">(</span></span>
 <span>  exp <span class="op">=</span> <span class="va">merged_KI</span><span class="op">$</span><span class="va">exp</span>, </span>
 <span>  drop_nonhuman_genes <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>  input_species <span class="op">=</span> <span class="st">"mouse"</span>,</span>
 <span>  level2annot <span class="op">=</span> <span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Check 1000Check 3777</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: sctSpecies_origin not provided. Setting to 'mouse' by default.</span></span></code></pre>
 <pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
@@ -1326,12 +1324,12 @@ objects as input.</p>
 <pre><code><span><span class="co">## Checking for cells with no expressed genes.</span></span></code></pre>
 <pre><code><span><span class="co">## DGE:: Limma...</span></span></code></pre>
 <pre><code><span><span class="co">## 1 / 1,000 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span></span></code></pre>
-<pre><code><span><span class="co">## Time difference of 0.4302049 secs</span></span></code></pre>
+<pre><code><span><span class="co">## Time difference of 0.435312 secs</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="generate-celltypedataset-1">Generate CellTypeDataset<a class="anchor" aria-label="anchor" href="#generate-celltypedataset-1"></a>
 </h3>
-<div class="sourceCode" id="cb487"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb485"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">annotLevels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>level1class<span class="op">=</span><span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level1class</span>,</span>
 <span>                   level2class<span class="op">=</span><span class="va">merged_KI</span><span class="op">$</span><span class="va">annot</span><span class="op">$</span><span class="va">level2class</span><span class="op">)</span></span>
 <span></span>
@@ -1350,8 +1348,8 @@ objects as input.</p>
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span>
 <span><span class="co">## Converting to sparse matrix.</span></span></code></pre>
-<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/RtmpVS2cmY/ctd_MergedKI.rda</span></span></code></pre>
-<div class="sourceCode" id="cb495"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## + Saving results ==&gt;  /tmp/Rtmp47iiMF/ctd_MergedKI.rda</span></span></code></pre>
+<div class="sourceCode" id="cb493"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd_MergedKI</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/load_rdata.html">load_rdata</a></span><span class="op">(</span><span class="va">fNames_MergedKI</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level3">
@@ -1370,13 +1368,13 @@ you will need to first install the ggplot2 package with
 generated above, which is accessed using <code><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ewceData::ctd()</a></code>.
 We recommend that you use the code above to regenerate this though and
 drop the first command from the below section.</p>
-<div class="sourceCode" id="cb496"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb494"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## You can also import the pre-merged cortex and hypothalamus dataset</span></span>
 <span><span class="co"># generated by Karolinska institute. `ewceData::ctd()` is the same file as </span></span>
 <span><span class="co"># ctd_MergedKI above.</span></span>
 <span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<div class="sourceCode" id="cb497"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb495"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="va">ctd_MergedKI</span> </span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
@@ -1395,7 +1393,7 @@ only wish to know about the proportion of a genes expression which is
 found in a particular cell type. We can study this instead using the
 following code which examines the data frame
 <code>ctd[[1]]$specificity</code>:</p>
-<div class="sourceCode" id="cb498"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb496"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                      level <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -1411,7 +1409,7 @@ neurons but because their are a greater number of neuronal subtypes, the
 total expression proportion appears lower. We can examine expression
 across level 2 cell type level annotations by looking at
 <code>ctd[[2]]$specificity</code>:</p>
-<div class="sourceCode" id="cb499"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb497"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                      level <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -1427,16 +1425,16 @@ across level 2 cell type level annotations by looking at
 <div class="section level3">
 <h3 id="prepare-data">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data"></a>
 </h3>
-<div class="sourceCode" id="cb500"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb498"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb501"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span>
 <span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb505"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## NOTE: rep=100 for demo purposes only. </span></span>
 <span><span class="co">## Use &gt;=10,000 for publication-quality results.</span></span>
 <span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">100</span> </span>
@@ -1467,7 +1465,7 @@ microglia.</p>
 <p>You can now speed up the bootstrapping process by parallelising
 across multiple cores with the parameter <code>no_cores</code>
 (<code>=1</code> by default).</p>
-<div class="sourceCode" id="cb506"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb504"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">unconditional_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span></span>
 <span>  sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
@@ -1563,8 +1561,8 @@ across multiple cores with the parameter <code>no_cores</code>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
 <pre><code><span><span class="co">## 1 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
 <pre><code><span><span class="co">##    CellType annotLevel p fold_change sd_from_mean q</span></span>
-<span><span class="co">## 1 microglia          1 0    2.084715     4.125539 0</span></span></code></pre>
-<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<span><span class="co">## 1 microglia          1 0    2.091643     4.309526 0</span></span></code></pre>
+<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conditional_results_micro</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span> <span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span></span>
 <span>  sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>  hits <span class="op">=</span> <span class="va">hits</span>,</span>
@@ -1660,7 +1658,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <pre><code><span><span class="co">## Sorting results by p-value.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
 <pre><code><span><span class="co">## 0 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
-<div class="sourceCode" id="cb670"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb668"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conditional_results_astro</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span></span>
 <span>  sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>  hits <span class="op">=</span> <span class="va">hits</span>,</span>
@@ -1755,12 +1753,14 @@ across multiple cores with the parameter <code>no_cores</code>
 <pre><code><span><span class="co">## Testing for enrichment in 7 cell types...</span></span></code></pre>
 <pre><code><span><span class="co">## Sorting results by p-value.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
-<pre><code><span><span class="co">## 0 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
+<pre><code><span><span class="co">## 1 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
+<pre><code><span><span class="co">##    CellType annotLevel p fold_change sd_from_mean q</span></span>
+<span><span class="co">## 1 microglia          1 0     1.56225     2.999021 0</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="merge-and-plot-results">Merge and plot results<a class="anchor" aria-label="anchor" href="#merge-and-plot-results"></a>
 </h4>
-<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb751"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">merged_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">unconditional_results</span><span class="op">$</span><span class="va">results</span>,</span>
 <span>             list<span class="op">=</span><span class="st">"Unconditional Enrichment"</span><span class="op">)</span>,</span>
@@ -1796,7 +1796,7 @@ however, it has also been shown that schizophrenia is enriched for
 specificity in CA1 pyramidal neurons (which highly express hPSD genes).
 These two enrichments can be disassociated using the following
 analysis:</p>
-<div class="sourceCode" id="cb753"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set seed for bootstrap reproducibility </span></span>
 <span></span>
 <span><span class="va">mouse_to_human_homologs</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/mouse_to_human_homologs.html" class="external-link">mouse_to_human_homologs</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -1858,7 +1858,7 @@ borderline to non-significant.</p>
 <div class="section level3">
 <h3 id="controlling-for-multiple-cell-types">Controlling for multiple cell types<a class="anchor" aria-label="anchor" href="#controlling-for-multiple-cell-types"></a>
 </h3>
-<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb753"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">controlledCTs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pyramidal CA1"</span>,<span class="st">"pyramidal SS"</span>,<span class="st">"interneurons"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">res_hpsd_schiz</span> <span class="op">=</span> </span>
@@ -1903,16 +1903,16 @@ borderline to non-significant.</p>
 <div class="section level3">
 <h3 id="prepare-data-1">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data-1"></a>
 </h3>
-<div class="sourceCode" id="cb755"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb757"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tt_alzh</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh.html" class="external-link">tt_alzh</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span>
 <span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## NOTE: rep=100 for demo purposes only. </span></span>
 <span><span class="co">## Use &gt;=10,000 for publication-quality results.</span></span>
 <span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">100</span> </span></code></pre></div>
@@ -1935,7 +1935,7 @@ thresholds and selects the gene sets, and calls the EWCE function.</p>
 <p>Below we show the function call using the default settings, but if
 desired different threshold values can be used, or alternative columns
 used to sort the table.</p>
-<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ewce_expression_data calls bootstrap_enrichment_test so  </span></span>
 <span><span class="va">tt_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                                          tt <span class="op">=</span> <span class="va">tt_alzh</span>,</span>
@@ -2072,10 +2072,10 @@ used to sort the table.</p>
 <pre><code><span><span class="co">## Sorting results by p-value.</span></span></code></pre>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
 <pre><code><span><span class="co">## 3 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
-<pre><code><span><span class="co">##               CellType annotLevel p fold_change sd_from_mean q</span></span>
-<span><span class="co">## 1    endothelial_mural          1 0    1.248699     4.077431 0</span></span>
-<span><span class="co">## 2 astrocytes_ependymal          1 0    1.207925     3.365494 0</span></span>
-<span><span class="co">## 3            microglia          1 0    1.214113     2.806159 0</span></span></code></pre>
+<pre><code><span><span class="co">##               CellType annotLevel    p fold_change sd_from_mean          q</span></span>
+<span><span class="co">## 1    endothelial_mural          1 0.00    1.248901     4.266810 0.00000000</span></span>
+<span><span class="co">## 2 astrocytes_ependymal          1 0.00    1.207702     3.255269 0.00000000</span></span>
+<span><span class="co">## 3            microglia          1 0.01    1.211037     2.948742 0.02333333</span></span></code></pre>
 <pre><code><span><span class="co">## 1 core(s) assigned as workers (3 reserved).</span></span></code></pre>
 <pre><code><span><span class="co">## Standardising CellTypeDataset</span></span></code></pre>
 <pre><code><span><span class="co">## Checking gene list inputs.</span></span></code></pre>
@@ -2089,9 +2089,9 @@ used to sort the table.</p>
 <pre><code><span><span class="co">## Computing BH-corrected q-values.</span></span></code></pre>
 <pre><code><span><span class="co">## 3 significant cell type enrichment results @ q&lt;0.05 :</span></span></code></pre>
 <pre><code><span><span class="co">##        CellType annotLevel p fold_change sd_from_mean q</span></span>
-<span><span class="co">## 1  pyramidal_SS          1 0    1.297443     5.920268 0</span></span>
-<span><span class="co">## 2 pyramidal_CA1          1 0    1.222863     4.276946 0</span></span>
-<span><span class="co">## 3  interneurons          1 0    1.216460     4.214220 0</span></span></code></pre>
+<span><span class="co">## 1  pyramidal_SS          1 0    1.295520     6.054133 0</span></span>
+<span><span class="co">## 2 pyramidal_CA1          1 0    1.221332     4.429679 0</span></span>
+<span><span class="co">## 3  interneurons          1 0    1.212988     3.982445 0</span></span></code></pre>
 <p><strong>Note</strong> - You can run
 <code><a href="../reference/ewce_expression_data.html">ewce_expression_data()</a></code> offline by passing
 <code>localhub = TRUE</code>. This will work off a previously cached
@@ -2101,7 +2101,7 @@ version of the reference dataset from <code>ExperimentHub</code>.</p>
 </h4>
 <p>The results of this analysis can be plotted using the
 <code>ewce_plot</code> function.</p>
-<div class="sourceCode" id="cb896"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span><span class="va">tt_results</span><span class="op">$</span><span class="va">joint_results</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></span>
@@ -2116,7 +2116,7 @@ downregulated while glial genes are upregulated.</p>
 </h3>
 <p>A common request is to explain which differentially expressed genes
 are associated with a cell type…</p>
-<div class="sourceCode" id="cb897"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb896"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">full_result_path</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/generate_bootstrap_plots_for_transcriptome.html">generate_bootstrap_plots_for_transcriptome</a></span><span class="op">(</span></span>
 <span>  sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>  tt <span class="op">=</span> <span class="va">tt_alzh</span>,</span>
@@ -2144,7 +2144,7 @@ one list.</p>
 <div class="section level4">
 <h4 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a>
 </h4>
-<div class="sourceCode" id="cb898"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb897"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#if running offline pass localhub = TRUE</span></span>
 <span><span class="va">tt_alzh_BA36</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA36.html" class="external-link">tt_alzh_BA36</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">tt_alzh_BA44</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/tt_alzh_BA44.html" class="external-link">tt_alzh_BA44</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
@@ -2152,7 +2152,7 @@ one list.</p>
 <div class="section level4">
 <h4 id="run-ewce-analysis">Run EWCE analysis<a class="anchor" aria-label="anchor" href="#run-ewce-analysis"></a>
 </h4>
-<div class="sourceCode" id="cb899"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb898"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tt_results_36</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_expression_data.html">ewce_expression_data</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                                             tt <span class="op">=</span> <span class="va">tt_alzh_BA36</span>,</span>
 <span>                                             annotLevel <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -2176,7 +2176,7 @@ one list.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></span></code></pre></div>
 <p>The results can then be plotted as normal using the
 <code>ewce_plot</code> function.</p>
-<div class="sourceCode" id="cb900"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb899"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span><span class="va">merged_res</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">$</span><span class="va">plain</span><span class="op">)</span></span></code></pre></div>
 <p>The merged results from all three Alzheimer’s brain regions are found
@@ -2187,15 +2187,15 @@ to be remarkably similar, as was reported in our paper.</p>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<details><div class="sourceCode" id="cb901"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb900"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2025-02-03 r87683)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.5 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.1 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -2212,78 +2212,75 @@ to be remarkably similar, as was reported in our paper.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] ewceData_1.13.0      ExperimentHub_2.13.1 AnnotationHub_3.13.3</span></span>
-<span><span class="co">##  [4] BiocFileCache_2.13.2 dbplyr_2.5.0         BiocGenerics_0.51.3 </span></span>
-<span><span class="co">##  [7] ggplot2_3.5.1        EWCE_1.15.0          RNOmni_1.0.1.2      </span></span>
-<span><span class="co">## [10] BiocStyle_2.33.1    </span></span>
+<span><span class="co">##  [1] ewceData_1.15.0      ExperimentHub_2.15.0 AnnotationHub_3.15.0</span></span>
+<span><span class="co">##  [4] BiocFileCache_2.15.1 dbplyr_2.5.0         BiocGenerics_0.53.6 </span></span>
+<span><span class="co">##  [7] generics_0.1.3       ggplot2_3.5.1        EWCE_1.15.1         </span></span>
+<span><span class="co">## [10] RNOmni_1.0.1.2       BiocStyle_2.35.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] ggdendro_0.2.0              jsonlite_1.8.9             </span></span>
 <span><span class="co">##   [3] magrittr_2.0.3              farver_2.1.2               </span></span>
-<span><span class="co">##   [5] rmarkdown_2.28              fs_1.6.4                   </span></span>
-<span><span class="co">##   [7] zlibbioc_1.51.2             ragg_1.3.3                 </span></span>
-<span><span class="co">##   [9] vctrs_0.6.5                 memoise_2.0.1              </span></span>
-<span><span class="co">##  [11] RCurl_1.98-1.16             ggtree_3.13.2              </span></span>
-<span><span class="co">##  [13] rstatix_0.7.2               htmltools_0.5.8.1          </span></span>
-<span><span class="co">##  [15] S4Arrays_1.5.11             curl_5.2.3                 </span></span>
-<span><span class="co">##  [17] broom_1.0.7                 SparseArray_1.5.45         </span></span>
-<span><span class="co">##  [19] Formula_1.2-5               gridGraphics_0.5-1         </span></span>
-<span><span class="co">##  [21] sass_0.4.9                  bslib_0.8.0                </span></span>
-<span><span class="co">##  [23] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
-<span><span class="co">##  [25] plyr_1.8.9                  HGNChelper_0.8.14          </span></span>
-<span><span class="co">##  [27] plotly_4.10.4               cachem_1.1.0               </span></span>
-<span><span class="co">##  [29] mime_0.12                   lifecycle_1.0.4            </span></span>
-<span><span class="co">##  [31] pkgconfig_2.0.3             Matrix_1.7-1               </span></span>
-<span><span class="co">##  [33] R6_2.5.1                    fastmap_1.2.0              </span></span>
-<span><span class="co">##  [35] GenomeInfoDbData_1.2.13     MatrixGenerics_1.17.1      </span></span>
-<span><span class="co">##  [37] digest_0.6.37               aplot_0.2.3                </span></span>
-<span><span class="co">##  [39] colorspace_2.1-1            patchwork_1.3.0            </span></span>
-<span><span class="co">##  [41] AnnotationDbi_1.67.0        S4Vectors_0.43.2           </span></span>
-<span><span class="co">##  [43] grr_0.9.5                   textshaping_0.4.0          </span></span>
-<span><span class="co">##  [45] GenomicRanges_1.57.2        RSQLite_2.3.7              </span></span>
-<span><span class="co">##  [47] ggpubr_0.6.0                labeling_0.4.3             </span></span>
-<span><span class="co">##  [49] filelock_1.0.3              fansi_1.0.6                </span></span>
-<span><span class="co">##  [51] httr_1.4.7                  abind_1.4-8                </span></span>
-<span><span class="co">##  [53] compiler_4.4.1              withr_3.0.2                </span></span>
-<span><span class="co">##  [55] bit64_4.5.2                 backports_1.5.0            </span></span>
-<span><span class="co">##  [57] BiocParallel_1.39.0         orthogene_1.11.0           </span></span>
-<span><span class="co">##  [59] carData_3.0-5               DBI_1.2.3                  </span></span>
-<span><span class="co">##  [61] homologene_1.4.68.19.3.27   highr_0.11                 </span></span>
-<span><span class="co">##  [63] ggsignif_0.6.4              MASS_7.3-61                </span></span>
-<span><span class="co">##  [65] rappdirs_0.3.3              DelayedArray_0.31.14       </span></span>
-<span><span class="co">##  [67] tools_4.4.1                 splitstackshape_1.4.8      </span></span>
-<span><span class="co">##  [69] ape_5.8                     glue_1.8.0                 </span></span>
-<span><span class="co">##  [71] nlme_3.1-166                grid_4.4.1                 </span></span>
-<span><span class="co">##  [73] reshape2_1.4.4              generics_0.1.3             </span></span>
-<span><span class="co">##  [75] gtable_0.3.6                tidyr_1.3.1                </span></span>
-<span><span class="co">##  [77] data.table_1.16.2           car_3.1-3                  </span></span>
-<span><span class="co">##  [79] utf8_1.2.4                  XVector_0.45.0             </span></span>
-<span><span class="co">##  [81] stringr_1.5.1               BiocVersion_3.20.0         </span></span>
-<span><span class="co">##  [83] pillar_1.9.0                yulab.utils_0.1.7          </span></span>
-<span><span class="co">##  [85] babelgene_22.9              limma_3.61.12              </span></span>
-<span><span class="co">##  [87] dplyr_1.1.4                 treeio_1.29.2              </span></span>
-<span><span class="co">##  [89] lattice_0.22-6              bit_4.5.0                  </span></span>
-<span><span class="co">##  [91] tidyselect_1.2.1            SingleCellExperiment_1.27.2</span></span>
-<span><span class="co">##  [93] Biostrings_2.73.2           knitr_1.48                 </span></span>
-<span><span class="co">##  [95] bookdown_0.41               IRanges_2.39.2             </span></span>
-<span><span class="co">##  [97] SummarizedExperiment_1.35.5 stats4_4.4.1               </span></span>
-<span><span class="co">##  [99] xfun_0.48                   Biobase_2.65.1             </span></span>
-<span><span class="co">## [101] statmod_1.5.0               matrixStats_1.4.1          </span></span>
-<span><span class="co">## [103] stringi_1.8.4               UCSC.utils_1.1.0           </span></span>
-<span><span class="co">## [105] lazyeval_0.2.2              ggfun_0.1.7                </span></span>
-<span><span class="co">## [107] yaml_2.3.10                 codetools_0.2-20           </span></span>
-<span><span class="co">## [109] evaluate_1.0.1              tibble_3.2.1               </span></span>
-<span><span class="co">## [111] BiocManager_1.30.25         ggplotify_0.1.2            </span></span>
-<span><span class="co">## [113] cli_3.6.3                   systemfonts_1.1.0          </span></span>
-<span><span class="co">## [115] munsell_0.5.1               jquerylib_0.1.4            </span></span>
-<span><span class="co">## [117] Rcpp_1.0.13                 GenomeInfoDb_1.41.2        </span></span>
-<span><span class="co">## [119] gprofiler2_0.2.3            png_0.1-8                  </span></span>
-<span><span class="co">## [121] parallel_4.4.1              pkgdown_2.1.1              </span></span>
-<span><span class="co">## [123] blob_1.2.4                  bitops_1.0-9               </span></span>
-<span><span class="co">## [125] viridisLite_0.4.2           tidytree_0.4.6             </span></span>
-<span><span class="co">## [127] scales_1.3.0                purrr_1.0.2                </span></span>
-<span><span class="co">## [129] crayon_1.5.3                rlang_1.1.4                </span></span>
-<span><span class="co">## [131] KEGGREST_1.45.1</span></span></code></pre>
+<span><span class="co">##   [5] rmarkdown_2.29              fs_1.6.5                   </span></span>
+<span><span class="co">##   [7] ragg_1.3.3                  vctrs_0.6.5                </span></span>
+<span><span class="co">##   [9] memoise_2.0.1               RCurl_1.98-1.16            </span></span>
+<span><span class="co">##  [11] ggtree_3.15.0               rstatix_0.7.2              </span></span>
+<span><span class="co">##  [13] htmltools_0.5.8.1           S4Arrays_1.7.3             </span></span>
+<span><span class="co">##  [15] curl_6.2.0                  broom_1.0.7                </span></span>
+<span><span class="co">##  [17] SparseArray_1.7.5           Formula_1.2-5              </span></span>
+<span><span class="co">##  [19] gridGraphics_0.5-1          sass_0.4.9                 </span></span>
+<span><span class="co">##  [21] bslib_0.9.0                 htmlwidgets_1.6.4          </span></span>
+<span><span class="co">##  [23] desc_1.4.3                  HGNChelper_0.8.15          </span></span>
+<span><span class="co">##  [25] plyr_1.8.9                  plotly_4.10.4              </span></span>
+<span><span class="co">##  [27] cachem_1.1.0                mime_0.12                  </span></span>
+<span><span class="co">##  [29] lifecycle_1.0.4             pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [31] Matrix_1.7-2                R6_2.6.0                   </span></span>
+<span><span class="co">##  [33] fastmap_1.2.0               GenomeInfoDbData_1.2.13    </span></span>
+<span><span class="co">##  [35] MatrixGenerics_1.19.1       digest_0.6.37              </span></span>
+<span><span class="co">##  [37] aplot_0.2.4                 colorspace_2.1-1           </span></span>
+<span><span class="co">##  [39] patchwork_1.3.0             AnnotationDbi_1.69.0       </span></span>
+<span><span class="co">##  [41] S4Vectors_0.45.4            grr_0.9.5                  </span></span>
+<span><span class="co">##  [43] textshaping_1.0.0           GenomicRanges_1.59.1       </span></span>
+<span><span class="co">##  [45] RSQLite_2.3.9               ggpubr_0.6.0               </span></span>
+<span><span class="co">##  [47] labeling_0.4.3              filelock_1.0.3             </span></span>
+<span><span class="co">##  [49] httr_1.4.7                  abind_1.4-8                </span></span>
+<span><span class="co">##  [51] compiler_4.5.0              withr_3.0.2                </span></span>
+<span><span class="co">##  [53] bit64_4.6.0-1               backports_1.5.0            </span></span>
+<span><span class="co">##  [55] BiocParallel_1.41.0         orthogene_1.13.0           </span></span>
+<span><span class="co">##  [57] carData_3.0-5               DBI_1.2.3                  </span></span>
+<span><span class="co">##  [59] homologene_1.4.68.19.3.27   ggsignif_0.6.4             </span></span>
+<span><span class="co">##  [61] MASS_7.3-64                 rappdirs_0.3.3             </span></span>
+<span><span class="co">##  [63] DelayedArray_0.33.5         tools_4.5.0                </span></span>
+<span><span class="co">##  [65] splitstackshape_1.4.8       ape_5.8-1                  </span></span>
+<span><span class="co">##  [67] glue_1.8.0                  nlme_3.1-167               </span></span>
+<span><span class="co">##  [69] grid_4.5.0                  reshape2_1.4.4             </span></span>
+<span><span class="co">##  [71] gtable_0.3.6                tidyr_1.3.1                </span></span>
+<span><span class="co">##  [73] data.table_1.16.4           car_3.1-3                  </span></span>
+<span><span class="co">##  [75] XVector_0.47.2              stringr_1.5.1              </span></span>
+<span><span class="co">##  [77] BiocVersion_3.21.1          pillar_1.10.1              </span></span>
+<span><span class="co">##  [79] yulab.utils_0.2.0           babelgene_22.9             </span></span>
+<span><span class="co">##  [81] limma_3.63.3                dplyr_1.1.4                </span></span>
+<span><span class="co">##  [83] treeio_1.31.0               lattice_0.22-6             </span></span>
+<span><span class="co">##  [85] bit_4.5.0.1                 tidyselect_1.2.1           </span></span>
+<span><span class="co">##  [87] SingleCellExperiment_1.29.1 Biostrings_2.75.3          </span></span>
+<span><span class="co">##  [89] knitr_1.49                  bookdown_0.42              </span></span>
+<span><span class="co">##  [91] IRanges_2.41.3              SummarizedExperiment_1.37.0</span></span>
+<span><span class="co">##  [93] stats4_4.5.0                xfun_0.50                  </span></span>
+<span><span class="co">##  [95] Biobase_2.67.0              statmod_1.5.0              </span></span>
+<span><span class="co">##  [97] matrixStats_1.5.0           stringi_1.8.4              </span></span>
+<span><span class="co">##  [99] UCSC.utils_1.3.1            lazyeval_0.2.2             </span></span>
+<span><span class="co">## [101] ggfun_0.1.8                 yaml_2.3.10                </span></span>
+<span><span class="co">## [103] codetools_0.2-20            evaluate_1.0.3             </span></span>
+<span><span class="co">## [105] tibble_3.2.1                BiocManager_1.30.25        </span></span>
+<span><span class="co">## [107] ggplotify_0.1.2             cli_3.6.4                  </span></span>
+<span><span class="co">## [109] systemfonts_1.2.1           munsell_0.5.1              </span></span>
+<span><span class="co">## [111] jquerylib_0.1.4             Rcpp_1.0.14                </span></span>
+<span><span class="co">## [113] GenomeInfoDb_1.43.4         gprofiler2_0.2.3           </span></span>
+<span><span class="co">## [115] png_0.1-8                   parallel_4.5.0             </span></span>
+<span><span class="co">## [117] pkgdown_2.1.1               blob_1.2.4                 </span></span>
+<span><span class="co">## [119] bitops_1.0-9                viridisLite_0.4.2          </span></span>
+<span><span class="co">## [121] tidytree_0.4.6              scales_1.3.0               </span></span>
+<span><span class="co">## [123] purrr_1.0.4                 crayon_1.5.3               </span></span>
+<span><span class="co">## [125] rlang_1.1.5                 KEGGREST_1.47.0</span></span></code></pre>
 </details><hr>
 </div>
 <div class="section level2">
