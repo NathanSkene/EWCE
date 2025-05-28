@@ -27,6 +27,7 @@ bootstrap_plot <- function(gene_data,
     
     requireNamespace("ggplot2")
     requireNamespace("patchwork")
+    requireNamespace("ggrepel")
     Pos <- Rep <- Exp <- p <- significant <- CellType <- NULL;
     
     exp_mats_msg <- paste(
@@ -36,8 +37,7 @@ bootstrap_plot <- function(gene_data,
     plots <- list()
     #### Set up save path ####
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)  
-    gene_data$symLab <- ifelse(gene_data$hit > 25, 
-                               sprintf("  %s", gene_data$gene), NA) 
+    gene_data$symLab <- ifelse(gene_data$hit > 25, gene_data$gene, "") 
     
     #### Filter gene_data ####
     if(!is.null(signif_ct)){
@@ -70,7 +70,7 @@ bootstrap_plot <- function(gene_data,
         facet_grid(facets = facets, 
                    scales = scales) + 
         add_line() +
-        theme_graph() 
+        theme_classic() 
     plots[["plot1"]] <- g1 
     messager("Saving plot -->", files[[1]], v=verbose)
     ggplot2::ggsave(filename = files[[1]], 
@@ -80,12 +80,18 @@ bootstrap_plot <- function(gene_data,
     
     #### Plot 2: Plot with gene names  ####
     g2 <- g1 + 
-        geom_text(aes_string(label = "symLab"),
-                   # fill=ggplot2::alpha("black",.5),
-                   color=ggplot2::alpha("black",.75),
-                   na.rm = TRUE,
-                  hjust = 0, vjust = 0, size = 3
-        ) + 
+        geom_text_repel(
+          mapping = aes(label = symLab), 
+          alpha = 0.75,
+          segment.alpha = 0.75,
+          max.overlaps = 15
+        ) +
+        # geom_text(aes_string(label = "symLab"),
+                   # # fill=ggplot2::alpha("black",.5),
+                   # color=ggplot2::alpha("black",.75),
+                   # na.rm = TRUE,
+                  # hjust = 0, vjust = 0, size = 3
+        # ) + 
         scale_x_discrete(expand = expansion(mult = c(0,.15))) +
         scale_y_discrete(expand = expansion(mult = c(0,.15))) 
     plots[["plot2"]] <- g2 
