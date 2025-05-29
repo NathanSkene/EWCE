@@ -90,7 +90,7 @@ bootstrap_plot <- function(gene_data,
           segment.alpha = 0.75,
           max.overlaps = 25,
           force_pull = 0.5
-        ) +
+        ) # +
         # scale_x_discrete(expand = expansion(mult = c(0,.15))) +
         # scale_y_discrete(expand = expansion(mult = c(0,.15))) 
     plots[["plot2"]] <- g2 
