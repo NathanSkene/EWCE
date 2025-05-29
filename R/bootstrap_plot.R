@@ -56,27 +56,31 @@ bootstrap_plot <- function(gene_data,
     }
     ## Plot several variants of the graph ##
     add_line <- function(){
-        geom_abline(intercept = 0, slope = 1, 
-                    linetype = "dashed",
-                    colour = ggplot2::alpha("red",.5)) 
+      geom_abline(
+        intercept = 0, 
+        slope = 1, 
+        linetype = "dashed",
+        color = "red", 
+        alpha = 0.5
+      ) 
     } 
     #### Plot 1: Plot without gene names  ####
-    g1 <- ggplot(gene_data,
-                          aes_string(x = "boot", y = "hit",  color="hit")) +
-        geom_point(size = 1,  alpha=.75) + 
+    g1 <- ggplot(gene_data, aes(x = boot, y = hit,  color = hit)) +
+        geom_point(size = 1,  alpha = .75) + 
         xlab("Mean Bootstrap Expression") +
         ylab("Expression in cell type (%)\n") +
         scale_color_viridis_c() +
-        facet_grid(facets = facets, 
-                   scales = scales) + 
+        facet_grid(facets = facets, scales = scales) + 
         add_line() +
         theme_classic() 
     plots[["plot1"]] <- g1 
     messager("Saving plot -->", files[[1]], v=verbose)
-    ggplot2::ggsave(filename = files[[1]], 
-                    plot = g1,
-                    width = 3.5, 
-                    height = 3.5) 
+    ggsave(
+      filename = files[[1]], 
+      plot = g1,
+      width = 4, 
+      height = 3.5
+    )
     
     #### Plot 2: Plot with gene names  ####
     g2 <- g1 + 
@@ -84,22 +88,19 @@ bootstrap_plot <- function(gene_data,
           mapping = aes(label = symLab), 
           alpha = 0.75,
           segment.alpha = 0.75,
-          max.overlaps = 15
+          max.overlaps = 25,
+          force_pull = 0.5
         ) +
-        # geom_text(aes_string(label = "symLab"),
-                   # # fill=ggplot2::alpha("black",.5),
-                   # color=ggplot2::alpha("black",.75),
-                   # na.rm = TRUE,
-                  # hjust = 0, vjust = 0, size = 3
-        # ) + 
         scale_x_discrete(expand = expansion(mult = c(0,.15))) +
         scale_y_discrete(expand = expansion(mult = c(0,.15))) 
     plots[["plot2"]] <- g2 
     messager("Saving plot -->", files[[2]], v=verbose)
-    ggplot2::ggsave(filename = files[[2]], 
-                    plot = g2,
-                    width = 3.5, 
-                    height = 3.5) 
+    ggsave(
+      filename = files[[2]], 
+      plot = g2,
+      width = 4, 
+      height = 3.5
+    ) 
    
  
     #### Plot 3 ####
