@@ -91,8 +91,8 @@ bootstrap_plot <- function(gene_data,
           max.overlaps = 25,
           force_pull = 0.5
         ) +
-        scale_x_discrete(expand = expansion(mult = c(0,.15))) +
-        scale_y_discrete(expand = expansion(mult = c(0,.15))) 
+        # scale_x_discrete(expand = expansion(mult = c(0,.15))) +
+        # scale_y_discrete(expand = expansion(mult = c(0,.15))) 
     plots[["plot2"]] <- g2 
     messager("Saving plot -->", files[[2]], v=verbose)
     ggsave(
@@ -141,6 +141,7 @@ bootstrap_plot <- function(gene_data,
             scale_x_discrete(breaks = NULL) +
             theme_graph() +
             facet_wrap(facets=facets)
+        print(sprintf("Names of melt boot: %s", paste(names(melt_boot), collapse = " ")))
         wd <- 1 + length(unique(melt_boot[, hit])) * 0.25 
         plots[["plot3"]] <- g3
         messager("Saving plot -->", files[[3]], v=verbose)
