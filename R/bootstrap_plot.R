@@ -69,7 +69,7 @@ bootstrap_plot <- function(gene_data,
         geom_point(size = 1,  alpha = .75) + 
         xlab("Mean Bootstrap Expression") +
         ylab("Expression in cell type (%)\n") +
-        scale_color_viridis_c() +
+        scale_color_viridis_c(direction = -1) +
         facet_grid(facets = facets, scales = scales) + 
         add_line() +
         theme_classic() 
@@ -141,7 +141,7 @@ bootstrap_plot <- function(gene_data,
             scale_x_discrete(breaks = NULL) +
             theme_graph() +
             facet_wrap(facets=facets)
-        print(sprintf("Names of melt boot: %s", paste(names(melt_boot), collapse = " ")))
+        cat("Names of melt boot:", paste(names(melt_boot), collapse = " "))
         wd <- 1 + length(unique(melt_boot[, hit])) * 0.25 
         plots[["plot3"]] <- g3
         messager("Saving plot -->", files[[3]], v=verbose)
