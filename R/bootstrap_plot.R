@@ -141,11 +141,12 @@ bootstrap_plot <- function(gene_data,
             scale_x_discrete(breaks = NULL) +
             theme_graph() +
             facet_wrap(facets=facets)
+        wd <- 1 + length(unique(melt_boot[, hit])) * 0.25 
         plots[["plot3"]] <- g3
         messager("Saving plot -->", files[[3]], v=verbose)
         ggplot2::ggsave(filename = files[[3]], 
                         plot = g3,
-                        width = 3.5, 
+                        width = wd, 
                         height = 3.5) 
         
         
@@ -189,7 +190,7 @@ bootstrap_plot <- function(gene_data,
             labs(x=expression("Least specific" %->% "Most specific"),
                  y="Expression in cell type (%)\n") 
         #### Save ####
-        wd <- 1 + length(unique(melt_boot[,4])) * 0.175 
+        wd <- 1 + length(unique(melt_boot[,4])) * 0.25 
         plots[["plot4"]] <- g4
         messager("Saving plot -->", files[[4]], v=verbose)
         ggplot2::ggsave(filename = files[[4]], 
