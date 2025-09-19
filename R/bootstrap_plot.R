@@ -27,7 +27,6 @@ bootstrap_plot <- function(gene_data,
     
     requireNamespace("ggplot2")
     requireNamespace("patchwork")
-    requireNamespace("ggrepel")
     Pos <- Rep <- Exp <- p <- significant <- CellType <- NULL;
     
     exp_mats_msg <- paste(
@@ -37,7 +36,8 @@ bootstrap_plot <- function(gene_data,
     plots <- list()
     #### Set up save path ####
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)  
-    gene_data$symLab <- ifelse(gene_data$hit > 25, gene_data$gene, "") 
+    gene_data$symLab <- ifelse(gene_data$hit > 25, 
+                               sprintf("  %s", gene_data$gene), NA) 
     
     #### Filter gene_data ####
     if(!is.null(signif_ct)){
@@ -56,51 +56,44 @@ bootstrap_plot <- function(gene_data,
     }
     ## Plot several variants of the graph ##
     add_line <- function(){
-      geom_abline(
-        intercept = 0, 
-        slope = 1, 
-        linetype = "dashed",
-        color = "red", 
-        alpha = 0.5
-      ) 
+        geom_abline(intercept = 0, slope = 1, 
+                    linetype = "dashed",
+                    colour = ggplot2::alpha("red",.5)) 
     } 
     #### Plot 1: Plot without gene names  ####
-    g1 <- ggplot(gene_data, aes(x = boot, y = hit,  color = hit)) +
-        geom_point(size = 1,  alpha = .75) + 
+    g1 <- ggplot(gene_data,
+                          aes_string(x = "boot", y = "hit",  color="hit")) +
+        geom_point(size = 1,  alpha=.75) + 
         xlab("Mean Bootstrap Expression") +
         ylab("Expression in cell type (%)\n") +
-        scale_color_viridis_c(direction = -1) +
-        facet_grid(facets = facets, scales = scales) + 
+        scale_color_viridis_c() +
+        facet_grid(facets = facets, 
+                   scales = scales) + 
         add_line() +
-        theme_classic() 
+        theme_graph() 
     plots[["plot1"]] <- g1 
     messager("Saving plot -->", files[[1]], v=verbose)
-    ggsave(
-      filename = files[[1]], 
-      plot = g1,
-      width = 4, 
-      height = 3.5
-    )
+    ggplot2::ggsave(filename = files[[1]], 
+                    plot = g1,
+                    width = 3.5, 
+                    height = 3.5) 
     
     #### Plot 2: Plot with gene names  ####
     g2 <- g1 + 
-        geom_text_repel(
-          mapping = aes(label = symLab), 
-          alpha = 0.75,
-          segment.alpha = 0.75,
-          max.overlaps = 25,
-          force_pull = 0.5
-        ) # +
-        # scale_x_discrete(expand = expansion(mult = c(0,.15))) +
-        # scale_y_discrete(expand = expansion(mult = c(0,.15))) 
+        geom_text(aes_string(label = "symLab"),
+                   # fill=ggplot2::alpha("black",.5),
+                   color=ggplot2::alpha("black",.75),
+                   na.rm = TRUE,
+                  hjust = 0, vjust = 0, size = 3
+        ) + 
+        scale_x_discrete(expand = expansion(mult = c(0,.15))) +
+        scale_y_discrete(expand = expansion(mult = c(0,.15))) 
     plots[["plot2"]] <- g2 
     messager("Saving plot -->", files[[2]], v=verbose)
-    ggsave(
-      filename = files[[2]], 
-      plot = g2,
-      width = 4, 
-      height = 3.5
-    ) 
+    ggplot2::ggsave(filename = files[[2]], 
+                    plot = g2,
+                    width = 3.5, 
+                    height = 3.5) 
    
  
     #### Plot 3 ####
@@ -141,13 +134,11 @@ bootstrap_plot <- function(gene_data,
             scale_x_discrete(breaks = NULL) +
             theme_graph() +
             facet_wrap(facets=facets)
-        # cat("Names of melt boot:", paste(names(melt_boot), collapse = " "))
-        # wd <- 1 + length(unique(melt_boot[, hit])) * 0.25 
         plots[["plot3"]] <- g3
         messager("Saving plot -->", files[[3]], v=verbose)
         ggplot2::ggsave(filename = files[[3]], 
                         plot = g3,
-                        width = 8, 
+                        width = 3.5, 
                         height = 3.5) 
         
         
@@ -191,12 +182,12 @@ bootstrap_plot <- function(gene_data,
             labs(x=expression("Least specific" %->% "Most specific"),
                  y="Expression in cell type (%)\n") 
         #### Save ####
-        # wd <- 1 + length(unique(melt_boot[,4])) * 0.25 
+        wd <- 1 + length(unique(melt_boot[,4])) * 0.175 
         plots[["plot4"]] <- g4
         messager("Saving plot -->", files[[4]], v=verbose)
         ggplot2::ggsave(filename = files[[4]], 
                         plot = g4,
-                        width = 8,
+                        width = wd, 
                         height = 4) 
     }
    
