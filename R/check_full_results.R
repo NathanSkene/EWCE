@@ -23,12 +23,8 @@ check_full_results <- function(full_results,
             " sct_data. Perhaps the wrong annotLevel was used?"
         )
         if (sum(!as.character(unique(full_results$results$CellType)) %in%
-            colnames(sct_data[[1]]$specificity)) ==
+            colnames(sct_data[[annotLevel]]$specificity)) ==
             length(as.character(unique(full_results$results$CellType)))) {
-            stop(err_msg2)
-        }
-        if (sum(!as.character(unique(full_results$results$CellType)) %in%
-            colnames(sct_data[[1]]$specificity)) > 0) {
             stop(err_msg2)
         }
     }
