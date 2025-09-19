@@ -9,7 +9,7 @@
 #' @keywords internal
 check_full_results <- function(full_results,
                                sct_data,
-                               annotLevel = annotLevel) {
+                               annotLevel) {
     if (!is.null(full_results)) {
         err_msg <- paste0(
             "ERROR: full_results must be a list of length 3 or 4",
