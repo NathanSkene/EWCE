@@ -1,3 +1,110 @@
+#' Create a multi-page PDF with each cell type on a separate page
+#'
+#' This function creates a PDF where each unique value in a specified faceting 
+#' variable (typically "CellType") is plotted on a separate page. Each plot shows 
+#' expression data with points colored by expression levels.
+#'
+#' @param gene_data A data frame containing gene expression data with columns for 
+#'   "boot", "hit", and a faceting variable (typically "CellType").
+#' @param facet_var Character string specifying the column name to use for 
+#'   separating plots onto different pages (e.g., "CellType").
+#' @param output_file Character string specifying the path to save the PDF file.
+#' @param add_labels Character string specifying the column name to use for point labels,
+#'   or NULL to disable labels (default: NULL).
+#' @param verbose Logical indicating whether to print progress messages (default: TRUE).
+#'
+#' @return No return value, called for side effect of creating a PDF file.
+#'
+#' @details The function creates QQ plots of "boot" vs "hit" values, with points 
+#'   colored by "hit" values using a reversed viridis color scale. Each plot includes
+#'   a title showing the cell type being displayed. If add_labels is provided, text labels
+#'   from the specified column will be added to the points using ggrepel.
+#'
+#' @examples
+#' \dontrun{
+#' # Create plots without labels
+#' .create_multipage_plot(
+#'   gene_data = my_gene_data,
+#'   facet_var = "CellType",
+#'   output_file = "cell_type_plots.pdf"
+#' )
+#'
+#' # Create plots with gene symbol labels
+#' .create_multipage_plot(
+#'   gene_data = my_gene_data,
+#'   facet_var = "CellType",
+#'   output_file = "cell_type_plots_labeled.pdf",
+#'   add_labels = "gene_symbol"
+#' )
+#' }
+#'
+#' @import ggplot2
+#' @importFrom viridis scale_color_viridis_c
+#' @importFrom ggrepel geom_text_repel
+#'
+#' @keywords internal 
+.create_multipage_plot <- function(gene_data, facet_var, output_file, 
+                                   add_labels = NULL, verbose = TRUE) {
+  # Check for required packages
+  if(!is.null(add_labels) && !requireNamespace("ggrepel", quietly = TRUE)) {
+    stop("Package 'ggrepel' is needed for adding labels. Please install it.",
+         call. = FALSE)
+  }
+  
+  if (verbose) messager("Saving plot -->", output_file)
+  # Check if the specified label column exists
+  if(!is.null(add_labels) && !(add_labels %in% colnames(gene_data))) {
+    stop(paste0("Label column '", add_labels, "' not found in data."),
+         call. = FALSE)
+  }
+  
+  # Get unique cell types
+  cell_types <- unique(gene_data[[facet_var]])
+  
+  # Start PDF device
+  pdf(output_file, width = 7, height = 7)
+  
+  # Create and print a plot for each cell type
+  for (cell_type in cell_types) {
+    # Subset data for this cell type
+    subset_data <- gene_data[gene_data[[facet_var]] == cell_type, ]
+    
+    # Create base plot for this cell type
+    g <- ggplot(subset_data, aes(x = boot, y = hit, color = hit)) +
+      geom_point(size = 1, alpha = .75) + 
+      xlab("Mean Bootstrap Expression") +
+      ylab("Expression in cell type (%)\n") +
+      scale_color_viridis_c(direction = -1) +
+      ggtitle(paste("Cell Type:", cell_type)) +
+      add_line() +
+      theme_classic()
+    
+    # Add labels if a column name was provided
+    if(!is.null(add_labels)) {
+      g <- g + ggrepel::geom_text_repel(
+        aes(label = .data[[add_labels]]),  # Use the column name dynamically
+        size = 3,
+        box.padding = 0.35,
+        point.padding = 0.5,
+        segment.color = "grey50",
+        max.overlaps = 25
+      )
+      
+      if (verbose) messager("Added labels from column:", add_labels)
+    }
+    
+    # Print the plot (adds it to the PDF)
+    print(g)
+    
+    if (verbose) messager("Added plot for", cell_type)
+  }
+  
+  # Close the PDF device
+  dev.off()
+  
+}
+
+
 #' Bootstrap plot
 #' 
 #' Plot bootstrap enrichment results. 
@@ -55,53 +162,22 @@ bootstrap_plot <- function(gene_data,
         dir.create(dirname(f), showWarnings = FALSE, recursive = TRUE)   
     }
     ## Plot several variants of the graph ##
-    add_line <- function(){
-      geom_abline(
-        intercept = 0, 
-        slope = 1, 
-        linetype = "dashed",
-        color = "red", 
-        alpha = 0.5
-      ) 
-    } 
     #### Plot 1: Plot without gene names  ####
-    g1 <- ggplot(gene_data, aes(x = boot, y = hit,  color = hit)) +
-        geom_point(size = 1,  alpha = .75) + 
-        xlab("Mean Bootstrap Expression") +
-        ylab("Expression in cell type (%)\n") +
-        scale_color_viridis_c(direction = -1) +
-        facet_grid(facets = facets, scales = scales) + 
-        add_line() +
-        theme_classic() 
-    plots[["plot1"]] <- g1 
-    messager("Saving plot -->", files[[1]], v=verbose)
-    ggsave(
-      filename = files[[1]], 
-      plot = g1,
-      width = 4, 
-      height = 3.5
+    .create_multipage_plot(
+      gene_data = gene_data,
+      facet_var = "CellType",  # Column name containing cell types
+      output_file = files[[1]],
+      verbose = verbose
     )
     
     #### Plot 2: Plot with gene names  ####
-    g2 <- g1 + 
-        geom_text_repel(
-          mapping = aes(label = symLab), 
-          alpha = 0.75,
-          segment.alpha = 0.75,
-          max.overlaps = 25,
-          force_pull = 0.5
-        ) # +
-        # scale_x_discrete(expand = expansion(mult = c(0,.15))) +
-        # scale_y_discrete(expand = expansion(mult = c(0,.15))) 
-    plots[["plot2"]] <- g2 
-    messager("Saving plot -->", files[[2]], v=verbose)
-    ggsave(
-      filename = files[[2]], 
-      plot = g2,
-      width = 4, 
-      height = 3.5
-    ) 
-   
+    .create_multipage_plot(
+      gene_data = gene_data,
+      facet_var = "CellType",  # Column name containing cell types
+      output_file = files[[2]],
+      add_labels = "symLab",
+      verbose = verbose
+    )
  
     #### Plot 3 ####
     if(is.null(exp_mats)){
@@ -204,3 +280,5 @@ bootstrap_plot <- function(gene_data,
     return(list(plots=plots,
                 paths=files))
 }
+
+
