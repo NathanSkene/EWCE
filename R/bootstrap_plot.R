@@ -89,6 +89,7 @@
       g <- g + ggrepel::geom_text_repel(
         aes(label = .data[[add_labels]]),  # Use the column name dynamically
         size = 3,
+        force_pull = 0.1, 
         box.padding = 0.35,
         point.padding = 0.5,
         segment.color = "grey50",
