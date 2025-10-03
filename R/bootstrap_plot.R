@@ -150,7 +150,11 @@ bootstrap_plot <- function(gene_data,
     plots <- list()
     #### Set up save path ####
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)  
-    gene_data$symLab <- ifelse(gene_data$hit - gene_data$boot > 1, gene_data$gene, "") 
+    gene_data$symLab <- ifelse(
+      test = gene_data$hit - gene_data$boot > 1 | gene_data$hit > 75, 
+      yes = gene_data$gene, 
+      no = ""
+    ) 
     
     #### Filter gene_data ####
     if(!is.null(signif_ct)){
