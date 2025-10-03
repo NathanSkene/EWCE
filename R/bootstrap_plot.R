@@ -76,7 +76,12 @@
       ylab("Expression in cell type (%)\n") +
       scale_color_viridis_c(direction = -1) +
       ggtitle(paste("Cell Type:", cell_type)) +
-      add_line() +
+      geom_abline(
+        intercept = 0, 
+        slope = 1, 
+        linetype = "dashed",
+        colour = ggplot2::alpha("red",.5)
+      ) +
       theme_classic()
     
     # Add labels if a column name was provided
