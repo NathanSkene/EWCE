@@ -28,7 +28,7 @@ expressed across cell-types (multiple DEG methods available).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ expressed across cell-types (multiple DEG methods available).
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Drop uninformative genes</h1>
-    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/R/drop_uninformative_genes.r" class="external-link"><code>R/drop_uninformative_genes.r</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/dep-fixes/R/drop_uninformative_genes.r" class="external-link"><code>R/drop_uninformative_genes.r</code></a></small>
     <div class="hidden name"><code>drop_uninformative_genes.Rd</code></div>
     </div>
 
@@ -147,38 +147,52 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 <dt id="arg-non-strategy">non121_strategy<a class="anchor" aria-label="anchor" href="#arg-non-strategy"></a></dt>
 <dd><p>How to handle genes that don't have
 1:1 mappings between <code>input_species</code>:<code>output_species</code>.
-Options include:<br></p><ul><li><p><code>"drop_both_species" or "dbs" or 1</code> : <br>
-Drop genes that have duplicate
-mappings in either the <code>input_species</code> or <code>output_species</code> <br>
-(<em>DEFAULT</em>).</p></li>
-<li><p><code>"drop_input_species" or "dis" or 2</code> : <br>
-Only drop genes that have duplicate
-mappings in the <code>input_species</code>.</p></li>
-<li><p><code>"drop_output_species" or "dos" or 3</code> : <br>
-Only drop genes that have duplicate
-mappings in the <code>output_species</code>.</p></li>
-<li><p><code>"keep_both_species" or "kbs" or 4</code> : <br>
-Keep all genes regardless of whether
-they have duplicate mappings in either species.</p></li>
-<li><p><code>"keep_popular" or "kp" or 5</code> : <br>
-Return only the most "popular" interspecies ortholog mappings.
+Options include:<br></p><dl><dt><code>"drop_both_species" or "dbs" or 1</code></dt>
+<dd><p>Drop genes that have duplicate
+mappings in either the <code>input_species</code> or <code>output_species</code>
+(<em>DEFAULT</em>).</p></dd>
+
+<dt><code>"drop_input_species" or "dis" or 2</code></dt>
+<dd><p>Only drop genes that have duplicate
+mappings in the <code>input_species</code>.</p></dd>
+
+<dt><code>"drop_output_species" or "dos" or 3</code></dt>
+<dd><p>Only drop genes that have duplicate
+mappings in the <code>output_species</code>.</p></dd>
+
+<dt><code>"keep_both_species" or "kbs" or 4</code></dt>
+<dd><p>Keep all genes regardless of whether
+they have duplicate mappings in either species.</p></dd>
+
+<dt><code>"keep_popular" or "kp" or 5</code></dt>
+<dd><p>Return only the most "popular" interspecies ortholog mappings.
  This procedure tends to yield a greater number of returned genes
- but at the cost of many of them not being true biological 1:1 orthologs.</p></li>
-<li><p><code>"sum","mean","median","min" or "max"</code> : <br>
- When <code>gene_df</code> is a matrix and <code>gene_output="rownames"</code>,
+ but at the cost of many of them not being true biological 1:1 orthologs.</p></dd>
+
+ <dt><code>"sum","mean","median","min" or "max"</code></dt>
+<dd><p>When <code>gene_df</code> is a matrix and <code>gene_output="rownames"</code>,
   these options will aggregate many-to-one gene mappings
   (<code>input_species</code>-to-<code>output_species</code>)
-  after dropping any duplicate genes in the <code>output_species</code>.</p></li>
-</ul></dd>
+  after dropping any duplicate genes in the <code>output_species</code>.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
-<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
-<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
-Also gives consensus scores for each gene mapping based on a
- several different data sources.</p></li>
-</ul></dd>
+<dd><p>R package to use for gene mapping:</p><dl><dt><code>"gprofiler"</code></dt>
+<dd><p>Slower but more species and genes.</p></dd>
+
+ <dt><code>"homologene"</code></dt>
+<dd><p>Faster but fewer species and genes.</p></dd>
+
+ <dt><code>"babelgene"</code></dt>
+<dd><p>Faster but fewer species and genes.
+ Also gives consensus scores for each gene mapping based on a
+ several different data sources.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-as-sparse">as_sparse<a class="anchor" aria-label="anchor" href="#arg-as-sparse"></a></dt>
@@ -210,11 +224,18 @@ Set to <code>NULL</code> to automatically optimise.</p></dd>
 <dd><p>Data object containing the genes
 (see <code>gene_input</code> for options on how
 the genes can be stored within the object).<br>
-Can be one of the following formats:<br></p><ul><li><p><code>matrix</code> : <br>A sparse or dense matrix.</p></li>
-<li><p><code>data.frame</code> : <br>A <code>data.frame</code>,
- <code>data.table</code>. or <code>tibble</code>.</p></li>
-<li><p>codelist : <br>A <code>list</code> or character <code>vector</code>.</p></li>
-</ul><p>Genes, transcripts, proteins, SNPs, or genomic ranges
+Can be one of the following formats:<br></p><dl><dt><code>matrix</code></dt>
+<dd><p>A sparse or dense matrix.</p></dd>
+
+<dt><code>data.frame</code></dt>
+<dd><p>A <code>data.frame</code>,
+ <code>data.table</code>. or <code>tibble</code>.</p></dd>
+
+<dt><code>list</code></dt>
+<dd><p>A <code>list</code> or character <code>vector</code>.</p></dd>
+
+
+</dl><p>Genes, transcripts, proteins, SNPs, or genomic ranges
  can be provided in any format
 (HGNC, Ensembl, RefSeq, UniProt, etc.) and will be
 automatically converted to gene symbols unless
@@ -224,24 +245,42 @@ must either supply genes in gene symbol format (e.g. "Sox2")
 
     <dt><code>gene_input</code></dt>
 <dd><p>Which aspect of <code>gene_df</code> to
-get gene names from:<br></p><ul><li><p><code>"rownames"</code> : <br>From row names of data.frame/matrix.</p></li>
-<li><p><code>"colnames"</code> : <br>From column names of data.frame/matrix.</p></li>
-<li><p><code>&lt;column name&gt;</code> : <br>From a column in <code>gene_df</code>,
- e.g. <code>"gene_names"</code>.</p></li>
-</ul></dd>
+get gene names from:<br></p><dl><dt><code>"rownames"</code></dt>
+<dd><p>From row names of data.frame/matrix.</p></dd>
+
+<dt><code>"colnames"</code></dt>
+<dd><p>From column names of data.frame/matrix.</p></dd>
+
+<dt><code>&lt;column name&gt;</code></dt>
+<dd><p>From a column in <code>gene_df</code>,
+ e.g. <code>"gene_names"</code>.</p></dd>
+
+
+</dl></dd>
 
     <dt><code>gene_output</code></dt>
 <dd><p>How to return genes.
-Options include:<br></p><ul><li><p><code>"rownames"</code> : <br>As row names of <code>gene_df</code>.</p></li>
-<li><p><code>"colnames"</code> : <br>As column names of <code>gene_df</code>.</p></li>
-<li><p><code>"columns"</code> : <br>As new columns "input_gene", "ortholog_gene"
+Options include:<br></p><dl><dt><code>"rownames"</code></dt>
+<dd><p>As row names of <code>gene_df</code>.</p></dd>
+
+<dt><code>"colnames"</code></dt>
+<dd><p>As column names of <code>gene_df</code>.</p></dd>
+
+<dt><code>"columns"</code></dt>
+<dd><p>As new columns "input_gene", "ortholog_gene"
 (and "input_gene_standard" if <code>standardise_genes=TRUE</code>)
-in <code>gene_df</code>.</p></li>
-<li><p><code>"dict"</code> : <br>As a dictionary (named list) where the names
-are input_gene and the values are ortholog_gene.</p></li>
-<li><p><code>"dict_rev"</code> : <br>As a reversed dictionary (named list)
-where the names are ortholog_gene and the values are input_gene.</p></li>
-</ul></dd>
+in <code>gene_df</code>.</p></dd>
+
+<dt><code>"dict"</code></dt>
+<dd><p>As a dictionary (named list) where the names
+are input_gene and the values are ortholog_gene.</p></dd>
+
+<dt><code>"dict_rev"</code></dt>
+<dd><p>As a reversed dictionary (named list)
+where the names are ortholog_gene and the values are input_gene.</p></dd>
+
+
+</dl></dd>
 
     <dt><code>standardise_genes</code></dt>
 <dd><p>If <code>TRUE</code> AND
@@ -269,19 +308,24 @@ Only used when <code>method="gprofiler"</code> (<em>DEFAULT : </em><code>Inf</co
     <dt><code>gene_map</code></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> that maps the current gene names
 to new gene names.
-This function's behaviour will adapt to different situations as follows:</p><ul><li><p><code>gene_map=&lt;data.frame&gt;</code> :<br> When a data.frame containing the
+This function's behaviour will adapt to different situations as follows:</p><dl><dt><code>gene_map=&lt;data.frame&gt;</code></dt>
+<dd><p>When a data.frame containing the
 gene key:value columns
 (specified by <code>input_col</code> and <code>output_col</code>, respectively)
-is provided, this will be used to perform aggregation/expansion.</p></li>
-<li><p><code>gene_map=NULL</code> and <code>input_species!=output_species</code> :<br>
-A <code>gene_map</code> is automatically generated by
+is provided, this will be used to perform aggregation/expansion.</p></dd>
+
+<dt><code>gene_map=NULL</code> and <code>input_species!=output_species</code></dt>
+<dd><p>A <code>gene_map</code> is automatically generated by
  <a href="https://rdrr.io/pkg/orthogene/man/map_orthologs.html" class="external-link">map_orthologs</a> to perform inter-species
- gene aggregation/expansion.</p></li>
-<li><p><code>gene_map=NULL</code> and <code>input_species==output_species</code> :<br>
-A <code>gene_map</code> is automatically generated by
+ gene aggregation/expansion.</p></dd>
+
+<dt><code>gene_map=NULL</code> and <code>input_species==output_species</code></dt>
+<dd><p>A <code>gene_map</code> is automatically generated by
  <a href="https://rdrr.io/pkg/orthogene/man/map_genes.html" class="external-link">map_genes</a> to perform within-species
- gene gene symbol standardization and aggregation/expansion.</p></li>
-</ul></dd>
+ gene gene symbol standardization and aggregation/expansion.</p></dd>
+
+
+</dl></dd>
 
     <dt><code>input_col</code></dt>
 <dd><p>Column name within <code>gene_map</code> with gene names matching
@@ -321,7 +365,7 @@ that you wish you map the row names of <code>X</code> onto.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking for cells with no expressed genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> DGE:: Limma...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 3 / 300 genes dropped @ DGE adj_pval_thresh &lt; 1e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07363701 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07413173 secs</span>
 </code></pre></div>
     </div>
   </div>
@@ -332,11 +376,11 @@ that you wish you map the row names of <code>X</code> onto.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Alan Murphy, Brian Schilder, Nathan Skene.</p>
+  <p></p><p>Developed by Alan Murphy, Brian Schilder, Hiranyamaya Dash, Nathan Skene.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

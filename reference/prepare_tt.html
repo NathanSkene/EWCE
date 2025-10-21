@@ -19,7 +19,7 @@ ewce_expression_data."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@ ewce_expression_data."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prepare differential gene expression table</h1>
-    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/R/prepare_tt.R" class="external-link"><code>R/prepare_tt.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/dep-fixes/R/prepare_tt.R" class="external-link"><code>R/prepare_tt.R</code></a></small>
     <div class="hidden name"><code>prepare_tt.Rd</code></div>
     </div>
 
@@ -104,12 +104,19 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
-<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
-<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
-Also gives consensus scores for each gene mapping based on a
- several different data sources.</p></li>
-</ul></dd>
+<dd><p>R package to use for gene mapping:</p><dl><dt><code>"gprofiler"</code></dt>
+<dd><p>Slower but more species and genes.</p></dd>
+
+ <dt><code>"homologene"</code></dt>
+<dd><p>Faster but fewer species and genes.</p></dd>
+
+ <dt><code>"babelgene"</code></dt>
+<dd><p>Faster but fewer species and genes.
+ Also gives consensus scores for each gene mapping based on a
+ several different data sources.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -129,11 +136,11 @@ Also gives consensus scores for each gene mapping based on a
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Alan Murphy, Brian Schilder, Nathan Skene.</p>
+  <p></p><p>Developed by Alan Murphy, Brian Schilder, Hiranyamaya Dash, Nathan Skene.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

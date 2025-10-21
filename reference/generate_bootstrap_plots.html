@@ -19,7 +19,7 @@ the genes in the list compares to those in randomly generated gene lists."><!-- 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@ the genes in the list compares to those in randomly generated gene lists."><!-- 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate bootstrap plots</h1>
-    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/R/generate_bootstrap_plots.r" class="external-link"><code>R/generate_bootstrap_plots.r</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/dep-fixes/R/generate_bootstrap_plots.r" class="external-link"><code>R/generate_bootstrap_plots.r</code></a></small>
     <div class="hidden name"><code>generate_bootstrap_plots.Rd</code></div>
     </div>
 
@@ -131,12 +131,19 @@ See <a href="list_species.html">list_species</a> for all available species.</p><
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>R package to use for gene mapping:</p><ul><li><p><code>"gprofiler"</code> : Slower but more species and genes.</p></li>
-<li><p><code>"homologene"</code> : Faster but fewer species and genes.</p></li>
-<li><p><code>"babelgene"</code> : Faster but fewer species and genes.
-Also gives consensus scores for each gene mapping based on a
- several different data sources.</p></li>
-</ul></dd>
+<dd><p>R package to use for gene mapping:</p><dl><dt><code>"gprofiler"</code></dt>
+<dd><p>Slower but more species and genes.</p></dd>
+
+ <dt><code>"homologene"</code></dt>
+<dd><p>Faster but fewer species and genes.</p></dd>
+
+ <dt><code>"babelgene"</code></dt>
+<dd><p>Faster but fewer species and genes.
+ Also gives consensus scores for each gene mapping based on a
+ several different data sources.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-reps">reps<a class="anchor" aria-label="anchor" href="#arg-reps"></a></dt>
@@ -335,14 +342,10 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling random genes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing gene scores.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating bootstrap plot for 1 celltype(s).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `facets` argument of `facet_grid()` is deprecated as of ggplot2 2.2.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use the `rows` argument instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">EWCE</span> package.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/NathanSkene/EWCE/issues&gt;</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/RtmpvgMS6z/BootstrapPlots/qqplot_noText_____level1.pdf</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/RtmpvgMS6z/BootstrapPlots/qqplot_wtgene_____level1.pdf</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/RtmpvgMS6z/BootstrapPlots/bootDists_____level1.pdf</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/RtmpvgMS6z/BootstrapPlots/bootDists_LOG_____level1.pdf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/Rtmpq6uGFq/BootstrapPlots/qqplot_noText_____level1.pdf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/Rtmpq6uGFq/BootstrapPlots/qqplot_wtgene_____level1.pdf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/Rtmpq6uGFq/BootstrapPlots/bootDists_____level1.pdf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving plot --&gt; /tmp/Rtmpq6uGFq/BootstrapPlots/bootDists_LOG_____level1.pdf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot1</span>
 <span class="r-plt img"><img src="generate_bootstrap_plots-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -365,11 +368,11 @@ Files start with one of the following:</p><ul><li><p><code>qqplot_noText</code>:
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Alan Murphy, Brian Schilder, Nathan Skene.</p>
+  <p></p><p>Developed by Alan Murphy, Brian Schilder, Hiranyamaya Dash, Nathan Skene.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
