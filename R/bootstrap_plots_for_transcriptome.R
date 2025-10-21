@@ -39,7 +39,7 @@ bootstrap_plots_for_transcriptome <- function(dat,
         dir.create(dirname(f), showWarnings = FALSE, recursive = TRUE)   
     } 
     #### Plot 1: without text ####
-    basic_graph <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
+    basic_graph <- ggplot(dat, aes(x = .data$boot, y = .data$hit)) +
         geom_point(size = 1) +
         labs(title = cc,
              x="Mean Bootstrap Expression", 
@@ -54,14 +54,14 @@ bootstrap_plots_for_transcriptome <- function(dat,
                     height = height) 
 
     #### Plot 2: with gene name ####
-    basic_graph2 <- ggplot(dat, aes_string(x = "boot", y = "hit")) +
+    basic_graph2 <- ggplot(dat, aes(x = .data$boot, y = .data$hit)) +
         geom_point(size = 2) +
         labs(title = cc,
              x="Mean Bootstrap Expression", 
              y="Expression in cell type (%)\n") + 
         graph_theme +
         geom_abline(intercept = 0, slope = 1, colour = "red") +
-        geom_text(aes_string(label = "symLab"),
+        geom_text(aes(label = .data$symLab),
                   hjust = 0, vjust = 0, size = 3
         ) + xlim(c(0, maxX)) 
     plots[["plot2"]] <- basic_graph2

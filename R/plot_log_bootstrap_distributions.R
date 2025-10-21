@@ -63,14 +63,14 @@ plot_log_bootstrap_distributions <- function(dat,
     wd <- 1 + length(unique(melt_boot[, 4])) * 0.175
     
     gp <-  ggplot(melt_boot) +
-        geom_boxplot(aes_string(x = "GSym", y = "Exp"), outlier.size = 0) +
+        geom_boxplot(aes(x = .data$GSym, y = .data$Exp), outlier.size = 0) +
         graph_theme +
         theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-        geom_point(aes_string(x = "GSym", y = "vals"),
+        geom_point(aes(x = .data$GSym, y = .data$vals),
                    col = "red",
                    data = actVals
         ) +
-        geom_text(aes_string(x = "GSym", y = "vals", label = "ast"),
+        geom_text(aes(x = .data$GSym, y = .data$vals, label = .data$ast),
                   colour = "black", col = "black", data = actVals
         ) +
         ylab("Expression in cell type (%)\n") +

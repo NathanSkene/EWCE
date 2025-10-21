@@ -36,7 +36,7 @@ and added to plots.}
 \item{annotLevel}{An integer indicating which level of \code{ctd} to
 analyse (\emph{Default: 1}).}
 
-\item{heights}{The relative heights row in the grid. 
+\item{heights}{The relative heights row in the grid.
 Will get repeated to match the dimensions of the grid.
 Passed to \link[patchwork]{wrap_plots}.}
 
@@ -56,6 +56,6 @@ A named list containing versions of the \link[ggplot2]{ggplot}
 ## Bootstrap significance test,
 ##  no control for transcript length or GC content
 ## Use pre-computed results to speed up example
-total_res <- EWCE::example_bootstrap_results()$results 
+total_res <- EWCE::example_bootstrap_results()$results
 plt <- ewce_plot(total_res = total_res)
 }
