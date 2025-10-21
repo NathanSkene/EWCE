@@ -1,11 +1,11 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 1.17.0
+Version: 1.17.1
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",
-           role = c("cre"),
+           role = c("aut"),
            email = "alanmurph94@hotmail.com",
            comment = c(ORCID = "0000-0002-2487-8753")),
      person(given = "Brian",
@@ -13,6 +13,11 @@ Authors@R:
            role = c("aut"),
            email = "brian_schilder@alumni.brown.edu",
            comment = c(ORCID = "0000-0001-5949-2191")),
+     person(given="Hiranyamaya",
+           family="Dash", 
+           email = "hdash.work@gmail.com",
+           role = c("cre"),
+           comment = c(ORCID = "0009-0005-5514-505X")),
      person(given = "Nathan",
            family = "Skene",
            role = c("aut"),
@@ -70,6 +75,6 @@ biocViews: GeneExpression, Transcription, DifferentialExpression,
         mRNAMicroarray, OneChannel, RNASeq,
         BiomedicalInformatics, Proteomics, Visualization,
         FunctionalGenomics, SingleCell 
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 Config/testthat/edition: 3 

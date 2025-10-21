@@ -29,36 +29,36 @@ row names to human gene names.}
 \item{suffix}{Suffix to add to the file name (right before \emph{.rda}).}
 
 \item{method}{R package to use for gene mapping:
-\itemize{
-\item{\code{"gprofiler"} : Slower but more species and genes.}
-\item{\code{"homologene"} : Faster but fewer species and genes.}
-\item{\code{"babelgene"} : Faster but fewer species and genes.
-Also gives consensus scores for each gene mapping based on a
+\describe{
+ \item{\code{"gprofiler"}}{Slower but more species and genes.}
+ \item{\code{"homologene"}}{Faster but fewer species and genes.}
+ \item{\code{"babelgene"}}{Faster but fewer species and genes.
+ Also gives consensus scores for each gene mapping based on a
  several different data sources.}
 }}
 
 \item{non121_strategy}{How to handle genes that don't have
 1:1 mappings between \code{input_species}:\code{output_species}.
 Options include:\cr
-\itemize{
-\item{\code{"drop_both_species" or "dbs" or 1} : \cr}{
+\describe{
+\item{\code{"drop_both_species" or "dbs" or 1}}{
 Drop genes that have duplicate
-mappings in either the \code{input_species} or \code{output_species} \cr
+mappings in either the \code{input_species} or \code{output_species}
 (\emph{DEFAULT}).}
-\item{\code{"drop_input_species" or "dis" or 2} : \cr}{
+\item{\code{"drop_input_species" or "dis" or 2}}{
 Only drop genes that have duplicate
 mappings in the \code{input_species}.}
-\item{\code{"drop_output_species" or "dos" or 3} : \cr}{
+\item{\code{"drop_output_species" or "dos" or 3}}{
 Only drop genes that have duplicate
 mappings in the \code{output_species}.}
-\item{\code{"keep_both_species" or "kbs" or 4} : \cr}{
+\item{\code{"keep_both_species" or "kbs" or 4}}{
 Keep all genes regardless of whether
 they have duplicate mappings in either species.}
-\item{\code{"keep_popular" or "kp" or 5} : \cr}{
+\item{\code{"keep_popular" or "kp" or 5}}{
 Return only the most "popular" interspecies ortholog mappings.
  This procedure tends to yield a greater number of returned genes
  but at the cost of many of them not being true biological 1:1 orthologs.}
- \item{\code{"sum","mean","median","min" or "max"} : \cr}{
+ \item{\code{"sum","mean","median","min" or "max"}}{
  When \code{gene_df} is a matrix and \code{gene_output="rownames"},
   these options will aggregate many-to-one gene mappings
   (\code{input_species}-to-\code{output_species})
@@ -75,11 +75,11 @@ Return only the most "popular" interspecies ortholog mappings.
 (see \code{gene_input} for options on how
 the genes can be stored within the object).\cr
 Can be one of the following formats:\cr
-\itemize{
-\item{\code{matrix} : \cr}{A sparse or dense matrix.}
-\item{\code{data.frame} : \cr}{A \code{data.frame},
+\describe{
+\item{\code{matrix}}{A sparse or dense matrix.}
+\item{\code{data.frame}}{A \code{data.frame},
  \code{data.table}. or \code{tibble}.}
-\item{code{list} : \cr}{A \code{list} or character \code{vector}.}
+\item{\code{list}}{A \code{list} or character \code{vector}.}
 }
 Genes, transcripts, proteins, SNPs, or genomic ranges
  can be provided in any format
@@ -91,24 +91,24 @@ must either supply genes in gene symbol format (e.g. "Sox2")
  OR set \code{standardise_genes=TRUE}.}
     \item{\code{gene_input}}{Which aspect of \code{gene_df} to
 get gene names from:\cr
-\itemize{
-\item{\code{"rownames"} : \cr}{From row names of data.frame/matrix.}
-\item{\code{"colnames"} : \cr}{From column names of data.frame/matrix.}
-\item{\code{<column name>} : \cr}{From a column in \code{gene_df},
+\describe{
+\item{\code{"rownames"}}{From row names of data.frame/matrix.}
+\item{\code{"colnames"}}{From column names of data.frame/matrix.}
+\item{\code{<column name>}}{From a column in \code{gene_df},
  e.g. \code{"gene_names"}.}
 }}
     \item{\code{gene_output}}{How to return genes.
 Options include:\cr
-\itemize{
-\item{\code{"rownames"} : \cr}{As row names of \code{gene_df}.}
-\item{\code{"colnames"} : \cr}{As column names of \code{gene_df}.}
-\item{\code{"columns"} : \cr}{As new columns "input_gene", "ortholog_gene"
+\describe{
+\item{\code{"rownames"}}{As row names of \code{gene_df}.}
+\item{\code{"colnames"}}{As column names of \code{gene_df}.}
+\item{\code{"columns"}}{As new columns "input_gene", "ortholog_gene"
 (and "input_gene_standard" if \code{standardise_genes=TRUE})
 in \code{gene_df}.}
-\item{\code{"dict"} : \cr}{As a dictionary (named list) where the names
-are input_gene and the values are ortholog_gene}.
-\item{\code{"dict_rev"} : \cr}{As a reversed dictionary (named list)
-where the names are ortholog_gene and the values are input_gene}.
+\item{\code{"dict"}}{As a dictionary (named list) where the names
+are input_gene and the values are ortholog_gene.}
+\item{\code{"dict_rev"}}{As a reversed dictionary (named list)
+where the names are ortholog_gene and the values are input_gene.}
 }}
     \item{\code{standardise_genes}}{If \code{TRUE} AND
 \code{gene_output="columns"}, a new column "input_gene_standard"
@@ -128,11 +128,11 @@ Only used when \code{method="gprofiler"} (\emph{DEFAULT : }\code{Inf}).}
     \item{\code{as_sparse}}{Convert \code{gene_df} to a sparse matrix.
 Only works if \code{gene_df} is one of the following classes:\cr
 \itemize{
-\item{\code{matrix}}
-\item{\code{Matrix}}
-\item{\code{data.frame}}
-\item{\code{data.table}}
-\item{\code{tibble}}
+ \item{\code{matrix}}
+ \item{\code{Matrix}}
+ \item{\code{data.frame}}
+ \item{\code{data.table}}
+ \item{\code{tibble}}
 }
 If \code{gene_df} is a sparse matrix to begin with,
 it will be returned as a sparse matrix
@@ -143,16 +143,16 @@ it will be returned as a sparse matrix
     \item{\code{gene_map}}{A \link[base]{data.frame} that maps the current gene names
 to new gene names. 
 This function's behaviour will adapt to different situations as follows: 
-\itemize{
-\item{\code{gene_map=<data.frame>} :\cr}{ When a data.frame containing the
+\describe{
+\item{\code{gene_map=<data.frame>}}{When a data.frame containing the
 gene key:value columns 
 (specified by \code{input_col} and \code{output_col}, respectively)
 is provided, this will be used to perform aggregation/expansion.}
-\item{\code{gene_map=NULL} and \code{input_species!=output_species} :\cr}{
+\item{\code{gene_map=NULL} and \code{input_species!=output_species}}{
 A \code{gene_map} is automatically generated by
  \link[orthogene]{map_orthologs} to perform inter-species 
  gene aggregation/expansion.}
-\item{\code{gene_map=NULL} and \code{input_species==output_species} :\cr}{
+\item{\code{gene_map=NULL} and \code{input_species==output_species}}{
 A \code{gene_map} is automatically generated by
  \link[orthogene]{map_genes} to perform within-species 
  gene gene symbol standardization and aggregation/expansion.}

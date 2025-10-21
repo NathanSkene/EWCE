@@ -28,10 +28,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Alan Murphy \email{alanmurph94@hotmail.com} (\href{https://orcid.org/0000-0002-2487-8753}{ORCID})
+\strong{Maintainer}: Hiranyamaya Dash \email{hdash.work@gmail.com} (\href{https://orcid.org/0009-0005-5514-505X}{ORCID})
 
 Authors:
 \itemize{
+  \item Alan Murphy \email{alanmurph94@hotmail.com} (\href{https://orcid.org/0000-0002-2487-8753}{ORCID})
   \item Brian Schilder \email{brian_schilder@alumni.brown.edu} (\href{https://orcid.org/0000-0001-5949-2191}{ORCID})
   \item Nathan Skene \email{nathan.skene@gmail.com} (\href{https://orcid.org/0000-0002-6807-3180}{ORCID})
 }

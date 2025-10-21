@@ -1,14 +1,14 @@
 `EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment
 ================
 <img src='https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png' title='Hex sticker for EWCE' height='300'><br>
-[![](https://img.shields.io/badge/release%20version-1.10.2-green.svg)](https://www.bioconductor.org/packages/EWCE)
-[![](https://img.shields.io/badge/download-270/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
-[![](https://img.shields.io/badge/download-5999/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/release%20version-1.17.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
+[![](https://img.shields.io/badge/download-420/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-10714/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![download](http://www.bioconductor.org/shields/downloads/release/EWCE.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 <br>
-[![](https://img.shields.io/badge/devel%20version-1.13.1-black.svg)](https://github.com/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/devel%20version-1.17.0-black.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
 <br> [![R build
@@ -17,10 +17,11 @@ status](https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg)](htt
 <br>
 <a href='https://app.codecov.io/gh/NathanSkene/EWCE/tree/master' target='_blank'><img src='https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg' title='Codecov icicle graph' width='200' height='50' style='vertical-align: top;'></a>  
 <h4>  
-Authors: <i>Alan Murphy, Brian Schilder, Nathan Skene</i>  
+Authors: <i>Alan Murphy, Brian Schilder, Hiranyamaya Dash, Nathan
+Skene</i>  
 </h4>
 <h4>  
-README updated: <i>Jul-09-2024</i>  
+README updated: <i>Oct-21-2025</i>  
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -123,7 +124,8 @@ Imperial College London
 
 ## References
 
-<div id="refs" class="references csl-bib-body" line-spacing="2">
+<div id="refs" class="references csl-bib-body" entry-spacing="0"
+line-spacing="2">
 
 <div id="ref-skene_2016" class="csl-entry">
 
