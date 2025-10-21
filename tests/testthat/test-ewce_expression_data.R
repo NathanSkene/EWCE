@@ -128,7 +128,7 @@ test_that("EWCE expression data creation", {
 
         ewce_plot_res <- EWCE::ewce_plot(merged_res)$plain
         # fail if any but ggplot returned
-        test6 <- is(ewce_plot_res)[1] == "gg"
+        test6 <- inherits(ewce_plot_res, "ggplot")
 
 
         # undirectional tests
