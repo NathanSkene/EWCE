@@ -51,11 +51,11 @@ See \link[EWCE]{list_species} for all available species.}
 \code{functional_genes} gene set.}
 
 \item{method}{R package to use for gene mapping:
-\itemize{
-\item{\code{"gprofiler"} : Slower but more species and genes.}
-\item{\code{"homologene"} : Faster but fewer species and genes.}
-\item{\code{"babelgene"} : Faster but fewer species and genes.
-Also gives consensus scores for each gene mapping based on a
+\describe{
+ \item{\code{"gprofiler"}}{Slower but more species and genes.}
+ \item{\code{"homologene"}}{Faster but fewer species and genes.}
+ \item{\code{"babelgene"}}{Faster but fewer species and genes.
+ Also gives consensus scores for each gene mapping based on a
  several different data sources.}
 }}
 

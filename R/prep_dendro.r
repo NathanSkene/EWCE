@@ -23,9 +23,9 @@ prep_dendro <- function(ctdIN,
     #### Vertical dendrogram ####
     a1 <- ggplot2::ggplot(ggdendro::segment(ddata)) +
         ggplot2::geom_segment(
-            ggplot2::aes_string(
-            x = "x", y = "y",
-            xend = "xend", yend = "yend"
+            ggplot2::aes(
+            x = .data$x, y = .data$y,
+            xend = .data$xend, yend = .data$yend
         )) +
         ggplot2::coord_flip() +
         ggdendro::theme_dendro()
@@ -34,9 +34,9 @@ prep_dendro <- function(ctdIN,
     }
     #### Horizontal dendrogram ####
     b1 <- ggplot(ggdendro::segment(ddata)) +
-        ggplot2::geom_segment(ggplot2::aes_string(
-            x = "x", y = "y",
-            xend = "xend", yend = "yend"
+        ggplot2::geom_segment(ggplot2::aes(
+            x = .data$x, y = .data$y,
+            xend = .data$xend, yend = .data$yend
         )) +
         ggdendro::theme_dendro()
     if(!is.null(expand)){

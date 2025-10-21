@@ -37,8 +37,8 @@ plot_with_bootstrap_distributions <- function(exp_mats,
     dir.create(dirname(pdf_path),showWarnings = FALSE, recursive = TRUE) 
     #### Make plot ####
     gp <- ggplot(melt_boot) +
-        geom_boxplot(aes_string(x = "Pos", y = "Exp"), outlier.size = 0) +
-        geom_point(aes_string(x = "pos", y = "vals"),
+        geom_boxplot(aes(x = .data$Pos, y = .data$Exp), outlier.size = 0) +
+        geom_point(aes(x = .data$pos, y = .data$vals),
             col = "red", data = actVals
         ) +
         ylab("Expression in cell type (%)\n") +

@@ -41,7 +41,7 @@ columns (\code{"free_y"}), or both rows and columns (\code{"free"})?}
 Null output.
 }
 \description{
-Plot bootstrap enrichment results. 
+Plot bootstrap enrichment results.
 Support function for \link[EWCE]{generate_bootstrap_plots}.
 }
 \keyword{internal}

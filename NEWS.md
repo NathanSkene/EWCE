@@ -1,3 +1,8 @@
+# EWCE 1.17.1
+
+* Update maintainer (Alan -> Hiru)
+* Fix deprecated `ggplot` arguments
+
 # EWCE 1.15.1
 
 ## Bug fixes

@@ -45,11 +45,11 @@ plot_ctd <- function(ctd,
 
     gp <- ggplot(
         plot_data,
-        aes_string(x = "Celltype", y = metric, fill = metric)
+        aes(x = .data$Celltype, y = .data[[metric]], fill = .data[[metric]])
     ) +
         scale_fill_gradient(low = "blue", high = "red") +
         geom_bar(stat = "identity") +
-        facet_grid(Gene ~ .) +
+        facet_grid(rows = vars(.data$Gene)) +
         theme_bw() +
         theme(
             axis.text.x = element_text(angle = 45, hjust = 1),
