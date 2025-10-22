@@ -1,3 +1,7 @@
+# EWCE 1.17.2
+
+* Add missing argument `with_dendro = TRUE` in the EWCE vignette.
+
 # EWCE 1.17.1
 
 * Update maintainer (Alan -> Hiru)

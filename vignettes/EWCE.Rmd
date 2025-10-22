@@ -138,7 +138,8 @@ The dendrogram at the top shows how the cell types are hierarchically clustered 
 ```{r, error=TRUE}
 plot_list <- EWCE::ewce_plot(total_res = full_results$results,
                            mtc_method = "BH",
-                           ctd = ctd)
+                           ctd = ctd,
+                           make_dendro = TRUE)
 print(plot_list$withDendro)
 ```
      
