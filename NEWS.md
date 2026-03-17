@@ -1,3 +1,12 @@
+# EWCE 1.19.1
+
+## Bug fixes
+
+* `bootstrap_enrichment_test` / `check_species`
+    - Validate species arguments before background generation.
+    - Fail fast when fewer than the minimum number of input hits are supplied,
+      so invalid inputs return errors instead of upstream warnings.
+
 # EWCE 1.17.1
 
 * Update maintainer (Alan -> Hiru)

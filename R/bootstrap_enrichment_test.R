@@ -140,6 +140,16 @@ bootstrap_enrichment_test <- function(sct_data = NULL,
     #### Set min_genes ####
     min_genes <- Sys.getenv("min_genes")
     min_genes <- if(min_genes=="") 4 else as.numeric(min_genes) 
+    if (min_genes < 1) {
+        min_genes <- 1
+    }
+    if (length(unique(hits)) < min_genes) {
+        stop(
+            "At least ", min_genes,
+            " genes are required in hits before background generation.",
+            " Only ", length(unique(hits)), " provided."
+        )
+    }
     #### Set cores ####
     core_allocation <- assign_cores(
         worker_cores = no_cores,
