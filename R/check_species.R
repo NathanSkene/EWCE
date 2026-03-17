@@ -13,6 +13,9 @@ check_species <- function(genelistSpecies = NULL,
                           sctSpecies_origin_default="mouse",
                           verbose = TRUE) {
     validate_species <- function(species, arg_name) {
+        if (is.null(species) || identical(species, "NULL")) {
+            return(species)
+        }
         species_map <- orthogene::map_species(
             species = species,
             method = "homologene",
