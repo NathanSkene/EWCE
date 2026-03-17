@@ -12,6 +12,17 @@ check_species <- function(genelistSpecies = NULL,
                           sctSpecies_origin = NULL,
                           sctSpecies_origin_default="mouse",
                           verbose = TRUE) {
+    validate_species <- function(species, arg_name) {
+        species_map <- orthogene::map_species(
+            species = species,
+            method = "homologene",
+            verbose = FALSE
+        )
+        if (length(species_map) == 0 || all(is.na(species_map))) {
+            stop(arg_name, " is not a recognised species: '", species, "'.")
+        }
+        names(species_map)[1]
+    }
     if (is.null(genelistSpecies)) {
         messager(
             "Warning: genelistSpecies not provided.",
@@ -38,6 +49,18 @@ check_species <- function(genelistSpecies = NULL,
         )
         sctSpecies_origin <- sctSpecies_origin_default
     }
+    genelistSpecies <- validate_species(
+        species = genelistSpecies,
+        arg_name = "genelistSpecies"
+    )
+    sctSpecies <- validate_species(
+        species = sctSpecies,
+        arg_name = "sctSpecies"
+    )
+    sctSpecies_origin <- validate_species(
+        species = sctSpecies_origin,
+        arg_name = "sctSpecies_origin"
+    )
     return(list(
         genelistSpecies = genelistSpecies,
         sctSpecies = sctSpecies,
