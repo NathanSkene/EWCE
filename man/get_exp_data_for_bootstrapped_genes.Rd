@@ -17,7 +17,11 @@ get_exp_data_for_bootstrapped_genes(
 )
 }
 \arguments{
-\item{signif_res}{signif_res (#fix).}
+\item{results}{Results for a single direction from
+\code{full_results$joint_results}.}
+
+\item{signif_res}{Significant cell types to generate bootstrap
+expression data for.}
 
 \item{sct_data}{List generated using \link[EWCE]{generate_celltype_data}.}
 
@@ -29,9 +33,11 @@ get_exp_data_for_bootstrapped_genes(
 \item{annotLevel}{An integer indicating which level of \code{sct_data} to
 analyse (\emph{Default: 1}).}
 
-\item{verbose}{Print messages.}
+\item{nReps}{Number of bootstrap replicates.}
 
-\item{full_results}{full_results (#fix).}
+\item{as_sparse}{Convert returned matrices to sparse matrices.}
+
+\item{verbose}{Print messages.}
 }
 \value{
 exp_mats

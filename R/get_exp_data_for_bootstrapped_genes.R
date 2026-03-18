@@ -3,11 +3,15 @@
 #' Support function for 
 #' \link[EWCE]{generate_bootstrap_plots_for_transcriptome}.
 #' 
-#' @param full_results full_results (#fix).
-#' @param signif_res signif_res (#fix).
+#' @param results Results for a single direction from
+#'   \code{full_results$joint_results}.
+#' @param signif_res Significant cell types to generate bootstrap
+#'   expression data for.
 #' @param hits Gene hits.
 #' @param combinedGenes Combined list of genes from \code{sct_data}, 
 #' \code{hits}, and background \code{bg}. 
+#' @param nReps Number of bootstrap replicates.
+#' @param as_sparse Convert returned matrices to sparse matrices.
 #' @inheritParams generate_bootstrap_plots_for_transcriptome
 #' @returns exp_mats
 #' 

@@ -20,7 +20,7 @@ test_that("DGE works", {
         #### DESeq2 ####
         deqseq2_res <- EWCE:::run_deseq2(
             exp = exp,
-            level2annot = level2annot,
+            level2annot = factor(level2annot),
             test = "LRT"
         )
         testthat::expect_true(
