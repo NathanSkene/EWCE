@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.18.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.19.1</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ Authors: Alan Murphy, Brian Schilder, and Nathan Skene<br>
 Updated: Mar-20-2026<br>
 </h4></h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/RELEASE_3_22/vignettes/EWCE.Rmd" class="external-link"><code>vignettes/EWCE.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/vignettes/EWCE.Rmd" class="external-link"><code>vignettes/EWCE.Rmd</code></a></small>
       <div class="hidden name"><code>EWCE.Rmd</code></div>
 
     </div>
@@ -158,20 +158,24 @@ interneuron subtypes (“Int…”).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctd</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/ctd.html" class="external-link">ctd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
+<pre><code><span><span class="co">## Error while performing HEAD request.</span></span>
+<span><span class="co">##    Proceeding without cache information.</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
+<pre><code><span><span class="co">## Error while performing HEAD request.</span></span>
+<span><span class="co">##    Proceeding without cache information.</span></span></code></pre>
 </div>
 <div class="section level5">
 <h5 id="plot-ctd-mean_exp">Plot CTD mean_exp<a class="anchor" aria-label="anchor" href="#plot-ctd-mean_exp"></a>
 </h5>
 <p>Plot the expression of four markers genes across all cell types in
 the CTD.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plt_exp</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                        level <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                        genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,</span>
 <span>                        metric <span class="op">=</span> <span class="st">"mean_exp"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="EWCE_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plt_spec</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_ctd.html">plot_ctd</a></span><span class="op">(</span>ctd <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                         level <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                         genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apoe"</span>,<span class="st">"Gfap"</span>,<span class="st">"Gapdh"</span><span class="op">)</span>,</span>
@@ -186,11 +190,11 @@ the CTD.</p>
 (e.g. GWAS, candidate genes, pathways).</p>
 <p>Here, we provide an example gene list of Alzheimer’s disease-related
 nominated from a GWAS.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">ewceData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ewceData/man/example_genelist.html" class="external-link">example_genelist</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?ewceData and browseVignettes('ewceData') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">hits</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "APOE"     "BIN1"     "CLU"      "ABCA7"    "CR1"      "PICALM"  </span></span>
 <span><span class="co">##  [7] "MS4A6A"   "CD33"     "MS4A4E"   "CD2AP"    "EOGA1"    "INPP5D"  </span></span>
@@ -223,10 +227,10 @@ quick example, but in practice you would want to use
 <p>You can now speed up the bootstrapping process by parallelising
 across multiple cores with the parameter <code>no_cores</code>
 (<code>=1</code> by default).</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reps</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">annotLevel</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">full_results</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/bootstrap_enrichment_test.html">bootstrap_enrichment_test</a></span><span class="op">(</span>sct_data <span class="op">=</span> <span class="va">ctd</span>,</span>
 <span>                                                sctSpecies <span class="op">=</span> <span class="st">"mouse"</span>,</span>
 <span>                                                genelistSpecies <span class="op">=</span> <span class="st">"human"</span>,</span>
@@ -325,7 +329,7 @@ across multiple cores with the parameter <code>no_cores</code>
 <code>full_results$results</code>.</p>
 <p>In this case, microglia were the only cell type that was
 significantly enriched in the Alzheimer’s disease gene list.</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">full_results</span><span class="op">$</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -418,7 +422,7 @@ level of expression was found to be in the target gene list, relative to
 the bootstrapped mean.</p>
 <p>The dendrogram at the top shows how the cell types are hierarchically
 clustered by transcriptional similarity.</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu">EWCE</span><span class="fu">::</span><span class="fu"><a href="../reference/ewce_plot.html">ewce_plot</a></span><span class="op">(</span>total_res <span class="op">=</span> <span class="va">full_results</span><span class="op">$</span><span class="va">results</span>,</span>
 <span>                           mtc_method <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>                           ctd <span class="op">=</span> <span class="va">ctd</span><span class="op">)</span></span>
@@ -487,7 +491,7 @@ URL in any web browser: <em><a href="http://localhost:8787/" class="external-lin
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<details><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R Under development (unstable) (2026-03-15 r89629)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
@@ -514,7 +518,7 @@ URL in any web browser: <em><a href="http://localhost:8787/" class="external-lin
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] ewceData_1.19.0     ExperimentHub_3.1.0 AnnotationHub_4.1.0</span></span>
 <span><span class="co">##  [4] BiocFileCache_3.1.0 dbplyr_2.5.2        BiocGenerics_0.57.0</span></span>
-<span><span class="co">##  [7] generics_0.1.4      EWCE_1.18.1         RNOmni_1.0.1.2     </span></span>
+<span><span class="co">##  [7] generics_0.1.4      EWCE_1.19.1         RNOmni_1.0.1.2     </span></span>
 <span><span class="co">## [10] BiocStyle_2.39.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
