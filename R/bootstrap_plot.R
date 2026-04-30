@@ -92,8 +92,8 @@
         force_pull = 0.1, 
         box.padding = 0.35,
         point.padding = 0.5,
-        segment.color = "grey50",
-        max.overlaps = 25
+        segment.color = "grey50" # ,
+        # max.overlaps = 25
       )
       
       if (verbose) messager("Added labels from column:", add_labels)
