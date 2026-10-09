@@ -31,3 +31,5 @@ DOCKERFILE
 node_modules$
 package-lock\.json$
 package\.json$
+^\.positai$
+^\.claude$
