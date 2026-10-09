@@ -1,9 +1,9 @@
 #' Compute gene counts
 #' 
 #' Aggregate gene-level scores across all bootstrap iterations.
-#' \itemize{
-#' \item{boot: }{Mean specificity of all genes within a given cell type.}
-#' \item{hit: }{Mean specificity of a hit gene within a given cell type.}
+#' \describe{
+#' \item{boot}{Mean specificity of all genes within a given cell type.}
+#' \item{hit}{Mean specificity of a hit gene within a given cell type.}
 #' }
 #' @param return_hit_exp Return the expression of each hit gene.
 #' @param bootstrap_list The output of \code{get_summed_proportions_iterate}.

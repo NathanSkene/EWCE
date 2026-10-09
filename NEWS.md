@@ -5,6 +5,12 @@
 * Import `cbind`/`rbind` from `BiocGenerics` instead of `DelayedArray`,
   which no longer re-exports them in Bioc 3.24 (fixes install failure, #106).
 
+## Miscellaneous
+
+* Fix "Lost braces in `\itemize`" Rd NOTE in `compute_gene_scores` and
+  `drop_uninformative_genes` docs.
+* Rebuild README.
+
 # EWCE 1.19.1
 
 ## Bug fixes
