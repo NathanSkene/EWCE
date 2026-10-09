@@ -1,3 +1,10 @@
+# EWCE 1.21.1
+
+## Bug fixes
+
+* Import `cbind`/`rbind` from `BiocGenerics` instead of `DelayedArray`,
+  which no longer re-exports them in Bioc 3.24 (fixes install failure, #106).
+
 # EWCE 1.19.1
 
 ## Bug fixes

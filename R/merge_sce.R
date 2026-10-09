@@ -32,7 +32,8 @@
 #' scMerge}.
 #' @author Yingxin Lin (modified by Brian Schilder)
 #'
-#' @importFrom DelayedArray rowMeans cbind rbind
+#' @importFrom DelayedArray rowMeans
+#' @importFrom BiocGenerics cbind rbind
 #' @importFrom SummarizedExperiment assay colData
 #' @importFrom SingleCellExperiment SingleCellExperiment
 #'
@@ -111,7 +112,7 @@ merge_sce <- function(sce_list,
         }
         names(assay_list) <- use_assays
         colData_list <- do.call(
-            DelayedArray::rbind,
+            BiocGenerics::rbind,
             lapply(sce_list, function(y) {
                 SummarizedExperiment::colData(y)[, colData_names, drop = FALSE]
             })
@@ -127,7 +128,7 @@ merge_sce <- function(sce_list,
         assay_list <- list()
         for (i in seq_len(length(use_assays))) {
             assay_list[[i]] <- do.call(
-                DelayedArray::cbind,
+                BiocGenerics::cbind,
                 lapply(sce_list, function(x) {
                     mat <- matrix(0,
                         nrow = length(keep), ncol = ncol(x),

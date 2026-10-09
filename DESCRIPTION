@@ -1,7 +1,7 @@
 Package: EWCE
 Type: Package
 Title: Expression Weighted Celltype Enrichment
-Version: 1.21.0
+Version: 1.21.1
 Authors@R:
     c(person(given = "Alan",
            family = "Murphy",
@@ -50,6 +50,7 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,   
     DelayedArray, 
+    BiocGenerics,
     BiocParallel,
     orthogene (>= 0.99.8),
     data.table
