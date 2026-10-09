@@ -1,27 +1,27 @@
 `EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment
 ================
 <img src='https://github.com/NathanSkene/EWCE/raw/master/inst/hex/hex.png' title='Hex sticker for EWCE' height='300'><br>
-[![](https://img.shields.io/badge/release%20version-1.17.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
-[![](https://img.shields.io/badge/download-420/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
-[![](https://img.shields.io/badge/download-10714/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/release%20version-1.20.0-green.svg)](https://www.bioconductor.org/packages/EWCE)
+[![](https://img.shields.io/badge/download-2587/month-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
+[![](https://img.shields.io/badge/download-19828/total-green.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![download](http://www.bioconductor.org/shields/downloads/release/EWCE.svg)](https://bioconductor.org/packages/stats/bioc/EWCE)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 <br>
-[![](https://img.shields.io/badge/devel%20version-1.17.0-black.svg)](https://github.com/NathanSkene/EWCE)
+[![](https://img.shields.io/badge/devel%20version-1.21.0-black.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/github/languages/code-size/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE)
 [![](https://img.shields.io/github/last-commit/NathanSkene/EWCE.svg)](https://github.com/NathanSkene/EWCE/commits/master)
 <br> [![R build
 status](https://github.com/NathanSkene/EWCE/workflows/rworkflows/badge.svg)](https://github.com/NathanSkene/EWCE/actions)
 [![](https://codecov.io/gh/NathanSkene/EWCE/branch/master/graph/badge.svg)](https://app.codecov.io/gh/NathanSkene/EWCE)
 <br>
-<a href='https://app.codecov.io/gh/NathanSkene/EWCE/tree/master' target='_blank'><img src='https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg' title='Codecov icicle graph' width='200' height='50' style='vertical-align: top;'></a>  
-<h4>  
+<a href='https://app.codecov.io/gh/NathanSkene/EWCE/tree/master' target='_blank'><img src='https://codecov.io/gh/NathanSkene/EWCE/branch/master/graphs/icicle.svg' title='Codecov icicle graph' width='200' height='50' style='vertical-align: top;'></a>\
+<h4>\
 Authors: <i>Alan Murphy, Brian Schilder, Hiranyamaya Dash, Nathan
-Skene</i>  
+Skene</i>\
 </h4>
-<h4>  
-README updated: <i>Oct-21-2025</i>  
+<h4>\
+README updated: <i>Oct-09-2026</i>\
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -36,7 +36,7 @@ Using *EWCE* essentially involves two steps:
 
 1.  Prepare a single-cell reference; i.e. CellTypeDataset (CTD).
     Alternatively, you can use one of the pre-generated CTDs we provide
-    via the package `ewceData` (which comes with *EWCE*).  
+    via the package `ewceData` (which comes with *EWCE*).\
 2.  Run cell type enrichment on a user-provided gene list.
 
 ## Installation
@@ -115,17 +115,17 @@ If you use the cortex/hippocampus single-cell data associated
 
 ### [Neurogenomics Lab](https://www.neurogenomics.co.uk/)
 
-UK Dementia Research Institute  
-Department of Brain Sciences  
-Faculty of Medicine  
-Imperial College London  
-[GitHub](https://github.com/neurogenomics)  
+UK Dementia Research Institute\
+Department of Brain Sciences\
+Faculty of Medicine\
+Imperial College London\
+[GitHub](https://github.com/neurogenomics)\
 [DockerHub](https://hub.docker.com/orgs/neurogenomicslab)
 
 ## References
 
-<div id="refs" class="references csl-bib-body" entry-spacing="0"
-line-spacing="2">
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+data-line-spacing="2">
 
 <div id="ref-skene_2016" class="csl-entry">
 
