@@ -153,7 +153,8 @@ generate_bootstrap_plots <- function(sct_data = NULL,
     )
     check_full_results(
         full_results = full_results,
-        sct_data = sct_data
+        sct_data = sct_data,
+        annotLevel = annotLevel
     ) 
     results <- full_results$results
     #### Check gene lists ####
