@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EWCE</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.19.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.21.1</span>
       </span>
     </div>
 
@@ -57,9 +57,21 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/NathanSkene/EWCE/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/NathanSkene/EWCE/blob/fix-delayedarray-cbind/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.21.1" id="ewce-1211">EWCE 1.21.1<a class="anchor" aria-label="anchor" href="#ewce-1211"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-21-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-21-1"></a></h3>
+<ul><li>Import <code>cbind</code>/<code>rbind</code> from <code>BiocGenerics</code> instead of <code>DelayedArray</code>, which no longer re-exports them in Bioc 3.24 (fixes install failure, <a href="https://github.com/NathanSkene/EWCE/issues/106" class="external-link">#106</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="miscellaneous-1-21-1">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-1-21-1"></a></h3>
+<ul><li>Fix “Lost braces in <code>\itemize</code>” Rd NOTE in <code>compute_gene_scores</code> and <code>drop_uninformative_genes</code> docs.</li>
+<li>Rebuild README.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.19.1" id="ewce-1191">EWCE 1.19.1<a class="anchor" aria-label="anchor" href="#ewce-1191"></a></h2>
 <div class="section level3">
@@ -552,7 +564,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
