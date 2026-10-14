@@ -38,9 +38,9 @@ but should be >=10,000 for publication-quality results).}
 }
 \description{
 Aggregate gene-level scores across all bootstrap iterations.
-\itemize{
-\item{boot: }{Mean specificity of all genes within a given cell type.}
-\item{hit: }{Mean specificity of a hit gene within a given cell type.}
+\describe{
+\item{boot}{Mean specificity of all genes within a given cell type.}
+\item{hit}{Mean specificity of a hit gene within a given cell type.}
 }
 }
 \keyword{internal}

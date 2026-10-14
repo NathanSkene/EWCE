@@ -1,3 +1,18 @@
+# EWCE 1.21.1
+
+## Bug fixes
+
+* Import `cbind`/`rbind` from `BiocGenerics` instead of `DelayedArray`,
+  which no longer re-exports them in Bioc 3.24 (fixes install failure, #106).
+
+## Miscellaneous
+
+* Fix "Lost braces in `\itemize`" Rd NOTE in `compute_gene_scores` and
+  `drop_uninformative_genes` docs.
+* Rebuild README.
+* README falls back to badges without the Bioc release version when
+  `rworkflows::use_badges()` fails to scrape it (#108).
+
 # EWCE 1.19.1
 
 ## Bug fixes

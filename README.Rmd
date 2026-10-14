@@ -1,6 +1,6 @@
 ---
 title: "`EWCE`: `E`xpression `W`eighted `C`elltype `E`nrichment"
-author: "`r rworkflows::use_badges(add_bioc_release = TRUE, add_bioc_download_month = TRUE, add_bioc_download_rank = TRUE, add_bioc_download_total = TRUE)`" 
+author: "`r badges <- function(rel) rworkflows::use_badges(add_bioc_release = rel, add_bioc_download_month = TRUE, add_bioc_download_rank = TRUE, add_bioc_download_total = TRUE); tryCatch(badges(TRUE), error = function(e) badges(FALSE))`"
 date: "<h4>README updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
 bibliography: inst/cit/EWCE.bib
 csl: inst/cit/nature.csl

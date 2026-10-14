@@ -4,12 +4,12 @@
 #' \code{drop_uninformative_genes} drops uninformative genes in order to reduce
 #' compute time and noise in subsequent steps. It achieves this through several
 #' steps, each of which are optional:
-#' \itemize{
-#' \item{Drop non-1:1 orthologs:\cr}{Removes genes that don't have 1:1 orthologs
+#' \describe{
+#' \item{Drop non-1:1 orthologs}{Removes genes that don't have 1:1 orthologs
 #' with the \code{output_species} ("human" by default).}
-#' \item{Drop non-varying genes:\cr}{Removes genes that don't vary across cells
+#' \item{Drop non-varying genes}{Removes genes that don't vary across cells
 #' based on variance deciles.}
-#' \item{Drop non-differentially expressed genes (DEGs):\cr}{
+#' \item{Drop non-differentially expressed genes (DEGs)}{
 #' Removes genes that are not significantly differentially
 #' expressed across cell-types (multiple DEG methods available).}
 #' }
